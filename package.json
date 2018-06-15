@@ -1,0 +1,45 @@
+{
+  "name": "finance-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "NODE_ENV=test mocha --recursive tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrieltanchen/finance-api.git"
+  },
+  "author": "Gabriel Tan-Chen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabrieltanchen/finance-api/issues"
+  },
+  "homepage": "https://github.com/gabrieltanchen/finance-api#readme",
+  "dependencies": {
+    "body-parser": "1.18.2",
+    "connect-roles": "3.1.2",
+    "cookie-parser": "1.4.3",
+    "dotenv": "5.0.1",
+    "express": "4.16.2",
+    "express-session": "1.15.6",
+    "express-validator": "5.0.3",
+    "jsonwebtoken": "8.2.0",
+    "nconf": "0.10.0",
+    "scrypt": "6.0.3",
+    "winston": "2.4.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "8.2.2",
+    "chai": "4.1.2",
+    "chai-http": "4.0.0",
+    "eslint": "4.18.2",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-plugin-import": "2.9.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-react": "7.7.0",
+    "mocha": "5.0.4",
+    "mocha-lcov-reporter": "1.3.0"
+  }
+}
