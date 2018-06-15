@@ -17,7 +17,7 @@ before_install:
 install:
   - npm install
 before_script:
-  - psql -c "CREATE DATABASE finance_test;" -U finance
+  - psql -c "CREATE DATABASE finance_test;" -U postgres
   - psql -c "CREATE ROLE finance LOGIN PASSWORD 'finance';" -U postgres
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE finance_test TO finance;" -U postgres
 script:
