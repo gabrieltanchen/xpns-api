@@ -4,6 +4,7 @@ const nconf = require('nconf');
 
 class TestHelper {
   async cleanup() {
+    /* istanbul ignore if */
     if (!this.app || !this.server) {
       throw new Error('App not yet initialized.');
     }

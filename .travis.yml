@@ -21,4 +21,6 @@ before_script:
   - psql -c "CREATE ROLE finance LOGIN PASSWORD 'finance';" -U postgres
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE finance_test TO finance;" -U postgres
 script:
-  - npm test
+  - npm run test:travis
+after_success:
+  - npm run coveralls
