@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "migration:generate": "sequelize migration:generate",
     "start": "node index",
     "test": "NODE_ENV=test mocha --recursive tests",
     "test:travis": "NODE_ENV=test nyc --reporter=none mocha --recursive --forbid-only tests"
