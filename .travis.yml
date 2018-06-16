@@ -22,3 +22,5 @@ before_script:
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE finance_test TO finance;" -U postgres
 script:
   - npm run test:travis
+after_success:
+  - npm run coveralls
