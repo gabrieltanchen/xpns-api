@@ -5,6 +5,7 @@ nconf.use('memory');
 nconf.argv();
 nconf.env();
 
+/* istanbul ignore next */
 switch (nconf.get('NODE_ENV')) {
 case 'development':
   nconf.set('DATABASE_URL', 'postgres://finance:finance@localhost/finance_development');
