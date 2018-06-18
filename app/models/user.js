@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-  return sequelize.define('Household', {
+  return sequelize.define('User', {
     created_at: {
       allowNull: false,
       type: Sequelize.DATE,
@@ -10,7 +10,19 @@ module.exports = (sequelize) => {
       allowNull: true,
       type: Sequelize.DATE,
     },
-    name: {
+    email: {
+      allowNull: false,
+      type: Sequelize.STRING,
+    },
+    first_name: {
+      allowNull: false,
+      type: Sequelize.STRING,
+    },
+    household_uuid: {
+      allowNull: false,
+      type: Sequelize.UUID,
+    },
+    last_name: {
       allowNull: false,
       type: Sequelize.STRING,
     },
@@ -26,7 +38,7 @@ module.exports = (sequelize) => {
     },
   }, {
     paranoid: true,
-    tableName: 'households',
+    tableName: 'users',
     timestamps: true,
   });
 };

@@ -3,7 +3,7 @@ const TestHelper = require('../../test-helper/');
 
 const assert = chai.assert;
 
-describe('Unit:Model - Household', function() {
+describe('Unit:Model - User', function() {
   let models;
   const testHelper = new TestHelper();
 
@@ -18,11 +18,11 @@ describe('Unit:Model - Household', function() {
   });
 
   it('should have the correct table name', function() {
-    assert.strictEqual(models.Household.getTableName(), 'households');
+    assert.strictEqual(models.User.getTableName(), 'users');
   });
 
   it('should have the correct attributes', async function() {
-    const attributes = await models.Household.describe();
+    const attributes = await models.User.describe();
 
     assert.isOk(attributes);
 
@@ -54,13 +54,32 @@ describe('Unit:Model - Household', function() {
     assert.isNull(attributes.deleted_at.defaultValue);
     assert.isFalse(attributes.deleted_at.primaryKey);
 
-    // name
-    assert.isOk(attributes.name);
-    assert.strictEqual(attributes.name.type, 'CHARACTER VARYING(255)');
-    assert.isFalse(attributes.name.allowNull);
-    assert.isNull(attributes.name.defaultValue);
-    assert.isFalse(attributes.name.primaryKey);
+    // household_uuid
+    assert.isOk(attributes.household_uuid);
+    assert.strictEqual(attributes.household_uuid.type, 'UUID');
+    assert.isFalse(attributes.household_uuid.allowNull);
+    assert.isNull(attributes.household_uuid.defaultValue);
+    assert.isFalse(attributes.household_uuid.primaryKey);
 
-    assert.strictEqual(Object.keys(attributes).length, 5);
+    // email
+    assert.isOk(attributes.email);
+    assert.strictEqual(attributes.email.type, 'CHARACTER VARYING(255)');
+    assert.isFalse(attributes.email.allowNull);
+    assert.isNull(attributes.email.defaultValue);
+    assert.isFalse(attributes.email.primaryKey);
+
+    // first_name
+    assert.isOk(attributes.first_name);
+    assert.strictEqual(attributes.first_name.type, 'CHARACTER VARYING(255)');
+    assert.isFalse(attributes.first_name.allowNull);
+    assert.isNull(attributes.first_name.defaultValue);
+    assert.isFalse(attributes.first_name.primaryKey);
+
+    // last_name
+    assert.isOk(attributes.last_name);
+    assert.strictEqual(attributes.last_name.type, 'CHARACTER VARYING(255)');
+    assert.isFalse(attributes.last_name.allowNull);
+    assert.isNull(attributes.last_name.defaultValue);
+    assert.isFalse(attributes.last_name.primaryKey);
   });
 });

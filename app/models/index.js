@@ -2,6 +2,7 @@ const nconf = require('nconf');
 const Sequelize = require('sequelize');
 
 const Household = require('./household');
+const User = require('./user');
 
 class Models {
   constructor(databaseUrl) {
@@ -26,6 +27,13 @@ class Models {
     });
 
     this.Household = Household(this.sequelize);
+    this.User = User(this.sequelize);
+
+    // Household
+    this.Household.hasMany(this.User);
+
+    // User
+    this.User.belongsTo(this.Household);
   }
 }
 

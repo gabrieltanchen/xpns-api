@@ -4,6 +4,7 @@ const express = require('express');
 const logger = require('winston');
 const Models = require('./models/');
 const nconf = require('nconf');
+const routes = require('./routes/');
 const Sequelize = require('sequelize');
 const Umzug = require('umzug');
 
@@ -32,6 +33,8 @@ module.exports = {
       }
       return next();
     });
+
+    routes(app);
 
     app.use((req, res) => {
       return res.sendStatus(501);
