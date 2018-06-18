@@ -81,5 +81,7 @@ describe('Unit:Model - User', function() {
     assert.isFalse(attributes.last_name.allowNull);
     assert.isNull(attributes.last_name.defaultValue);
     assert.isFalse(attributes.last_name.primaryKey);
+
+    assert.strictEqual(Object.keys(attributes).length, 8);
   });
 });

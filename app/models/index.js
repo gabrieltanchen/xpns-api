@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 
 const Household = require('./household');
 const User = require('./user');
+const UserLogin = require('./user-login');
 
 class Models {
   constructor(databaseUrl) {
@@ -28,12 +29,17 @@ class Models {
 
     this.Household = Household(this.sequelize);
     this.User = User(this.sequelize);
+    this.UserLogin = UserLogin(this.sequelize);
 
     // Household
     this.Household.hasMany(this.User);
 
     // User
     this.User.belongsTo(this.Household);
+    this.User.hasOne(this.UserLogin);
+
+    // UserLogin
+    this.UserLogin.belongsTo(this.User);
   }
 }
 
