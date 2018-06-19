@@ -1,6 +1,7 @@
 const nconf = require('nconf');
 const Sequelize = require('sequelize');
 
+const Hash = require('./hash');
 const Household = require('./household');
 const User = require('./user');
 const UserLogin = require('./user-login');
@@ -27,6 +28,7 @@ class Models {
       operatorsAliases: false,
     });
 
+    this.Hash = Hash(this.sequelize);
     this.Household = Household(this.sequelize);
     this.User = User(this.sequelize);
     this.UserLogin = UserLogin(this.sequelize);
