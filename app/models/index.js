@@ -1,6 +1,7 @@
 const nconf = require('nconf');
 const Sequelize = require('sequelize');
 
+const Audit = require('./audit/');
 const Hash = require('./hash');
 const Household = require('./household');
 const User = require('./user');
@@ -28,20 +29,53 @@ class Models {
       operatorsAliases: false,
     });
 
+    this.Audit = Audit(this.sequelize);
     this.Hash = Hash(this.sequelize);
     this.Household = Household(this.sequelize);
     this.User = User(this.sequelize);
     this.UserLogin = UserLogin(this.sequelize);
 
+    // Audit.ApiCall
+    this.Audit.ApiCall.hasOne(this.Audit.Log, {
+      foreignKey: 'audit_api_call_uuid',
+    });
+    this.Audit.ApiCall.belongsTo(this.User, {
+      foreignKey: 'user_uuid',
+    });
+
+    // Audit.Change
+    this.Audit.Change.belongsTo(this.Audit.Log, {
+      foreignKey: 'audit_log_uuid',
+    });
+
+    // Audit.Log
+    this.Audit.Log.belongsTo(this.Audit.ApiCall, {
+      foreignKey: 'audit_api_call_uuid',
+    });
+    this.Audit.Log.hasMany(this.Audit.Change, {
+      foreignKey: 'audit_log_uuid',
+    });
+
     // Household
-    this.Household.hasMany(this.User);
+    this.Household.hasMany(this.User, {
+      foreignKey: 'household_uuid',
+    });
 
     // User
-    this.User.belongsTo(this.Household);
-    this.User.hasOne(this.UserLogin);
+    this.User.hasMany(this.Audit.ApiCall, {
+      foreignKey: 'user_uuid',
+    });
+    this.User.belongsTo(this.Household, {
+      foreignKey: 'household_uuid',
+    });
+    this.User.hasOne(this.UserLogin, {
+      foreignKey: 'user_uuid',
+    });
 
     // UserLogin
-    this.UserLogin.belongsTo(this.User);
+    this.UserLogin.belongsTo(this.User, {
+      foreignKey: 'user_uuid',
+    });
   }
 }
 
