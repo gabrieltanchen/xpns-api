@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const Controllers = require('./controllers/');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const logger = require('winston');
@@ -12,6 +13,7 @@ module.exports = {
   createApp() {
     const app = express();
     app.set('models', new Models(nconf.get('DATABASE_URL')));
+    app.set('controllers', new Controllers(app.get('models')));
 
     app.use(bodyParser.urlencoded({
       extended: true,
