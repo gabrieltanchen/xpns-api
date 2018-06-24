@@ -10,8 +10,9 @@ const shouldTrackAttribute = ({
   attribute,
   auditChanges,
   key,
+  newValue,
+  oldValue,
   table,
-  value,
 }) => {
   const trackedAttr = _.find(auditChanges, (auditChange) => {
     return auditChange.get('table') === table &&
@@ -19,11 +20,11 @@ const shouldTrackAttribute = ({
       auditChange.get('key') === key;
   });
   assert.isOk(trackedAttr);
-  assert.isNull(trackedAttr.get('old_value'));
-  assert.strictEqual(trackedAttr.get('new_value'), String(value));
+  assert.strictEqual(trackedAttr.get('old_value'), String(oldValue));
+  assert.strictEqual(trackedAttr.get('new_value'), String(newValue));
 };
 
-describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
+describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
   let controllers;
   let models;
   const testHelper = new TestHelper();
@@ -44,14 +45,15 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
   });
 
   it('should reject without an audit log', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.householdName,
+    });
+    household.set('name', sampleData.users.user2.householdName);
     try {
       await models.sequelize.transaction({
         isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
-        const household = models.Household.build({
-          name: sampleData.users.user1.householdName,
-        });
-        await controllers.AuditCtrl._trackNewInstance(null, household, transaction);
+        await controllers.AuditCtrl._trackInstanceUpdate(null, household, transaction);
       });
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
@@ -66,7 +68,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       await models.sequelize.transaction({
         isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
-        await controllers.AuditCtrl._trackNewInstance(auditLog, null, transaction);
+        await controllers.AuditCtrl._trackInstanceUpdate(auditLog, null, transaction);
       });
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
@@ -76,12 +78,13 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
   });
 
   it('should reject without a Sequelize transaction', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.householdName,
+    });
+    household.set('name', sampleData.users.user2.householdName);
     try {
       const auditLog = await models.Audit.Log.create();
-      const household = await models.Household.build({
-        name: sampleData.users.user1.householdName,
-      });
-      await controllers.AuditCtrl._trackNewInstance(auditLog, household, null);
+      await controllers.AuditCtrl._trackInstanceUpdate(auditLog, household, null);
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -91,14 +94,15 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
 
   it('should track all Household attributes', async function() {
     const auditLog = await models.Audit.Log.create();
-    const household = models.Household.build({
+    const household = await models.Household.create({
       name: sampleData.users.user1.householdName,
     });
+    household.set('name', sampleData.users.user2.householdName);
 
     await models.sequelize.transaction({
       isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
-      await controllers.AuditCtrl._trackNewInstance(auditLog, household, transaction);
+      await controllers.AuditCtrl._trackInstanceUpdate(auditLog, household, transaction);
     });
 
     const auditChanges = await models.Audit.Change.findAll({
@@ -110,28 +114,36 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       attribute: 'name',
       auditChanges,
       key: household.get('uuid'),
+      newValue: sampleData.users.user2.householdName,
+      oldValue: sampleData.users.user1.householdName,
       table: 'households',
-      value: sampleData.users.user1.householdName,
     });
     assert.strictEqual(auditChanges.length, 1);
   });
 
   it('should track all User attributes', async function() {
-    const household = await models.Household.create({
+    const auditLog = await models.Audit.Log.create();
+    const household1 = await models.Household.create({
       name: sampleData.users.user1.householdName,
     });
-    const auditLog = await models.Audit.Log.create();
-    const user = models.User.build({
+    const household2 = await models.Household.create({
+      name: sampleData.users.user2.householdName,
+    });
+    const user = await models.User.create({
       email: sampleData.users.user1.email,
       first_name: sampleData.users.user1.firstName,
-      household_uuid: household.get('uuid'),
+      household_uuid: household1.get('uuid'),
       last_name: sampleData.users.user1.lastName,
     });
+    user.set('email', sampleData.users.user2.email);
+    user.set('first_name', sampleData.users.user2.firstName);
+    user.set('household_uuid', household2.get('uuid'));
+    user.set('last_name', sampleData.users.user2.lastName);
 
     await models.sequelize.transaction({
       isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
-      await controllers.AuditCtrl._trackNewInstance(auditLog, user, transaction);
+      await controllers.AuditCtrl._trackInstanceUpdate(auditLog, user, transaction);
     });
 
     const auditChanges = await models.Audit.Change.findAll({
@@ -143,34 +155,39 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       attribute: 'email',
       auditChanges,
       key: user.get('uuid'),
+      newValue: sampleData.users.user2.email,
+      oldValue: sampleData.users.user1.email,
       table: 'users',
-      value: sampleData.users.user1.email,
     });
     shouldTrackAttribute({
       attribute: 'first_name',
       auditChanges,
       key: user.get('uuid'),
+      newValue: sampleData.users.user2.firstName,
+      oldValue: sampleData.users.user1.firstName,
       table: 'users',
-      value: sampleData.users.user1.firstName,
     });
     shouldTrackAttribute({
       attribute: 'household_uuid',
       auditChanges,
       key: user.get('uuid'),
+      newValue: household2.get('uuid'),
+      oldValue: household1.get('uuid'),
       table: 'users',
-      value: household.get('uuid'),
     });
     shouldTrackAttribute({
       attribute: 'last_name',
       auditChanges,
       key: user.get('uuid'),
+      newValue: sampleData.users.user2.lastName,
+      oldValue: sampleData.users.user1.lastName,
       table: 'users',
-      value: sampleData.users.user1.lastName,
     });
     assert.strictEqual(auditChanges.length, 4);
   });
 
   it('should track all UserLogin attributes', async function() {
+    const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
       name: sampleData.users.user1.householdName,
     });
@@ -180,17 +197,22 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       household_uuid: household.get('uuid'),
       last_name: sampleData.users.user1.lastName,
     });
-    const auditLog = await models.Audit.Log.create();
-    const userLogin = models.UserLogin.build({
-      h2: crypto.randomBytes(96).toString('base64'),
-      s1: crypto.randomBytes(48).toString('base64'),
+    const newH2 = crypto.randomBytes(96).toString('base64');
+    const newS1 = crypto.randomBytes(48).toString('base64');
+    const oldH2 = crypto.randomBytes(96).toString('base64');
+    const oldS1 = crypto.randomBytes(48).toString('base64');
+    const userLogin = await models.UserLogin.create({
+      h2: oldH2,
+      s1: oldS1,
       user_uuid: user.get('uuid'),
     });
+    userLogin.set('h2', newH2);
+    userLogin.set('s1', newS1);
 
     await models.sequelize.transaction({
       isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
-      await controllers.AuditCtrl._trackNewInstance(auditLog, userLogin, transaction);
+      await controllers.AuditCtrl._trackInstanceUpdate(auditLog, userLogin, transaction);
     });
 
     const auditChanges = await models.Audit.Change.findAll({
