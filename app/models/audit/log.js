@@ -20,14 +20,6 @@ module.exports = (sequelize) => {
       primaryKey: true,
       type: Sequelize.UUID,
     },
-    worker: {
-      allowNull: true,
-      type: Sequelize.STRING,
-    },
-    worker_action: {
-      allowNull: true,
-      type: Sequelize.STRING,
-    },
   }, {
     paranoid: false,
     tableName: 'audit_logs',

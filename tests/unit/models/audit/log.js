@@ -54,20 +54,6 @@ describe('Unit:Model - AuditLog', function() {
     assert.isNull(attributes.audit_api_call_uuid.defaultValue);
     assert.isFalse(attributes.audit_api_call_uuid.primaryKey);
 
-    // worker
-    assert.isOk(attributes.worker);
-    assert.strictEqual(attributes.worker.type, 'CHARACTER VARYING(255)');
-    assert.isTrue(attributes.worker.allowNull);
-    assert.isNull(attributes.worker.defaultValue);
-    assert.isFalse(attributes.worker.primaryKey);
-
-    // worker_action
-    assert.isOk(attributes.worker_action);
-    assert.strictEqual(attributes.worker_action.type, 'CHARACTER VARYING(255)');
-    assert.isTrue(attributes.worker_action.allowNull);
-    assert.isNull(attributes.worker_action.defaultValue);
-    assert.isFalse(attributes.worker_action.primaryKey);
-
-    assert.strictEqual(Object.keys(attributes).length, 6);
+    assert.strictEqual(Object.keys(attributes).length, 4);
   });
 });

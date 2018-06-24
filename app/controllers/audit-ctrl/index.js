@@ -26,6 +26,14 @@ class AuditCtrl {
 
   // Private methods
 
+  /**
+  * Save audit change for deletion of paranoid instances. Only delete instances
+  * that are paranoid.
+  *
+  * @param {object} auditLog Audit log Sequelize instance
+  * @param {object} instance The Sequelize instance to track
+  * @param {object} transaction Sequelize transaction
+   */
   async _trackInstanceDestroy(auditLog, instance, transaction) {
     const models = this.models;
     if (!auditLog) {
@@ -152,6 +160,53 @@ class AuditCtrl {
       }
     }
     await Promise.all(auditChanges);
+  }
+
+  // Public methods
+
+  /**
+   * Track the changes in the change list. The change list must be a list of
+   * Sequelize instances that have yet to be saved. The delete list must be
+   * a list of Sequelize instances that are intended for deletion, but have not
+   * yet been deleted.
+   *
+   * @param {string} auditApiCallUuid Audit API call
+   * @param {object[]} [changeList] List of Sequelize instances to create/update
+   * @param {object[]} [deleteList] List of Sequelize instances to destroy
+   * @param {object} transaction Sequelize transaction
+   */
+  async trackChanges({
+    auditApiCallUuid,
+    changeList = [],
+    deleteList = [],
+    transaction,
+  }) {
+    const models = this.models;
+    if (!transaction) {
+      throw new Error('Sequelize transaction is required.');
+    } else if (!auditApiCallUuid) {
+      throw new Error('API call is required.');
+    }
+
+    const auditLog = await models.Audit.Log.create({
+      audit_api_call_uuid: auditApiCallUuid,
+    }, {
+      transaction,
+    });
+
+    const promises = [];
+    for (const changeInstance of changeList) {
+      if (changeInstance.isNewRecord) {
+        promises.push(this._trackNewInstance(auditLog, changeInstance, transaction));
+      } else {
+        promises.push(this._trackInstanceUpdate(auditLog, changeInstance, transaction));
+      }
+    }
+    for (const deleteInstance of deleteList) {
+      promises.push(this._trackInstanceDestroy(auditLog, deleteInstance, transaction));
+    }
+
+    await Promise.all(promises);
   }
 }
 

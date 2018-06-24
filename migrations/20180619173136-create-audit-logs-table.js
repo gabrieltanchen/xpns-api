@@ -24,14 +24,6 @@ module.exports = {
         },
         type: Sequelize.UUID,
       },
-      worker: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
-      worker_action: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
     });
   },
 
