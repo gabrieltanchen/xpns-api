@@ -2,6 +2,15 @@ class AuditCtrl {
   constructor(parent, models) {
     this.parent = parent;
     this.models = models;
+
+    this.suppressLogChanges = [
+      'created_at',
+      'h1',
+      'h2',
+      's1',
+      's2',
+      'updated_at',
+    ];
   }
 
   // Private methods
@@ -30,15 +39,7 @@ class AuditCtrl {
     const auditChanges = [];
     const changedAttributes = instance.changed() || [];
 
-    const suppressLogChanges = [
-      'created_at',
-      'deleted_at',
-      'h1',
-      'h2',
-      's1',
-      's2',
-      'updated_at',
-    ];
+    const suppressLogChanges = this.suppressLogChanges;
     let primaryKey;
     const tableName = instance._modelOptions.tableName;
     switch (tableName) {
@@ -97,15 +98,7 @@ class AuditCtrl {
 
     const auditChanges = [];
 
-    const suppressLogChanges = [
-      'created_at',
-      'deleted_at',
-      'h1',
-      'h2',
-      's1',
-      's2',
-      'updated_at',
-    ];
+    const suppressLogChanges = this.suppressLogChanges;
     let primaryKey;
     const tableName = instance._modelOptions.tableName;
     switch (tableName) {

@@ -107,13 +107,20 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       },
     });
     shouldTrackAttribute({
+      attribute: 'deleted_at',
+      auditChanges,
+      key: household.get('uuid'),
+      table: 'households',
+      value: null,
+    });
+    shouldTrackAttribute({
       attribute: 'name',
       auditChanges,
       key: household.get('uuid'),
       table: 'households',
       value: sampleData.users.user1.householdName,
     });
-    assert.strictEqual(auditChanges.length, 1);
+    assert.strictEqual(auditChanges.length, 2);
   });
 
   it('should track all User attributes', async function() {
@@ -139,6 +146,13 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
         audit_log_uuid: auditLog.get('uuid'),
       },
     });
+    shouldTrackAttribute({
+      attribute: 'deleted_at',
+      auditChanges,
+      key: user.get('uuid'),
+      table: 'users',
+      value: null,
+    })
     shouldTrackAttribute({
       attribute: 'email',
       auditChanges,
@@ -167,7 +181,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       table: 'users',
       value: sampleData.users.user1.lastName,
     });
-    assert.strictEqual(auditChanges.length, 4);
+    assert.strictEqual(auditChanges.length, 5);
   });
 
   it('should track all UserLogin attributes', async function() {
