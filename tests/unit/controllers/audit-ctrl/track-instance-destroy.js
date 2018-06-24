@@ -6,24 +6,7 @@ const _ = require('lodash');
 
 const assert = chai.assert;
 
-const shouldTrackAttribute = ({
-  attribute,
-  auditChanges,
-  key,
-  table,
-  value,
-}) => {
-  const trackedAttr = _.find(auditChanges, (auditChange) => {
-    return auditChange.get('table') === table &&
-      auditChange.get('attribute') === attribute &&
-      auditChange.get('key') === key;
-  });
-  assert.isOk(trackedAttr);
-  assert.isNull(trackedAttr.get('old_value'));
-  assert.strictEqual(trackedAttr.get('new_value'), String(value));
-};
-
-describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
+describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
   let controllers;
   let models;
   const testHelper = new TestHelper();
@@ -44,14 +27,14 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
   });
 
   it('should reject without an audit log', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.householdName,
+    });
     try {
       await models.sequelize.transaction({
         isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
-        const household = models.Household.build({
-          name: sampleData.users.user1.householdName,
-        });
-        await controllers.AuditCtrl._trackNewInstance(null, household, transaction);
+        await controllers.AuditCtrl._trackInstanceDestroy(null, household, transaction);
       });
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
@@ -66,7 +49,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       await models.sequelize.transaction({
         isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
-        await controllers.AuditCtrl._trackNewInstance(auditLog, null, transaction);
+        await controllers.AuditCtrl._trackInstanceDestroy(auditLog, null, transaction);
       });
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
@@ -76,12 +59,12 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
   });
 
   it('should reject without a Sequelize transaction', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.householdName,
+    });
     try {
       const auditLog = await models.Audit.Log.create();
-      const household = await models.Household.build({
-        name: sampleData.users.user1.householdName,
-      });
-      await controllers.AuditCtrl._trackNewInstance(auditLog, household, null);
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, household, null);
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -89,56 +72,16 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     }
   });
 
-  it('should track all Household attributes', async function() {
+  it('should track deleting a Household', async function() {
     const auditLog = await models.Audit.Log.create();
-    const household = models.Household.build({
-      name: sampleData.users.user1.householdName,
-    });
-
-    await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
-    }, async(transaction) => {
-      await controllers.AuditCtrl._trackNewInstance(auditLog, household, transaction);
-    });
-
-    const auditChanges = await models.Audit.Change.findAll({
-      where: {
-        audit_log_uuid: auditLog.get('uuid'),
-      },
-    });
-    shouldTrackAttribute({
-      attribute: 'deleted_at',
-      auditChanges,
-      key: household.get('uuid'),
-      table: 'households',
-      value: null,
-    });
-    shouldTrackAttribute({
-      attribute: 'name',
-      auditChanges,
-      key: household.get('uuid'),
-      table: 'households',
-      value: sampleData.users.user1.householdName,
-    });
-    assert.strictEqual(auditChanges.length, 2);
-  });
-
-  it('should track all User attributes', async function() {
     const household = await models.Household.create({
       name: sampleData.users.user1.householdName,
     });
-    const auditLog = await models.Audit.Log.create();
-    const user = models.User.build({
-      email: sampleData.users.user1.email,
-      first_name: sampleData.users.user1.firstName,
-      household_uuid: household.get('uuid'),
-      last_name: sampleData.users.user1.lastName,
-    });
 
     await models.sequelize.transaction({
       isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
-      await controllers.AuditCtrl._trackNewInstance(auditLog, user, transaction);
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, household, transaction);
     });
 
     const auditChanges = await models.Audit.Change.findAll({
@@ -146,45 +89,32 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
         audit_log_uuid: auditLog.get('uuid'),
       },
     });
-    shouldTrackAttribute({
-      attribute: 'deleted_at',
-      auditChanges,
-      key: user.get('uuid'),
-      table: 'users',
-      value: null,
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'households' &&
+        auditChange.get('attribute') === 'deleted_at' &&
+        auditChange.get('key') === household.get('uuid');
     });
-    shouldTrackAttribute({
-      attribute: 'email',
-      auditChanges,
-      key: user.get('uuid'),
-      table: 'users',
-      value: sampleData.users.user1.email,
-    });
-    shouldTrackAttribute({
-      attribute: 'first_name',
-      auditChanges,
-      key: user.get('uuid'),
-      table: 'users',
-      value: sampleData.users.user1.firstName,
-    });
-    shouldTrackAttribute({
-      attribute: 'household_uuid',
-      auditChanges,
-      key: user.get('uuid'),
-      table: 'users',
-      value: household.get('uuid'),
-    });
-    shouldTrackAttribute({
-      attribute: 'last_name',
-      auditChanges,
-      key: user.get('uuid'),
-      table: 'users',
-      value: sampleData.users.user1.lastName,
-    });
-    assert.strictEqual(auditChanges.length, 5);
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the Household is deleted.
+    assert.isNull(await models.Household.findOne({
+      where: {
+        uuid: household.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.Household.findOne({
+      paranoid: false,
+      where: {
+        uuid: household.get('uuid'),
+      },
+    }));
   });
 
-  it('should track all UserLogin attributes', async function() {
+  it('should track deleting a User', async function() {
+    const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
       name: sampleData.users.user1.householdName,
     });
@@ -194,8 +124,54 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       household_uuid: household.get('uuid'),
       last_name: sampleData.users.user1.lastName,
     });
+
+    await models.sequelize.transaction({
+      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, user, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'users' &&
+        auditChange.get('attribute') === 'deleted_at' &&
+        auditChange.get('key') === user.get('uuid');
+    });
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the User is deleted.
+    assert.isNull(await models.User.findOne({
+      where: {
+        uuid: user.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.User.findOne({
+      paranoid: false,
+      where: {
+        uuid: user.get('uuid'),
+      },
+    }));
+  });
+
+  it('should not delete a UserLogin', async function() {
     const auditLog = await models.Audit.Log.create();
-    const userLogin = models.UserLogin.build({
+    const household = await models.Household.create({
+      name: sampleData.users.user1.householdName,
+    });
+    const user = await models.User.create({
+      email: sampleData.users.user1.email,
+      first_name: sampleData.users.user1.firstName,
+      household_uuid: household.get('uuid'),
+      last_name: sampleData.users.user1.lastName,
+    });
+    const userLogin = await models.UserLogin.create({
       h2: crypto.randomBytes(96).toString('base64'),
       s1: crypto.randomBytes(48).toString('base64'),
       user_uuid: user.get('uuid'),
@@ -204,7 +180,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     await models.sequelize.transaction({
       isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
-      await controllers.AuditCtrl._trackNewInstance(auditLog, userLogin, transaction);
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, userLogin, transaction);
     });
 
     const auditChanges = await models.Audit.Change.findAll({
@@ -213,5 +189,12 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       },
     });
     assert.strictEqual(auditChanges.length, 0);
+
+    // Verify that the UserLogin is not deleted.
+    assert.isOk(await models.UserLogin.findOne({
+      where: {
+        user_uuid: user.get('uuid'),
+      },
+    }));
   });
 });

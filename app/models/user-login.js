@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
       type: Sequelize.UUID,
     },
   }, {
-    paranoid: true,
+    paranoid: false,
     tableName: 'user_logins',
     timestamps: true,
   });
