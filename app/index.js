@@ -16,6 +16,7 @@ module.exports = {
     app.set('models', new Models(nconf.get('DATABASE_URL')));
     app.set('controllers', new Controllers(app.get('models')));
     app.set('Auditor', new Middleware.Auditor(app.get('models')));
+    app.set('Validator', Middleware.Validator);
 
     app.use(bodyParser.urlencoded({
       extended: true,
