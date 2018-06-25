@@ -12,6 +12,7 @@ chai.use(chaiHttp);
 
 describe('Integration - POST /users', function() {
   let controllers;
+  let models;
   let server;
   const testHelper = new TestHelper();
 
@@ -50,6 +51,7 @@ describe('Integration - POST /users', function() {
     this.timeout(30000);
     const app = await testHelper.getApp();
     controllers = app.get('controllers');
+    models = app.get('models');
     server = await testHelper.getServer();
   });
 
@@ -112,9 +114,77 @@ describe('Integration - POST /users', function() {
     assert.strictEqual(signUpSpy.callCount, 0);
   });
 
-  it('should return 422 with no password');
+  it('should return 422 with no password', async function() {
+    await errorResponseTest(sampleData.users.invalid5, 422, [{
+      detail: 'Passwords must be a minimum of 8 characters.',
+      source: '/data/attributes/password',
+    }]);
 
-  it('should return 422 with a short password');
+    assert.strictEqual(signUpSpy.callCount, 0);
+  });
 
-  it('should return 201 with valid data');
+  it('should return 422 with a short password', async function() {
+    await errorResponseTest(sampleData.users.invalid7, 422, [{
+      detail: 'Passwords must be a minimum of 8 characters.',
+      source: '/data/attributes/password',
+    }]);
+
+    assert.strictEqual(signUpSpy.callCount, 0);
+  });
+
+  it('should return 201 with valid data', async function() {
+    const res = await chai.request(server)
+      .post('/users')
+      .set('Content-Type', 'application/vnd.api+json')
+      .send({
+        'data': {
+          'attributes': {
+            'email': sampleData.users.user1.email,
+            'first-name': sampleData.users.user1.firstName,
+            'last-name': sampleData.users.user1.lastName,
+            'password': sampleData.users.user1.password,
+          },
+          'type': 'users',
+        },
+      });
+    expect(res).to.have.status(201);
+    assert.isOk(res.body.data);
+    assert.isOk(res.body.data.attributes);
+    assert.isOk(res.body.data.attributes['created-at']);
+    assert.strictEqual(res.body.data.attributes.email, sampleData.users.user1.email.toLowerCase());
+    assert.strictEqual(res.body.data.attributes['first-name'], sampleData.users.user1.firstName);
+    assert.strictEqual(res.body.data.attributes['last-name'], sampleData.users.user1.lastName);
+    assert.isOk(res.body.data.id);
+    assert.strictEqual(res.body.data.type, 'users');
+
+    // Validate UserCtrl.signUp call.
+    assert.strictEqual(signUpSpy.callCount, 1);
+    const signUpParams = signUpSpy.getCall(0).args[0];
+    assert.isOk(signUpParams.auditApiCallUuid);
+    assert.strictEqual(signUpParams.email, sampleData.users.user1.email);
+    assert.strictEqual(signUpParams.firstName, sampleData.users.user1.firstName);
+    assert.strictEqual(signUpParams.lastName, sampleData.users.user1.lastName);
+    assert.strictEqual(signUpParams.password, sampleData.users.user1.password);
+
+    // Validate Audit API call.
+    const apiCall = await models.Audit.ApiCall.findOne({
+      attributes: [
+        'http_method',
+        'ip_address',
+        'route',
+        'user_agent',
+        'user_uuid',
+        'uuid',
+      ],
+      where: {
+        uuid: signUpParams.auditApiCallUuid,
+      },
+    });
+    assert.isOk(apiCall);
+    assert.strictEqual(apiCall.get('http_method'), 'POST');
+    assert.isOk(apiCall.get('ip_address'));
+    assert.strictEqual(apiCall.get('route'), '/users');
+    assert.isOk(apiCall.get('user_agent'));
+    assert.isNull(apiCall.get('user_uuid'));
+  });
 });
