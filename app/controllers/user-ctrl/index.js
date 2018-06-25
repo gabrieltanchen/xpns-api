@@ -1,3 +1,4 @@
+const loginWithPassword = require('./login-with-password');
 const signUp = require('./sign-up');
 
 class UserCtrl {
@@ -11,6 +12,14 @@ class UserCtrl {
       p: 1,
     };
     this.tokenExpiresIn = 7200;
+  }
+
+  async loginWithPassword(email, password) {
+    return loginWithPassword({
+      email,
+      password,
+      userCtrl: this,
+    });
   }
 
   /**
