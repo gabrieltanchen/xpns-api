@@ -48,7 +48,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       await models.sequelize.transaction({
         isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
-        const household = models.Household.build({
+        const household = await models.Household.create({
           name: sampleData.users.user1.householdName,
         });
         await controllers.AuditCtrl._trackNewInstance(null, household, transaction);
@@ -78,7 +78,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
   it('should reject without a Sequelize transaction', async function() {
     try {
       const auditLog = await models.Audit.Log.create();
-      const household = await models.Household.build({
+      const household = await models.Household.create({
         name: sampleData.users.user1.householdName,
       });
       await controllers.AuditCtrl._trackNewInstance(auditLog, household, null);
@@ -91,7 +91,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
 
   it('should track all Household attributes', async function() {
     const auditLog = await models.Audit.Log.create();
-    const household = models.Household.build({
+    const household = await models.Household.create({
       name: sampleData.users.user1.householdName,
     });
 
@@ -128,7 +128,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       name: sampleData.users.user1.householdName,
     });
     const auditLog = await models.Audit.Log.create();
-    const user = models.User.build({
+    const user = await models.User.create({
       email: sampleData.users.user1.email,
       first_name: sampleData.users.user1.firstName,
       household_uuid: household.get('uuid'),
@@ -195,7 +195,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       last_name: sampleData.users.user1.lastName,
     });
     const auditLog = await models.Audit.Log.create();
-    const userLogin = models.UserLogin.build({
+    const userLogin = await models.UserLogin.create({
       h2: crypto.randomBytes(96).toString('base64'),
       s1: crypto.randomBytes(48).toString('base64'),
       user_uuid: user.get('uuid'),
