@@ -3,6 +3,7 @@ const Controllers = require('./controllers/');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const logger = require('winston');
+const Middleware = require('./middleware/');
 const Models = require('./models/');
 const nconf = require('nconf');
 const routes = require('./routes/');
@@ -14,6 +15,7 @@ module.exports = {
     const app = express();
     app.set('models', new Models(nconf.get('DATABASE_URL')));
     app.set('controllers', new Controllers(app.get('models')));
+    app.set('Auditor', new Middleware.Auditor(app.get('models')));
 
     app.use(bodyParser.urlencoded({
       extended: true,
