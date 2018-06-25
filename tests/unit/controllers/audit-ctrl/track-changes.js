@@ -55,7 +55,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
       });
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid: apiCall.get('uuid'),
-        changeList: [household],
+        newList: [household],
         transaction: null,
       });
       throw new Error('Expected to reject not resolve.');
@@ -78,7 +78,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
       }, async(transaction) => {
         await controllers.AuditCtrl.trackChanges({
           auditApiCallUuid: null,
-          changeList: [household],
+          newList: [household],
           transaction,
         });
       });
@@ -102,7 +102,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
     }, async(transaction) => {
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid: apiCall.get('uuid'),
-        changeList: [household],
+        newList: [household],
         transaction,
       });
     });

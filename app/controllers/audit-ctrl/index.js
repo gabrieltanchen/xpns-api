@@ -135,10 +135,6 @@ class AuditCtrl {
       throw new Error('Sequelize transaction is required.');
     }
 
-    await instance.save({
-      transaction,
-    });
-
     const auditChanges = [];
 
     const suppressLogChanges = this.suppressLogChanges;
@@ -171,14 +167,16 @@ class AuditCtrl {
    * yet been deleted.
    *
    * @param {string} auditApiCallUuid Audit API call
-   * @param {object[]} [changeList] List of Sequelize instances to create/update
+   * @param {object[]} [changeList] List of Sequelize instances to update
    * @param {object[]} [deleteList] List of Sequelize instances to destroy
+   * @param {object[]} [newList] List of Sequelize instances that have been created
    * @param {object} transaction Sequelize transaction
    */
   async trackChanges({
     auditApiCallUuid,
     changeList = [],
     deleteList = [],
+    newList = [],
     transaction,
   }) {
     const models = this.models;
@@ -196,14 +194,13 @@ class AuditCtrl {
 
     const promises = [];
     for (const changeInstance of changeList) {
-      if (changeInstance.isNewRecord) {
-        promises.push(this._trackNewInstance(auditLog, changeInstance, transaction));
-      } else {
-        promises.push(this._trackInstanceUpdate(auditLog, changeInstance, transaction));
-      }
+      promises.push(this._trackInstanceUpdate(auditLog, changeInstance, transaction));
     }
     for (const deleteInstance of deleteList) {
       promises.push(this._trackInstanceDestroy(auditLog, deleteInstance, transaction));
+    }
+    for (const newInstance of newList) {
+      promises.push(this._trackNewInstance(auditLog, newInstance, transaction));
     }
 
     await Promise.all(promises);
