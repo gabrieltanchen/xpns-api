@@ -1,10 +1,23 @@
 const bodyParser = require('body-parser');
+const Controllers = require('./controllers/');
 const cookieParser = require('cookie-parser');
 const express = require('express');
+const logger = require('winston');
+const Middleware = require('./middleware/');
+const Models = require('./models/');
+const nconf = require('nconf');
+const routes = require('./routes/');
+const Sequelize = require('sequelize');
+const Umzug = require('umzug');
 
 module.exports = {
   createApp() {
     const app = express();
+    app.set('models', new Models(nconf.get('DATABASE_URL')));
+    app.set('controllers', new Controllers(app.get('models')));
+    app.set('Auditor', new Middleware.Auditor(app.get('models')));
+    app.set('Validator', Middleware.Validator);
+
     app.use(bodyParser.urlencoded({
       extended: true,
     }));
@@ -26,10 +39,32 @@ module.exports = {
       return next();
     });
 
+    routes(app);
+
     app.use((req, res) => {
       return res.sendStatus(501);
     });
 
     return app;
+  },
+
+  async startServer(app) {
+    const models = app.get('models');
+
+    const umzug = new Umzug({
+      storage: 'sequelize',
+      storageOptions: {
+        sequelize: models.sequelize,
+      },
+      migrations: {
+        params: [models.sequelize.getQueryInterface(), Sequelize],
+      },
+    });
+    await umzug.up();
+
+    const port = process.env.PORT || nconf.get('NODE_PORT');
+    return app.listen(port, () => {
+      logger.info(`[API] Listening on port ${port}`);
+    });
   },
 };
