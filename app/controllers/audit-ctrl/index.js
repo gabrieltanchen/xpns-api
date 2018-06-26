@@ -1,3 +1,8 @@
+const trackChanges = require('./track-changes');
+const trackInstanceDestroy = require('./track-instance-destroy');
+const trackInstanceUpdate = require('./track-instance-update');
+const trackNewInstance = require('./track-new-instance');
+
 class AuditCtrl {
   constructor(parent, models) {
     this.parent = parent;
@@ -35,34 +40,12 @@ class AuditCtrl {
   * @param {object} transaction Sequelize transaction
    */
   async _trackInstanceDestroy(auditLog, instance, transaction) {
-    const models = this.models;
-    if (!auditLog) {
-      throw new Error('Audit log is required.');
-    } else if (!instance) {
-      throw new Error('Sequelize instance is required.');
-    } else if (!transaction) {
-      throw new Error('Sequelize transaction is required.');
-    }
-
-    if (instance._modelOptions.paranoid) {
-      // Only destroy paranoid models. Deleting non-paranoid models must be done
-      // manually.
-      await instance.destroy({
-        transaction,
-      });
-
-      const tableName = instance._modelOptions.tableName;
-      const primaryKey = this.getPrimaryKey(tableName);
-      await models.Audit.Change.create({
-        attribute: 'deleted_at',
-        audit_log_uuid: auditLog.get('uuid'),
-        key: instance.get(primaryKey),
-        new_value: String(instance.get('deleted_at')),
-        table: tableName,
-      }, {
-        transaction,
-      });
-    }
+    return trackInstanceDestroy({
+      auditCtrl: this,
+      auditLog,
+      instance,
+      transaction,
+    });
   }
 
   /**
@@ -77,43 +60,12 @@ class AuditCtrl {
    * @param {object} transaction Sequelize transaction
    */
   async _trackInstanceUpdate(auditLog, instance, transaction) {
-    const models = this.models;
-    if (!auditLog) {
-      throw new Error('Audit log is required.');
-    } else if (!instance) {
-      throw new Error('Sequelize instance is required.');
-    } else if (!transaction) {
-      throw new Error('Sequelize transaction is required.');
-    }
-
-    const auditChanges = [];
-    const changedAttributes = instance.changed() || [];
-
-    const suppressLogChanges = this.suppressLogChanges;
-    const tableName = instance._modelOptions.tableName;
-    const primaryKey = this.getPrimaryKey(tableName);
-    suppressLogChanges.push(primaryKey);
-
-    for (const attr of changedAttributes) {
-      if (!suppressLogChanges.includes(attr)) {
-        auditChanges.push(models.Audit.Change.create({
-          attribute: attr,
-          audit_log_uuid: auditLog.get('uuid'),
-          key: instance.get(primaryKey),
-          new_value: String(instance.get(attr)),
-          old_value: String(instance.previous(attr)),
-          table: tableName,
-        }, {
-          transaction,
-        }));
-      }
-    }
-
-    auditChanges.push(instance.save({
+    return trackInstanceUpdate({
+      auditCtrl: this,
+      auditLog,
+      instance,
       transaction,
-    }));
-
-    await Promise.all(auditChanges);
+    });
   }
 
   /**
@@ -126,36 +78,12 @@ class AuditCtrl {
    * @param {object} transaction Sequelize transaction
    */
   async _trackNewInstance(auditLog, instance, transaction) {
-    const models = this.models;
-    if (!auditLog) {
-      throw new Error('Audit log is required.');
-    } else if (!instance) {
-      throw new Error('Sequelize instance is required.');
-    } else if (!transaction) {
-      throw new Error('Sequelize transaction is required.');
-    }
-
-    const auditChanges = [];
-
-    const suppressLogChanges = this.suppressLogChanges;
-    const tableName = instance._modelOptions.tableName;
-    const primaryKey = this.getPrimaryKey(tableName);
-    suppressLogChanges.push(primaryKey);
-
-    for (const attr of Object.keys(instance.dataValues)) {
-      if (!suppressLogChanges.includes(attr)) {
-        auditChanges.push(models.Audit.Change.create({
-          attribute: attr,
-          audit_log_uuid: auditLog.get('uuid'),
-          key: instance.get(primaryKey),
-          new_value: String(instance.get(attr)),
-          table: tableName,
-        }, {
-          transaction,
-        }));
-      }
-    }
-    await Promise.all(auditChanges);
+    return trackNewInstance({
+      auditCtrl: this,
+      auditLog,
+      instance,
+      transaction,
+    });
   }
 
   // Public methods
@@ -179,31 +107,14 @@ class AuditCtrl {
     newList = [],
     transaction,
   }) {
-    const models = this.models;
-    if (!transaction) {
-      throw new Error('Sequelize transaction is required.');
-    } else if (!auditApiCallUuid) {
-      throw new Error('API call is required.');
-    }
-
-    const auditLog = await models.Audit.Log.create({
-      audit_api_call_uuid: auditApiCallUuid,
-    }, {
+    return trackChanges({
+      auditCtrl: this,
+      auditApiCallUuid,
+      changeList,
+      deleteList,
+      newList,
       transaction,
     });
-
-    const promises = [];
-    for (const changeInstance of changeList) {
-      promises.push(this._trackInstanceUpdate(auditLog, changeInstance, transaction));
-    }
-    for (const deleteInstance of deleteList) {
-      promises.push(this._trackInstanceDestroy(auditLog, deleteInstance, transaction));
-    }
-    for (const newInstance of newList) {
-      promises.push(this._trackNewInstance(auditLog, newInstance, transaction));
-    }
-
-    await Promise.all(promises);
   }
 }
 

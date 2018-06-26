@@ -41,6 +41,17 @@ module.exports = {
 
     routes(app);
 
+    app.use((err, req, res, next) => {
+      if (err) {
+        return res.status(403).json({
+          errors: [{
+            detail: err.message,
+          }],
+        });
+      }
+      return next();
+    });
+
     app.use((req, res) => {
       return res.sendStatus(501);
     });

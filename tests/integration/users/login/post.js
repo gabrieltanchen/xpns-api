@@ -1,8 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const sampleData = require('../../sample-data/');
+const sampleData = require('../../../sample-data/');
 const sinon = require('sinon');
-const TestHelper = require('../../test-helper/');
+const TestHelper = require('../../../test-helper/');
 const _ = require('lodash');
 
 const assert = chai.assert;
@@ -10,24 +10,24 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - POST /users', function() {
+describe('Integration - POST /users/login', function() {
   let controllers;
   let models;
   let server;
   const testHelper = new TestHelper();
 
-  let signUpSpy;
+  let loginWithPasswordSpy;
+
+  let userUuid;
 
   const errorResponseTest = async(attributes, expectedStatus, expectedErrors) => {
     const res = await chai.request(server)
-      .post('/users')
+      .post('/users/login')
       .set('Content-Type', 'application/vnd.api+json')
       .send({
         'data': {
           'attributes': {
             'email': attributes.email,
-            'first-name': attributes.firstName,
-            'last-name': attributes.lastName,
             'password': attributes.password,
           },
           'type': 'users',
@@ -56,19 +56,30 @@ describe('Integration - POST /users', function() {
   });
 
   before('create sinon spies', function() {
-    signUpSpy = sinon.spy(controllers.UserCtrl, 'signUp');
+    loginWithPasswordSpy = sinon.spy(controllers.UserCtrl, 'loginWithPassword');
   });
 
   after('restore sinon spies', function() {
-    signUpSpy.restore();
+    loginWithPasswordSpy.restore();
   });
 
   after('cleanup', async function() {
     await testHelper.cleanup();
   });
 
+  beforeEach('create user', async function() {
+    const apiCall = await models.Audit.ApiCall.create();
+    userUuid = await controllers.UserCtrl.signUp({
+      auditApiCallUuid: apiCall.get('uuid'),
+      email: sampleData.users.user1.email,
+      firstName: sampleData.users.user1.firstName,
+      lastName: sampleData.users.user1.lastName,
+      password: sampleData.users.user1.password,
+    });
+  });
+
   afterEach('reset history for sinon spies', function() {
-    signUpSpy.resetHistory();
+    loginWithPasswordSpy.resetHistory();
   });
 
   afterEach('truncate tables', async function() {
@@ -84,7 +95,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/email',
     }]);
 
-    assert.strictEqual(signUpSpy.callCount, 0);
+    assert.strictEqual(loginWithPasswordSpy.callCount, 0);
   });
 
   it('should return 422 with an invalid email', async function() {
@@ -93,25 +104,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/email',
     }]);
 
-    assert.strictEqual(signUpSpy.callCount, 0);
-  });
-
-  it('should return 422 with no first name', async function() {
-    await errorResponseTest(sampleData.users.invalid2, 422, [{
-      detail: 'First name is required.',
-      source: '/data/attributes/first-name',
-    }]);
-
-    assert.strictEqual(signUpSpy.callCount, 0);
-  });
-
-  it('should return 422 with no last name', async function() {
-    await errorResponseTest(sampleData.users.invalid4, 422, [{
-      detail: 'Last name is required.',
-      source: '/data/attributes/last-name',
-    }]);
-
-    assert.strictEqual(signUpSpy.callCount, 0);
+    assert.strictEqual(loginWithPasswordSpy.callCount, 0);
   });
 
   it('should return 422 with no password', async function() {
@@ -120,7 +113,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/password',
     }]);
 
-    assert.strictEqual(signUpSpy.callCount, 0);
+    assert.strictEqual(loginWithPasswordSpy.callCount, 0);
   });
 
   it('should return 422 with a short password', async function() {
@@ -129,62 +122,47 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/password',
     }]);
 
-    assert.strictEqual(signUpSpy.callCount, 0);
+    assert.strictEqual(loginWithPasswordSpy.callCount, 0);
   });
 
-  it('should return 201 with valid data', async function() {
+  it('should return 403 with an invalid password', async function() {
+    await errorResponseTest({
+      email: sampleData.users.user1.email,
+      password: sampleData.users.user2.password,
+    }, 403, [{
+      detail: 'Invalid email/password combination.',
+    }]);
+
+    assert.strictEqual(loginWithPasswordSpy.callCount, 1);
+  });
+
+  it('should return 200 with the correct password', async function() {
     const res = await chai.request(server)
-      .post('/users')
+      .post('/users/login')
       .set('Content-Type', 'application/vnd.api+json')
       .send({
         'data': {
           'attributes': {
             'email': sampleData.users.user1.email,
-            'first-name': sampleData.users.user1.firstName,
-            'last-name': sampleData.users.user1.lastName,
             'password': sampleData.users.user1.password,
           },
           'type': 'users',
         },
       });
-    expect(res).to.have.status(201);
+    expect(res).to.have.status(200);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.email, sampleData.users.user1.email.toLowerCase());
     assert.strictEqual(res.body.data.attributes['first-name'], sampleData.users.user1.firstName);
     assert.strictEqual(res.body.data.attributes['last-name'], sampleData.users.user1.lastName);
-    assert.isOk(res.body.data.id);
+    assert.strictEqual(res.body.data.id, userUuid);
     assert.strictEqual(res.body.data.type, 'users');
 
-    // Validate UserCtrl.signUp call.
-    assert.strictEqual(signUpSpy.callCount, 1);
-    const signUpParams = signUpSpy.getCall(0).args[0];
-    assert.isOk(signUpParams.auditApiCallUuid);
-    assert.strictEqual(signUpParams.email, sampleData.users.user1.email);
-    assert.strictEqual(signUpParams.firstName, sampleData.users.user1.firstName);
-    assert.strictEqual(signUpParams.lastName, sampleData.users.user1.lastName);
-    assert.strictEqual(signUpParams.password, sampleData.users.user1.password);
-
-    // Validate Audit API call.
-    const apiCall = await models.Audit.ApiCall.findOne({
-      attributes: [
-        'http_method',
-        'ip_address',
-        'route',
-        'user_agent',
-        'user_uuid',
-        'uuid',
-      ],
-      where: {
-        uuid: signUpParams.auditApiCallUuid,
-      },
-    });
-    assert.isOk(apiCall);
-    assert.strictEqual(apiCall.get('http_method'), 'POST');
-    assert.isOk(apiCall.get('ip_address'));
-    assert.strictEqual(apiCall.get('route'), '/users');
-    assert.isOk(apiCall.get('user_agent'));
-    assert.isNull(apiCall.get('user_uuid'));
+    // Validate UserCtrl.loginWithPassword call.
+    assert.strictEqual(loginWithPasswordSpy.callCount, 1);
+    const loginWithPasswordParams = loginWithPasswordSpy.getCall(0).args[0];
+    assert.strictEqual(loginWithPasswordParams.email, sampleData.users.user1.email);
+    assert.strictEqual(loginWithPasswordParams.password, sampleData.users.user1.password);
   });
 });

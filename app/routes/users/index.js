@@ -1,5 +1,6 @@
 const { body } = require('express-validator/check');
 const post = require('./post');
+const routeLogin = require('./login/');
 
 module.exports = (router, app) => {
   const Auditor = app.get('Auditor');
@@ -48,6 +49,8 @@ module.exports = (router, app) => {
         min: 8,
       }),
     ], Validator.validateRequest(), Auditor.trackApiCall(), post(app));
+
+  routeLogin(router, app);
 
   return router;
 };
