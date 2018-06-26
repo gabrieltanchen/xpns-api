@@ -1,24 +1,21 @@
 const { body } = require('express-validator/check');
 const post = require('./post');
-const routeLoginToken = require('./token/');
 
 module.exports = (router, app) => {
   const Validator = app.get('Validator');
 
   /**
-   * @api {post} /users/login
-   * @apiName UserLoginPost
+   * @api {post} /users/login/token
+   * @apiName UserLoginTokenPost
    * @apiGroup User
    *
    * @apiParam {object} data
    * @apiParam {object} data.attributes
-   * @apiParam {string} data.attributes.email
-   * @apiParam {string} data.attributes.password
+   * @apiParam {string} data.attributes.token
    * @apiParam {string} data.type
    *
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object} data.attributes
-   * @apiSuccess (200) {string} data.attributes[created-at]
    * @apiSuccess (200) {string} data.attributes.email
    * @apiSuccess (200) {string} data.attributes[first-name]
    * @apiSuccess (200) {string} data.attributes[last-name]
@@ -30,20 +27,14 @@ module.exports = (router, app) => {
    *    {
    *      "errors": [{
    *        "source": {
-   *          "pointer": "/data/attributes/email",
+   *          "pointer": "/data/attributes/token",
    *        },
-   *        "detail": "Email is required.",
+   *        "detail": "No token provided.",
    *      }],
    *    }
    */
-  router.route('/login')
+  router.route('/login/token')
     .post([
-      body([['data', 'attributes', 'email']], 'Email address is required.').not().isEmpty(),
-      body([['data', 'attributes', 'email']], 'Please enter a valid email address.').isEmail(),
-      body([['data', 'attributes', 'password']], 'Passwords must be a minimum of 8 characters.').isLength({
-        min: 8,
-      }),
+      body([['data', 'attributes', 'token']], 'No token provided.').not().isEmpty(),
     ], Validator.validateRequest(), post(app));
-
-  routeLoginToken(router, app);
 };
