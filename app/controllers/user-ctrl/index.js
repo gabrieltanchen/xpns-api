@@ -1,5 +1,6 @@
 const getToken = require('./get-token');
 const loginWithPassword = require('./login-with-password');
+const loginWithToken = require('./login-with-token');
 const signUp = require('./sign-up');
 
 class UserCtrl {
@@ -29,6 +30,13 @@ class UserCtrl {
     return loginWithPassword({
       email,
       password,
+      userCtrl: this,
+    });
+  }
+
+  async loginWithToken(token) {
+    return loginWithToken({
+      token,
       userCtrl: this,
     });
   }
