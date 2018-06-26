@@ -14,7 +14,10 @@ class UserCtrl {
     this.tokenExpiresIn = 7200;
   }
 
-  async loginWithPassword(email, password) {
+  async loginWithPassword({
+    email,
+    password,
+  }) {
     return loginWithPassword({
       email,
       password,

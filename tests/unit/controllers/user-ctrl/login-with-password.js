@@ -39,7 +39,10 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
 
   it('should reject with no email', async function() {
     try {
-      await controllers.UserCtrl.loginWithPassword(null, sampleData.users.user1.password);
+      await controllers.UserCtrl.loginWithPassword({
+        email: null,
+        password: sampleData.users.user1.password,
+      });
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -49,7 +52,10 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
 
   it('should reject with no password', async function() {
     try {
-      await controllers.UserCtrl.loginWithPassword(sampleData.users.user1.email, null);
+      await controllers.UserCtrl.loginWithPassword({
+        email: sampleData.users.user1.email,
+        password: null,
+      });
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -59,10 +65,10 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
 
   it('should reject when the user does not exist', async function() {
     try {
-      await controllers.UserCtrl.loginWithPassword(
-        sampleData.users.user2.email,
-        sampleData.users.user1.password,
-      );
+      await controllers.UserCtrl.loginWithPassword({
+        email: sampleData.users.user2.email,
+        password: sampleData.users.user1.password,
+      });
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -72,10 +78,10 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
 
   it('should reject with the wrong password', async function() {
     try {
-      await controllers.UserCtrl.loginWithPassword(
-        sampleData.users.user1.email,
-        sampleData.users.user2.password,
-      );
+      await controllers.UserCtrl.loginWithPassword({
+        email: sampleData.users.user1.email,
+        password: sampleData.users.user2.password,
+      });
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -84,10 +90,10 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
   });
 
   it('should return the user uuid with the correct password', async function() {
-    const result = await controllers.UserCtrl.loginWithPassword(
-      sampleData.users.user1.email,
-      sampleData.users.user1.password,
-    );
+    const result = await controllers.UserCtrl.loginWithPassword({
+      email: sampleData.users.user1.email,
+      password: sampleData.users.user1.password,
+    });
     assert.strictEqual(result, userUuid);
   });
 });
