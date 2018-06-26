@@ -16,6 +16,7 @@ describe('Integration - POST /users/login', function() {
   let server;
   const testHelper = new TestHelper();
 
+  let getTokenSpy;
   let loginWithPasswordSpy;
 
   let userUuid;
@@ -56,10 +57,12 @@ describe('Integration - POST /users/login', function() {
   });
 
   before('create sinon spies', function() {
+    getTokenSpy = sinon.spy(controllers.UserCtrl, 'getToken');
     loginWithPasswordSpy = sinon.spy(controllers.UserCtrl, 'loginWithPassword');
   });
 
   after('restore sinon spies', function() {
+    getTokenSpy.restore();
     loginWithPasswordSpy.restore();
   });
 
@@ -79,6 +82,7 @@ describe('Integration - POST /users/login', function() {
   });
 
   afterEach('reset history for sinon spies', function() {
+    getTokenSpy.resetHistory();
     loginWithPasswordSpy.resetHistory();
   });
 
@@ -95,6 +99,7 @@ describe('Integration - POST /users/login', function() {
       source: '/data/attributes/email',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(loginWithPasswordSpy.callCount, 0);
   });
 
@@ -104,6 +109,7 @@ describe('Integration - POST /users/login', function() {
       source: '/data/attributes/email',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(loginWithPasswordSpy.callCount, 0);
   });
 
@@ -113,6 +119,7 @@ describe('Integration - POST /users/login', function() {
       source: '/data/attributes/password',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(loginWithPasswordSpy.callCount, 0);
   });
 
@@ -122,6 +129,7 @@ describe('Integration - POST /users/login', function() {
       source: '/data/attributes/password',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(loginWithPasswordSpy.callCount, 0);
   });
 
@@ -133,6 +141,7 @@ describe('Integration - POST /users/login', function() {
       detail: 'Invalid email/password combination.',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(loginWithPasswordSpy.callCount, 1);
   });
 
@@ -156,8 +165,13 @@ describe('Integration - POST /users/login', function() {
     assert.strictEqual(res.body.data.attributes.email, sampleData.users.user1.email.toLowerCase());
     assert.strictEqual(res.body.data.attributes['first-name'], sampleData.users.user1.firstName);
     assert.strictEqual(res.body.data.attributes['last-name'], sampleData.users.user1.lastName);
+    assert.isOk(res.body.data.attributes.token);
     assert.strictEqual(res.body.data.id, userUuid);
     assert.strictEqual(res.body.data.type, 'users');
+
+    // Validate UserCtrl.getToken call.
+    assert.strictEqual(getTokenSpy.callCount, 1);
+    assert.strictEqual(getTokenSpy.getCall(0).args[0], userUuid);
 
     // Validate UserCtrl.loginWithPassword call.
     assert.strictEqual(loginWithPasswordSpy.callCount, 1);

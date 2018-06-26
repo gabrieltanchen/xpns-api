@@ -26,6 +26,7 @@ module.exports = (router, app) => {
      * @apiSuccess (201) {string} data.attributes.email
      * @apiSuccess (201) {string} data.attributes[first-name]
      * @apiSuccess (201) {string} data.attributes[last-name]
+     * @apiSuccess (201) {string} data.attributes.token
      * @apiSuccess (201) {string} data.id
      * @apiSuccess (201) {string} data.type
      *

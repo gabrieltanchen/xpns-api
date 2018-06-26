@@ -15,6 +15,7 @@ module.exports = (app) => {
           uuid: userUuid,
         },
       });
+      const token = await controllers.UserCtrl.getToken(user.get('uuid'));
 
       return res.status(200).json({
         'data': {
@@ -23,6 +24,7 @@ module.exports = (app) => {
             'email': user.get('email'),
             'first-name': user.get('first_name'),
             'last-name': user.get('last_name'),
+            'token': token,
           },
           'id': user.get('uuid'),
           'type': 'users',

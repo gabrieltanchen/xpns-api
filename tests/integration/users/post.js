@@ -16,6 +16,7 @@ describe('Integration - POST /users', function() {
   let server;
   const testHelper = new TestHelper();
 
+  let getTokenSpy;
   let signUpSpy;
 
   const errorResponseTest = async(attributes, expectedStatus, expectedErrors) => {
@@ -56,10 +57,12 @@ describe('Integration - POST /users', function() {
   });
 
   before('create sinon spies', function() {
+    getTokenSpy = sinon.spy(controllers.UserCtrl, 'getToken');
     signUpSpy = sinon.spy(controllers.UserCtrl, 'signUp');
   });
 
   after('restore sinon spies', function() {
+    getTokenSpy.restore();
     signUpSpy.restore();
   });
 
@@ -68,6 +71,7 @@ describe('Integration - POST /users', function() {
   });
 
   afterEach('reset history for sinon spies', function() {
+    getTokenSpy.resetHistory();
     signUpSpy.resetHistory();
   });
 
@@ -84,6 +88,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/email',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(signUpSpy.callCount, 0);
   });
 
@@ -93,6 +98,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/email',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(signUpSpy.callCount, 0);
   });
 
@@ -102,6 +108,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/first-name',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(signUpSpy.callCount, 0);
   });
 
@@ -111,6 +118,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/last-name',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(signUpSpy.callCount, 0);
   });
 
@@ -120,6 +128,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/password',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(signUpSpy.callCount, 0);
   });
 
@@ -129,6 +138,7 @@ describe('Integration - POST /users', function() {
       source: '/data/attributes/password',
     }]);
 
+    assert.strictEqual(getTokenSpy.callCount, 0);
     assert.strictEqual(signUpSpy.callCount, 0);
   });
 
@@ -154,8 +164,13 @@ describe('Integration - POST /users', function() {
     assert.strictEqual(res.body.data.attributes.email, sampleData.users.user1.email.toLowerCase());
     assert.strictEqual(res.body.data.attributes['first-name'], sampleData.users.user1.firstName);
     assert.strictEqual(res.body.data.attributes['last-name'], sampleData.users.user1.lastName);
+    assert.isOk(res.body.data.attributes.token);
     assert.isOk(res.body.data.id);
     assert.strictEqual(res.body.data.type, 'users');
+
+    // Validate UserCtrl.getToken call.
+    assert.strictEqual(getTokenSpy.callCount, 1);
+    assert.strictEqual(getTokenSpy.getCall(0).args[0], res.body.data.id);
 
     // Validate UserCtrl.signUp call.
     assert.strictEqual(signUpSpy.callCount, 1);
