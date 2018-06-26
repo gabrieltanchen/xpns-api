@@ -1,3 +1,4 @@
+const getToken = require('./get-token');
 const loginWithPassword = require('./login-with-password');
 const signUp = require('./sign-up');
 
@@ -12,6 +13,13 @@ class UserCtrl {
       p: 1,
     };
     this.tokenExpiresIn = 7200;
+  }
+
+  async getToken(userUuid) {
+    return getToken({
+      userCtrl: this,
+      userUuid,
+    });
   }
 
   async loginWithPassword({

@@ -55,6 +55,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceUpdate(null, household, transaction);
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -70,6 +71,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceUpdate(auditLog, null, transaction);
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -85,6 +87,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     try {
       const auditLog = await models.Audit.Log.create();
       await controllers.AuditCtrl._trackInstanceUpdate(auditLog, household, null);
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);

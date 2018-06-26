@@ -53,6 +53,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
         });
         await controllers.AuditCtrl._trackNewInstance(null, household, transaction);
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -68,6 +69,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       }, async(transaction) => {
         await controllers.AuditCtrl._trackNewInstance(auditLog, null, transaction);
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -82,6 +84,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
         name: sampleData.users.user1.householdName,
       });
       await controllers.AuditCtrl._trackNewInstance(auditLog, household, null);
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);

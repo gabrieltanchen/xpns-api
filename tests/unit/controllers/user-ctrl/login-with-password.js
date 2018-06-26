@@ -43,6 +43,7 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
         email: null,
         password: sampleData.users.user1.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -56,6 +57,7 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
         email: sampleData.users.user1.email,
         password: null,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -69,6 +71,7 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
         email: sampleData.users.user2.email,
         password: sampleData.users.user1.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -82,6 +85,7 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
         email: sampleData.users.user1.email,
         password: sampleData.users.user2.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);

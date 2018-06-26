@@ -36,6 +36,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceDestroy(null, household, transaction);
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -51,6 +52,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceDestroy(auditLog, null, transaction);
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -65,6 +67,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     try {
       const auditLog = await models.Audit.Log.create();
       await controllers.AuditCtrl._trackInstanceDestroy(auditLog, household, null);
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);

@@ -51,6 +51,7 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
         lastName: sampleData.users.invalid1.lastName,
         password: sampleData.users.invalid1.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -69,6 +70,7 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
         lastName: sampleData.users.invalid2.lastName,
         password: sampleData.users.invalid2.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -87,6 +89,7 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
         lastName: sampleData.users.invalid4.lastName,
         password: sampleData.users.invalid4.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -105,6 +108,7 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
         lastName: sampleData.users.invalid5.lastName,
         password: sampleData.users.invalid5.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -123,6 +127,7 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
         lastName: sampleData.users.invalid7.lastName,
         password: sampleData.users.invalid7.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -140,6 +145,7 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
         lastName: sampleData.users.user1.lastName,
         password: sampleData.users.user1.password,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -262,6 +268,7 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
           lastName: sampleData.users.user1.lastName,
           password: sampleData.users.user1.password,
         });
+        /* istanbul ignore next */
         throw new Error('Expected to reject not resolve.');
       } catch (err) {
         assert.isOk(err);
@@ -280,6 +287,7 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
           lastName: sampleData.users.user1.lastName,
           password: sampleData.users.user1.password,
         });
+        /* istanbul ignore next */
         throw new Error('Expected to reject not resolve.');
       } catch (err) {
         assert.isOk(err);

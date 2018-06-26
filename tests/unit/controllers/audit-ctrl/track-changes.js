@@ -58,6 +58,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
         newList: [household],
         transaction: null,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -82,6 +83,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
           transaction,
         });
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
