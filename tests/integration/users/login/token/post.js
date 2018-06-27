@@ -21,7 +21,7 @@ describe('Integration - POST /users/login/token', function() {
   let userUuid;
   let userToken;
 
-  before(async function() {
+  before('get server', async function() {
     this.timeout(30000);
     const app = await testHelper.getApp();
     controllers = app.get('controllers');

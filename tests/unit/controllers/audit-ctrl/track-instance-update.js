@@ -46,9 +46,9 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
 
   it('should reject without an audit log', async function() {
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
-    household.set('name', sampleData.users.user2.householdName);
+    household.set('name', sampleData.users.user2.lastName);
     try {
       await models.sequelize.transaction({
         isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
@@ -81,9 +81,9 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
 
   it('should reject without a Sequelize transaction', async function() {
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
-    household.set('name', sampleData.users.user2.householdName);
+    household.set('name', sampleData.users.user2.lastName);
     try {
       const auditLog = await models.Audit.Log.create();
       await controllers.AuditCtrl._trackInstanceUpdate(auditLog, household, null);
@@ -98,9 +98,9 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
   it('should track all Household attributes', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
-    household.set('name', sampleData.users.user2.householdName);
+    household.set('name', sampleData.users.user2.lastName);
 
     await models.sequelize.transaction({
       isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
@@ -117,8 +117,8 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
       attribute: 'name',
       auditChanges,
       key: household.get('uuid'),
-      newValue: sampleData.users.user2.householdName,
-      oldValue: sampleData.users.user1.householdName,
+      newValue: sampleData.users.user2.lastName,
+      oldValue: sampleData.users.user1.lastName,
       table: 'households',
     });
     assert.strictEqual(auditChanges.length, 1);
@@ -127,10 +127,10 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
   it('should track all User attributes', async function() {
     const auditLog = await models.Audit.Log.create();
     const household1 = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     const household2 = await models.Household.create({
-      name: sampleData.users.user2.householdName,
+      name: sampleData.users.user2.lastName,
     });
     const user = await models.User.create({
       email: sampleData.users.user1.email,
@@ -192,7 +192,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
   it('should track all UserLogin attributes', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     const user = await models.User.create({
       email: sampleData.users.user1.email,

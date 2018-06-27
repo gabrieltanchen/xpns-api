@@ -48,7 +48,7 @@ describe('Integration - POST /users', function() {
     assert.strictEqual(res.body.errors.length, expectedErrors.length);
   };
 
-  before(async function() {
+  before('get server', async function() {
     this.timeout(30000);
     const app = await testHelper.getApp();
     controllers = app.get('controllers');
@@ -93,7 +93,7 @@ describe('Integration - POST /users', function() {
   });
 
   it('should return 422 with an invalid email', async function() {
-    await errorResponseTest(sampleData.users.invalid6, 422, [{
+    await errorResponseTest(sampleData.users.invalid5, 422, [{
       detail: 'Please enter a valid email address.',
       source: '/data/attributes/email',
     }]);
@@ -113,7 +113,7 @@ describe('Integration - POST /users', function() {
   });
 
   it('should return 422 with no last name', async function() {
-    await errorResponseTest(sampleData.users.invalid4, 422, [{
+    await errorResponseTest(sampleData.users.invalid3, 422, [{
       detail: 'Last name is required.',
       source: '/data/attributes/last-name',
     }]);
@@ -123,7 +123,7 @@ describe('Integration - POST /users', function() {
   });
 
   it('should return 422 with no password', async function() {
-    await errorResponseTest(sampleData.users.invalid5, 422, [{
+    await errorResponseTest(sampleData.users.invalid4, 422, [{
       detail: 'Passwords must be a minimum of 8 characters.',
       source: '/data/attributes/password',
     }]);
@@ -133,7 +133,7 @@ describe('Integration - POST /users', function() {
   });
 
   it('should return 422 with a short password', async function() {
-    await errorResponseTest(sampleData.users.invalid7, 422, [{
+    await errorResponseTest(sampleData.users.invalid6, 422, [{
       detail: 'Passwords must be a minimum of 8 characters.',
       source: '/data/attributes/password',
     }]);

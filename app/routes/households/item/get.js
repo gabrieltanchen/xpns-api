@@ -1,6 +1,26 @@
 module.exports = (app) => {
   const models = app.get('models');
 
+  /**
+   * @api {get} /households/:uuid
+   * @apiName HouseholdItemGet
+   * @apiGroup Household
+   *
+   * @apiSuccess (200) {object} data
+   * @apiSuccess (200) {object} data.attributes
+   * @apiSuccess (200) {string} data.attributes[created-at]
+   * @apiSuccess (200) {string} data.attributes.nane
+   * @apiSuccess (200) {string} data.id
+   * @apiSuccess (200) {string} data.type
+   *
+   * @apiErrorExample {json} Error-Response:
+   *    HTTP/1.1 401 Unprocessable Entity
+   *    {
+   *      "errors": [{
+   *        "detail": "Unauthorized",
+   *      }],
+   *    }
+   */
   return async(req, res, next) => {
     try {
       const user = await models.User.findOne({
@@ -9,7 +29,7 @@ module.exports = (app) => {
           uuid: req.userUuid,
         },
       });
-      if (req.params.householdUuid !== user.get('household_uuid')) {
+      if (req.params.uuid !== user.get('household_uuid')) {
         return res.status(401).json({
           errors: [{
             detail: 'Unauthorized',

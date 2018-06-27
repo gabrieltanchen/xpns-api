@@ -49,7 +49,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
         isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
         const household = await models.Household.create({
-          name: sampleData.users.user1.householdName,
+          name: sampleData.users.user1.lastName,
         });
         await controllers.AuditCtrl._trackNewInstance(null, household, transaction);
       });
@@ -81,7 +81,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     try {
       const auditLog = await models.Audit.Log.create();
       const household = await models.Household.create({
-        name: sampleData.users.user1.householdName,
+        name: sampleData.users.user1.lastName,
       });
       await controllers.AuditCtrl._trackNewInstance(auditLog, household, null);
       /* istanbul ignore next */
@@ -95,7 +95,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
   it('should track all Household attributes', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
 
     await models.sequelize.transaction({
@@ -121,14 +121,14 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       auditChanges,
       key: household.get('uuid'),
       table: 'households',
-      value: sampleData.users.user1.householdName,
+      value: sampleData.users.user1.lastName,
     });
     assert.strictEqual(auditChanges.length, 2);
   });
 
   it('should track all User attributes', async function() {
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     const auditLog = await models.Audit.Log.create();
     const user = await models.User.create({
@@ -189,7 +189,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
 
   it('should track all UserLogin attributes', async function() {
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     const user = await models.User.create({
       email: sampleData.users.user1.email,

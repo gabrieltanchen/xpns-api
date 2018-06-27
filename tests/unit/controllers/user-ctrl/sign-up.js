@@ -84,10 +84,10 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       const apiCall = await models.Audit.ApiCall.create();
       await controllers.UserCtrl.signUp({
         auditApiCallUuid: apiCall.get('uuid'),
-        email: sampleData.users.invalid4.email,
-        firstName: sampleData.users.invalid4.firstName,
-        lastName: sampleData.users.invalid4.lastName,
-        password: sampleData.users.invalid4.password,
+        email: sampleData.users.invalid3.email,
+        firstName: sampleData.users.invalid3.firstName,
+        lastName: sampleData.users.invalid3.lastName,
+        password: sampleData.users.invalid3.password,
       });
       /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
@@ -103,10 +103,10 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       const apiCall = await models.Audit.ApiCall.create();
       await controllers.UserCtrl.signUp({
         auditApiCallUuid: apiCall.get('uuid'),
-        email: sampleData.users.invalid5.email,
-        firstName: sampleData.users.invalid5.firstName,
-        lastName: sampleData.users.invalid5.lastName,
-        password: sampleData.users.invalid5.password,
+        email: sampleData.users.invalid4.email,
+        firstName: sampleData.users.invalid4.firstName,
+        lastName: sampleData.users.invalid4.lastName,
+        password: sampleData.users.invalid4.password,
       });
       /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
@@ -122,10 +122,10 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       const apiCall = await models.Audit.ApiCall.create();
       await controllers.UserCtrl.signUp({
         auditApiCallUuid: apiCall.get('uuid'),
-        email: sampleData.users.invalid7.email,
-        firstName: sampleData.users.invalid7.firstName,
-        lastName: sampleData.users.invalid7.lastName,
-        password: sampleData.users.invalid7.password,
+        email: sampleData.users.invalid6.email,
+        firstName: sampleData.users.invalid6.firstName,
+        lastName: sampleData.users.invalid6.lastName,
+        password: sampleData.users.invalid6.password,
       });
       /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');

@@ -11,12 +11,12 @@ describe('Integration - DELETE /users/login/token', function() {
   let server;
   const testHelper = new TestHelper();
 
-  before(async function() {
+  before('get server', async function() {
     this.timeout(30000);
     server = await testHelper.getServer();
   });
 
-  after(async function() {
+  after('cleanup', async function() {
     await testHelper.cleanup();
   });
 

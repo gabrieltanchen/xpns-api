@@ -8,16 +8,16 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - DELETE /households/:householdUuid', function() {
+describe('Integration - DELETE /households/:uuid', function() {
   let server;
   const testHelper = new TestHelper();
 
-  before(async function() {
+  before('get server', async function() {
     this.timeout(30000);
     server = await testHelper.getServer();
   });
 
-  after(async function() {
+  after('cleanup', async function() {
     await testHelper.cleanup();
   });
 

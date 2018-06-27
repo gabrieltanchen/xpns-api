@@ -8,7 +8,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - GET /users/:userUuid', function() {
+describe('Integration - GET /users/:uuid', function() {
   let controllers;
   let models;
   let server;
@@ -19,7 +19,7 @@ describe('Integration - GET /users/:userUuid', function() {
   let user2Token;
   let user2Uuid;
 
-  before(async function() {
+  before('get server', async function() {
     this.timeout(30000);
     const app = await testHelper.getApp();
     controllers = app.get('controllers');
