@@ -1,5 +1,6 @@
 const { body } = require('express-validator/check');
 const post = require('./post');
+const routeItem = require('./item/');
 const routeLogin = require('./login/');
 
 module.exports = (router, app) => {
@@ -52,6 +53,8 @@ module.exports = (router, app) => {
     ], Validator.validateRequest(), Auditor.trackApiCall(), post(app));
 
   routeLogin(router, app);
+
+  routeItem(router, app);
 
   return router;
 };

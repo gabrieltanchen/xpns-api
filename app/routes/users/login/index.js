@@ -37,6 +37,9 @@ module.exports = (router, app) => {
    *    }
    */
   router.route('/login')
+    .get((req, res) => {
+      return res.sendStatus(501);
+    })
     .post([
       body([['data', 'attributes', 'email']], 'Email address is required.').not().isEmpty(),
       body([['data', 'attributes', 'email']], 'Please enter a valid email address.').isEmail(),
