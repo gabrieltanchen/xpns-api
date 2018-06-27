@@ -13,9 +13,12 @@ const Umzug = require('umzug');
 module.exports = {
   createApp() {
     const app = express();
+
+    const Authentication = Middleware.Authentication();
     app.set('models', new Models(nconf.get('DATABASE_URL')));
     app.set('controllers', new Controllers(app.get('models')));
     app.set('Auditor', new Middleware.Auditor(app.get('models')));
+    app.set('Authentication', Authentication);
     app.set('Validator', Middleware.Validator);
 
     app.use(bodyParser.urlencoded({
@@ -39,7 +42,20 @@ module.exports = {
       return next();
     });
 
+    app.use(Authentication.checkBearerAuth);
+
     routes(app);
+
+    app.use((err, req, res, next) => {
+      if (err) {
+        return res.status(403).json({
+          errors: [{
+            detail: err.message,
+          }],
+        });
+      }
+      return next();
+    });
 
     app.use((req, res) => {
       return res.sendStatus(501);
