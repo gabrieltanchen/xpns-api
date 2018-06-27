@@ -2,7 +2,6 @@ module.exports = {
   user1: {
     email: 'LindsayRigby@example.com',
     firstName: 'Lindsay',
-    householdName: 'Rigby',
     lastName: 'Rigby',
     middleName: 'Adella',
     password: 's8aG3th3k+tHuzaC',
@@ -10,7 +9,6 @@ module.exports = {
   user2: {
     email: 'LaceyWalters@example.com',
     firstName: 'Lacey',
-    householdName: 'Walters',
     lastName: 'Walters',
     middleName: 'Lessie',
     password: 'k?TratrEpU?5Udru',
@@ -18,7 +16,6 @@ module.exports = {
   user3: {
     email: 'freddiesanford@example.com',
     firstName: 'Freddie',
-    householdName: 'Sanford',
     lastName: 'Sanford',
     middleName: 'Rick',
     password: 'WEHe$eT3a86wa@$P',
@@ -26,7 +23,6 @@ module.exports = {
   user4: {
     email: 'codysimonson@example.com',
     firstName: 'Cody',
-    householdName: 'Simonson',
     lastName: 'Simonson',
     middleName: 'Earline',
     password: 'Pus3=stazA3uh7j&',
@@ -34,7 +30,6 @@ module.exports = {
   user5: {
     email: 'sandygardener@example.com',
     firstName: 'Sandy',
-    householdName: 'Gardener',
     lastName: 'Gardener',
     middleName: 'Therese',
     password: 'se3Rak_Thuvafes5',
@@ -42,7 +37,6 @@ module.exports = {
   user6: {
     email: 'devonspeight@example.com',
     firstName: 'Devon',
-    householdName: 'Speight',
     lastName: 'Speight',
     middleName: 'Oliver',
     password: 'D?=Mu*AsTU7umud6',
@@ -50,7 +44,6 @@ module.exports = {
   user7: {
     email: 'robbiedickman@example.com',
     firstName: 'Robbie',
-    householdName: 'Dickman',
     lastName: 'Dickman',
     middleName: 'Tyler',
     password: 'cRUk5M$kaFrEdrev',
@@ -58,7 +51,6 @@ module.exports = {
   user8: {
     email: 'olliesummers@example.com',
     firstName: 'Ollie',
-    householdName: 'Summers',
     lastName: 'Summers',
     middleName: 'Brandon',
     password: 'z8sU3tEfRe2+cREc',
@@ -66,7 +58,6 @@ module.exports = {
   user9: {
     email: 'kerrydickenson@example.com',
     firstName: 'Kerry',
-    householdName: 'Dickenson',
     lastName: 'Dickenson',
     middleName: 'Richard',
     password: 'st!dRETr4b6fuheb',
@@ -74,7 +65,6 @@ module.exports = {
   user10: {
     email: 'chrissudworth@example.com',
     firstName: 'Chris',
-    householdName: 'Sudworth',
     lastName: 'Sudworth',
     middleName: 'David',
     password: 'kaDRe-hEPhetH72r',
@@ -82,7 +72,6 @@ module.exports = {
   invalid1: { // No email
     email: '',
     firstName: 'Harper',
-    householdName: 'Westbrook',
     lastName: 'Westbrook',
     middleName: 'Spencer',
     password: 'r2=6prusP&NaR7p?',
@@ -90,47 +79,34 @@ module.exports = {
   invalid2: { // No first name
     email: 'bernynorman@example.com',
     firstName: '',
-    householdName: 'Norman',
     lastName: 'Norman',
     middleName: 'Hiro',
     password: 'b2wePRura_3S3uBu',
   },
-  invalid3: { // No household name
-    email: 'patriciamilly@example.com',
-    firstName: 'Patricia',
-    householdName: '',
-    lastName: 'Milly',
-    middleName: 'Jason',
-    password: 'sp5d+&apre46dRud',
-  },
-  invalid4: { // No last name
+  invalid3: { // No last name
     email: 'lindsaybrooks@example.com',
     firstName: 'Lindsay',
-    householdName: 'Brooks',
     lastName: '',
     middleName: 'George',
     password: '6etrudAnu7af#@=2',
   },
-  invalid5: { // No password
+  invalid4: { // No password
     email: 'dariandannel@example.com',
     firstName: 'Darian',
-    householdName: 'Dannel',
     lastName: 'Dannel',
     middleName: 'Jack',
     password: '',
   },
-  invalid6: { // Invalid email
+  invalid5: { // Invalid email
     email: 'lindsayhansonexample.com',
     firstName: 'Lindsay',
-    householdName: 'Hanson',
     lastName: 'Hanson',
     middleName: 'Tom',
     password: 'QU?E$reV4ch@P2cu',
   },
-  invalid7: { // Password too short
+  invalid6: { // Password too short
     email: 'shannoncarman@example.com',
     firstName: 'Shannon',
-    householdName: 'Carman',
     lastName: 'Carman',
     middleName: 'Adelaide',
     password: 'Z$nu8pU',

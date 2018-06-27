@@ -51,13 +51,14 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
     try {
       const apiCall = await models.Audit.ApiCall.create();
       const household = models.Household.build({
-        name: sampleData.users.user1.householdName,
+        name: sampleData.users.user1.lastName,
       });
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid: apiCall.get('uuid'),
         newList: [household],
         transaction: null,
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -71,7 +72,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
   it('should reject without an API call', async function() {
     try {
       const household = models.Household.build({
-        name: sampleData.users.user1.householdName,
+        name: sampleData.users.user1.lastName,
       });
       await models.sequelize.transaction({
         isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
@@ -82,6 +83,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
           transaction,
         });
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -95,7 +97,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
   it('should call _trackNewInstance with a new instance', async function() {
     const apiCall = await models.Audit.ApiCall.create();
     const household = models.Household.build({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     await models.sequelize.transaction({
       isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
@@ -119,9 +121,9 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
   it('should call _trackInstanceUpdate when updating an instance', async function() {
     const apiCall = await models.Audit.ApiCall.create();
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
-    household.set('name', sampleData.users.user2.householdName);
+    household.set('name', sampleData.users.user2.lastName);
     await models.sequelize.transaction({
       isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
@@ -144,7 +146,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
   it('should call _trackInstanceDestroy when deleting an instance', async function() {
     const apiCall = await models.Audit.ApiCall.create();
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
 
     await models.sequelize.transaction({

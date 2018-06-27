@@ -28,7 +28,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
 
   it('should reject without an audit log', async function() {
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     try {
       await models.sequelize.transaction({
@@ -36,6 +36,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceDestroy(null, household, transaction);
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -51,6 +52,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceDestroy(auditLog, null, transaction);
       });
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -60,11 +62,12 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
 
   it('should reject without a Sequelize transaction', async function() {
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     try {
       const auditLog = await models.Audit.Log.create();
       await controllers.AuditCtrl._trackInstanceDestroy(auditLog, household, null);
+      /* istanbul ignore next */
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
@@ -75,7 +78,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
   it('should track deleting a Household', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
 
     await models.sequelize.transaction({
@@ -116,7 +119,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
   it('should track deleting a User', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     const user = await models.User.create({
       email: sampleData.users.user1.email,
@@ -163,7 +166,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
   it('should not delete a UserLogin', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
-      name: sampleData.users.user1.householdName,
+      name: sampleData.users.user1.lastName,
     });
     const user = await models.User.create({
       email: sampleData.users.user1.email,

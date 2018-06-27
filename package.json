@@ -1,6 +1,6 @@
 {
   "name": "finance-api",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -36,6 +36,7 @@
     "sequelize": "4.37.10",
     "sequelize-cli": "4.0.0",
     "umzug": "2.1.0",
+    "uuid": "3.3.0",
     "winston": "3.0.0"
   },
   "devDependencies": {
