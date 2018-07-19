@@ -40,7 +40,7 @@
     "winston": "3.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.5",
+    "babel-eslint": "8.2.6",
     "chai": "4.1.2",
     "chai-http": "4.0.0",
     "coveralls": "3.0.1",
