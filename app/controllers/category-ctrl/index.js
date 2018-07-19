@@ -1,4 +1,5 @@
 const createCategory = require('./create-category');
+const updateCategory = require('./update-category');
 
 class CategoryCtrl {
   constructor(parent, models) {
@@ -14,6 +15,21 @@ class CategoryCtrl {
     return createCategory({
       auditApiCallUuid,
       categoryCtrl: this,
+      name,
+      parentUuid,
+    });
+  }
+
+  async updateCategory({
+    auditApiCallUuid,
+    categoryUuid,
+    name,
+    parentUuid,
+  }) {
+    return updateCategory({
+      auditApiCallUuid,
+      categoryCtrl: this,
+      categoryUuid,
       name,
       parentUuid,
     });
