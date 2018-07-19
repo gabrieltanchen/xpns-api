@@ -14,7 +14,9 @@ module.exports = async({
 }) => {
   const controllers = categoryCtrl.parent;
   const models = categoryCtrl.models;
-  if (!name) {
+  if (!categoryUuid) {
+    throw new Error('Category is required.');
+  } else if (!name) {
     throw new Error('Name is required.');
   }
 
@@ -41,21 +43,20 @@ module.exports = async({
   const category = await models.Category.findOne({
     attributes: ['household_uuid', 'name', 'parent_uuid', 'uuid'],
     where: {
+      household_uuid: user.get('household_uuid'),
       uuid: categoryUuid,
     },
   });
   if (!category) {
     throw new Error('Not found');
-  } else if (category.get('household_uuid') !== user.get('household_uuid')) {
-    throw new Error('Unauthorized');
   }
 
   if (name !== category.get('name')) {
     category.set('name', name);
   }
 
-  if (parentUuid
-        && parentUuid !== category.get('parent_uuid')) {
+  if ((parentUuid)
+      && parentUuid !== category.get('parent_uuid')) {
     const parentCategory = await models.Category.findOne({
       attributes: ['uuid'],
       where: {
@@ -67,6 +68,9 @@ module.exports = async({
       throw new Error('Unauthorized');
     }
     category.set('parent_uuid', parentCategory.get('uuid'));
+  } else if (category.get('parent_uuid')
+      && !parentUuid) {
+    category.set('parent_uuid', null);
   }
 
   if (category.changed()) {
