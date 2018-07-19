@@ -22,7 +22,7 @@ module.exports = async({
       uuid: auditApiCallUuid,
     },
   });
-  if (!apiCall.get('user_uuid')) {
+  if (!apiCall || !apiCall.get('user_uuid')) {
     throw new Error('Unauthorized');
   }
 
