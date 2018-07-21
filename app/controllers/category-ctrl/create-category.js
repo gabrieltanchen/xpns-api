@@ -23,6 +23,7 @@ module.exports = async({
     },
   });
   if (!apiCall || !apiCall.get('user_uuid')) {
+    console.log('hello1');
     throw new Error('Unauthorized');
   }
 
@@ -33,6 +34,7 @@ module.exports = async({
     },
   });
   if (!user) {
+    console.log('hello2');
     throw new Error('Unauthorized');
   }
 
@@ -46,6 +48,7 @@ module.exports = async({
       },
     });
     if (!parentCategory) {
+      console.log('hello3');
       throw new Error('Unauthorized');
     }
   }

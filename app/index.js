@@ -36,7 +36,8 @@ module.exports = {
       res.header('Access-Control-Allow-Credentials', 'true');
       if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
-      } else if (req.method === 'GET') {
+      }
+      if (req.method === 'GET') {
         res.setHeader('Last-Modified', (new Date()).toUTCString());
       }
       return next();
