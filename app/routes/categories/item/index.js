@@ -1,5 +1,6 @@
 const { body } = require('express-validator/check');
-const patch = require('./patch');
+const deleteFn = require('./delete');
+const patchFn = require('./patch');
 
 module.exports = (router, app) => {
   const Auditor = app.get('Auditor');
@@ -7,7 +8,18 @@ module.exports = (router, app) => {
   const Validator = app.get('Validator');
 
   router.route('/:uuid')
-    .patch(Authentication.UserAuth.can('access-account'), [
-      body([['data', 'attributes', 'name']], 'Category name is required.').not().isEmpty(),
-    ], Validator.validateRequest(), Auditor.trackApiCall(), patch(app));
+    .delete(
+      Authentication.UserAuth.can('access-account'),
+      Auditor.trackApiCall(),
+      deleteFn(app),
+    )
+    .patch(
+      Authentication.UserAuth.can('access-account'),
+      [
+        body([['data', 'attributes', 'name']], 'Category name is required.').not().isEmpty(),
+      ],
+      Validator.validateRequest(),
+      Auditor.trackApiCall(),
+      patchFn(app),
+    );
 };

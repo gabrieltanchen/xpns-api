@@ -1,5 +1,5 @@
 const { body } = require('express-validator/check');
-const post = require('./post');
+const postFn = require('./post');
 const routeItem = require('./item/');
 
 module.exports = (router, app) => {
@@ -8,9 +8,15 @@ module.exports = (router, app) => {
   const Validator = app.get('Validator');
 
   router.route('/')
-    .post(Authentication.UserAuth.can('access-account'), [
-      body([['data', 'attributes', 'name']], 'Category name is required.').not().isEmpty(),
-    ], Validator.validateRequest(), Auditor.trackApiCall(), post(app));
+    .post(
+      Authentication.UserAuth.can('access-account'),
+      [
+        body([['data', 'attributes', 'name']], 'Category name is required.').not().isEmpty(),
+      ],
+      Validator.validateRequest(),
+      Auditor.trackApiCall(),
+      postFn(app),
+    );
 
   routeItem(router, app);
 
