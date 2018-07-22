@@ -94,10 +94,23 @@ describe('Integration - PATCH /categories/:uuid', function() {
   });
 
   it('should return 401 with no auth token', async function() {
-    
+    const res = await chai.request(server)
+      .patch(`/categories/${categoryUuid}`)
+      .set('Content-Type', 'application/vnd.api+json')
+      .send({
+        'data': {
+          'attributes': {
+            'name': sampleData.categories.category2.name,
+          },
+          'id': categoryUuid,
+          'type': 'categories',
+        },
+      });
   });
 
   it('should return 404 with the wrong auth token');
+
+  it('should return 422 with no name');
 
   it('should return 200 with the correct auth token');
 });
