@@ -1,7 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
-const uuidv4 = require('uuid/v4');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
@@ -106,11 +105,117 @@ describe('Integration - PATCH /categories/:uuid', function() {
           'type': 'categories',
         },
       });
+    expect(res).to.have.status(401);
+    assert.deepEqual(res.body, {
+      errors: [{
+        detail: 'Unauthorized',
+      }],
+    });
+    assert.strictEqual(updateCategorySpy.callCount, 0);
   });
 
-  it('should return 404 with the wrong auth token');
+  it('should return 404 with the wrong auth token', async function() {
+    const res = await chai.request(server)
+      .patch(`/categories/${categoryUuid}`)
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${user2Token}`)
+      .send({
+        'data': {
+          'attributes': {
+            'name': sampleData.categories.category2.name,
+          },
+          'id': categoryUuid,
+          'type': 'categories',
+        },
+      });
+    expect(res).to.have.status(404);
+    assert.deepEqual(res.body, {
+      errors: [{
+        detail: 'Not found',
+      }],
+    });
 
-  it('should return 422 with no name');
+    assert.strictEqual(updateCategorySpy.callCount, 1);
+    const updateCategoryParams = updateCategorySpy.getCall(0).args[0];
+    assert.isOk(updateCategoryParams.auditApiCallUuid);
+    assert.strictEqual(updateCategoryParams.categoryUuid, categoryUuid);
+    assert.strictEqual(updateCategoryParams.name, sampleData.categories.category2.name);
+  });
 
-  it('should return 200 with the correct auth token');
+  it('should return 422 with no name', async function() {
+    const res = await chai.request(server)
+      .patch(`/categories/${categoryUuid}`)
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${user1Token}`)
+      .send({
+        'data': {
+          'attributes': {
+            'name': '',
+          },
+          'id': categoryUuid,
+          'type': 'categories',
+        },
+      });
+    expect(res).to.have.status(422);
+    assert.deepEqual(res.body, {
+      errors: [{
+        detail: 'Category name is required.',
+        source: {
+          pointer: '/data/attributes/name',
+        },
+      }],
+    });
+    assert.strictEqual(updateCategorySpy.callCount, 0);
+  });
+
+  it('should return 200 with the correct auth token', async function() {
+    const res = await chai.request(server)
+      .patch(`/categories/${categoryUuid}`)
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${user1Token}`)
+      .send({
+        'data': {
+          'attributes': {
+            'name': sampleData.categories.category2.name,
+          },
+          'id': categoryUuid,
+          'type': 'categories',
+        },
+      });
+    expect(res).to.have.status(200);
+    assert.isOk(res.body.data);
+    assert.isOk(res.body.data.attributes);
+    assert.isOk(res.body.data.attributes['created-at']);
+    assert.strictEqual(res.body.data.attributes.name, sampleData.categories.category2.name);
+    assert.strictEqual(res.body.data.id, categoryUuid);
+    assert.strictEqual(res.body.data.type, 'categories');
+
+    // Validate CategoryCtrl.updateCategory call.
+    assert.strictEqual(updateCategorySpy.callCount, 1);
+    const updateCategoryParams = updateCategorySpy.getCall(0).args[0];
+    assert.isOk(updateCategoryParams.auditApiCallUuid);
+    assert.strictEqual(updateCategoryParams.categoryUuid, categoryUuid);
+    assert.strictEqual(updateCategoryParams.name, sampleData.categories.category2.name);
+
+    // Validate Audit API call.
+    const apiCall = await models.Audit.ApiCall.findOne({
+      attributes: [
+        'http_method',
+        'ip_address',
+        'route',
+        'user_agent',
+        'user_uuid',
+        'uuid',
+      ],
+      where: {
+        uuid: updateCategoryParams.auditApiCallUuid,
+      },
+    });
+    assert.isOk(apiCall);
+    assert.strictEqual(apiCall.get('http_method'), 'PATCH');
+    assert.isOk(apiCall.get('ip_address'));
+    assert.strictEqual(apiCall.get('route'), `/categories/${categoryUuid}`);
+    assert.isOk(apiCall.get('user_agent'));
+    assert.strictEqual(apiCall.get('user_uuid'), user1Uuid);
+  });
 });

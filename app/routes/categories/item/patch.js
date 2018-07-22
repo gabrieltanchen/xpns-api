@@ -27,7 +27,7 @@ module.exports = (app) => {
       await controllers.CategoryCtrl.updateCategory({
         auditApiCallUuid: req.auditApiCallUuid,
         categoryUuid: req.params.uuid,
-        name: req.data.attributes.name,
+        name: req.body.data.attributes.name,
       });
 
       const category = await models.Category.findOne({

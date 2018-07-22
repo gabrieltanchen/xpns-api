@@ -131,7 +131,7 @@ describe('Integration - POST /categories', function() {
     assert.isOk(res.body.data.id);
     assert.strictEqual(res.body.data.type, 'categories');
 
-    // Validate CategoryCtrl.createCategory.call.
+    // Validate CategoryCtrl.createCategory call.
     assert.strictEqual(createCategorySpy.callCount, 1);
     const createCategoryParams = createCategorySpy.getCall(0).args[0];
     assert.isOk(createCategoryParams.auditApiCallUuid);
