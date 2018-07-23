@@ -1,4 +1,5 @@
 const { body } = require('express-validator/check');
+const getFn = require('./get');
 const postFn = require('./post');
 const routeItem = require('./item/');
 
@@ -8,6 +9,10 @@ module.exports = (router, app) => {
   const Validator = app.get('Validator');
 
   router.route('/')
+    .get(
+      Authentication.UserAuth.can('access-account'),
+      getFn(app),
+    )
     .post(
       Authentication.UserAuth.can('access-account'),
       [
