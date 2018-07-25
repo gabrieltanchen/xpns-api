@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe.only('Integration - GET /categories', function() {
+describe('Integration - GET /categories', function() {
   let controllers;
   let models;
   let server;
@@ -43,10 +43,8 @@ describe.only('Integration - GET /categories', function() {
   let category26Uuid;
   let category27Uuid;
   let category28Uuid;
-  let user1HouseholdUuid;
   let user1Token;
   let user1Uuid;
-  let user2HouseholdUuid;
   let user2Token;
   let user2Uuid;
 
@@ -95,14 +93,6 @@ describe.only('Integration - GET /categories', function() {
       lastName: sampleData.users.user1.lastName,
       password: sampleData.users.user1.password,
     });
-    const user = await models.User.findOne({
-      attributes: ['household_uuid', 'uuid'],
-      where: {
-        uuid: user1Uuid,
-      },
-    });
-    assert.isOk(user);
-    user1HouseholdUuid = user.get('household_uuid');
   });
 
   before('create user 1 token', async function() {
@@ -118,14 +108,6 @@ describe.only('Integration - GET /categories', function() {
       lastName: sampleData.users.user2.lastName,
       password: sampleData.users.user2.password,
     });
-    const user = await models.User.findOne({
-      attributes: ['household_uuid', 'uuid'],
-      where: {
-        uuid: user2Uuid,
-      },
-    });
-    assert.isOk(user);
-    user2HouseholdUuid = user.get('household_uuid');
   });
 
   before('create user 2 token', async function() {
@@ -621,11 +603,114 @@ describe.only('Integration - GET /categories', function() {
     assert.strictEqual(res.body.meta.total, 27);
   });
 
-  it('should return 200 and 2 categories as user 1 with no limit and page=2');
+  it('should return 200 and 2 categories as user 1 with no limit and page=2', async function() {
+    const res = await chai.request(server)
+      .get('/categories?page=2')
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${user1Token}`);
+    expect(res).to.have.status(200);
+    assert.isOk(res.body.data);
+    assert.strictEqual(res.body.data.length, 2);
 
-  it('should return 200 and 5 categories as user 1 with limit=5 and page=4');
+    // Category 4
+    assert.isOk(res.body.data[0].attributes);
+    assert.isOk(res.body.data[0].attributes['created-at']);
+    assert.strictEqual(res.body.data[0].attributes.name, sampleData.categories.category4.name);
+    assert.strictEqual(res.body.data[0].id, category4Uuid);
+    assert.strictEqual(res.body.data[0].type, 'categories');
 
-  it('should return 200 and 1 category as user 2');
+    // Category 2
+    assert.isOk(res.body.data[1].attributes);
+    assert.isOk(res.body.data[1].attributes['created-at']);
+    assert.strictEqual(res.body.data[1].attributes.name, sampleData.categories.category2.name);
+    assert.strictEqual(res.body.data[1].id, category2Uuid);
+    assert.strictEqual(res.body.data[1].type, 'categories');
 
-  it('should return 200 and 0 categories as user 2 with page=2');
+    assert.isOk(res.body.meta);
+    assert.strictEqual(res.body.meta.pages, 2);
+    assert.strictEqual(res.body.meta.total, 27);
+  });
+
+  it('should return 200 and 5 categories as user 1 with limit=5 and page=4', async function() {
+    const res = await chai.request(server)
+      .get('/categories?limit=5&page=4')
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${user1Token}`);
+    expect(res).to.have.status(200);
+    assert.isOk(res.body.data);
+    assert.strictEqual(res.body.data.length, 5);
+
+    // Category 17
+    assert.isOk(res.body.data[0].attributes);
+    assert.isOk(res.body.data[0].attributes['created-at']);
+    assert.strictEqual(res.body.data[0].attributes.name, sampleData.categories.category17.name);
+    assert.strictEqual(res.body.data[0].id, category17Uuid);
+    assert.strictEqual(res.body.data[0].type, 'categories');
+
+    // Category 9
+    assert.isOk(res.body.data[1].attributes);
+    assert.isOk(res.body.data[1].attributes['created-at']);
+    assert.strictEqual(res.body.data[1].attributes.name, sampleData.categories.category9.name);
+    assert.strictEqual(res.body.data[1].id, category9Uuid);
+    assert.strictEqual(res.body.data[1].type, 'categories');
+
+    // Category 13
+    assert.isOk(res.body.data[2].attributes);
+    assert.isOk(res.body.data[2].attributes['created-at']);
+    assert.strictEqual(res.body.data[2].attributes.name, sampleData.categories.category13.name);
+    assert.strictEqual(res.body.data[2].id, category13Uuid);
+    assert.strictEqual(res.body.data[2].type, 'categories');
+
+    // Category 6
+    assert.isOk(res.body.data[3].attributes);
+    assert.isOk(res.body.data[3].attributes['created-at']);
+    assert.strictEqual(res.body.data[3].attributes.name, sampleData.categories.category6.name);
+    assert.strictEqual(res.body.data[3].id, category6Uuid);
+    assert.strictEqual(res.body.data[3].type, 'categories');
+
+    // Category 25
+    assert.isOk(res.body.data[4].attributes);
+    assert.isOk(res.body.data[4].attributes['created-at']);
+    assert.strictEqual(res.body.data[4].attributes.name, sampleData.categories.category25.name);
+    assert.strictEqual(res.body.data[4].id, category25Uuid);
+    assert.strictEqual(res.body.data[4].type, 'categories');
+
+    assert.isOk(res.body.meta);
+    assert.strictEqual(res.body.meta.pages, 6);
+    assert.strictEqual(res.body.meta.total, 27);
+  });
+
+  it('should return 200 and 1 category as user 2', async function() {
+    const res = await chai.request(server)
+      .get('/categories')
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${user2Token}`);
+    expect(res).to.have.status(200);
+    assert.isOk(res.body.data);
+    assert.strictEqual(res.body.data.length, 1);
+
+    // Category 28
+    assert.isOk(res.body.data[0].attributes);
+    assert.isOk(res.body.data[0].attributes['created-at']);
+    assert.strictEqual(res.body.data[0].attributes.name, sampleData.categories.category28.name);
+    assert.strictEqual(res.body.data[0].id, category28Uuid);
+    assert.strictEqual(res.body.data[0].type, 'categories');
+
+    assert.isOk(res.body.meta);
+    assert.strictEqual(res.body.meta.pages, 1);
+    assert.strictEqual(res.body.meta.total, 1);
+  });
+
+  it('should return 200 and 0 categories as user 2 with page=2', async function() {
+    const res = await chai.request(server)
+      .get('/categories?page=2')
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${user2Token}`);
+    expect(res).to.have.status(200);
+    assert.isOk(res.body.data);
+    assert.strictEqual(res.body.data.length, 0);
+    assert.isOk(res.body.meta);
+    assert.strictEqual(res.body.meta.pages, 1);
+    assert.strictEqual(res.body.meta.total, 1);
+  });
 });
