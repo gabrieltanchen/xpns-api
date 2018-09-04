@@ -37,7 +37,7 @@
     "sequelize-cli": "4.0.0",
     "umzug": "2.1.0",
     "uuid": "3.3.2",
-    "winston": "3.0.0"
+    "winston": "3.1.0"
   },
   "devDependencies": {
     "babel-eslint": "8.2.6",
