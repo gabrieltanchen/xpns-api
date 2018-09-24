@@ -41,6 +41,21 @@ module.exports = (app) => {
         },
       });
 
+      let parentUuid = null;
+      if (req.query.parent_uuid) {
+        const parentCategory = await models.Category.findOne({
+          attributes: ['uuid'],
+          where: {
+            household_uuid: user.get('household_uuid'),
+            uuid: req.query.parent_uuid,
+          },
+        });
+        if (!parentCategory) {
+          throw new Error('Not found');
+        }
+        parentUuid = parentCategory.get('uuid');
+      }
+
       const categories = await models.Category.findAndCount({
         attributes: ['created_at', 'name', 'uuid'],
         limit,
@@ -48,7 +63,7 @@ module.exports = (app) => {
         order: [['name', 'ASC']],
         where: {
           household_uuid: user.get('household_uuid'),
-          parent_uuid: null,
+          parent_uuid: parentUuid,
         },
       });
 
