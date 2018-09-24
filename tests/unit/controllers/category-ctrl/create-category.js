@@ -185,7 +185,7 @@ describe('Unit:Controllers - CategoryCtrl.createCategory', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Unauthorized');
+      assert.strictEqual(err.message, 'Not found');
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -206,7 +206,7 @@ describe('Unit:Controllers - CategoryCtrl.createCategory', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Unauthorized');
+      assert.strictEqual(err.message, 'Not found');
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });

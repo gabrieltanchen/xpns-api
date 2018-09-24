@@ -10,6 +10,7 @@ module.exports = (app) => {
    * @apiParam {object} data
    * @apiParam {object} data.attributes
    * @apiParam {string} data.attributes.name
+   * @apiParam {string} data.attributes[parent-uuid]
    * @apiParam {string} data.type
    *
    * @apiSuccess (201) {object} data
@@ -35,6 +36,7 @@ module.exports = (app) => {
       const categoryUuid = await controllers.CategoryCtrl.createCategory({
         auditApiCallUuid: req.auditApiCallUuid,
         name: req.body.data.attributes.name,
+        parentUuid: req.body.data.attributes['parent-uuid'],
       });
 
       const category = await models.Category.findOne({

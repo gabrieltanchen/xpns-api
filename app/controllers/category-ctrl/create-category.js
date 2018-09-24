@@ -46,7 +46,7 @@ module.exports = async({
       },
     });
     if (!parentCategory) {
-      throw new Error('Unauthorized');
+      throw new Error('Not found');
     }
   }
 

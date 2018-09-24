@@ -16,6 +16,8 @@ describe('Integration - GET /categories', function() {
   const testHelper = new TestHelper();
 
   let category1Uuid;
+  let category1Subcategory1Uuid;
+  let category1Subcategory2Uuid;
   let category2Uuid;
   let category3Uuid;
   let category4Uuid;
@@ -123,6 +125,10 @@ describe('Integration - GET /categories', function() {
       name: sampleData.categories.category1.name,
     });
   });
+
+  before('create category 1 subcategory 1');
+
+  before('create category 1 subcategory 2');
 
   before('create category 2', async function() {
     const apiCall = await models.Audit.ApiCall.create({
@@ -713,4 +719,8 @@ describe('Integration - GET /categories', function() {
     assert.strictEqual(res.body.meta.pages, 1);
     assert.strictEqual(res.body.meta.total, 1);
   });
+
+  it('should return 404 with parent category 1 as user 2');
+
+  it('should return 200 and 2 subcategories with parent category 1 as user 1');
 });
