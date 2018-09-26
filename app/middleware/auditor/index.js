@@ -12,8 +12,8 @@ class Auditor {
         route: req.originalUrl,
         user_agent: req.headers['user-agent'],
       };
-      if (req.user && req.user.uuid) {
-        apiCallParams.user_uuid = req.user.uuid;
+      if (req.userUuid) {
+        apiCallParams.user_uuid = req.userUuid;
       }
       const apiCall = await models.Audit.ApiCall.create(apiCallParams);
       req.auditApiCallUuid = apiCall.get('uuid');

@@ -2,6 +2,7 @@ const nconf = require('nconf');
 const Sequelize = require('sequelize');
 
 const Audit = require('./audit/');
+const Category = require('./category');
 const Hash = require('./hash');
 const Household = require('./household');
 const User = require('./user');
@@ -30,6 +31,7 @@ class Models {
     });
 
     this.Audit = Audit(this.sequelize);
+    this.Category = Category(this.sequelize);
     this.Hash = Hash(this.sequelize);
     this.Household = Household(this.sequelize);
     this.User = User(this.sequelize);
@@ -56,7 +58,15 @@ class Models {
       foreignKey: 'audit_log_uuid',
     });
 
+    // Category
+    this.Category.belongsTo(this.Household, {
+      foreignKey: 'household_uuid',
+    });
+
     // Household
+    this.Household.hasMany(this.Category, {
+      foreignKey: 'household_uuid',
+    });
     this.Household.hasMany(this.User, {
       foreignKey: 'household_uuid',
     });
