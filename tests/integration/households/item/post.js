@@ -1,7 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const TestHelper = require('../../../test-helper/');
 const uuidv4 = require('uuid/v4');
+
+const TestHelper = require('../../../test-helper/');
 
 const assert = chai.assert;
 const expect = chai.expect;
