@@ -1,9 +1,10 @@
 const chai = require('chai');
-const sampleData = require('../../../sample-data/');
 const scrypt = require('scrypt');
 const sinon = require('sinon');
-const TestHelper = require('../../../test-helper/');
 const _ = require('lodash');
+
+const sampleData = require('../../../sample-data/');
+const TestHelper = require('../../../test-helper/');
 
 const assert = chai.assert;
 
@@ -227,18 +228,18 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
     assert.isNotOk(trackChangesParams.deleteList);
     assert.isOk(trackChangesParams.newList);
     const newHousehold = _.find(trackChangesParams.newList, (newInstance) => {
-      return newInstance instanceof models.Household &&
-        newInstance.get('uuid') === household.get('uuid');
+      return newInstance instanceof models.Household
+        && newInstance.get('uuid') === household.get('uuid');
     });
     assert.isOk(newHousehold);
     const newUser = _.find(trackChangesParams.newList, (newInstance) => {
-      return newInstance instanceof models.User &&
-        newInstance.get('uuid') === user.get('uuid');
+      return newInstance instanceof models.User
+        && newInstance.get('uuid') === user.get('uuid');
     });
     assert.isOk(newUser);
     const newUserLogin = _.find(trackChangesParams.newList, (newInstance) => {
-      return newInstance instanceof models.UserLogin &&
-        newInstance.get('user_uuid') === user.get('uuid');
+      return newInstance instanceof models.UserLogin
+        && newInstance.get('user_uuid') === user.get('uuid');
     });
     assert.isOk(newUserLogin);
     assert.strictEqual(trackChangesParams.newList.length, 3);

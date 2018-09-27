@@ -1,9 +1,10 @@
 const chai = require('chai');
 const nconf = require('nconf');
 const jwt = require('jsonwebtoken');
+const uuidv4 = require('uuid/v4');
+
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
-const uuidv4 = require('uuid/v4');
 
 const assert = chai.assert;
 

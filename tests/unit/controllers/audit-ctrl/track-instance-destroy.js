@@ -1,8 +1,9 @@
 const chai = require('chai');
 const crypto = require('crypto');
+const _ = require('lodash');
+
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
-const _ = require('lodash');
 
 const assert = chai.assert;
 
@@ -75,6 +76,51 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     }
   });
 
+  it('should track deleting a Category', async function() {
+    const auditLog = await models.Audit.Log.create();
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const category = await models.Category.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, category, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'categories'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === category.get('uuid');
+    });
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the Category is deleted.
+    assert.isNull(await models.Category.findOne({
+      where: {
+        uuid: category.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.Category.findOne({
+      paranoid: false,
+      where: {
+        uuid: category.get('uuid'),
+      },
+    }));
+  });
+
   it('should track deleting a Household', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
@@ -93,9 +139,9 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       },
     });
     const trackDeletedAt = _.find(auditChanges, (auditChange) => {
-      return auditChange.get('table') === 'households' &&
-        auditChange.get('attribute') === 'deleted_at' &&
-        auditChange.get('key') === household.get('uuid');
+      return auditChange.get('table') === 'households'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === household.get('uuid');
     });
     assert.isOk(trackDeletedAt);
     assert.isNull(trackDeletedAt.get('old_value'));
@@ -140,9 +186,9 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       },
     });
     const trackDeletedAt = _.find(auditChanges, (auditChange) => {
-      return auditChange.get('table') === 'users' &&
-        auditChange.get('attribute') === 'deleted_at' &&
-        auditChange.get('key') === user.get('uuid');
+      return auditChange.get('table') === 'users'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === user.get('uuid');
     });
     assert.isOk(trackDeletedAt);
     assert.isNull(trackDeletedAt.get('old_value'));
