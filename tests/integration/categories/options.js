@@ -1,15 +1,13 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const uuidv4 = require('uuid/v4');
-
-const TestHelper = require('../../../test-helper/');
+const TestHelper = require('../../test-helper/');
 
 const assert = chai.assert;
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - DELETE /households/:uuid', function() {
+describe('Integration - OPTIONS /categories', function() {
   let server;
   const testHelper = new TestHelper();
 
@@ -22,11 +20,11 @@ describe('Integration - DELETE /households/:uuid', function() {
     await testHelper.cleanup();
   });
 
-  it('should return 501', async function() {
+  it('should return 200', async function() {
     const res = await chai.request(server)
-      .delete(`/households/${uuidv4()}`)
+      .options('/categories')
       .set('Content-Type', 'application/vnd.api+json');
-    expect(res).to.have.status(501);
+    expect(res).to.have.status(200);
     assert.deepEqual(res.body, {});
   });
 });
