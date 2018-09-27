@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - DELETE /households/:uuid', function() {
+describe('Integration - OPTIONS /categories/:uuid', function() {
   let server;
   const testHelper = new TestHelper();
 
@@ -22,11 +22,11 @@ describe('Integration - DELETE /households/:uuid', function() {
     await testHelper.cleanup();
   });
 
-  it('should return 501', async function() {
+  it('should return 200', async function() {
     const res = await chai.request(server)
-      .delete(`/households/${uuidv4()}`)
+      .options(`/categories/${uuidv4()}`)
       .set('Content-Type', 'application/vnd.api+json');
-    expect(res).to.have.status(501);
+    expect(res).to.have.status(200);
     assert.deepEqual(res.body, {});
   });
 });

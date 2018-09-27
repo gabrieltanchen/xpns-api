@@ -36,7 +36,8 @@ module.exports = {
       res.header('Access-Control-Allow-Credentials', 'true');
       if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
-      } else if (req.method === 'GET') {
+      }
+      if (req.method === 'GET') {
         res.setHeader('Last-Modified', (new Date()).toUTCString());
       }
       return next();
@@ -48,7 +49,11 @@ module.exports = {
 
     app.use((err, req, res, next) => {
       if (err) {
-        return res.status(403).json({
+        let status = 403;
+        if (err.message === 'Not found') {
+          status = 404;
+        }
+        return res.status(status).json({
           errors: [{
             detail: err.message,
           }],
