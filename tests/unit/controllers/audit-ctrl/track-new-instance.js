@@ -1,8 +1,9 @@
 const chai = require('chai');
 const crypto = require('crypto');
+const _ = require('lodash');
+
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
-const _ = require('lodash');
 
 const assert = chai.assert;
 
@@ -14,9 +15,9 @@ const shouldTrackAttribute = ({
   value,
 }) => {
   const trackedAttr = _.find(auditChanges, (auditChange) => {
-    return auditChange.get('table') === table &&
-      auditChange.get('attribute') === attribute &&
-      auditChange.get('key') === key;
+    return auditChange.get('table') === table
+      && auditChange.get('attribute') === attribute
+      && auditChange.get('key') === key;
   });
   assert.isOk(trackedAttr);
   assert.isNull(trackedAttr.get('old_value'));
@@ -90,6 +91,63 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Sequelize transaction is required.');
     }
+  });
+
+  it('should track all Category attributes', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const category1 = await models.Category.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+    const category2 = await models.Category.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category2.name,
+      parent_uuid: category1.get('uuid'),
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackNewInstance(auditLog, category2, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'deleted_at',
+      auditChanges,
+      key: category2.get('uuid'),
+      table: 'categories',
+      value: null,
+    });
+    shouldTrackAttribute({
+      attribute: 'household_uuid',
+      auditChanges,
+      key: category2.get('uuid'),
+      table: 'categories',
+      value: household.get('uuid'),
+    });
+    shouldTrackAttribute({
+      attribute: 'name',
+      auditChanges,
+      key: category2.get('uuid'),
+      table: 'categories',
+      value: sampleData.categories.category2.name,
+    });
+    shouldTrackAttribute({
+      attribute: 'parent_uuid',
+      auditChanges,
+      key: category2.get('uuid'),
+      table: 'categories',
+      value: category1.get('uuid'),
+    });
+    assert.strictEqual(auditChanges.length, 4);
   });
 
   it('should track all Household attributes', async function() {
