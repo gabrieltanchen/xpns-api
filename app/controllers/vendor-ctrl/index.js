@@ -18,7 +18,7 @@ class VendorCtrl {
     });
   }
 
-  async updateVendory({
+  async updateVendor({
     auditApiCallUuid,
     name,
     vendorUuid,
