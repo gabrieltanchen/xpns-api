@@ -1,4 +1,5 @@
 const createVendor = require('./create-vendor');
+const deleteVendor = require('./delete-vendor');
 const updateVendor = require('./update-vendor');
 
 class VendorCtrl {
@@ -15,6 +16,17 @@ class VendorCtrl {
       auditApiCallUuid,
       name,
       vendorCtrl: this,
+    });
+  }
+
+  async deleteVendor({
+    auditApiCallUuid,
+    vendorUuid,
+  }) {
+    return deleteVendor({
+      auditApiCallUuid,
+      vendorCtrl: this,
+      vendorUuid,
     });
   }
 
