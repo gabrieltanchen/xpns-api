@@ -7,6 +7,7 @@ const Hash = require('./hash');
 const Household = require('./household');
 const User = require('./user');
 const UserLogin = require('./user-login');
+const Vendor = require('./vendor');
 
 class Models {
   constructor(databaseUrl) {
@@ -36,6 +37,7 @@ class Models {
     this.Household = Household(this.sequelize);
     this.User = User(this.sequelize);
     this.UserLogin = UserLogin(this.sequelize);
+    this.Vendor = Vendor(this.sequelize);
 
     // Audit.ApiCall
     this.Audit.ApiCall.hasOne(this.Audit.Log, {
@@ -70,6 +72,9 @@ class Models {
     this.Household.hasMany(this.User, {
       foreignKey: 'household_uuid',
     });
+    this.Household.hasMany(this.Vendor, {
+      foreignKey: 'household_uuid',
+    });
 
     // User
     this.User.hasMany(this.Audit.ApiCall, {
@@ -85,6 +90,11 @@ class Models {
     // UserLogin
     this.UserLogin.belongsTo(this.User, {
       foreignKey: 'user_uuid',
+    });
+
+    // Vendor
+    this.Vendor.belongsTo(this.Household, {
+      foreignKey: 'household_uuid',
     });
   }
 }

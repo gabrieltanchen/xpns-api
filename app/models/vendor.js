@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-  return sequelize.define('Category', {
+  return sequelize.define('Vendor', {
     created_at: {
       allowNull: false,
       type: Sequelize.DATE,
@@ -18,10 +18,6 @@ module.exports = (sequelize) => {
       allowNull: false,
       type: Sequelize.STRING,
     },
-    parent_uuid: {
-      allowNull: true,
-      type: Sequelize.UUID,
-    },
     updated_at: {
       allowNull: false,
       type: Sequelize.DATE,
@@ -34,7 +30,7 @@ module.exports = (sequelize) => {
     },
   }, {
     paranoid: true,
-    tableName: 'categories',
+    tableName: 'vendors',
     timestamps: true,
   });
 };
