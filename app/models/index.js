@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 
 const Audit = require('./audit/');
 const Category = require('./category');
+const Expense = require('./expense');
 const Hash = require('./hash');
 const Household = require('./household');
 const User = require('./user');
@@ -33,6 +34,7 @@ class Models {
 
     this.Audit = Audit(this.sequelize);
     this.Category = Category(this.sequelize);
+    this.Expense = Expense(this.sequelize);
     this.Hash = Hash(this.sequelize);
     this.Household = Household(this.sequelize);
     this.User = User(this.sequelize);
@@ -61,8 +63,19 @@ class Models {
     });
 
     // Category
+    this.Category.hasMany(this.Expense, {
+      foreignKey: 'category_uuid',
+    });
     this.Category.belongsTo(this.Household, {
       foreignKey: 'household_uuid',
+    });
+
+    // Expense
+    this.Expense.belongsTo(this.Category, {
+      foreignKey: 'category_uuid',
+    });
+    this.Expense.belongsTo(this.Vendor, {
+      foreignKey: 'vendor_uuid',
     });
 
     // Household
@@ -93,6 +106,9 @@ class Models {
     });
 
     // Vendor
+    this.Vendor.hasMany(this.Expense, {
+      foreignKey: 'vendor_uuid',
+    });
     this.Vendor.belongsTo(this.Household, {
       foreignKey: 'household_uuid',
     });
