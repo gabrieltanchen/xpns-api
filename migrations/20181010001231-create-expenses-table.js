@@ -44,7 +44,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      reimbused_cents: {
+      reimbursed_cents: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
