@@ -117,7 +117,7 @@ module.exports = async({
       },
     });
     if (!category) {
-      throw new Error('Unauthorized');
+      throw new Error('Not found');
     }
     expense.set('category_uuid', category.get('uuid'));
   }
@@ -132,7 +132,7 @@ module.exports = async({
       },
     });
     if (!vendor) {
-      throw new Error('Unauthorized');
+      throw new Error('Not found');
     }
     expense.set('vendor_uuid', vendor.get('uuid'));
   }

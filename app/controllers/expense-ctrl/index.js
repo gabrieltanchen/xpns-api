@@ -28,7 +28,7 @@ class ExpenseCtrl {
     });
   }
 
-  asyncUpdateExpense({
+  async updateExpense({
     amountCents,
     auditApiCallUuid,
     categoryUuid,
