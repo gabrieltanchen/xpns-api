@@ -14,6 +14,7 @@ describe('Unit:Controllers - VendorCtrl.updateVendor', function() {
   const testHelper = new TestHelper();
 
   let trackChangesSpy;
+
   let user1HouseholdUuid;
   let user1Uuid;
   let user2Uuid;
