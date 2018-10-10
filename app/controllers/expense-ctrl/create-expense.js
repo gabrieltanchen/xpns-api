@@ -82,11 +82,11 @@ module.exports = async({
   }
 
   const newExpense = models.Expense.build({
-    amount_cents: amountCents,
+    amount_cents: parseInt(amountCents, 10),
     category_uuid: category.get('uuid'),
     date: moment(date).format('YYYY-MM-DD'),
     description,
-    reimbursed_cents: reimbursedCents,
+    reimbursed_cents: parseInt(reimbursedCents, 10),
     vendor_uuid: vendor.get('uuid'),
   });
 

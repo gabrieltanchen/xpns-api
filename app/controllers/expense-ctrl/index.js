@@ -1,4 +1,5 @@
 const createExpense = require('./create-expense');
+const updateExpense = require('./update-expense');
 
 class ExpenseCtrl {
   constructor(parent, models) {
@@ -22,6 +23,29 @@ class ExpenseCtrl {
       date,
       description,
       expenseCtrl: this,
+      reimbursedCents,
+      vendorUuid,
+    });
+  }
+
+  asyncUpdateExpense({
+    amountCents,
+    auditApiCallUuid,
+    categoryUuid,
+    date,
+    description,
+    expenseUuid,
+    reimbursedCents,
+    vendorUuid,
+  }) {
+    return updateExpense({
+      amountCents,
+      auditApiCallUuid,
+      categoryUuid,
+      date,
+      description,
+      expenseCtrl: this,
+      expenseUuid,
       reimbursedCents,
       vendorUuid,
     });
