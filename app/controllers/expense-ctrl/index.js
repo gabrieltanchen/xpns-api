@@ -1,4 +1,5 @@
 const createExpense = require('./create-expense');
+const deleteExpense = require('./delete-expense');
 const updateExpense = require('./update-expense');
 
 class ExpenseCtrl {
@@ -25,6 +26,17 @@ class ExpenseCtrl {
       expenseCtrl: this,
       reimbursedCents,
       vendorUuid,
+    });
+  }
+
+  async deleteExpense({
+    auditApiCallUuid,
+    expenseUuid,
+  }) {
+    return deleteExpense({
+      auditApiCallUuid,
+      expenseCtrl: this,
+      expenseUuid,
     });
   }
 
