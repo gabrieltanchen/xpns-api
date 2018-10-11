@@ -275,4 +275,49 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     });
     assert.strictEqual(auditChanges.length, 0);
   });
+
+  it('should track all Vendor attributes', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const vendor = await models.Vendor.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.vendors.vendor1.name,
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackNewInstance(auditLog, vendor, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'deleted_at',
+      auditChanges,
+      key: vendor.get('uuid'),
+      table: 'vendors',
+      value: null,
+    });
+    shouldTrackAttribute({
+      attribute: 'household_uuid',
+      auditChanges,
+      key: vendor.get('uuid'),
+      table: 'vendors',
+      value: household.get('uuid'),
+    });
+    shouldTrackAttribute({
+      attribute: 'name',
+      auditChanges,
+      key: vendor.get('uuid'),
+      table: 'vendors',
+      value: sampleData.vendors.vendor1.name,
+    });
+    assert.strictEqual(auditChanges.length, 3);
+  });
 });
