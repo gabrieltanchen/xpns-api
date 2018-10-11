@@ -246,4 +246,49 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       },
     }));
   });
+
+  it('should track deleting a Vendor', async function() {
+    const auditLog = await models.Audit.Log.create();
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const vendor = await models.Vendor.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.vendors.vendor1.name,
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, vendor, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'vendors'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === vendor.get('uuid');
+    });
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the Vendor is deleted.
+    assert.isNull(await models.Vendor.findOne({
+      where: {
+        uuid: vendor.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.Vendor.findOne({
+      paranoid: false,
+      where: {
+        uuid: vendor.get('uuid'),
+      },
+    }));
+  });
 });

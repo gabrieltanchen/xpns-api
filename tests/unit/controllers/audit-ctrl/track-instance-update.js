@@ -289,4 +289,49 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     });
     assert.strictEqual(auditChanges.length, 0);
   });
+
+  it('should track all Vendor attributes', async function() {
+    const auditLog = await models.Audit.Log.create();
+    const household1 = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const household2 = await models.Household.create({
+      name: sampleData.users.user2.lastName,
+    });
+    const vendor = await models.Vendor.create({
+      household_uuid: household1.get('uuid'),
+      name: sampleData.vendors.vendor1.name,
+    });
+    vendor.set('household_uuid', household2.get('uuid'));
+    vendor.set('name', sampleData.vendors.vendor2.name);
+
+    await models.sequelize.transaction({
+      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceUpdate(auditLog, vendor, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'household_uuid',
+      auditChanges,
+      key: vendor.get('uuid'),
+      newValue: household2.get('uuid'),
+      oldValue: household1.get('uuid'),
+      table: 'vendors',
+    });
+    shouldTrackAttribute({
+      attribute: 'name',
+      auditChanges,
+      key: vendor.get('uuid'),
+      newValue: sampleData.vendors.vendor2.name,
+      oldValue: sampleData.vendors.vendor1.name,
+      table: 'vendors',
+    });
+    assert.strictEqual(auditChanges.length, 2);
+  });
 });
