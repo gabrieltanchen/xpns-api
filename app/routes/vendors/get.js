@@ -1,3 +1,7 @@
+const Sequelize = require('sequelize');
+
+const Op = Sequelize.Op;
+
 module.exports = (app) => {
   const models = app.get('models');
 
@@ -41,14 +45,23 @@ module.exports = (app) => {
         },
       });
 
+      const vendorWhere = {
+        household_uuid: user.get('household_uuid'),
+      };
+
+      if (req.query && req.query.search) {
+        offset = 0;
+        vendorWhere.name = {
+          [Op.iLike]: `%${req.query.search}%`,
+        };
+      }
+
       const vendors = await models.Vendor.findAndCount({
         attributes: ['created_at', 'name', 'uuid'],
         limit,
         offset,
         order: [['name', 'ASC']],
-        where: {
-          household_uuid: user.get('household_uuid'),
-        },
+        where: vendorWhere,
       });
 
       return res.status(200).json({
