@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - PATCH /users/:uuid', function() {
+describe('Integration - PATCH /expenses/:uuid', function() {
   let server;
   const testHelper = new TestHelper();
 
@@ -24,7 +24,7 @@ describe('Integration - PATCH /users/:uuid', function() {
 
   it('should return 501', async function() {
     const res = await chai.request(server)
-      .patch(`/users/${uuidv4()}`)
+      .patch(`/expenses/${uuidv4()}`)
       .set('Content-Type', 'application/vnd.api+json');
     expect(res).to.have.status(501);
     assert.deepEqual(res.body, {});

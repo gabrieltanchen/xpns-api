@@ -1,15 +1,13 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const uuidv4 = require('uuid/v4');
-
-const TestHelper = require('../../../test-helper/');
+const TestHelper = require('../../test-helper/');
 
 const assert = chai.assert;
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - PATCH /users/:uuid', function() {
+describe('Integration - DELETE /expenses', function() {
   let server;
   const testHelper = new TestHelper();
 
@@ -24,7 +22,7 @@ describe('Integration - PATCH /users/:uuid', function() {
 
   it('should return 501', async function() {
     const res = await chai.request(server)
-      .patch(`/users/${uuidv4()}`)
+      .delete('/expenses')
       .set('Content-Type', 'application/vnd.api+json');
     expect(res).to.have.status(501);
     assert.deepEqual(res.body, {});
