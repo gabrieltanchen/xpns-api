@@ -1,9 +1,10 @@
 module.exports = (app) => {
+  const controllers = app.get('controllers');
   const models = app.get('models');
 
   /**
-   * @api {get} /expenses/:uuid
-   * @apiName ExpenseItemGet
+   * @api {patch} /expenses/:uuid
+   * @apiName ExpenseItemPatch
    * @apiGroup Expense
    *
    * @apiSuccess (200) {object} data
@@ -36,15 +37,16 @@ module.exports = (app) => {
    */
   return async(req, res, next) => {
     try {
-      const user = await models.User.findOne({
-        attributes: ['household_uuid', 'uuid'],
-        where: {
-          uuid: req.userUuid,
-        },
+      await controllers.ExpenseCtrl.updateExpense({
+        amountCents: req.body.data.attributes['amount-cents'],
+        auditApiCallUuid: req.auditApiCallUuid,
+        categoryUuid: req.body.data.relationships.category.data.id,
+        date: req.body.data.attributes.date,
+        description: req.body.data.attributes.description,
+        expenseUuid: req.params.uuid,
+        reimbursedCents: req.body.data.attributes['reimbursed-cents'],
+        vendorUuid: req.body.data.relationships.vendor.data.id,
       });
-      if (!user) {
-        throw new Error('Unauthorized');
-      }
 
       const expense = await models.Expense.findOne({
         attributes: [
@@ -56,27 +58,18 @@ module.exports = (app) => {
           'uuid',
         ],
         include: [{
-          attributes: ['uuid'],
+          attributes: ['name', 'uuid'],
           model: models.Category,
           required: true,
-          where: {
-            household_uuid: user.get('household_uuid'),
-          },
         }, {
-          attributes: ['uuid'],
+          attributes: ['name', 'uuid'],
           model: models.Vendor,
           required: true,
-          where: {
-            household_uuid: user.get('household_uuid'),
-          },
         }],
         where: {
           uuid: req.params.uuid,
         },
       });
-      if (!expense) {
-        throw new Error('Not found');
-      }
 
       return res.status(200).json({
         'data': {

@@ -36,8 +36,8 @@ describe('Integration - PATCH /vendors/:uuid', function() {
     updateVendorSpy = sinon.spy(controllers.VendorCtrl, 'updateVendor');
   });
 
-  after('restore sinon spies', async function() {
-    await testHelper.cleanup();
+  after('restore sinon spies', function() {
+    updateVendorSpy.restore();
   });
 
   after('cleanup', async function() {
