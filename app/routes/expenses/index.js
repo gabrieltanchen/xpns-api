@@ -1,6 +1,7 @@
 const { body } = require('express-validator/check');
 const getFn = require('./get');
 const postFn = require('./post');
+const routeItem = require('./item/');
 
 module.exports = (router, app) => {
   const Auditor = app.get('Auditor');
@@ -28,6 +29,8 @@ module.exports = (router, app) => {
       Auditor.trackApiCall(),
       postFn(app),
     );
+
+  routeItem(router, app);
 
   return router;
 };
