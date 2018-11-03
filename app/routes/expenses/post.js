@@ -83,11 +83,13 @@ module.exports = (app) => {
             'category': {
               'data': {
                 'id': expense.Category.get('uuid'),
+                'type': 'categories',
               },
             },
             'vendor': {
               'data': {
                 'id': expense.Vendor.get('uuid'),
+                'type': 'vendors',
               },
             },
           },
