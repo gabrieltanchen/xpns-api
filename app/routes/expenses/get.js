@@ -55,12 +55,12 @@ module.exports = (app) => {
       });
 
       const expenseWhere = {};
-      if (req.query.category_id) {
+      if (req.query.category_uuid) {
         const category = await models.Category.findOne({
           attributes: ['uuid'],
           where: {
             household_uuid: user.get('household_uuid'),
-            uuid: req.query.category_id,
+            uuid: req.query.category_uuid,
           },
         });
         if (!category) {

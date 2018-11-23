@@ -610,10 +610,10 @@ describe('Integration - GET /expenses', function() {
     });
   });
 
-  describe('when called with the category_id query param', function() {
+  describe('when called with the category_uuid query param', function() {
     it('should return 404 when the category does not exist', async function() {
       const res = await chai.request(server)
-        .get(`/expenses?category_id=${uuidv4()}`)
+        .get(`/expenses?category_uuid=${uuidv4()}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(404);
@@ -626,7 +626,7 @@ describe('Integration - GET /expenses', function() {
 
     it('should return 404 when the category belongs to a different household', async function() {
       const res = await chai.request(server)
-        .get(`/expenses?category_id=${category1Uuid}`)
+        .get(`/expenses?category_uuid=${category1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user2Token}`);
       expect(res).to.have.status(404);
@@ -639,7 +639,7 @@ describe('Integration - GET /expenses', function() {
 
     it('should return 200 and 25 expenses as user 1 with category 1 and no limit or page specified', async function() {
       const res = await chai.request(server)
-        .get(`/expenses?category_id=${category1Uuid}`)
+        .get(`/expenses?category_uuid=${category1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -878,7 +878,7 @@ describe('Integration - GET /expenses', function() {
 
     it('should return 200 and 2 expenses as user 1 with category 1 and no limit and page=2', async function() {
       const res = await chai.request(server)
-        .get(`/expenses?category_id=${category1Uuid}&page=2`)
+        .get(`/expenses?category_uuid=${category1Uuid}&page=2`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -910,7 +910,7 @@ describe('Integration - GET /expenses', function() {
 
     it('should return 200 and 5 expenses as user 1 with category 1 limit=5 and page=4', async function() {
       const res = await chai.request(server)
-        .get(`/expenses?category_id=${category1Uuid}&limit=5&page=4`)
+        .get(`/expenses?category_uuid=${category1Uuid}&limit=5&page=4`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -969,7 +969,7 @@ describe('Integration - GET /expenses', function() {
 
     it('should return 200 and 1 expense as user 1 with category 2', async function() {
       const res = await chai.request(server)
-        .get(`/expenses?category_id=${category2Uuid}`)
+        .get(`/expenses?category_uuid=${category2Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
