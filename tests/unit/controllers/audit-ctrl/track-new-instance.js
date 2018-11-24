@@ -150,6 +150,91 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     assert.strictEqual(auditChanges.length, 4);
   });
 
+  it('should track all Expense attributes', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const category = await models.Category.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+    const vendor = await models.Vendor.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.vendors.vendor1.name,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const expense = await models.Expense.create({
+      amount_cents: sampleData.expenses.expense1.amount_cents,
+      category_uuid: category.get('uuid'),
+      date: sampleData.expenses.expense1.date,
+      description: sampleData.expenses.expense1.description,
+      reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
+      vendor_uuid: vendor.get('uuid'),
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackNewInstance(auditLog, expense, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'deleted_at',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: null,
+    });
+    shouldTrackAttribute({
+      attribute: 'amount_cents',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: sampleData.expenses.expense1.amount_cents,
+    });
+    shouldTrackAttribute({
+      attribute: 'category_uuid',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: category.get('uuid'),
+    });
+    shouldTrackAttribute({
+      attribute: 'date',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: sampleData.expenses.expense1.date,
+    });
+    shouldTrackAttribute({
+      attribute: 'description',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: sampleData.expenses.expense1.description,
+    });
+    shouldTrackAttribute({
+      attribute: 'reimbursed_cents',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: sampleData.expenses.expense1.reimbursed_cents,
+    });
+    shouldTrackAttribute({
+      attribute: 'vendor_uuid',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: vendor.get('uuid'),
+    });
+    assert.strictEqual(auditChanges.length, 7);
+  });
+
   it('should track all Household attributes', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({

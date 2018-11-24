@@ -10,19 +10,21 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - PATCH /vendors/:uuid', function() {
+describe('Integration - DELETE /expenses/:uuid', function() {
   let controllers;
   let models;
   let server;
   const testHelper = new TestHelper();
 
-  let updateVendorSpy;
+  let deleteExpenseSpy;
 
+  let expenseUuid;
+  let user1CategoryUuid;
   let user1Token;
   let user1Uuid;
+  let user1VendorUuid;
   let user2Token;
   let user2Uuid;
-  let vendorUuid;
 
   before('get server', async function() {
     this.timeout(30000);
@@ -33,11 +35,11 @@ describe('Integration - PATCH /vendors/:uuid', function() {
   });
 
   before('create sinon spies', function() {
-    updateVendorSpy = sinon.spy(controllers.VendorCtrl, 'updateVendor');
+    deleteExpenseSpy = sinon.spy(controllers.ExpenseCtrl, 'deleteExpense');
   });
 
   after('restore sinon spies', function() {
-    updateVendorSpy.restore();
+    deleteExpenseSpy.restore();
   });
 
   after('cleanup', async function() {
@@ -59,6 +61,26 @@ describe('Integration - PATCH /vendors/:uuid', function() {
     user1Token = await controllers.UserCtrl.getToken(user1Uuid);
   });
 
+  beforeEach('create user 1 category', async function() {
+    const apiCall = await models.Audit.ApiCall.create({
+      user_uuid: user1Uuid,
+    });
+    user1CategoryUuid = await controllers.CategoryCtrl.createCategory({
+      auditApiCallUuid: apiCall.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+  });
+
+  beforeEach('create user 1 vendor', async function() {
+    const apiCall = await models.Audit.ApiCall.create({
+      user_uuid: user1Uuid,
+    });
+    user1VendorUuid = await controllers.VendorCtrl.createVendor({
+      auditApiCallUuid: apiCall.get('uuid'),
+      name: sampleData.vendors.vendor1.name,
+    });
+  });
+
   beforeEach('create user 2', async function() {
     const apiCall = await models.Audit.ApiCall.create();
     user2Uuid = await controllers.UserCtrl.signUp({
@@ -74,18 +96,23 @@ describe('Integration - PATCH /vendors/:uuid', function() {
     user2Token = await controllers.UserCtrl.getToken(user2Uuid);
   });
 
-  beforeEach('create vendor', async function() {
+  beforeEach('create expense', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
     });
-    vendorUuid = await controllers.VendorCtrl.createVendor({
+    expenseUuid = await controllers.ExpenseCtrl.createExpense({
+      amountCents: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      name: sampleData.vendors.vendor1.name,
+      categoryUuid: user1CategoryUuid,
+      date: sampleData.expenses.expense1.date,
+      description: sampleData.expenses.expense1.description,
+      reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      vendorUuid: user1VendorUuid,
     });
   });
 
   afterEach('reset history for sinon spies', function() {
-    updateVendorSpy.resetHistory();
+    deleteExpenseSpy.resetHistory();
   });
 
   afterEach('truncate tables', async function() {
@@ -94,40 +121,22 @@ describe('Integration - PATCH /vendors/:uuid', function() {
 
   it('should return 401 with no auth token', async function() {
     const res = await chai.request(server)
-      .patch(`/vendors/${vendorUuid}`)
-      .set('Content-Type', 'application/vnd.api+json')
-      .send({
-        'data': {
-          'attributes': {
-            'name': sampleData.vendors.vendor2.name,
-          },
-          'id': vendorUuid,
-          'type': 'vendors',
-        },
-      });
+      .delete(`/expenses/${expenseUuid}`)
+      .set('Content-Type', 'application/vnd.api+json');
     expect(res).to.have.status(401);
     assert.deepEqual(res.body, {
       errors: [{
         detail: 'Unauthorized',
       }],
     });
-    assert.strictEqual(updateVendorSpy.callCount, 0);
+    assert.strictEqual(deleteExpenseSpy.callCount, 0);
   });
 
   it('should return 404 with the wrong auth token', async function() {
     const res = await chai.request(server)
-      .patch(`/vendors/${vendorUuid}`)
+      .delete(`/expenses/${expenseUuid}`)
       .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user2Token}`)
-      .send({
-        'data': {
-          'attributes': {
-            'name': sampleData.vendors.vendor2.name,
-          },
-          'id': vendorUuid,
-          'type': 'vendors',
-        },
-      });
+      .set('Authorization', `Bearer ${user2Token}`);
     expect(res).to.have.status(404);
     assert.deepEqual(res.body, {
       errors: [{
@@ -135,67 +144,25 @@ describe('Integration - PATCH /vendors/:uuid', function() {
       }],
     });
 
-    assert.strictEqual(updateVendorSpy.callCount, 1);
-    const updateVendorParams = updateVendorSpy.getCall(0).args[0];
-    assert.isOk(updateVendorParams.auditApiCallUuid);
-    assert.strictEqual(updateVendorParams.name, sampleData.vendors.vendor2.name);
-    assert.strictEqual(updateVendorParams.vendorUuid, vendorUuid);
+    assert.strictEqual(deleteExpenseSpy.callCount, 1);
+    const deleteExpenseParams = deleteExpenseSpy.getCall(0).args[0];
+    assert.isOk(deleteExpenseParams.auditApiCallUuid);
+    assert.strictEqual(deleteExpenseParams.expenseUuid, expenseUuid);
   });
 
-  it('should return 422 with no name', async function() {
+  it('should return 204 with the correct auth token', async function() {
     const res = await chai.request(server)
-      .patch(`/vendors/${vendorUuid}`)
+      .delete(`/expenses/${expenseUuid}`)
       .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user1Token}`)
-      .send({
-        'data': {
-          'attributes': {
-            'name': '',
-          },
-          'id': vendorUuid,
-          'type': 'vendors',
-        },
-      });
-    expect(res).to.have.status(422);
-    assert.deepEqual(res.body, {
-      errors: [{
-        detail: 'Vendor name is required.',
-        source: {
-          pointer: '/data/attributes/name',
-        },
-      }],
-    });
-    assert.strictEqual(updateVendorSpy.callCount, 0);
-  });
+      .set('Authorization', `Bearer ${user1Token}`);
+    expect(res).to.have.status(204);
+    assert.deepEqual(res.body, {});
 
-  it('should return 200 with the correct auth token', async function() {
-    const res = await chai.request(server)
-      .patch(`/vendors/${vendorUuid}`)
-      .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user1Token}`)
-      .send({
-        'data': {
-          'attributes': {
-            'name': sampleData.vendors.vendor2.name,
-          },
-          'id': vendorUuid,
-          'type': 'vendors',
-        },
-      });
-    expect(res).to.have.status(200);
-    assert.isOk(res.body.data);
-    assert.isOk(res.body.data.attributes);
-    assert.isOk(res.body.data.attributes['created-at']);
-    assert.strictEqual(res.body.data.attributes.name, sampleData.vendors.vendor2.name);
-    assert.strictEqual(res.body.data.id, vendorUuid);
-    assert.strictEqual(res.body.data.type, 'vendors');
-
-    // Validate VendorCtrl.updateVendor call.
-    assert.strictEqual(updateVendorSpy.callCount, 1);
-    const updateVendorParams = updateVendorSpy.getCall(0).args[0];
-    assert.isOk(updateVendorParams.auditApiCallUuid);
-    assert.strictEqual(updateVendorParams.name, sampleData.vendors.vendor2.name);
-    assert.strictEqual(updateVendorParams.vendorUuid, vendorUuid);
+    // Validate ExpenseCtrl.deleteExpense call.
+    assert.strictEqual(deleteExpenseSpy.callCount, 1);
+    const deleteExpenseParams = deleteExpenseSpy.getCall(0).args[0];
+    assert.isOk(deleteExpenseParams.auditApiCallUuid);
+    assert.strictEqual(deleteExpenseParams.expenseUuid, expenseUuid);
 
     // Validate Audit API call.
     const apiCall = await models.Audit.ApiCall.findOne({
@@ -208,13 +175,13 @@ describe('Integration - PATCH /vendors/:uuid', function() {
         'uuid',
       ],
       where: {
-        uuid: updateVendorParams.auditApiCallUuid,
+        uuid: deleteExpenseParams.auditApiCallUuid,
       },
     });
     assert.isOk(apiCall);
-    assert.strictEqual(apiCall.get('http_method'), 'PATCH');
+    assert.strictEqual(apiCall.get('http_method'), 'DELETE');
     assert.isOk(apiCall.get('ip_address'));
-    assert.strictEqual(apiCall.get('route'), `/vendors/${vendorUuid}`);
+    assert.strictEqual(apiCall.get('route'), `/expenses/${expenseUuid}`);
     assert.isOk(apiCall.get('user_agent'));
     assert.strictEqual(apiCall.get('user_uuid'), user1Uuid);
   });

@@ -9,7 +9,7 @@ engines:
 checks:
   file-lines:
     config:
-      threshold: 1000
+      threshold: 5000
   method-complexity:
     enabled: false
   method-lines:

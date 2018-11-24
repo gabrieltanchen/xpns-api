@@ -121,6 +121,63 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     }));
   });
 
+  it('should track deleting an Expense', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const category = await models.Category.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+    const vendor = await models.Vendor.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.vendors.vendor1.name,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const expense = await models.Expense.create({
+      amount_cents: sampleData.expenses.expense1.amount_cents,
+      category_uuid: category.get('uuid'),
+      date: sampleData.expenses.expense1.date,
+      description: sampleData.expenses.expense1.description,
+      reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
+      vendor_uuid: vendor.get('uuid'),
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, expense, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'expenses'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === expense.get('uuid');
+    });
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the Expense is deleted.
+    assert.isNull(await models.Expense.findOne({
+      where: {
+        uuid: expense.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.Expense.findOne({
+      paranoid: false,
+      where: {
+        uuid: expense.get('uuid'),
+      },
+    }));
+  });
+
   it('should track deleting a Household', async function() {
     const auditLog = await models.Audit.Log.create();
     const household = await models.Household.create({
