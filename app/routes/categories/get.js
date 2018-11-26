@@ -56,7 +56,7 @@ module.exports = (app) => {
         parentUuid = parentCategory.get('uuid');
       }
 
-      const categories = await models.Category.findAndCount({
+      const categories = await models.Category.findAndCountAll({
         attributes: ['created_at', 'name', 'uuid'],
         limit,
         offset,

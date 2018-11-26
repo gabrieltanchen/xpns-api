@@ -83,7 +83,7 @@ module.exports = (app) => {
         throw new Error('Category or vendor ID is required.');
       }
 
-      const expenses = await models.Expense.findAndCount({
+      const expenses = await models.Expense.findAndCountAll({
         attributes: [
           'amount_cents',
           'created_at',

@@ -56,7 +56,7 @@ module.exports = (app) => {
         };
       }
 
-      const vendors = await models.Vendor.findAndCount({
+      const vendors = await models.Vendor.findAndCountAll({
         attributes: ['created_at', 'name', 'uuid'],
         limit,
         offset,
