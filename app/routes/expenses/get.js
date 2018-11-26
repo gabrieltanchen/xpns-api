@@ -93,7 +93,7 @@ module.exports = (app) => {
           'uuid',
         ],
         include: [{
-          attributes: ['uuid'],
+          attributes: ['name', 'uuid'],
           model: models.Category,
           required: true,
         }, {
@@ -108,12 +108,23 @@ module.exports = (app) => {
       });
 
       const included = [];
+      const categoryIds = [];
       const vendorIds = [];
       expenses.rows.forEach((expense) => {
+        if (!categoryIds.includes(expense.Category.get('uuid'))) {
+          categoryIds.push(expense.Category.get('uuid'));
+          included.push({
+            'attributes': {
+              'name': expense.Category.get('name'),
+            },
+            'id': expense.Category.get('uuid'),
+            'type': 'categories',
+          });
+        }
         if (!vendorIds.includes(expense.Vendor.get('uuid'))) {
           vendorIds.push(expense.Vendor.get('uuid'));
           included.push({
-            attributes: {
+            'attributes': {
               'name': expense.Vendor.get('name'),
             },
             'id': expense.Vendor.get('uuid'),

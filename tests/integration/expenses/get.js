@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const uuidv4 = require('uuid/v4');
+const _ = require('lodash');
 
 const sampleData = require('../../sample-data/');
 const TestHelper = require('../../test-helper/');
@@ -871,6 +872,23 @@ describe('Integration - GET /expenses', function() {
         vendorUuid: vendor1Uuid,
       });
 
+      assert.isOk(res.body.included);
+      const categoryInclude = _.find(res.body.included, (include) => {
+        return include.id === category1Uuid
+          && include.type === 'categories';
+      });
+      assert.isOk(categoryInclude);
+      assert.isOk(categoryInclude.attributes);
+      assert.strictEqual(categoryInclude.attributes.name, sampleData.categories.category1.name);
+      const vendorInclude = _.find(res.body.included, (include) => {
+        return include.id === vendor1Uuid
+          && include.type === 'vendors';
+      });
+      assert.isOk(vendorInclude);
+      assert.isOk(vendorInclude.attributes);
+      assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+      assert.strictEqual(res.body.included.length, 2);
+
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 2);
       assert.strictEqual(res.body.meta.total, 27);
@@ -902,6 +920,23 @@ describe('Integration - GET /expenses', function() {
         returnedExpense: res.body.data[1],
         vendorUuid: vendor1Uuid,
       });
+
+      assert.isOk(res.body.included);
+      const categoryInclude = _.find(res.body.included, (include) => {
+        return include.id === category1Uuid
+          && include.type === 'categories';
+      });
+      assert.isOk(categoryInclude);
+      assert.isOk(categoryInclude.attributes);
+      assert.strictEqual(categoryInclude.attributes.name, sampleData.categories.category1.name);
+      const vendorInclude = _.find(res.body.included, (include) => {
+        return include.id === vendor1Uuid
+          && include.type === 'vendors';
+      });
+      assert.isOk(vendorInclude);
+      assert.isOk(vendorInclude.attributes);
+      assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+      assert.strictEqual(res.body.included.length, 2);
 
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 2);
@@ -962,6 +997,23 @@ describe('Integration - GET /expenses', function() {
         vendorUuid: vendor1Uuid,
       });
 
+      assert.isOk(res.body.included);
+      const categoryInclude = _.find(res.body.included, (include) => {
+        return include.id === category1Uuid
+          && include.type === 'categories';
+      });
+      assert.isOk(categoryInclude);
+      assert.isOk(categoryInclude.attributes);
+      assert.strictEqual(categoryInclude.attributes.name, sampleData.categories.category1.name);
+      const vendorInclude = _.find(res.body.included, (include) => {
+        return include.id === vendor1Uuid
+          && include.type === 'vendors';
+      });
+      assert.isOk(vendorInclude);
+      assert.isOk(vendorInclude.attributes);
+      assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+      assert.strictEqual(res.body.included.length, 2);
+
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 6);
       assert.strictEqual(res.body.meta.total, 27);
@@ -984,6 +1036,23 @@ describe('Integration - GET /expenses', function() {
         returnedExpense: res.body.data[0],
         vendorUuid: vendor2Uuid,
       });
+
+      assert.isOk(res.body.included);
+      const categoryInclude = _.find(res.body.included, (include) => {
+        return include.id === category2Uuid
+          && include.type === 'categories';
+      });
+      assert.isOk(categoryInclude);
+      assert.isOk(categoryInclude.attributes);
+      assert.strictEqual(categoryInclude.attributes.name, sampleData.categories.category2.name);
+      const vendorInclude = _.find(res.body.included, (include) => {
+        return include.id === vendor2Uuid
+          && include.type === 'vendors';
+      });
+      assert.isOk(vendorInclude);
+      assert.isOk(vendorInclude.attributes);
+      assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor2.name);
+      assert.strictEqual(res.body.included.length, 2);
 
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 1);
@@ -1252,6 +1321,23 @@ describe('Integration - GET /expenses', function() {
         vendorUuid: vendor1Uuid,
       });
 
+      assert.isOk(res.body.included);
+      const categoryInclude = _.find(res.body.included, (include) => {
+        return include.id === category1Uuid
+          && include.type === 'categories';
+      });
+      assert.isOk(categoryInclude);
+      assert.isOk(categoryInclude.attributes);
+      assert.strictEqual(categoryInclude.attributes.name, sampleData.categories.category1.name);
+      const vendorInclude = _.find(res.body.included, (include) => {
+        return include.id === vendor1Uuid
+          && include.type === 'vendors';
+      });
+      assert.isOk(vendorInclude);
+      assert.isOk(vendorInclude.attributes);
+      assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+      assert.strictEqual(res.body.included.length, 2);
+
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 2);
       assert.strictEqual(res.body.meta.total, 27);
@@ -1283,6 +1369,23 @@ describe('Integration - GET /expenses', function() {
         returnedExpense: res.body.data[1],
         vendorUuid: vendor1Uuid,
       });
+
+      assert.isOk(res.body.included);
+      const categoryInclude = _.find(res.body.included, (include) => {
+        return include.id === category1Uuid
+          && include.type === 'categories';
+      });
+      assert.isOk(categoryInclude);
+      assert.isOk(categoryInclude.attributes);
+      assert.strictEqual(categoryInclude.attributes.name, sampleData.categories.category1.name);
+      const vendorInclude = _.find(res.body.included, (include) => {
+        return include.id === vendor1Uuid
+          && include.type === 'vendors';
+      });
+      assert.isOk(vendorInclude);
+      assert.isOk(vendorInclude.attributes);
+      assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+      assert.strictEqual(res.body.included.length, 2);
 
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 2);
@@ -1343,6 +1446,23 @@ describe('Integration - GET /expenses', function() {
         vendorUuid: vendor1Uuid,
       });
 
+      assert.isOk(res.body.included);
+      const categoryInclude = _.find(res.body.included, (include) => {
+        return include.id === category1Uuid
+          && include.type === 'categories';
+      });
+      assert.isOk(categoryInclude);
+      assert.isOk(categoryInclude.attributes);
+      assert.strictEqual(categoryInclude.attributes.name, sampleData.categories.category1.name);
+      const vendorInclude = _.find(res.body.included, (include) => {
+        return include.id === vendor1Uuid
+          && include.type === 'vendors';
+      });
+      assert.isOk(vendorInclude);
+      assert.isOk(vendorInclude.attributes);
+      assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+      assert.strictEqual(res.body.included.length, 2);
+
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 6);
       assert.strictEqual(res.body.meta.total, 27);
@@ -1365,6 +1485,23 @@ describe('Integration - GET /expenses', function() {
         returnedExpense: res.body.data[0],
         vendorUuid: vendor2Uuid,
       });
+
+      assert.isOk(res.body.included);
+      const categoryInclude = _.find(res.body.included, (include) => {
+        return include.id === category2Uuid
+          && include.type === 'categories';
+      });
+      assert.isOk(categoryInclude);
+      assert.isOk(categoryInclude.attributes);
+      assert.strictEqual(categoryInclude.attributes.name, sampleData.categories.category2.name);
+      const vendorInclude = _.find(res.body.included, (include) => {
+        return include.id === vendor2Uuid
+          && include.type === 'vendors';
+      });
+      assert.isOk(vendorInclude);
+      assert.isOk(vendorInclude.attributes);
+      assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor2.name);
+      assert.strictEqual(res.body.included.length, 2);
 
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 1);
