@@ -97,7 +97,7 @@ module.exports = (app) => {
           model: models.Category,
           required: true,
         }, {
-          attributes: ['uuid'],
+          attributes: ['name', 'uuid'],
           model: models.Vendor,
           required: true,
         }],
@@ -105,6 +105,21 @@ module.exports = (app) => {
         offset,
         order: [['date', 'ASC']],
         where: expenseWhere,
+      });
+
+      const included = [];
+      const vendorIds = [];
+      expenses.rows.forEach((expense) => {
+        if (!vendorIds.includes(expense.Vendor.get('uuid'))) {
+          vendorIds.push(expense.Vendor.get('uuid'));
+          included.push({
+            attributes: {
+              'name': expense.Vendor.get('name'),
+            },
+            'id': expense.Vendor.get('uuid'),
+            'type': 'vendors',
+          });
+        }
       });
 
       return res.status(200).json({
@@ -137,6 +152,7 @@ module.exports = (app) => {
             'type': 'expenses',
           };
         }),
+        'included': included,
         'meta': {
           'pages': Math.ceil(expenses.count / limit),
           'total': expenses.count,
