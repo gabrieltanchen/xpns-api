@@ -1,7 +1,7 @@
 ---
 language: node_js
 node_js:
-  - 8.11.2
+  - 10.16.3
 env:
   - CXX=g++-4.8
 addons:
@@ -10,17 +10,22 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
-  postgresql: "9.6"
 before_install:
+  - sudo apt-get update
+  - sudo apt-get --yes remove postgresql\*
+  - sudo apt-get install -y postgresql-11 postgresql-client-11
+  - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
+  - sudo service postgresql restart 11
   - npm --version
   - node --version
 install:
   - npm install
 before_script:
+  - psql --version
   - psql -c "CREATE DATABASE finance_test;" -U postgres
   - psql -c "CREATE ROLE finance LOGIN PASSWORD 'finance';" -U postgres
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE finance_test TO finance;" -U postgres
 script:
   - npm run test:travis
-after_success:
-  - npm run coveralls
+# after_success:
+#   - npm run coveralls
