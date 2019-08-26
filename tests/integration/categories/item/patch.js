@@ -131,7 +131,7 @@ describe('Integration - PATCH /categories/:uuid', function() {
     expect(res).to.have.status(404);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'Not found',
+        detail: 'Category not found.',
       }],
     });
 
