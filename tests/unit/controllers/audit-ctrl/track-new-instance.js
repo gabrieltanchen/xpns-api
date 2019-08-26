@@ -1,5 +1,6 @@
 const chai = require('chai');
 const crypto = require('crypto');
+const Sequelize = require('sequelize');
 const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
@@ -47,7 +48,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
   it('should reject without an audit log', async function() {
     try {
       await models.sequelize.transaction({
-        isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+        isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
         const household = await models.Household.create({
           name: sampleData.users.user1.lastName,
@@ -66,7 +67,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     try {
       const auditLog = await models.Audit.Log.create();
       await models.sequelize.transaction({
-        isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+        isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
         await controllers.AuditCtrl._trackNewInstance(auditLog, null, transaction);
       });
@@ -109,7 +110,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackNewInstance(auditLog, category2, transaction);
     });
@@ -173,7 +174,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackNewInstance(auditLog, expense, transaction);
     });
@@ -242,7 +243,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackNewInstance(auditLog, household, transaction);
     });
@@ -282,7 +283,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackNewInstance(auditLog, user, transaction);
     });
@@ -348,7 +349,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackNewInstance(auditLog, userLogin, transaction);
     });
@@ -372,7 +373,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackNewInstance(auditLog, vendor, transaction);
     });
