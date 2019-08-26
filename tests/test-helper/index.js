@@ -32,8 +32,14 @@ class TestHelper {
   }
 
   async setup() {
-    this.app = App.createApp();
-    this.server = await App.startServer(this.app);
+    const app = new App({
+      logger: {
+        error: () => {},
+        info: () => {},
+      },
+    });
+    this.app = app.app;
+    this.server = await app.startServer();
   }
 
   async truncateTables() {
