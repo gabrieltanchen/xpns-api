@@ -1,4 +1,4 @@
-const { body } = require('express-validator/check');
+const { body } = require('express-validator');
 const getFn = require('./get');
 const postFn = require('./post');
 const routeItem = require('./item/');
