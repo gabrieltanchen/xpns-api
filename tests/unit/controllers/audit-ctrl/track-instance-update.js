@@ -1,5 +1,6 @@
 const chai = require('chai');
 const crypto = require('crypto');
+const Sequelize = require('sequelize');
 const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
@@ -52,7 +53,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     household.set('name', sampleData.users.user2.lastName);
     try {
       await models.sequelize.transaction({
-        isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+        isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceUpdate(null, household, transaction);
       });
@@ -68,7 +69,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     try {
       const auditLog = await models.Audit.Log.create();
       await models.sequelize.transaction({
-        isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+        isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceUpdate(auditLog, null, transaction);
       });
@@ -122,7 +123,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     category3.set('parent_uuid', category2.get('uuid'));
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceUpdate(auditLog, category3, transaction);
     });
@@ -196,7 +197,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     expense.set('vendor_uuid', vendor2.get('uuid'));
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceUpdate(auditLog, expense, transaction);
     });
@@ -265,7 +266,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     household.set('name', sampleData.users.user2.lastName);
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceUpdate(auditLog, household, transaction);
     });
@@ -306,7 +307,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     user.set('last_name', sampleData.users.user2.lastName);
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceUpdate(auditLog, user, transaction);
     });
@@ -375,7 +376,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     userLogin.set('s1', newS1);
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceUpdate(auditLog, userLogin, transaction);
     });
@@ -404,7 +405,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     vendor.set('name', sampleData.vendors.vendor2.name);
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceUpdate(auditLog, vendor, transaction);
     });

@@ -1,5 +1,6 @@
 const chai = require('chai');
 const crypto = require('crypto');
+const Sequelize = require('sequelize');
 const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
@@ -33,7 +34,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     });
     try {
       await models.sequelize.transaction({
-        isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+        isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceDestroy(null, household, transaction);
       });
@@ -49,7 +50,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     try {
       const auditLog = await models.Audit.Log.create();
       await models.sequelize.transaction({
-        isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+        isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
         await controllers.AuditCtrl._trackInstanceDestroy(auditLog, null, transaction);
       });
@@ -87,7 +88,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceDestroy(auditLog, category, transaction);
     });
@@ -144,7 +145,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceDestroy(auditLog, expense, transaction);
     });
@@ -185,7 +186,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceDestroy(auditLog, household, transaction);
     });
@@ -232,7 +233,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceDestroy(auditLog, user, transaction);
     });
@@ -284,7 +285,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceDestroy(auditLog, userLogin, transaction);
     });
@@ -315,7 +316,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl._trackInstanceDestroy(auditLog, vendor, transaction);
     });

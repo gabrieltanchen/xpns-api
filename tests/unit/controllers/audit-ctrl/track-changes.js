@@ -1,5 +1,6 @@
 const chai = require('chai');
 const sampleData = require('../../../sample-data/');
+const Sequelize = require('sequelize');
 const sinon = require('sinon');
 const TestHelper = require('../../../test-helper/');
 
@@ -75,7 +76,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
         name: sampleData.users.user1.lastName,
       });
       await models.sequelize.transaction({
-        isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+        isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
       }, async(transaction) => {
         await controllers.AuditCtrl.trackChanges({
           auditApiCallUuid: null,
@@ -100,7 +101,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
       name: sampleData.users.user1.lastName,
     });
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid: apiCall.get('uuid'),
@@ -125,7 +126,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
     });
     household.set('name', sampleData.users.user2.lastName);
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid: apiCall.get('uuid'),
@@ -150,7 +151,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
     });
 
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid: apiCall.get('uuid'),

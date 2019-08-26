@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {string} name
@@ -55,7 +57,7 @@ module.exports = async({
 
   if (vendor.changed()) {
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid,
