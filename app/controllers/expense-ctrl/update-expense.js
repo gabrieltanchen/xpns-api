@@ -1,4 +1,5 @@
 const moment = require('moment');
+const Sequelize = require('sequelize');
 const _ = require('lodash');
 
 /**
@@ -139,7 +140,7 @@ module.exports = async({
 
   if (expense.changed()) {
     await models.sequelize.transaction({
-      isolationLevel: models.sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid,
