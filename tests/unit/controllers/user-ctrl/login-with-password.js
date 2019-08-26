@@ -1,6 +1,8 @@
 const chai = require('chai');
+
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
+const { LOGIN_PASSWORD_FAILED } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -47,7 +49,8 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid email/password combination.');
+      assert.strictEqual(err.message, 'No email or password given');
+      assert.strictEqual(err.code, LOGIN_PASSWORD_FAILED);
     }
   });
 
@@ -61,7 +64,8 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid email/password combination.');
+      assert.strictEqual(err.message, 'No email or password given');
+      assert.strictEqual(err.code, LOGIN_PASSWORD_FAILED);
     }
   });
 
@@ -75,7 +79,8 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid email/password combination.');
+      assert.strictEqual(err.message, 'User does not exist');
+      assert.strictEqual(err.code, LOGIN_PASSWORD_FAILED);
     }
   });
 
@@ -89,7 +94,8 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid email/password combination.');
+      assert.strictEqual(err.message, 'Wrong password');
+      assert.strictEqual(err.code, LOGIN_PASSWORD_FAILED);
     }
   });
 

@@ -47,6 +47,8 @@ class App {
 
     routes(this.app);
 
+    this.app.use(Middleware.ErrorHandler.middleware);
+
     this.app.use((err, req, res, next) => {
       if (err) {
         let status = 403;
