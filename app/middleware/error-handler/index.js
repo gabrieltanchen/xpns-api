@@ -1,7 +1,12 @@
 const errorCodes = {
+  CATEGORY_NOT_FOUND: 'CATEGORY_NOT_FOUND',
   LOGIN_PASSWORD_FAILED: 'LOGIN_PASSWORD_FAILED',
 };
 const errorResponses = {
+  [errorCodes.CATEGORY_NOT_FOUND]: {
+    message: 'Category not found.',
+    status: 404,
+  },
   [errorCodes.LOGIN_PASSWORD_FAILED]: {
     message: 'Invalid email/password combination.',
     status: 403,
