@@ -113,7 +113,7 @@ describe('Integration - DELETE /categories/:uuid', function() {
     expect(res).to.have.status(404);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'Category not found.',
+        detail: 'Unable to find category.',
       }],
     });
 

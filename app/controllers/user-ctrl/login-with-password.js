@@ -1,6 +1,6 @@
 const scrypt = require('scrypt');
 
-const { LOGIN_PASSWORD_FAILED } = require('../../middleware/error-handler/');
+const { LoginPasswordFailedError } = require('../../middleware/error-handler/');
 
 module.exports = async({
   email,
@@ -9,9 +9,7 @@ module.exports = async({
 }) => {
   const models = userCtrl.models;
   if (!email || !password) {
-    const error = new Error('No email or password given');
-    error.code = LOGIN_PASSWORD_FAILED;
-    throw error;
+    throw new LoginPasswordFailedError('No email or password given');
   }
 
   const user = await models.User.findOne({
@@ -26,9 +24,7 @@ module.exports = async({
     },
   });
   if (!user) {
-    const error = new Error('User does not exist');
-    error.code = LOGIN_PASSWORD_FAILED;
-    throw error;
+    throw new LoginPasswordFailedError('User does not exist');
   }
 
   const hash = await models.Hash.findOne({
@@ -40,18 +36,14 @@ module.exports = async({
     },
   });
   if (!hash) {
-    const error = new Error('Wrong password');
-    error.code = LOGIN_PASSWORD_FAILED;
-    throw error;
+    throw new LoginPasswordFailedError('H1 not found');
   }
 
   const h2 = (
     await scrypt.hash(password, userCtrl.hashParams, 96, hash.get('s2'))
   ).toString('base64');
   if (h2 !== user.UserLogin.get('h2')) {
-    const error = new Error('Wrong password');
-    error.code = LOGIN_PASSWORD_FAILED;
-    throw error;
+    throw new LoginPasswordFailedError('H2 does not match');
   }
 
   return user.get('uuid');

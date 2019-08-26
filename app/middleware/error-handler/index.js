@@ -1,31 +1,22 @@
-const errorCodes = {
-  CATEGORY_NOT_FOUND: 'CATEGORY_NOT_FOUND',
-  LOGIN_PASSWORD_FAILED: 'LOGIN_PASSWORD_FAILED',
-};
-const errorResponses = {
-  [errorCodes.CATEGORY_NOT_FOUND]: {
-    message: 'Category not found.',
-    status: 404,
-  },
-  [errorCodes.LOGIN_PASSWORD_FAILED]: {
-    message: 'Invalid email/password combination.',
-    status: 403,
-  },
+const CategoryNotFoundError = require('./category-not-found-error');
+const LoginPasswordFailedError = require('./login-password-failed-error');
+
+const errorClasses = {
+  CategoryNotFoundError,
+  LoginPasswordFailedError,
 };
 
 module.exports = {
-  ...errorCodes,
+  ...errorClasses,
   middleware(err, req, res, next) {
     if (err
-        && err.code
-        && Object.keys(errorResponses).includes(err.code)
-        && errorResponses[err.code].message
-        && errorResponses[err.code].status) {
+        && Object.keys(errorClasses).includes(err.name)) {
       const logger = req.app.get('logger');
       logger.error('Error:', err);
-      return res.status(errorResponses[err.code].status).json({
+      const { message, status } = err.getApiResponse();
+      return res.status(status).json({
         errors: [{
-          detail: errorResponses[err.code].message,
+          detail: message,
         }],
       });
     }
