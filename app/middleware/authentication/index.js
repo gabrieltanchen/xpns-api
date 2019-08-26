@@ -1,9 +1,8 @@
 const ConnectRoles = require('connect-roles');
-const logger = require('winston');
 const jwt = require('jsonwebtoken');
 const nconf = require('nconf');
 
-module.exports = () => {
+module.exports = (logger) => {
   const Authentication = {
     checkBearerAuth(req, res, next) {
       req.userUuid = null;
