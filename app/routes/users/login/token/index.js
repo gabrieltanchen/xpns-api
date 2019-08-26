@@ -1,4 +1,4 @@
-const { body } = require('express-validator/check');
+const { body } = require('express-validator');
 const postFn = require('./post');
 
 module.exports = (router, app) => {

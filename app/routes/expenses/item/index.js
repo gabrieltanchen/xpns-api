@@ -1,4 +1,4 @@
-const { body } = require('express-validator/check');
+const { body } = require('express-validator');
 const deleteFn = require('./delete');
 const getFn = require('./get');
 const patchFn = require('./patch');
