@@ -1,35 +1,35 @@
 const bodyParser = require('body-parser');
-const Controllers = require('./controllers/');
 const cookieParser = require('cookie-parser');
 const express = require('express');
-const logger = require('winston');
-const Middleware = require('./middleware/');
-const Models = require('./models/');
 const nconf = require('nconf');
-const routes = require('./routes/');
 const Sequelize = require('sequelize');
 const Umzug = require('umzug');
 
-module.exports = {
-  createApp() {
-    const app = express();
+const Controllers = require('./controllers/');
+const Middleware = require('./middleware/');
+const Models = require('./models/');
+const routes = require('./routes/');
 
-    const Authentication = Middleware.Authentication();
-    app.set('models', new Models(nconf.get('DATABASE_URL')));
-    app.set('controllers', new Controllers(app.get('models')));
-    app.set('Auditor', new Middleware.Auditor(app.get('models')));
-    app.set('Authentication', Authentication);
-    app.set('Validator', Middleware.Validator);
+class App {
+  constructor({ logger }) {
+    this.app = express();
+    this.app.set('logger', logger);
+    this.app.set('models', new Models(nconf.get('DATABASE_URL')));
+    this.app.set('controllers', new Controllers(this.app.get('models')));
+    this.app.set('Auditor', new Middleware.Auditor(this.app.get('models')));
+    const Authentication = Middleware.Authentication(logger);
+    this.app.set('Authentication', Authentication);
+    this.app.set('Validator', Middleware.Validator);
 
-    app.use(bodyParser.urlencoded({
+    this.app.use(bodyParser.urlencoded({
       extended: true,
     }));
-    app.use(bodyParser.json({
+    this.app.use(bodyParser.json({
       type: 'application/vnd.api+json',
     }));
-    app.use(cookieParser());
+    this.app.use(cookieParser());
 
-    app.use((req, res, next) => {
+    this.app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', req.headers.origin);
       res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
       res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Accept-Version');
@@ -43,11 +43,11 @@ module.exports = {
       return next();
     });
 
-    app.use(Authentication.checkBearerAuth);
+    this.app.use(Authentication.checkBearerAuth);
 
-    routes(app);
+    routes(this.app);
 
-    app.use((err, req, res, next) => {
+    this.app.use((err, req, res, next) => {
       if (err) {
         let status = 403;
         if (err.message === 'Not found') {
@@ -62,14 +62,14 @@ module.exports = {
       return next();
     });
 
-    app.use((req, res) => {
+    this.app.use((req, res) => {
       return res.sendStatus(501);
     });
+  }
 
-    return app;
-  },
-
-  async startServer(app) {
+  async startServer() {
+    const app = this.app;
+    const logger = app.get('logger');
     const models = app.get('models');
 
     const umzug = new Umzug({
@@ -87,5 +87,7 @@ module.exports = {
     return app.listen(port, () => {
       logger.info(`[API] Listening on port ${port}`);
     });
-  },
-};
+  }
+}
+
+module.exports = App;
