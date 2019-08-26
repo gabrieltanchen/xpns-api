@@ -29,7 +29,6 @@ class Models {
         max: 5,
         min: 0,
       },
-      operatorsAliases: false,
     });
 
     this.Audit = Audit(this.sequelize);
