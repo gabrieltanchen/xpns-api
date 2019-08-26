@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+const { CATEGORY_NOT_FOUND } = require('../../middleware/error-handler/');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {object} categoryCtrl Instance of CategoryCtrl
@@ -44,7 +46,9 @@ module.exports = async({
     },
   });
   if (!category) {
-    throw new Error('Not found');
+    const error = new Error('Not found');
+    error.code = CATEGORY_NOT_FOUND;
+    throw error;
   }
 
   // Search for any child categories. If any exist, don't allow deletion.
