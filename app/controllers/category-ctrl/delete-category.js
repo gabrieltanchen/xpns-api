@@ -15,7 +15,7 @@ module.exports = async({
   const controllers = categoryCtrl.parent;
   const models = categoryCtrl.models;
   if (!categoryUuid) {
-    throw new Error('Category is required.');
+    throw new CategoryError('Category is required');
   }
 
   const apiCall = await models.Audit.ApiCall.findOne({
@@ -25,7 +25,7 @@ module.exports = async({
     },
   });
   if (!apiCall || !apiCall.get('user_uuid')) {
-    throw new Error('Unauthorized');
+    throw new CategoryError('Missing audit API call');
   }
 
   const user = await models.User.findOne({
@@ -35,7 +35,7 @@ module.exports = async({
     },
   });
   if (!user) {
-    throw new Error('Unauthorized');
+    throw new CategoryError('Audit user does not exist');
   }
 
   const category = await models.Category.findOne({
