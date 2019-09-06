@@ -1,3 +1,5 @@
+const { AuditError } = require('../../middleware/error-handler/');
+
 /**
 * Save audit change for deletion of paranoid instances. Only delete instances
 * that are paranoid.
@@ -15,11 +17,11 @@ module.exports = async({
 }) => {
   const models = auditCtrl.models;
   if (!auditLog) {
-    throw new Error('Audit log is required.');
+    throw new AuditError('Audit log is required');
   } else if (!instance) {
-    throw new Error('Sequelize instance is required.');
+    throw new AuditError('Sequelize instance is required');
   } else if (!transaction) {
-    throw new Error('Sequelize transaction is required.');
+    throw new AuditError('Sequelize transaction is required');
   }
 
   if (instance._modelOptions.paranoid) {

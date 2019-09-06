@@ -97,7 +97,7 @@ describe('Integration - GET /categories/:uuid', function() {
     expect(res).to.have.status(404);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'Not found',
+        detail: 'Unable to find category.',
       }],
     });
   });
@@ -115,7 +115,7 @@ describe('Integration - GET /categories/:uuid', function() {
     expect(res).to.have.status(404);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'Not found',
+        detail: 'Unable to find category.',
       }],
     });
   });

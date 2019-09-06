@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+const { VendorError } = require('../../middleware/error-handler/');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {object} vendorCtrl Instance of VendorCtrl
@@ -13,7 +15,7 @@ module.exports = async({
   const controllers = vendorCtrl.parent;
   const models = vendorCtrl.models;
   if (!vendorUuid) {
-    throw new Error('Vendor is required.');
+    throw new VendorError('Vendor is required');
   }
 
   const apiCall = await models.Audit.ApiCall.findOne({
@@ -23,7 +25,7 @@ module.exports = async({
     },
   });
   if (!apiCall || !apiCall.get('user_uuid')) {
-    throw new Error('Unauthorized');
+    throw new VendorError('Missing audit API call');
   }
 
   const user = await models.User.findOne({
@@ -33,7 +35,7 @@ module.exports = async({
     },
   });
   if (!user) {
-    throw new Error('Unauthorized');
+    throw new VendorError('Audit user does not exist');
   }
 
   const vendor = await models.Vendor.findOne({
@@ -44,7 +46,7 @@ module.exports = async({
     },
   });
   if (!vendor) {
-    throw new Error('Not found');
+    throw new VendorError('Not found');
   }
 
   await models.sequelize.transaction({
