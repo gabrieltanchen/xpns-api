@@ -1,8 +1,10 @@
 const chai = require('chai');
-const sampleData = require('../../../sample-data/');
 const Sequelize = require('sequelize');
 const sinon = require('sinon');
+
+const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
+const { AuditError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -63,7 +65,8 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Sequelize transaction is required.');
+      assert.strictEqual(err.message, 'Sequelize transaction is required');
+      assert.isTrue(err instanceof AuditError);
     }
     assert.strictEqual(trackInstanceDestroySpy.callCount, 0);
     assert.strictEqual(trackInstanceUpdateSpy.callCount, 0);
@@ -88,7 +91,8 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'API call is required.');
+      assert.strictEqual(err.message, 'API call is required');
+      assert.isTrue(err instanceof AuditError);
     }
     assert.strictEqual(trackInstanceDestroySpy.callCount, 0);
     assert.strictEqual(trackInstanceUpdateSpy.callCount, 0);
