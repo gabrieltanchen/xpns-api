@@ -110,7 +110,7 @@ describe('Integration - POST /users/login/token', function() {
     expect(res).to.have.status(403);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'invalid signature',
+        detail: 'Unauthorized',
       }],
     });
 

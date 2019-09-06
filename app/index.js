@@ -47,15 +47,14 @@ class App {
 
     routes(this.app);
 
+    this.app.use(Middleware.ErrorHandler.middleware);
+
     this.app.use((err, req, res, next) => {
       if (err) {
-        let status = 403;
-        if (err.message === 'Not found') {
-          status = 404;
-        }
-        return res.status(status).json({
+        logger.error('500 ERROR: Unhandled error', err);
+        return res.status(500).json({
           errors: [{
-            detail: err.message,
+            detail: 'Something went wrong. Please try again later.',
           }],
         });
       }

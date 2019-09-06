@@ -5,6 +5,7 @@ const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
+const { AuditError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -59,7 +60,8 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Audit log is required.');
+      assert.strictEqual(err.message, 'Audit log is required');
+      assert.isTrue(err instanceof AuditError);
     }
   });
 
@@ -75,7 +77,8 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Sequelize instance is required.');
+      assert.strictEqual(err.message, 'Sequelize instance is required');
+      assert.isTrue(err instanceof AuditError);
     }
   });
 
@@ -90,7 +93,8 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Sequelize transaction is required.');
+      assert.strictEqual(err.message, 'Sequelize transaction is required');
+      assert.isTrue(err instanceof AuditError);
     }
   });
 

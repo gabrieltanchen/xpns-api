@@ -113,7 +113,7 @@ describe('Integration - DELETE /vendors/:uuid', function() {
     expect(res).to.have.status(404);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'Not found',
+        detail: 'Unable to find vendor.',
       }],
     });
 

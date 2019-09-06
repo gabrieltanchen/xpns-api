@@ -3,6 +3,8 @@ const scrypt = require('scrypt');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
+const { UserError } = require('../../middleware/error-handler/');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {string} email
@@ -22,17 +24,17 @@ module.exports = async({
   const controllers = userCtrl.parent;
   const models = userCtrl.models;
   if (!email || !_.isString(email)) {
-    throw new Error('Email is required.');
+    throw new UserError('Email is required');
   } else if (!firstName || !_.isString(firstName)) {
-    throw new Error('First name is required.');
+    throw new UserError('First name is required');
   } else if (!lastName || !_.isString(lastName)) {
-    throw new Error('Last name is required.');
+    throw new UserError('Last name is required');
   } else if (!password || !_.isString(password)) {
-    throw new Error('Password is required.');
+    throw new UserError('Password is required');
   } else if (password.length < 8) {
-    throw new Error('Passwords must be at least 8 characters.');
+    throw new UserError('Passwords must be at least 8 characters');
   } else if (!auditApiCallUuid || !_.isString(auditApiCallUuid)) {
-    throw new Error('Audit API call is required.');
+    throw new UserError('Audit API call is required');
   }
 
   if (await models.User.findOne({
@@ -41,7 +43,7 @@ module.exports = async({
       email: email.toLowerCase(),
     },
   })) {
-    throw new Error('That email address is already taken.');
+    throw new UserError('Email already exists');
   }
 
   const user = models.User.build({
