@@ -1,12 +1,10 @@
-const CategoryDeleteError = require('./category-delete-error');
-const CategoryNotFoundError = require('./category-not-found-error');
+const CategoryError = require('./category-error');
 const ExpenseError = require('./expense-error');
 const LoginPasswordFailedError = require('./login-password-failed-error');
 const VendorNotFoundError = require('./vendor-not-found-error');
 
 const errorClasses = {
-  CategoryDeleteError,
-  CategoryNotFoundError,
+  CategoryError,
   ExpenseError,
   LoginPasswordFailedError,
   VendorNotFoundError,

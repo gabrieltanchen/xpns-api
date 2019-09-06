@@ -5,10 +5,7 @@ const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
-const {
-  CategoryDeleteError,
-  CategoryNotFoundError,
-} = require('../../../../app/middleware/error-handler/');
+const { CategoryError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -161,7 +158,7 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
-      assert.isTrue(err instanceof CategoryNotFoundError);
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -178,7 +175,7 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
-      assert.isTrue(err instanceof CategoryNotFoundError);
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -239,8 +236,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
         });
       } catch (err) {
         assert.isOk(err);
-        assert.strictEqual(err.message, 'Found subcategories');
-        assert.isTrue(err instanceof CategoryDeleteError);
+        assert.strictEqual(err.message, 'Cannot delete with subcategories');
+        assert.isTrue(err instanceof CategoryError);
       }
       assert.strictEqual(trackChangesSpy.callCount, 0);
     });

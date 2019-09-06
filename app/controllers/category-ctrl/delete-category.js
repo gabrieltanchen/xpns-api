@@ -1,9 +1,6 @@
 const Sequelize = require('sequelize');
 
-const {
-  CategoryDeleteError,
-  CategoryNotFoundError,
-} = require('../../middleware/error-handler/');
+const { CategoryError } = require('../../middleware/error-handler/');
 
 /**
  * @param {string} auditApiCallUuid
@@ -49,7 +46,7 @@ module.exports = async({
     },
   });
   if (!category) {
-    throw new CategoryNotFoundError('Not found');
+    throw new CategoryError('Not found');
   }
 
   // Search for any child categories. If any exist, don't allow deletion.
@@ -59,7 +56,7 @@ module.exports = async({
     },
   });
   if (childCategoryCount > 0) {
-    throw new CategoryDeleteError('Found subcategories');
+    throw new CategoryError('Cannot delete with subcategories');
   }
 
   await models.sequelize.transaction({

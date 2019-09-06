@@ -5,7 +5,7 @@ const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
-const { CategoryNotFoundError } = require('../../../../app/middleware/error-handler/');
+const { CategoryError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -187,7 +187,7 @@ describe('Unit:Controllers - CategoryCtrl.createCategory', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Parent category not found');
-      assert.isTrue(err instanceof CategoryNotFoundError);
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -209,7 +209,7 @@ describe('Unit:Controllers - CategoryCtrl.createCategory', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Parent category not found');
-      assert.isTrue(err instanceof CategoryNotFoundError);
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });

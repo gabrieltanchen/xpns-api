@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { CategoryNotFoundError } = require('../../middleware/error-handler/');
+const { CategoryError } = require('../../middleware/error-handler/');
 
 /**
  * @param {string} auditApiCallUuid
@@ -50,7 +50,7 @@ module.exports = async({
       },
     });
     if (!parentCategory) {
-      throw new CategoryNotFoundError('Parent category not found');
+      throw new CategoryError('Parent category not found');
     }
   }
 

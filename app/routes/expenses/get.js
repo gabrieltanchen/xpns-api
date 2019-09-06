@@ -1,5 +1,5 @@
 const {
-  CategoryNotFoundError,
+  CategoryError,
   ExpenseError,
   VendorNotFoundError,
 } = require('../../middleware/error-handler/');
@@ -70,7 +70,7 @@ module.exports = (app) => {
           },
         });
         if (!category) {
-          throw new CategoryNotFoundError('Not found');
+          throw new CategoryError('Not found');
         }
         expenseWhere.category_uuid = category.get('uuid');
       } else if (req.query.vendor_id) {

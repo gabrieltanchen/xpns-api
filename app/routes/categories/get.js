@@ -1,4 +1,4 @@
-const { CategoryNotFoundError } = require('../../middleware/error-handler/');
+const { CategoryError } = require('../../middleware/error-handler/');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -53,7 +53,7 @@ module.exports = (app) => {
           },
         });
         if (!parentCategory) {
-          throw new CategoryNotFoundError('Not found');
+          throw new CategoryError('Not found');
         }
         parentUuid = parentCategory.get('uuid');
       }
