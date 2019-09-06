@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+const { CategoryError } = require('../../middleware/error-handler/');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {object} categoryCtrl Instance of CategoryCtrl
@@ -13,7 +15,7 @@ module.exports = async({
   const controllers = categoryCtrl.parent;
   const models = categoryCtrl.models;
   if (!categoryUuid) {
-    throw new Error('Category is required.');
+    throw new CategoryError('Category is required');
   }
 
   const apiCall = await models.Audit.ApiCall.findOne({
@@ -23,7 +25,7 @@ module.exports = async({
     },
   });
   if (!apiCall || !apiCall.get('user_uuid')) {
-    throw new Error('Unauthorized');
+    throw new CategoryError('Missing audit API call');
   }
 
   const user = await models.User.findOne({
@@ -33,7 +35,7 @@ module.exports = async({
     },
   });
   if (!user) {
-    throw new Error('Unauthorized');
+    throw new CategoryError('Audit user does not exist');
   }
 
   const category = await models.Category.findOne({
@@ -44,7 +46,7 @@ module.exports = async({
     },
   });
   if (!category) {
-    throw new Error('Not found');
+    throw new CategoryError('Not found');
   }
 
   // Search for any child categories. If any exist, don't allow deletion.
@@ -54,7 +56,7 @@ module.exports = async({
     },
   });
   if (childCategoryCount > 0) {
-    throw new Error('Cannot delete a parent category');
+    throw new CategoryError('Cannot delete with subcategories');
   }
 
   await models.sequelize.transaction({

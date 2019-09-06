@@ -210,7 +210,7 @@ describe('Integration - POST /categories', function() {
       expect(res).to.have.status(404);
       assert.deepEqual(res.body, {
         errors: [{
-          detail: 'Not found',
+          detail: 'Could not find parent category.',
         }],
       });
     });

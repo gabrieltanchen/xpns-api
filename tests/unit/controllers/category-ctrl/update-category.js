@@ -5,6 +5,7 @@ const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
+const { CategoryError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -96,7 +97,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Category is required.');
+      assert.strictEqual(err.message, 'Category is required');
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -113,7 +115,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Name is required.');
+      assert.strictEqual(err.message, 'Name is required');
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -127,7 +130,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Unauthorized');
+      assert.strictEqual(err.message, 'Missing audit API call');
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -141,7 +145,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Unauthorized');
+      assert.strictEqual(err.message, 'Missing audit API call');
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -163,7 +168,7 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Unauthorized');
+      assert.strictEqual(err.message, 'Audit user does not exist');
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -181,6 +186,7 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -198,6 +204,7 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });

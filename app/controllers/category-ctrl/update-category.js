@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+const { CategoryError } = require('../../middleware/error-handler/');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {object} categoryCtrl Instance of CategoryCtrl
@@ -17,9 +19,9 @@ module.exports = async({
   const controllers = categoryCtrl.parent;
   const models = categoryCtrl.models;
   if (!categoryUuid) {
-    throw new Error('Category is required.');
+    throw new CategoryError('Category is required');
   } else if (!name) {
-    throw new Error('Name is required.');
+    throw new CategoryError('Name is required');
   }
 
   const apiCall = await models.Audit.ApiCall.findOne({
@@ -29,7 +31,7 @@ module.exports = async({
     },
   });
   if (!apiCall || !apiCall.get('user_uuid')) {
-    throw new Error('Unauthorized');
+    throw new CategoryError('Missing audit API call');
   }
 
   const user = await models.User.findOne({
@@ -39,7 +41,7 @@ module.exports = async({
     },
   });
   if (!user) {
-    throw new Error('Unauthorized');
+    throw new CategoryError('Audit user does not exist');
   }
 
   const category = await models.Category.findOne({
@@ -50,7 +52,7 @@ module.exports = async({
     },
   });
   if (!category) {
-    throw new Error('Not found');
+    throw new CategoryError('Not found');
   }
 
   if (name !== category.get('name')) {
