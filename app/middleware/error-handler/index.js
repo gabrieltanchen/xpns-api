@@ -2,6 +2,7 @@ const AuditError = require('./audit-error');
 const CategoryError = require('./category-error');
 const ExpenseError = require('./expense-error');
 const LoginPasswordFailedError = require('./login-password-failed-error');
+const UserError = require('./user-error');
 const VendorError = require('./vendor-error');
 
 const errorClasses = {
@@ -9,6 +10,7 @@ const errorClasses = {
   CategoryError,
   ExpenseError,
   LoginPasswordFailedError,
+  UserError,
   VendorError,
 };
 
