@@ -24,7 +24,7 @@ module.exports = class CategoryError extends Error {
       };
     default:
       return {
-        message: 'An error occurred. Please try again.',
+        message: 'An error occurred. Please try again later.',
         status: 500,
       };
     }
