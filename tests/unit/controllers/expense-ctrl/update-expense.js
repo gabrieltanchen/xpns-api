@@ -5,6 +5,7 @@ const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
+const { ExpenseError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -177,7 +178,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Expense is required.');
+      assert.strictEqual(err.message, 'Expense is required');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -199,7 +201,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Category is required.');
+      assert.strictEqual(err.message, 'Category is required');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -221,7 +224,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Vendor is required.');
+      assert.strictEqual(err.message, 'Vendor is required');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -243,7 +247,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid date.');
+      assert.strictEqual(err.message, 'Invalid date');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -265,7 +270,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid date.');
+      assert.strictEqual(err.message, 'Invalid date');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -287,7 +293,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid amount.');
+      assert.strictEqual(err.message, 'Invalid amount');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -309,7 +316,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid amount.');
+      assert.strictEqual(err.message, 'Invalid amount');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -331,7 +339,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid reimbursed amount.');
+      assert.strictEqual(err.message, 'Invalid reimbursed amount');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -353,7 +362,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid reimbursed amount.');
+      assert.strictEqual(err.message, 'Invalid reimbursed amount');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -375,7 +385,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid description.');
+      assert.strictEqual(err.message, 'Invalid description');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -397,7 +408,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Invalid description.');
+      assert.strictEqual(err.message, 'Invalid description');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -416,7 +428,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Unauthorized');
+      assert.strictEqual(err.message, 'Missing audit API call');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -435,7 +448,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Unauthorized');
+      assert.strictEqual(err.message, 'Missing audit API call');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -462,7 +476,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Unauthorized');
+      assert.strictEqual(err.message, 'Audit user does not exist');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -485,6 +500,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -507,6 +523,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -537,6 +554,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -567,6 +585,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -862,7 +881,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Not found');
+      assert.strictEqual(err.message, 'Category not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -884,7 +904,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Not found');
+      assert.strictEqual(err.message, 'Category not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -970,7 +991,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Not found');
+      assert.strictEqual(err.message, 'Vendor not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -992,7 +1014,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       });
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Not found');
+      assert.strictEqual(err.message, 'Vendor not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });

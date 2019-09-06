@@ -15,7 +15,7 @@ module.exports = async({
   const controllers = expenseCtrl.parent;
   const models = expenseCtrl.models;
   if (!expenseUuid) {
-    throw new Error('Expense is required.');
+    throw new ExpenseError('Expense is required');
   }
 
   const apiCall = await models.Audit.ApiCall.findOne({
@@ -25,7 +25,7 @@ module.exports = async({
     },
   });
   if (!apiCall || !apiCall.get('user_uuid')) {
-    throw new Error('Unauthorized');
+    throw new ExpenseError('Missing audit API call');
   }
 
   const user = await models.User.findOne({
@@ -35,7 +35,7 @@ module.exports = async({
     },
   });
   if (!user) {
-    throw new Error('Unauthorized');
+    throw new ExpenseError('Audit user does not exist');
   }
 
   const expense = await models.Expense.findOne({

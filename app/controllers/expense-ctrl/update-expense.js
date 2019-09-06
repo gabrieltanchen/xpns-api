@@ -29,19 +29,19 @@ module.exports = async({
   const controllers = expenseCtrl.parent;
   const models = expenseCtrl.models;
   if (!expenseUuid) {
-    throw new Error('Expense is required.');
+    throw new ExpenseError('Expense is required');
   } else if (!categoryUuid) {
-    throw new Error('Category is required.');
+    throw new ExpenseError('Category is required');
   } else if (!vendorUuid) {
-    throw new Error('Vendor is required.');
+    throw new ExpenseError('Vendor is required');
   } else if (!moment(date).isValid()) {
-    throw new Error('Invalid date.');
+    throw new ExpenseError('Invalid date');
   } else if (isNaN(parseInt(amountCents, 10))) {
-    throw new Error('Invalid amount.');
+    throw new ExpenseError('Invalid amount');
   } else if (isNaN(parseInt(reimbursedCents, 10))) {
-    throw new Error('Invalid reimbursed amount.');
+    throw new ExpenseError('Invalid reimbursed amount');
   } else if (!_.isString(description)) {
-    throw new Error('Invalid description.');
+    throw new ExpenseError('Invalid description');
   }
 
   const apiCall = await models.Audit.ApiCall.findOne({
@@ -51,7 +51,7 @@ module.exports = async({
     },
   });
   if (!apiCall || !apiCall.get('user_uuid')) {
-    throw new Error('Unauthorized');
+    throw new ExpenseError('Missing audit API call');
   }
 
   const user = await models.User.findOne({
@@ -61,7 +61,7 @@ module.exports = async({
     },
   });
   if (!user) {
-    throw new Error('Unauthorized');
+    throw new ExpenseError('Audit user does not exist');
   }
 
   const expense = await models.Expense.findOne({
@@ -120,7 +120,7 @@ module.exports = async({
       },
     });
     if (!category) {
-      throw new Error('Not found');
+      throw new ExpenseError('Category not found');
     }
     expense.set('category_uuid', category.get('uuid'));
   }
@@ -135,7 +135,7 @@ module.exports = async({
       },
     });
     if (!vendor) {
-      throw new Error('Not found');
+      throw new ExpenseError('Vendor not found');
     }
     expense.set('vendor_uuid', vendor.get('uuid'));
   }
