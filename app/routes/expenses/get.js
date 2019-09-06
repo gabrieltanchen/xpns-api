@@ -1,7 +1,7 @@
 const {
   CategoryError,
   ExpenseError,
-  VendorNotFoundError,
+  VendorError,
 } = require('../../middleware/error-handler/');
 
 module.exports = (app) => {
@@ -82,7 +82,7 @@ module.exports = (app) => {
           },
         });
         if (!vendor) {
-          throw new VendorNotFoundError('Not found');
+          throw new VendorError('Not found');
         }
         expenseWhere.vendor_uuid = vendor.get('uuid');
       } else {

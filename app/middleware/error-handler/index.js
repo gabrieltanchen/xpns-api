@@ -1,13 +1,13 @@
 const CategoryError = require('./category-error');
 const ExpenseError = require('./expense-error');
 const LoginPasswordFailedError = require('./login-password-failed-error');
-const VendorNotFoundError = require('./vendor-not-found-error');
+const VendorError = require('./vendor-error');
 
 const errorClasses = {
   CategoryError,
   ExpenseError,
   LoginPasswordFailedError,
-  VendorNotFoundError,
+  VendorError,
 };
 
 module.exports = {
