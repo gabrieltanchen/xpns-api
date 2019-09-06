@@ -1,3 +1,5 @@
+const { AuditError } = require('../../middleware/error-handler/');
+
 /**
  * Track the changes in the change list. The change list must be a list of
  * Sequelize instances that have yet to be saved. The delete list must be
@@ -21,9 +23,9 @@ module.exports = async({
 }) => {
   const models = auditCtrl.models;
   if (!transaction) {
-    throw new Error('Sequelize transaction is required.');
+    throw new AuditError('Sequelize transaction is required');
   } else if (!auditApiCallUuid) {
-    throw new Error('API call is required.');
+    throw new AuditError('API call is required');
   }
 
   const auditLog = await models.Audit.Log.create({
