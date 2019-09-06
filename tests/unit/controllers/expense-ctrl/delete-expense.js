@@ -5,6 +5,7 @@ const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
+const { ExpenseError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -199,6 +200,7 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -215,6 +217,7 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -239,6 +242,7 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -263,6 +267,7 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });

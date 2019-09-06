@@ -746,7 +746,7 @@ describe('Integration - GET /categories', function() {
     expect(res).to.have.status(404);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'Not found',
+        detail: 'Unable to find category.',
       }],
     });
   });

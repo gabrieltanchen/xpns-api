@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+const { VendorNotFoundError } = require('../../middleware/error-handler/');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {string} name
@@ -48,7 +50,7 @@ module.exports = async({
     },
   });
   if (!vendor) {
-    throw new Error('Not found');
+    throw new VendorNotFoundError('Not found');
   }
 
   if (name !== vendor.get('name')) {

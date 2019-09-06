@@ -1,9 +1,15 @@
+const CategoryDeleteError = require('./category-delete-error');
 const CategoryNotFoundError = require('./category-not-found-error');
+const ExpenseError = require('./expense-error');
 const LoginPasswordFailedError = require('./login-password-failed-error');
+const VendorNotFoundError = require('./vendor-not-found-error');
 
 const errorClasses = {
+  CategoryDeleteError,
   CategoryNotFoundError,
+  ExpenseError,
   LoginPasswordFailedError,
+  VendorNotFoundError,
 };
 
 module.exports = {
@@ -17,6 +23,13 @@ module.exports = {
       return res.status(status).json({
         errors: [{
           detail: message,
+        }],
+      });
+    }
+    if (err.name === 'JsonWebTokenError') {
+      return res.status(403).json({
+        errors: [{
+          detail: 'Unauthorized',
         }],
       });
     }

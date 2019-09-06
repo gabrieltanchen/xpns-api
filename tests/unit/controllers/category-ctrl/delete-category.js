@@ -5,7 +5,10 @@ const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
-const { CategoryNotFoundError } = require('../../../../app/middleware/error-handler/');
+const {
+  CategoryDeleteError,
+  CategoryNotFoundError,
+} = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -236,7 +239,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
         });
       } catch (err) {
         assert.isOk(err);
-        assert.strictEqual(err.message, 'Cannot delete a parent category');
+        assert.strictEqual(err.message, 'Found subcategories');
+        assert.isTrue(err instanceof CategoryDeleteError);
       }
       assert.strictEqual(trackChangesSpy.callCount, 0);
     });

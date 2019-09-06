@@ -1,3 +1,9 @@
+const {
+  CategoryNotFoundError,
+  ExpenseError,
+  VendorNotFoundError,
+} = require('../../middleware/error-handler/');
+
 module.exports = (app) => {
   const models = app.get('models');
 
@@ -64,7 +70,7 @@ module.exports = (app) => {
           },
         });
         if (!category) {
-          throw new Error('Not found');
+          throw new CategoryNotFoundError('Not found');
         }
         expenseWhere.category_uuid = category.get('uuid');
       } else if (req.query.vendor_id) {
@@ -76,11 +82,11 @@ module.exports = (app) => {
           },
         });
         if (!vendor) {
-          throw new Error('Not found');
+          throw new VendorNotFoundError('Not found');
         }
         expenseWhere.vendor_uuid = vendor.get('uuid');
       } else {
-        throw new Error('Category or vendor ID is required.');
+        throw new ExpenseError('No open queries');
       }
 
       const expenses = await models.Expense.findAndCountAll({

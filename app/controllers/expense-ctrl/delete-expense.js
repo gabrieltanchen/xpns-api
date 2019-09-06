@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+const { ExpenseError } = require('../../middleware/error-handler/');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {object} expenseCtrl Instance of ExpenseCtrl
@@ -58,7 +60,7 @@ module.exports = async({
     },
   });
   if (!expense) {
-    throw new Error('Not found');
+    throw new ExpenseError('Not found');
   }
 
   await models.sequelize.transaction({

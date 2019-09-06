@@ -1,3 +1,5 @@
+const { VendorNotFoundError } = require('../../../middleware/error-handler/');
+
 module.exports = (app) => {
   const models = app.get('models');
 
@@ -41,7 +43,7 @@ module.exports = (app) => {
         },
       });
       if (!vendor) {
-        throw new Error('Not found');
+        throw new VendorNotFoundError('Not found');
       }
 
       return res.status(200).json({

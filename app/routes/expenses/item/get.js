@@ -1,3 +1,5 @@
+const { ExpenseError } = require('../../../middleware/error-handler/');
+
 module.exports = (app) => {
   const models = app.get('models');
 
@@ -75,7 +77,7 @@ module.exports = (app) => {
         },
       });
       if (!expense) {
-        throw new Error('Not found');
+        throw new ExpenseError('Not found');
       }
 
       return res.status(200).json({

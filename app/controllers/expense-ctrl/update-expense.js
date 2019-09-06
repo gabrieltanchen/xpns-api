@@ -2,6 +2,8 @@ const moment = require('moment');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
+const { ExpenseError } = require('../../middleware/error-handler/');
+
 /**
  * @param {integer} amountCents
  * @param {string} auditApiCallUuid
@@ -92,7 +94,7 @@ module.exports = async({
     },
   });
   if (!expense) {
-    throw new Error('Not found');
+    throw new ExpenseError('Not found');
   }
 
   if (expense.get('amount_cents') !== parseInt(amountCents, 10)) {
