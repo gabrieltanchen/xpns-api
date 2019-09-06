@@ -5,6 +5,7 @@ const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
+const { UserError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -56,7 +57,8 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Email is required.');
+      assert.strictEqual(err.message, 'Email is required');
+      assert.isTrue(err instanceof UserError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -75,7 +77,8 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'First name is required.');
+      assert.strictEqual(err.message, 'First name is required');
+      assert.isTrue(err instanceof UserError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -94,7 +97,8 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Last name is required.');
+      assert.strictEqual(err.message, 'Last name is required');
+      assert.isTrue(err instanceof UserError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -113,7 +117,8 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Password is required.');
+      assert.strictEqual(err.message, 'Password is required');
+      assert.isTrue(err instanceof UserError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -132,7 +137,8 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Passwords must be at least 8 characters.');
+      assert.strictEqual(err.message, 'Passwords must be at least 8 characters');
+      assert.isTrue(err instanceof UserError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -150,7 +156,8 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Audit API call is required.');
+      assert.strictEqual(err.message, 'Audit API call is required');
+      assert.isTrue(err instanceof UserError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
@@ -273,7 +280,8 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
         throw new Error('Expected to reject not resolve.');
       } catch (err) {
         assert.isOk(err);
-        assert.strictEqual(err.message, 'That email address is already taken.');
+        assert.strictEqual(err.message, 'Email already exists');
+        assert.isTrue(err instanceof UserError);
       }
       assert.strictEqual(trackChangesSpy.callCount, 0);
     });
@@ -292,7 +300,8 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
         throw new Error('Expected to reject not resolve.');
       } catch (err) {
         assert.isOk(err);
-        assert.strictEqual(err.message, 'That email address is already taken.');
+        assert.strictEqual(err.message, 'Email already exists');
+        assert.isTrue(err instanceof UserError);
       }
       assert.strictEqual(trackChangesSpy.callCount, 0);
     });

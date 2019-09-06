@@ -5,6 +5,7 @@ const uuidv4 = require('uuid/v4');
 
 const sampleData = require('../../../sample-data/');
 const TestHelper = require('../../../test-helper/');
+const { UserError } = require('../../../../app/middleware/error-handler/');
 
 const assert = chai.assert;
 
@@ -48,7 +49,8 @@ describe('Unit:Controllers - UserCtrl.getToken', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'User UUID is required.');
+      assert.strictEqual(err.message, 'User UUID is required');
+      assert.isTrue(err instanceof UserError);
     }
   });
 
@@ -59,7 +61,8 @@ describe('Unit:Controllers - UserCtrl.getToken', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'User not found.');
+      assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof UserError);
     }
   });
 

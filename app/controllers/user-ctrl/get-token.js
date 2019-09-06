@@ -1,13 +1,15 @@
 const jwt = require('jsonwebtoken');
 const nconf = require('nconf');
 
+const { UserError } = require('../../middleware/error-handler/');
+
 module.exports = async({
   userCtrl,
   userUuid,
 }) => {
   const models = userCtrl.models;
   if (!userUuid) {
-    throw new Error('User UUID is required.');
+    throw new UserError('User UUID is required');
   }
 
   const user = await models.User.findOne({
@@ -17,7 +19,7 @@ module.exports = async({
     },
   });
   if (!user) {
-    throw new Error('User not found.');
+    throw new UserError('Not found');
   }
 
   return jwt.sign({
