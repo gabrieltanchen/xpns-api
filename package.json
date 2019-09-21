@@ -1,5 +1,5 @@
 {
-  "name": "finance-api",
+  "name": "expense-api",
   "version": "1.1.1",
   "description": "",
   "main": "index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabrieltanchen/finance-api.git"
+    "url": "git+https://github.com/gabrieltanchen/expense-api.git"
   },
   "author": "Gabriel Tan-Chen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gabrieltanchen/finance-api/issues"
+    "url": "https://github.com/gabrieltanchen/expense-api/issues"
   },
-  "homepage": "https://github.com/gabrieltanchen/finance-api#readme",
+  "homepage": "https://github.com/gabrieltanchen/expense-api#readme",
   "dependencies": {
     "body-parser": "1.19.0",
     "connect-roles": "3.1.2",
