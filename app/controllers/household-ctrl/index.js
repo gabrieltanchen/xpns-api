@@ -1,4 +1,5 @@
 const createMember = require('./create-member');
+const updateMember = require('./update-member');
 
 class HouseholdCtrl {
   constructor(parent, models) {
@@ -13,6 +14,19 @@ class HouseholdCtrl {
     return createMember({
       auditApiCallUuid,
       householdCtrl: this,
+      name,
+    });
+  }
+
+  async updateMember({
+    auditApiCallUuid,
+    householdMemberUuid,
+    name,
+  }) {
+    return updateMember({
+      auditApiCallUuid,
+      householdCtrl: this,
+      householdMemberUuid,
       name,
     });
   }
