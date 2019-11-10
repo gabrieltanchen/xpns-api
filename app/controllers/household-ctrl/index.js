@@ -1,4 +1,5 @@
 const createMember = require('./create-member');
+const deleteMember = require('./delete-member');
 const updateMember = require('./update-member');
 
 class HouseholdCtrl {
@@ -15,6 +16,17 @@ class HouseholdCtrl {
       auditApiCallUuid,
       householdCtrl: this,
       name,
+    });
+  }
+
+  async deleteMember({
+    auditApiCallUuid,
+    householdMemberUuid,
+  }) {
+    return deleteMember({
+      auditApiCallUuid,
+      householdCtrl: this,
+      householdMemberUuid,
     });
   }
 
