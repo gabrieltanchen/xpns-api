@@ -21,6 +21,7 @@ module.exports = async({
   date,
   description,
   expenseCtrl,
+  householdMemberUuid,
   reimbursedCents,
   vendorUuid,
 }) => {
@@ -30,6 +31,8 @@ module.exports = async({
     throw new ExpenseError('Category is required');
   } else if (!vendorUuid) {
     throw new ExpenseError('Vendor is required');
+  } else if (!householdMemberUuid) {
+    throw new ExpenseError('Household member is required');
   } else if (!moment(date).isValid()) {
     throw new ExpenseError('Invalid date');
   } else if (isNaN(parseInt(amountCents, 10))) {
@@ -84,11 +87,24 @@ module.exports = async({
     throw new ExpenseError('Vendor not found');
   }
 
+  // Validate household member belongs to household.
+  const householdMember = await models.HouseholdMember.findOne({
+    attributes: ['uuid'],
+    where: {
+      household_uuid: user.get('household_uuid'),
+      uuid: householdMemberUuid,
+    },
+  });
+  if (!householdMember) {
+    throw new ExpenseError('Household member not found');
+  }
+
   const newExpense = models.Expense.build({
     amount_cents: parseInt(amountCents, 10),
     category_uuid: category.get('uuid'),
     date: moment(date).format('YYYY-MM-DD'),
     description,
+    household_member_uuid: householdMember.get('uuid'),
     reimbursed_cents: parseInt(reimbursedCents, 10),
     vendor_uuid: vendor.get('uuid'),
   });
