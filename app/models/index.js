@@ -75,6 +75,9 @@ class Models {
     this.Expense.belongsTo(this.Category, {
       foreignKey: 'category_uuid',
     });
+    this.Expense.belongsTo(this.HouseholdMember, {
+      foreignKey: 'household_member_uuid',
+    });
     this.Expense.belongsTo(this.Vendor, {
       foreignKey: 'vendor_uuid',
     });
@@ -94,6 +97,9 @@ class Models {
     });
 
     // HouseholdMember
+    this.HouseholdMember.hasMany(this.Expense, {
+      foreignKey: 'household_member_uuid',
+    });
     this.HouseholdMember.belongsTo(this.Household, {
       foreignKey: 'household_uuid',
     });
