@@ -49,6 +49,7 @@ class ExpenseCtrl {
     date,
     description,
     expenseUuid,
+    householdMemberUuid,
     reimbursedCents,
     vendorUuid,
   }) {
@@ -60,6 +61,7 @@ class ExpenseCtrl {
       description,
       expenseCtrl: this,
       expenseUuid,
+      householdMemberUuid,
       reimbursedCents,
       vendorUuid,
     });
