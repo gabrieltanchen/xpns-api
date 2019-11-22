@@ -18,10 +18,12 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
 
   let expenseUuid;
   let user1CategoryUuid;
+  let user1HouseholdMemberUuid;
   let user1HouseholdUuid;
   let user1Uuid;
   let user1VendorUuid;
   let user2CategoryUuid;
+  let user2HouseholdMemberUuid;
   let user2HouseholdUuid;
   let user2Uuid;
   let user2VendorUuid;
@@ -75,6 +77,14 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     user1VendorUuid = vendor.get('uuid');
   });
 
+  beforeEach('create user 1 household member', async function() {
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: user1HouseholdUuid,
+      name: sampleData.users.user1.firstName,
+    });
+    user1HouseholdMemberUuid = householdMember.get('uuid');
+  });
+
   beforeEach('create user 2', async function() {
     const household = await models.Household.create({
       name: sampleData.users.user2.lastName,
@@ -105,12 +115,21 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     user2VendorUuid = vendor.get('uuid');
   });
 
+  beforeEach('create user 2 household member', async function() {
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: user2HouseholdUuid,
+      name: sampleData.users.user2.firstName,
+    });
+    user2HouseholdMemberUuid = householdMember.get('uuid');
+  });
+
   beforeEach('create expense', async function() {
     const expense = await models.Expense.create({
       amount_cents: sampleData.expenses.expense1.amount_cents,
       category_uuid: user1CategoryUuid,
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
+      household_member_uuid: user1HouseholdMemberUuid,
       reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
       vendor_uuid: user1VendorUuid,
     });
@@ -256,6 +275,31 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     try {
       await models.Expense.update({
         vendor_uuid: user2VendorUuid,
+      }, {
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.deleteExpense({
+        auditApiCallUuid: apiCall.get('uuid'),
+        expenseUuid,
+      });
+    } catch (err) {
+      assert.isOk(err);
+      assert.strictEqual(err.message, 'Not found');
+      assert.isTrue(err instanceof ExpenseError);
+    }
+    assert.strictEqual(trackChangesSpy.callCount, 0);
+  });
+
+  // This should not happen.
+  it('should reject when the expense household member belongs to a different household', async function() {
+    try {
+      await models.Expense.update({
+        household_member_uuid: user2HouseholdMemberUuid,
       }, {
         where: {
           uuid: expenseUuid,
