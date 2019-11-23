@@ -11,6 +11,7 @@ const { ExpenseError } = require('../../middleware/error-handler/');
  * @param {string} date
  * @param {string} description
  * @param {object} expenseCtrl Instance of ExpenseCtrl
+ * @param {string} householdMemberUuid
  * @param {integer} reimbursedCents
  * @param {string} vendorUuid
  */
