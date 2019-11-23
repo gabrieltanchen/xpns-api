@@ -138,12 +138,17 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       household_uuid: household.get('uuid'),
       name: sampleData.vendors.vendor1.name,
     });
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
     const auditLog = await models.Audit.Log.create();
     const expense = await models.Expense.create({
       amount_cents: sampleData.expenses.expense1.amount_cents,
       category_uuid: category.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
+      household_member_uuid: householdMember.get('uuid'),
       reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
       vendor_uuid: vendor.get('uuid'),
     });

@@ -167,12 +167,17 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       household_uuid: household.get('uuid'),
       name: sampleData.vendors.vendor1.name,
     });
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
     const auditLog = await models.Audit.Log.create();
     const expense = await models.Expense.create({
       amount_cents: sampleData.expenses.expense1.amount_cents,
       category_uuid: category.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
+      household_member_uuid: householdMember.get('uuid'),
       reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
       vendor_uuid: vendor.get('uuid'),
     });
@@ -224,6 +229,13 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       value: sampleData.expenses.expense1.description,
     });
     shouldTrackAttribute({
+      attribute: 'household_member_uuid',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: householdMember.get('uuid'),
+    });
+    shouldTrackAttribute({
       attribute: 'reimbursed_cents',
       auditChanges,
       key: expense.get('uuid'),
@@ -237,7 +249,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       table: 'expenses',
       value: vendor.get('uuid'),
     });
-    assert.strictEqual(auditChanges.length, 7);
+    assert.strictEqual(auditChanges.length, 8);
   });
 
   it('should track all Household attributes', async function() {
