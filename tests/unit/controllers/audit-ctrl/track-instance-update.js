@@ -309,6 +309,51 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     assert.strictEqual(auditChanges.length, 1);
   });
 
+  it('should track all HouseholdMember attributes', async function() {
+    const auditLog = await models.Audit.Log.create();
+    const household1 = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const household2 = await models.Household.create({
+      name: sampleData.users.user2.lastName,
+    });
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: household1.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
+    householdMember.set('household_uuid', household2.get('uuid'));
+    householdMember.set('name', sampleData.users.user2.firstName);
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceUpdate(auditLog, householdMember, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'household_uuid',
+      auditChanges,
+      key: householdMember.get('uuid'),
+      newValue: household2.get('uuid'),
+      oldValue: household1.get('uuid'),
+      table: 'household_members',
+    });
+    shouldTrackAttribute({
+      attribute: 'name',
+      auditChanges,
+      key: householdMember.get('uuid'),
+      newValue: sampleData.users.user2.firstName,
+      oldValue: sampleData.users.user1.firstName,
+      table: 'household_members',
+    });
+    assert.strictEqual(auditChanges.length, 2);
+  });
+
   it('should track all User attributes', async function() {
     const auditLog = await models.Audit.Log.create();
     const household1 = await models.Household.create({
