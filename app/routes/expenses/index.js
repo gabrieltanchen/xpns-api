@@ -23,6 +23,7 @@ module.exports = (router, app) => {
         body([['data', 'attributes', 'reimbursed-cents']], 'Reimbursed amount is required.').not().isEmpty(),
         body([['data', 'attributes', 'reimbursed-cents']], 'Reimbursed amount must be an integer.').isWhitelisted('0123456789'),
         body([['data', 'relationships', 'category', 'data', 'id']], 'Category is required.').not().isEmpty(),
+        body([['data', 'relationships', 'household-member', 'data', 'id']], 'Member is required.').not().isEmpty(),
         body([['data', 'relationships', 'vendor', 'data', 'id']], 'Vendor is required.').not().isEmpty(),
       ],
       Validator.validateRequest(),
