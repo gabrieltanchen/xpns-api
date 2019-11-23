@@ -17,6 +17,7 @@ describe('Integration - GET /expenses/:uuid', function() {
 
   let expenseUuid;
   let user1CategoryUuid;
+  let user1HouseholdMemberUuid;
   let user1Token;
   let user1Uuid;
   let user1VendorUuid;
@@ -24,6 +25,7 @@ describe('Integration - GET /expenses/:uuid', function() {
   let user2Token;
   let user2Uuid;
   let user2VendorUuid;
+  let user2HouseholdMemberUuid;
 
   before('get server', async function() {
     this.timeout(30000);
@@ -72,6 +74,16 @@ describe('Integration - GET /expenses/:uuid', function() {
     });
   });
 
+  beforeEach('create user 1 household member', async function() {
+    const apiCall = await models.Audit.ApiCall.create({
+      user_uuid: user1Uuid,
+    });
+    user1HouseholdMemberUuid = await controllers.HouseholdCtrl.createMember({
+      auditApiCallUuid: apiCall.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
+  });
+
   beforeEach('create user 2', async function() {
     const apiCall = await models.Audit.ApiCall.create();
     user2Uuid = await controllers.UserCtrl.signUp({
@@ -107,6 +119,16 @@ describe('Integration - GET /expenses/:uuid', function() {
     });
   });
 
+  beforeEach('create user 2 household member', async function() {
+    const apiCall = await models.Audit.ApiCall.create({
+      user_uuid: user2Uuid,
+    });
+    user2HouseholdMemberUuid = await controllers.HouseholdCtrl.createMember({
+      auditApiCallUuid: apiCall.get('uuid'),
+      name: sampleData.users.user2.firstName,
+    });
+  });
+
   beforeEach('create expense', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
@@ -117,6 +139,7 @@ describe('Integration - GET /expenses/:uuid', function() {
       categoryUuid: user1CategoryUuid,
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
+      householdMemberUuid: user1HouseholdMemberUuid,
       reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
       vendorUuid: user1VendorUuid,
     });
@@ -211,6 +234,27 @@ describe('Integration - GET /expenses/:uuid', function() {
     });
   });
 
+  // This should not happen.
+  it('should return 404 when the expense household member belongs to a different household', async function() {
+    await models.Expense.update({
+      household_member_uuid: user2HouseholdMemberUuid,
+    }, {
+      where: {
+        uuid: expenseUuid,
+      },
+    });
+    const res = await chai.request(server)
+      .get(`/expenses/${expenseUuid}`)
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${user1Token}`);
+    expect(res).to.have.status(404);
+    assert.deepEqual(res.body, {
+      errors: [{
+        detail: 'Unable to find expense.',
+      }],
+    });
+  });
+
   it('should return 200 with the correct auth token', async function() {
     const res = await chai.request(server)
       .get(`/expenses/${expenseUuid}`)
@@ -234,6 +278,9 @@ describe('Integration - GET /expenses/:uuid', function() {
     assert.isOk(res.body.data.relationships.category);
     assert.isOk(res.body.data.relationships.category.data);
     assert.strictEqual(res.body.data.relationships.category.data.id, user1CategoryUuid);
+    assert.isOk(res.body.data.relationships['household-member']);
+    assert.isOk(res.body.data.relationships['household-member'].data);
+    assert.strictEqual(res.body.data.relationships['household-member'].data.id, user1HouseholdMemberUuid);
     assert.isOk(res.body.data.relationships.vendor);
     assert.isOk(res.body.data.relationships.vendor.data);
     assert.strictEqual(res.body.data.relationships.vendor.data.id, user1VendorUuid);
