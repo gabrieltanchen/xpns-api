@@ -12,6 +12,7 @@ const { ExpenseError } = require('../../middleware/error-handler/');
  * @param {string} description
  * @param {object} expenseCtrl Instance of ExpenseCtrl
  * @param {string} expenseUuid
+ * @param {string} householdMemberUuid
  * @param {integer} reimbursedCents
  * @param {string} vendorUuid
  */
@@ -23,6 +24,7 @@ module.exports = async({
   description,
   expenseCtrl,
   expenseUuid,
+  householdMemberUuid,
   reimbursedCents,
   vendorUuid,
 }) => {
@@ -34,6 +36,8 @@ module.exports = async({
     throw new ExpenseError('Category is required');
   } else if (!vendorUuid) {
     throw new ExpenseError('Vendor is required');
+  } else if (!householdMemberUuid) {
+    throw new ExpenseError('Household member is required');
   } else if (!moment(date).isValid()) {
     throw new ExpenseError('Invalid date');
   } else if (isNaN(parseInt(amountCents, 10))) {
@@ -70,6 +74,7 @@ module.exports = async({
       'category_uuid',
       'date',
       'description',
+      'household_member_uuid',
       'reimbursed_cents',
       'uuid',
       'vendor_uuid',
@@ -77,6 +82,13 @@ module.exports = async({
     include: [{
       attributes: ['uuid'],
       model: models.Category,
+      required: true,
+      where: {
+        household_uuid: user.get('household_uuid'),
+      },
+    }, {
+      attributes: ['uuid'],
+      model: models.HouseholdMember,
       required: true,
       where: {
         household_uuid: user.get('household_uuid'),
@@ -138,6 +150,20 @@ module.exports = async({
       throw new ExpenseError('Vendor not found');
     }
     expense.set('vendor_uuid', vendor.get('uuid'));
+  }
+
+  if (householdMemberUuid !== expense.get('household_member_uuid')) {
+    const householdMember = await models.HouseholdMember.findOne({
+      attributes: ['uuid'],
+      where: {
+        household_uuid: user.get('household_uuid'),
+        uuid: householdMemberUuid,
+      },
+    });
+    if (!householdMember) {
+      throw new ExpenseError('Household member not found');
+    }
+    expense.set('household_member_uuid', householdMember.get('uuid'));
   }
 
   if (expense.changed()) {

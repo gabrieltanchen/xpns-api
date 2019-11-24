@@ -185,11 +185,20 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
       household_uuid: household.get('uuid'),
       name: sampleData.vendors.vendor2.name,
     });
+    const householdMember1 = await models.HouseholdMember.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
+    const householdMember2 = await models.HouseholdMember.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.users.user2.firstName,
+    });
     const expense = await models.Expense.create({
       amount_cents: sampleData.expenses.expense1.amount_cents,
       category_uuid: category1.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
+      household_member_uuid: householdMember1.get('uuid'),
       reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
       vendor_uuid: vendor1.get('uuid'),
     });
@@ -197,6 +206,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     expense.set('category_uuid', category2.get('uuid'));
     expense.set('date', sampleData.expenses.expense2.date);
     expense.set('description', sampleData.expenses.expense2.description);
+    expense.set('household_member_uuid', householdMember2.get('uuid'));
     expense.set('reimbursed_cents', sampleData.expenses.expense2.reimbursed_cents);
     expense.set('vendor_uuid', vendor2.get('uuid'));
 
@@ -244,6 +254,14 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
       table: 'expenses',
     });
     shouldTrackAttribute({
+      attribute: 'household_member_uuid',
+      auditChanges,
+      key: expense.get('uuid'),
+      newValue: householdMember2.get('uuid'),
+      oldValue: householdMember1.get('uuid'),
+      table: 'expenses',
+    });
+    shouldTrackAttribute({
       attribute: 'reimbursed_cents',
       auditChanges,
       key: expense.get('uuid'),
@@ -259,7 +277,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
       oldValue: vendor1.get('uuid'),
       table: 'expenses',
     });
-    assert.strictEqual(auditChanges.length, 6);
+    assert.strictEqual(auditChanges.length, 7);
   });
 
   it('should track all Household attributes', async function() {
@@ -289,6 +307,51 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
       table: 'households',
     });
     assert.strictEqual(auditChanges.length, 1);
+  });
+
+  it('should track all HouseholdMember attributes', async function() {
+    const auditLog = await models.Audit.Log.create();
+    const household1 = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const household2 = await models.Household.create({
+      name: sampleData.users.user2.lastName,
+    });
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: household1.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
+    householdMember.set('household_uuid', household2.get('uuid'));
+    householdMember.set('name', sampleData.users.user2.firstName);
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceUpdate(auditLog, householdMember, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'household_uuid',
+      auditChanges,
+      key: householdMember.get('uuid'),
+      newValue: household2.get('uuid'),
+      oldValue: household1.get('uuid'),
+      table: 'household_members',
+    });
+    shouldTrackAttribute({
+      attribute: 'name',
+      auditChanges,
+      key: householdMember.get('uuid'),
+      newValue: sampleData.users.user2.firstName,
+      oldValue: sampleData.users.user1.firstName,
+      table: 'household_members',
+    });
+    assert.strictEqual(auditChanges.length, 2);
   });
 
   it('should track all User attributes', async function() {

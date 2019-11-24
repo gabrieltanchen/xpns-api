@@ -26,6 +26,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       type: Sequelize.STRING,
     },
+    household_member_uuid: {
+      allowNull: false,
+      type: Sequelize.UUID,
+    },
     reimbursed_cents: {
       allowNull: false,
       type: Sequelize.INTEGER,

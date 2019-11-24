@@ -18,10 +18,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
   let trackChangesSpy;
 
   let user1CategoryUuid;
+  let user1HouseholdMemberUuid;
   let user1HouseholdUuid;
   let user1Uuid;
   let user1VendorUuid;
   let user2CategoryUuid;
+  let user2HouseholdMemberUuid;
   let user2HouseholdUuid;
   let user2VendorUuid;
 
@@ -74,6 +76,14 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
     user1VendorUuid = vendor.get('uuid');
   });
 
+  beforeEach('create user 1 household member', async function() {
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: user1HouseholdUuid,
+      name: sampleData.users.user1.firstName,
+    });
+    user1HouseholdMemberUuid = householdMember.get('uuid');
+  });
+
   beforeEach('create user 2', async function() {
     const household = await models.Household.create({
       name: sampleData.users.user2.lastName,
@@ -103,6 +113,14 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
     user2VendorUuid = vendor.get('uuid');
   });
 
+  beforeEach('create user 2 household member', async function() {
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: user2HouseholdUuid,
+      name: sampleData.users.user2.firstName,
+    });
+    user2HouseholdMemberUuid = householdMember.get('uuid');
+  });
+
   afterEach('reset history for sinon spies', function() {
     trackChangesSpy.resetHistory();
   });
@@ -122,6 +140,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: null,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -144,12 +163,36 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: null,
       });
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Vendor is required');
+      assert.isTrue(err instanceof ExpenseError);
+    }
+    assert.strictEqual(trackChangesSpy.callCount, 0);
+  });
+
+  it('should reject with no household member UUID', async function() {
+    try {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.createExpense({
+        amountCents: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        categoryUuid: user1CategoryUuid,
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        householdMemberUuid: null,
+        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        vendorUuid: user1VendorUuid,
+      });
+    } catch (err) {
+      assert.isOk(err);
+      assert.strictEqual(err.message, 'Household member is required');
       assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
@@ -166,6 +209,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: null,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -188,6 +232,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: 'invalid date',
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -210,6 +255,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -232,6 +278,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -254,6 +301,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: null,
         vendorUuid: user1VendorUuid,
       });
@@ -276,6 +324,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: 'invalid reimbursed amount',
         vendorUuid: user1VendorUuid,
       });
@@ -298,6 +347,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: null,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -320,6 +370,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: 1234,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -339,6 +390,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -358,6 +410,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -385,6 +438,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -407,6 +461,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: uuidv4(),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -429,6 +484,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user2CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user1VendorUuid,
       });
@@ -451,6 +507,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: uuidv4(),
       });
@@ -473,12 +530,59 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         categoryUuid: user1CategoryUuid,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
         reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
         vendorUuid: user2VendorUuid,
       });
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Vendor not found');
+      assert.isTrue(err instanceof ExpenseError);
+    }
+    assert.strictEqual(trackChangesSpy.callCount, 0);
+  });
+
+  it('should reject when the household member does not exist', async function() {
+    try {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.createExpense({
+        amountCents: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        categoryUuid: user1CategoryUuid,
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        householdMemberUuid: uuidv4(),
+        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        vendorUuid: user1VendorUuid,
+      });
+    } catch (err) {
+      assert.isOk(err);
+      assert.strictEqual(err.message, 'Household member not found');
+      assert.isTrue(err instanceof ExpenseError);
+    }
+    assert.strictEqual(trackChangesSpy.callCount, 0);
+  });
+
+  it('should reject when the household member belongs to a different household', async function() {
+    try {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.createExpense({
+        amountCents: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        categoryUuid: user1CategoryUuid,
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        householdMemberUuid: user2HouseholdMemberUuid,
+        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        vendorUuid: user1VendorUuid,
+      });
+    } catch (err) {
+      assert.isOk(err);
+      assert.strictEqual(err.message, 'Household member not found');
       assert.isTrue(err instanceof ExpenseError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
@@ -494,6 +598,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
       categoryUuid: user1CategoryUuid,
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
+      householdMemberUuid: user1HouseholdMemberUuid,
       reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
       vendorUuid: user1VendorUuid,
     });
@@ -507,6 +612,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         'category_uuid',
         'date',
         'description',
+        'household_member_uuid',
         'reimbursed_cents',
         'uuid',
         'vendor_uuid',
@@ -520,6 +626,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
     assert.strictEqual(expense.get('category_uuid'), user1CategoryUuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+    assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMemberUuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
     assert.strictEqual(expense.get('vendor_uuid'), user1VendorUuid);
 

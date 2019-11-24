@@ -21,7 +21,9 @@ module.exports = (app) => {
    * @apiSuccess (200) {object} data.relationships.category
    * @apiSuccess (200) {object} data.relationships.category.data
    * @apiSuccess (200) {string} data.relationships.category.data.id
-   * @apiSuccess (200) {object} data.relationships
+   * @apiSuccess (200) {object} data.relationships[household-member]
+   * @apiSuccess (200) {object} data.relationships[household-member].data
+   * @apiSuccess (200) {string} data.relatinoships[household-member].data.id
    * @apiSuccess (200) {object} data.relationships.vendor
    * @apiSuccess (200) {object} data.relationships.vendor.data
    * @apiSuccess (200) {string} data.relationships.vendor.data.id
@@ -44,6 +46,7 @@ module.exports = (app) => {
         date: req.body.data.attributes.date,
         description: req.body.data.attributes.description,
         expenseUuid: req.params.uuid,
+        householdMemberUuid: req.body.data.relationships['household-member'].data.id,
         reimbursedCents: req.body.data.attributes['reimbursed-cents'],
         vendorUuid: req.body.data.relationships.vendor.data.id,
       });
@@ -60,6 +63,10 @@ module.exports = (app) => {
         include: [{
           attributes: ['name', 'uuid'],
           model: models.Category,
+          required: true,
+        }, {
+          attributes: ['name', 'uuid'],
+          model: models.HouseholdMember,
           required: true,
         }, {
           attributes: ['name', 'uuid'],
@@ -88,6 +95,12 @@ module.exports = (app) => {
               'data': {
                 'id': expense.Category.get('uuid'),
                 'type': 'categories',
+              },
+            },
+            'household-member': {
+              'data': {
+                'id': expense.HouseholdMember.get('uuid'),
+                'type': 'household-members',
               },
             },
             'vendor': {
