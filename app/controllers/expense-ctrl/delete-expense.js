@@ -49,6 +49,13 @@ module.exports = async({
       },
     }, {
       attributes: ['uuid'],
+      model: models.HouseholdMember,
+      required: true,
+      where: {
+        household_uuid: user.get('household_uuid'),
+      },
+    }, {
+      attributes: ['uuid'],
       model: models.Vendor,
       required: true,
       where: {

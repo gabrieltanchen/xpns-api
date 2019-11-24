@@ -6,6 +6,7 @@ const Category = require('./category');
 const Expense = require('./expense');
 const Hash = require('./hash');
 const Household = require('./household');
+const HouseholdMember = require('./household-member');
 const User = require('./user');
 const UserLogin = require('./user-login');
 const Vendor = require('./vendor');
@@ -36,6 +37,7 @@ class Models {
     this.Expense = Expense(this.sequelize);
     this.Hash = Hash(this.sequelize);
     this.Household = Household(this.sequelize);
+    this.HouseholdMember = HouseholdMember(this.sequelize);
     this.User = User(this.sequelize);
     this.UserLogin = UserLogin(this.sequelize);
     this.Vendor = Vendor(this.sequelize);
@@ -73,6 +75,9 @@ class Models {
     this.Expense.belongsTo(this.Category, {
       foreignKey: 'category_uuid',
     });
+    this.Expense.belongsTo(this.HouseholdMember, {
+      foreignKey: 'household_member_uuid',
+    });
     this.Expense.belongsTo(this.Vendor, {
       foreignKey: 'vendor_uuid',
     });
@@ -81,10 +86,21 @@ class Models {
     this.Household.hasMany(this.Category, {
       foreignKey: 'household_uuid',
     });
+    this.Household.hasMany(this.HouseholdMember, {
+      foreignKey: 'household_uuid',
+    });
     this.Household.hasMany(this.User, {
       foreignKey: 'household_uuid',
     });
     this.Household.hasMany(this.Vendor, {
+      foreignKey: 'household_uuid',
+    });
+
+    // HouseholdMember
+    this.HouseholdMember.hasMany(this.Expense, {
+      foreignKey: 'household_member_uuid',
+    });
+    this.HouseholdMember.belongsTo(this.Household, {
       foreignKey: 'household_uuid',
     });
 

@@ -96,6 +96,13 @@ describe('Unit:Model - Expense', function() {
     assert.isNull(attributes.description.defaultValue);
     assert.isFalse(attributes.description.primaryKey);
 
-    assert.strictEqual(Object.keys(attributes).length, 10);
+    // household_member_uuid
+    assert.isOk(attributes.household_member_uuid);
+    assert.strictEqual(attributes.household_member_uuid.type, 'UUID');
+    assert.isFalse(attributes.household_member_uuid.allowNull);
+    assert.isNull(attributes.household_member_uuid.defaultValue);
+    assert.isFalse(attributes.household_member_uuid.primaryKey);
+
+    assert.strictEqual(Object.keys(attributes).length, 11);
   });
 });

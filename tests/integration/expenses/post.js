@@ -19,6 +19,7 @@ describe('Integration - POST /expenses', function() {
   let createExpenseSpy;
 
   let categoryUuid;
+  let householdMemberUuid;
   let userToken;
   let userUuid;
   let vendorUuid;
@@ -78,6 +79,16 @@ describe('Integration - POST /expenses', function() {
     });
   });
 
+  beforeEach('create household member', async function() {
+    const apiCall = await models.Audit.ApiCall.create({
+      user_uuid: userUuid,
+    });
+    householdMemberUuid = await controllers.HouseholdCtrl.createMember({
+      auditApiCallUuid: apiCall.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
+  });
+
   afterEach('reset history for sinon spies', function() {
     createExpenseSpy.resetHistory();
   });
@@ -102,6 +113,11 @@ describe('Integration - POST /expenses', function() {
             'category': {
               'data': {
                 'id': categoryUuid,
+              },
+            },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
               },
             },
             'vendor': {
@@ -138,6 +154,11 @@ describe('Integration - POST /expenses', function() {
             'category': {
               'data': {
                 'id': categoryUuid,
+              },
+            },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
               },
             },
             'vendor': {
@@ -179,6 +200,11 @@ describe('Integration - POST /expenses', function() {
                 'id': categoryUuid,
               },
             },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
+              },
+            },
             'vendor': {
               'data': {
                 'id': vendorUuid,
@@ -216,6 +242,11 @@ describe('Integration - POST /expenses', function() {
             'category': {
               'data': {
                 'id': categoryUuid,
+              },
+            },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
               },
             },
             'vendor': {
@@ -262,6 +293,11 @@ describe('Integration - POST /expenses', function() {
                 'id': categoryUuid,
               },
             },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
+              },
+            },
             'vendor': {
               'data': {
                 'id': vendorUuid,
@@ -299,6 +335,11 @@ describe('Integration - POST /expenses', function() {
             'category': {
               'data': {
                 'id': categoryUuid,
+              },
+            },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
               },
             },
             'vendor': {
@@ -340,6 +381,11 @@ describe('Integration - POST /expenses', function() {
                 'id': categoryUuid,
               },
             },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
+              },
+            },
             'vendor': {
               'data': {
                 'id': vendorUuid,
@@ -377,6 +423,11 @@ describe('Integration - POST /expenses', function() {
             'category': {
               'data': {
                 'id': null,
+              },
+            },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
               },
             },
             'vendor': {
@@ -418,6 +469,11 @@ describe('Integration - POST /expenses', function() {
                 'id': categoryUuid,
               },
             },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
+              },
+            },
             'vendor': {
               'data': {
                 'id': null,
@@ -432,6 +488,50 @@ describe('Integration - POST /expenses', function() {
         detail: 'Vendor is required.',
         source: {
           pointer: '/data/relationships/vendor/data/id',
+        },
+      }],
+    });
+    assert.strictEqual(createExpenseSpy.callCount, 0);
+  });
+
+  it('should return 422 with no household member uuid', async function() {
+    const res = await chai.request(server)
+      .post('/expenses')
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({
+        'data': {
+          'attributes': {
+            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'date': sampleData.expenses.expense1.date,
+            'description': sampleData.expenses.expense1.description,
+            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+          },
+          'relationships': {
+            'category': {
+              'data': {
+                'id': categoryUuid,
+              },
+            },
+            'household-member': {
+              'data': {
+                'id': null,
+              },
+            },
+            'vendor': {
+              'data': {
+                'id': vendorUuid,
+              },
+            },
+          },
+        },
+      });
+    expect(res).to.have.status(422);
+    assert.deepEqual(res.body, {
+      errors: [{
+        detail: 'Member is required.',
+        source: {
+          pointer: '/data/relationships/household-member/data/id',
         },
       }],
     });
@@ -455,6 +555,11 @@ describe('Integration - POST /expenses', function() {
             'category': {
               'data': {
                 'id': categoryUuid,
+              },
+            },
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
               },
             },
             'vendor': {
@@ -483,6 +588,9 @@ describe('Integration - POST /expenses', function() {
     assert.isOk(res.body.data.relationships.category);
     assert.isOk(res.body.data.relationships.category.data);
     assert.strictEqual(res.body.data.relationships.category.data.id, categoryUuid);
+    assert.isOk(res.body.data.relationships['household-member']);
+    assert.isOk(res.body.data.relationships['household-member'].data);
+    assert.strictEqual(res.body.data.relationships['household-member'].data.id, householdMemberUuid);
     assert.isOk(res.body.data.relationships.vendor);
     assert.isOk(res.body.data.relationships.vendor.data);
     assert.strictEqual(res.body.data.relationships.vendor.data.id, vendorUuid);
@@ -497,6 +605,7 @@ describe('Integration - POST /expenses', function() {
     assert.strictEqual(createExpenseParams.categoryUuid, categoryUuid);
     assert.strictEqual(createExpenseParams.date, sampleData.expenses.expense1.date);
     assert.strictEqual(createExpenseParams.description, sampleData.expenses.expense1.description);
+    assert.strictEqual(createExpenseParams.householdMemberUuid, householdMemberUuid);
     assert.strictEqual(
       createExpenseParams.reimbursedCents,
       sampleData.expenses.expense1.reimbursed_cents,
