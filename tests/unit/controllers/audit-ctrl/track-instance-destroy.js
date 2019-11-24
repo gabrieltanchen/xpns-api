@@ -138,12 +138,17 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       household_uuid: household.get('uuid'),
       name: sampleData.vendors.vendor1.name,
     });
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
     const auditLog = await models.Audit.Log.create();
     const expense = await models.Expense.create({
       amount_cents: sampleData.expenses.expense1.amount_cents,
       category_uuid: category.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
+      household_member_uuid: householdMember.get('uuid'),
       reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
       vendor_uuid: vendor.get('uuid'),
     });
@@ -220,6 +225,51 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       paranoid: false,
       where: {
         uuid: household.get('uuid'),
+      },
+    }));
+  });
+
+  it('should track deleting a HouseholdMember', async function() {
+    const auditLog = await models.Audit.Log.create();
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const householdMember = await models.HouseholdMember.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, householdMember, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'household_members'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === householdMember.get('uuid');
+    });
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the Vendor is deleted.
+    assert.isNull(await models.HouseholdMember.findOne({
+      where: {
+        uuid: householdMember.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.HouseholdMember.findOne({
+      paranoid: false,
+      where: {
+        uuid: householdMember.get('uuid'),
       },
     }));
   });

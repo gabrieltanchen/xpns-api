@@ -20,6 +20,7 @@ describe('Integration - DELETE /expenses/:uuid', function() {
 
   let expenseUuid;
   let user1CategoryUuid;
+  let user1HouseholdMemberUuid;
   let user1Token;
   let user1Uuid;
   let user1VendorUuid;
@@ -81,6 +82,16 @@ describe('Integration - DELETE /expenses/:uuid', function() {
     });
   });
 
+  beforeEach('create user 1 household member', async function() {
+    const apiCall = await models.Audit.ApiCall.create({
+      user_uuid: user1Uuid,
+    });
+    user1HouseholdMemberUuid = await controllers.HouseholdCtrl.createMember({
+      auditApiCallUuid: apiCall.get('uuid'),
+      name: sampleData.users.user1.firstName,
+    });
+  });
+
   beforeEach('create user 2', async function() {
     const apiCall = await models.Audit.ApiCall.create();
     user2Uuid = await controllers.UserCtrl.signUp({
@@ -106,6 +117,7 @@ describe('Integration - DELETE /expenses/:uuid', function() {
       categoryUuid: user1CategoryUuid,
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
+      householdMemberUuid: user1HouseholdMemberUuid,
       reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
       vendorUuid: user1VendorUuid,
     });

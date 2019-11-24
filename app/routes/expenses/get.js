@@ -1,6 +1,7 @@
 const {
   CategoryError,
   ExpenseError,
+  HouseholdError,
   VendorError,
 } = require('../../middleware/error-handler/');
 
@@ -27,7 +28,9 @@ module.exports = (app) => {
    * @apiSuccess (200) {object} data.expenses[].relationships.category
    * @apiSuccess (200) {object} data.expenses[].relationships.category.data
    * @apiSuccess (200) {string} data.expenses[].relationships.category.data.id
-   * @apiSuccess (200) {object} data.expenses[].relationships
+   * @apiSuccess (200) {object} data.expenses[].relationships[household-member]
+   * @apiSuccess (200) {object} data.expenses[].relationships[household-member].data
+   * @apiSuccess (200) {string} data.expenses[].relationships[household-member].data.id
    * @apiSuccess (200) {object} data.expenses[].relationships.vendor
    * @apiSuccess (200) {object} data.expenses[].relationships.vendor.data
    * @apiSuccess (200) {string} data.expenses[].relationships.vendor.data.id
@@ -73,6 +76,18 @@ module.exports = (app) => {
           throw new CategoryError('Not found');
         }
         expenseWhere.category_uuid = category.get('uuid');
+      } else if (req.query.household_member_id) {
+        const householdMember = await models.HouseholdMember.findOne({
+          attributes: ['uuid'],
+          where: {
+            household_uuid: user.get('household_uuid'),
+            uuid: req.query.household_member_id,
+          },
+        });
+        if (!householdMember) {
+          throw new HouseholdError('Not found');
+        }
+        expenseWhere.household_member_uuid = householdMember.get('uuid');
       } else if (req.query.vendor_id) {
         const vendor = await models.Vendor.findOne({
           attributes: ['uuid'],
@@ -104,6 +119,10 @@ module.exports = (app) => {
           required: true,
         }, {
           attributes: ['name', 'uuid'],
+          model: models.HouseholdMember,
+          required: true,
+        }, {
+          attributes: ['name', 'uuid'],
           model: models.Vendor,
           required: true,
         }],
@@ -115,6 +134,7 @@ module.exports = (app) => {
 
       const included = [];
       const categoryIds = [];
+      const householdMemberIds = [];
       const vendorIds = [];
       expenses.rows.forEach((expense) => {
         if (!categoryIds.includes(expense.Category.get('uuid'))) {
@@ -125,6 +145,16 @@ module.exports = (app) => {
             },
             'id': expense.Category.get('uuid'),
             'type': 'categories',
+          });
+        }
+        if (!householdMemberIds.includes(expense.HouseholdMember.get('uuid'))) {
+          householdMemberIds.push(expense.HouseholdMember.get('uuid'));
+          included.push({
+            'attributes': {
+              'name': expense.HouseholdMember.get('name'),
+            },
+            'id': expense.HouseholdMember.get('uuid'),
+            'type': 'household-members',
           });
         }
         if (!vendorIds.includes(expense.Vendor.get('uuid'))) {
@@ -157,6 +187,12 @@ module.exports = (app) => {
                 'data': {
                   'id': expense.Category.get('uuid'),
                   'type': 'categories',
+                },
+              },
+              'household-member': {
+                'data': {
+                  'id': expense.HouseholdMember.get('uuid'),
+                  'type': 'household-members',
                 },
               },
               'vendor': {
