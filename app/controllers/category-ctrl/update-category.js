@@ -7,14 +7,12 @@ const { CategoryError } = require('../../middleware/error-handler/');
  * @param {object} categoryCtrl Instance of CategoryCtrl
  * @param {string} categoryUuid UUID of the category to update
  * @param {string} name
- * @param {string} parentUuid
  */
 module.exports = async({
   auditApiCallUuid,
   categoryCtrl,
   categoryUuid,
   name,
-  parentUuid,
 }) => {
   const controllers = categoryCtrl.parent;
   const models = categoryCtrl.models;
@@ -45,7 +43,7 @@ module.exports = async({
   }
 
   const category = await models.Category.findOne({
-    attributes: ['household_uuid', 'name', 'parent_uuid', 'uuid'],
+    attributes: ['household_uuid', 'name', 'uuid'],
     where: {
       household_uuid: user.get('household_uuid'),
       uuid: categoryUuid,
@@ -57,24 +55,6 @@ module.exports = async({
 
   if (name !== category.get('name')) {
     category.set('name', name);
-  }
-
-  if ((parentUuid)
-      && parentUuid !== category.get('parent_uuid')) {
-    const parentCategory = await models.Category.findOne({
-      attributes: ['uuid'],
-      where: {
-        household_uuid: user.get('household_uuid'),
-        uuid: parentUuid,
-      },
-    });
-    if (!parentCategory) {
-      throw new Error('Unauthorized');
-    }
-    category.set('parent_uuid', parentCategory.get('uuid'));
-  } else if (category.get('parent_uuid')
-      && !parentUuid) {
-    category.set('parent_uuid', null);
   }
 
   if (category.changed()) {

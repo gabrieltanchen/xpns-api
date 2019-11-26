@@ -74,6 +74,11 @@ class TestHelper {
       force: true,
       truncate: true,
     });
+    await models.Subcategory.destroy({
+      cascade: true,
+      force: true,
+      truncate: true,
+    });
     await models.Category.destroy({
       cascade: true,
       force: true,

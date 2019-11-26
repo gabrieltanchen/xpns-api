@@ -11,13 +11,11 @@ class CategoryCtrl {
   async createCategory({
     auditApiCallUuid,
     name,
-    parentUuid,
   }) {
     return createCategory({
       auditApiCallUuid,
       categoryCtrl: this,
       name,
-      parentUuid,
     });
   }
 
@@ -36,14 +34,12 @@ class CategoryCtrl {
     auditApiCallUuid,
     categoryUuid,
     name,
-    parentUuid,
   }) {
     return updateCategory({
       auditApiCallUuid,
       categoryCtrl: this,
       categoryUuid,
       name,
-      parentUuid,
     });
   }
 }

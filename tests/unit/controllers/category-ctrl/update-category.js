@@ -19,7 +19,6 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
   let categoryUuid;
   let user1HouseholdUuid;
   let user1Uuid;
-  let user2HouseholdUuid;
   let user2Uuid;
 
   before('get app', async function() {
@@ -59,7 +58,6 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
     const household = await models.Household.create({
       name: sampleData.users.user2.lastName,
     });
-    user2HouseholdUuid = household.get('uuid');
     const user = await models.User.create({
       email: sampleData.users.user2.email,
       first_name: sampleData.users.user2.firstName,
@@ -234,7 +232,7 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
 
     // Verify the Category instance.
     const category = await models.Category.findOne({
-      attributes: ['household_uuid', 'name', 'parent_uuid', 'uuid'],
+      attributes: ['household_uuid', 'name', 'uuid'],
       where: {
         uuid: categoryUuid,
       },
@@ -242,7 +240,6 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
     assert.isOk(category);
     assert.strictEqual(category.get('household_uuid'), user1HouseholdUuid);
     assert.strictEqual(category.get('name'), sampleData.categories.category2.name);
-    assert.isNull(category.get('parent_uuid'));
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -257,183 +254,5 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
     assert.isNotOk(trackChangesParams.deleteList);
     assert.isNotOk(trackChangesParams.newList);
     assert.isOk(trackChangesParams.transaction);
-  });
-
-  describe('when the category has no parent category', function() {
-    it('should reject when the new parent category does not exist', async function() {
-      try {
-        const apiCall = await models.Audit.ApiCall.create({
-          user_uuid: user1Uuid,
-        });
-        await controllers.CategoryCtrl.updateCategory({
-          auditApiCallUuid: apiCall.get('uuid'),
-          categoryUuid,
-          name: sampleData.categories.category1.name,
-          parentUuid: uuidv4(),
-        });
-      } catch (err) {
-        assert.isOk(err);
-        assert.strictEqual(err.message, 'Unauthorized');
-      }
-      assert.strictEqual(trackChangesSpy.callCount, 0);
-    });
-
-    it('should reject when the new parent category belongs to a different household', async function() {
-      try {
-        const parentCategory = await models.Category.create({
-          household_uuid: user2HouseholdUuid,
-          name: sampleData.categories.category2.name,
-        });
-        const apiCall = await models.Audit.ApiCall.create({
-          user_uuid: user1Uuid,
-        });
-        await controllers.CategoryCtrl.updateCategory({
-          auditApiCallUuid: apiCall.get('uuid'),
-          categoryUuid,
-          name: sampleData.categories.category1.name,
-          parentUuid: parentCategory.get('uuid'),
-        });
-      } catch (err) {
-        assert.isOk(err);
-        assert.strictEqual(err.message, 'Unauthorized');
-      }
-      assert.strictEqual(trackChangesSpy.callCount, 0);
-    });
-
-    it('should resolve updating the parent category', async function() {
-      const parentCategory = await models.Category.create({
-        household_uuid: user1HouseholdUuid,
-        name: sampleData.categories.category2.name,
-      });
-      const apiCall = await models.Audit.ApiCall.create({
-        user_uuid: user1Uuid,
-      });
-      await controllers.CategoryCtrl.updateCategory({
-        auditApiCallUuid: apiCall.get('uuid'),
-        categoryUuid,
-        name: sampleData.categories.category1.name,
-        parentUuid: parentCategory.get('uuid'),
-      });
-
-      // Verify the Category instance.
-      const category = await models.Category.findOne({
-        attributes: ['household_uuid', 'name', 'parent_uuid', 'uuid'],
-        where: {
-          uuid: categoryUuid,
-        },
-      });
-      assert.isOk(category);
-      assert.strictEqual(category.get('household_uuid'), user1HouseholdUuid);
-      assert.strictEqual(category.get('name'), sampleData.categories.category1.name);
-      assert.strictEqual(category.get('parent_uuid'), parentCategory.get('uuid'));
-    });
-  });
-
-  describe('when the category has a parent category', function() {
-    beforeEach('create parent category', async function() {
-      const parentCategory = await models.Category.create({
-        household_uuid: user1HouseholdUuid,
-        name: sampleData.categories.category2.name,
-      });
-      await models.Category.update({
-        parent_uuid: parentCategory.get('uuid'),
-      }, {
-        where: {
-          uuid: categoryUuid,
-        },
-      });
-    });
-
-    it('should reject when the new parent category does not exist', async function() {
-      try {
-        const apiCall = await models.Audit.ApiCall.create({
-          user_uuid: user1Uuid,
-        });
-        await controllers.CategoryCtrl.updateCategory({
-          auditApiCallUuid: apiCall.get('uuid'),
-          categoryUuid,
-          name: sampleData.categories.category1.name,
-          parentUuid: uuidv4(),
-        });
-      } catch (err) {
-        assert.isOk(err);
-        assert.strictEqual(err.message, 'Unauthorized');
-      }
-      assert.strictEqual(trackChangesSpy.callCount, 0);
-    });
-
-    it('should reject when the new parent category belongs to a different household', async function() {
-      try {
-        const parentCategory = await models.Category.create({
-          household_uuid: user2HouseholdUuid,
-          name: sampleData.categories.category2.name,
-        });
-        const apiCall = await models.Audit.ApiCall.create({
-          user_uuid: user1Uuid,
-        });
-        await controllers.CategoryCtrl.updateCategory({
-          auditApiCallUuid: apiCall.get('uuid'),
-          categoryUuid,
-          name: sampleData.categories.category1.name,
-          parentUuid: parentCategory.get('uuid'),
-        });
-      } catch (err) {
-        assert.isOk(err);
-        assert.strictEqual(err.message, 'Unauthorized');
-      }
-      assert.strictEqual(trackChangesSpy.callCount, 0);
-    });
-
-    it('should resolve updating the parent category', async function() {
-      const parentCategory = await models.Category.create({
-        household_uuid: user1HouseholdUuid,
-        name: sampleData.categories.category2.name,
-      });
-      const apiCall = await models.Audit.ApiCall.create({
-        user_uuid: user1Uuid,
-      });
-      await controllers.CategoryCtrl.updateCategory({
-        auditApiCallUuid: apiCall.get('uuid'),
-        categoryUuid,
-        name: sampleData.categories.category1.name,
-        parentUuid: parentCategory.get('uuid'),
-      });
-
-      // Verify the Category instance.
-      const category = await models.Category.findOne({
-        attributes: ['household_uuid', 'name', 'parent_uuid', 'uuid'],
-        where: {
-          uuid: categoryUuid,
-        },
-      });
-      assert.isOk(category);
-      assert.strictEqual(category.get('household_uuid'), user1HouseholdUuid);
-      assert.strictEqual(category.get('name'), sampleData.categories.category1.name);
-      assert.strictEqual(category.get('parent_uuid'), parentCategory.get('uuid'));
-    });
-
-    it('should resolve removing the parent category', async function() {
-      const apiCall = await models.Audit.ApiCall.create({
-        user_uuid: user1Uuid,
-      });
-      await controllers.CategoryCtrl.updateCategory({
-        auditApiCallUuid: apiCall.get('uuid'),
-        categoryUuid,
-        name: sampleData.categories.category1.name,
-        parentUuid: null,
-      });
-
-      // Verify the Category instance.
-      const category = await models.Category.findOne({
-        attributes: ['household_uuid', 'name', 'parent_uuid', 'uuid'],
-        where: {
-          uuid: categoryUuid,
-        },
-      });
-      assert.isOk(category);
-      assert.strictEqual(category.get('household_uuid'), user1HouseholdUuid);
-      assert.strictEqual(category.get('name'), sampleData.categories.category1.name);
-      assert.isNull(category.get('parent_uuid'));
-    });
   });
 });
