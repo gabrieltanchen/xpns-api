@@ -1,38 +1,22 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-  return sequelize.define('Expense', {
-    amount_cents: {
+  return sequelize.define('Subcategory', {
+    category_uuid: {
       allowNull: false,
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
     },
     created_at: {
       allowNull: false,
       type: Sequelize.DATE,
     },
-    date: {
-      allowNull: false,
-      type: Sequelize.DATEONLY,
-    },
     deleted_at: {
       allowNull: true,
       type: Sequelize.DATE,
     },
-    description: {
+    name: {
       allowNull: false,
       type: Sequelize.STRING,
-    },
-    household_member_uuid: {
-      allowNull: false,
-      type: Sequelize.UUID,
-    },
-    reimbursed_cents: {
-      allowNull: false,
-      type: Sequelize.INTEGER,
-    },
-    subcategory_uuid: {
-      allowNull: false,
-      type: Sequelize.UUID,
     },
     updated_at: {
       allowNull: false,
@@ -44,13 +28,9 @@ module.exports = (sequelize) => {
       primaryKey: true,
       type: Sequelize.UUID,
     },
-    vendor_uuid: {
-      allowNull: false,
-      type: Sequelize.UUID,
-    },
   }, {
     paranoid: true,
-    tableName: 'expenses',
+    tableName: 'subcategories',
     timestamps: true,
   });
 };

@@ -3,7 +3,7 @@ const TestHelper = require('../../test-helper/');
 
 const assert = chai.assert;
 
-describe('Unit:Model - Category', function() {
+describe('Unit:Model - Subcategory', function() {
   let models;
   const testHelper = new TestHelper();
 
@@ -18,11 +18,11 @@ describe('Unit:Model - Category', function() {
   });
 
   it('should have the correct table name', function() {
-    assert.strictEqual(models.Category.getTableName(), 'categories');
+    assert.strictEqual(models.Subcategory.getTableName(), 'subcategories');
   });
 
   it('should have the correct attributes', async function() {
-    const attributes = await models.Category.describe();
+    const attributes = await models.Subcategory.describe();
 
     assert.isOk(attributes);
 
@@ -54,12 +54,12 @@ describe('Unit:Model - Category', function() {
     assert.isNull(attributes.deleted_at.defaultValue);
     assert.isFalse(attributes.deleted_at.primaryKey);
 
-    // household_uuid
-    assert.isOk(attributes.household_uuid);
-    assert.strictEqual(attributes.household_uuid.type, 'UUID');
-    assert.isFalse(attributes.household_uuid.allowNull);
-    assert.isNull(attributes.household_uuid.defaultValue);
-    assert.isFalse(attributes.household_uuid.primaryKey);
+    // category_uuid
+    assert.isOk(attributes.category_uuid);
+    assert.strictEqual(attributes.category_uuid.type, 'UUID');
+    assert.isFalse(attributes.category_uuid.allowNull);
+    assert.isNull(attributes.category_uuid.defaultValue);
+    assert.isFalse(attributes.category_uuid.primaryKey);
 
     // name
     assert.isOk(attributes.name);
