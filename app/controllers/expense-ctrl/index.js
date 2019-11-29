@@ -11,22 +11,22 @@ class ExpenseCtrl {
   async createExpense({
     amountCents,
     auditApiCallUuid,
-    categoryUuid,
     date,
     description,
     householdMemberUuid,
     reimbursedCents,
+    subcategoryUuid,
     vendorUuid,
   }) {
     return createExpense({
       amountCents,
       auditApiCallUuid,
-      categoryUuid,
       date,
       description,
       expenseCtrl: this,
       householdMemberUuid,
       reimbursedCents,
+      subcategoryUuid,
       vendorUuid,
     });
   }

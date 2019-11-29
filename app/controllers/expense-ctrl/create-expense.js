@@ -7,28 +7,28 @@ const { ExpenseError } = require('../../middleware/error-handler/');
 /**
  * @param {integer} amountCents
  * @param {string} auditApiCallUuid
- * @param {string} categoryUuid
  * @param {string} date
  * @param {string} description
  * @param {object} expenseCtrl Instance of ExpenseCtrl
  * @param {string} householdMemberUuid
  * @param {integer} reimbursedCents
+ * @param {string} subcategoryUuid
  * @param {string} vendorUuid
  */
 module.exports = async({
   amountCents,
   auditApiCallUuid,
-  categoryUuid,
   date,
   description,
   expenseCtrl,
   householdMemberUuid,
   reimbursedCents,
+  subcategoryUuid,
   vendorUuid,
 }) => {
   const controllers = expenseCtrl.parent;
   const models = expenseCtrl.models;
-  if (!categoryUuid) {
+  if (!subcategoryUuid) {
     throw new ExpenseError('Category is required');
   } else if (!vendorUuid) {
     throw new ExpenseError('Vendor is required');
@@ -65,14 +65,21 @@ module.exports = async({
   }
 
   // Validate category belongs to household.
-  const category = await models.Category.findOne({
+  const subcategory = await models.Subcategory.findOne({
     attributes: ['uuid'],
+    include: [{
+      attributes: ['uuid'],
+      model: models.Category,
+      required: true,
+      where: {
+        household_uuid: user.get('household_uuid'),
+      },
+    }],
     where: {
-      household_uuid: user.get('household_uuid'),
-      uuid: categoryUuid,
+      uuid: subcategoryUuid,
     },
   });
-  if (!category) {
+  if (!subcategory) {
     throw new ExpenseError('Category not found');
   }
 
@@ -102,11 +109,11 @@ module.exports = async({
 
   const newExpense = models.Expense.build({
     amount_cents: parseInt(amountCents, 10),
-    category_uuid: category.get('uuid'),
     date: moment(date).format('YYYY-MM-DD'),
     description,
     household_member_uuid: householdMember.get('uuid'),
     reimbursed_cents: parseInt(reimbursedCents, 10),
+    subcategory_uuid: subcategory.get('uuid'),
     vendor_uuid: vendor.get('uuid'),
   });
 
