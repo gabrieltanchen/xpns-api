@@ -7,32 +7,32 @@ const { ExpenseError } = require('../../middleware/error-handler/');
 /**
  * @param {integer} amountCents
  * @param {string} auditApiCallUuid
- * @param {string} categoryUuid
  * @param {string} date
  * @param {string} description
  * @param {object} expenseCtrl Instance of ExpenseCtrl
  * @param {string} expenseUuid
  * @param {string} householdMemberUuid
  * @param {integer} reimbursedCents
+ * @param {string} subcategoryUuid
  * @param {string} vendorUuid
  */
 module.exports = async({
   amountCents,
   auditApiCallUuid,
-  categoryUuid,
   date,
   description,
   expenseCtrl,
   expenseUuid,
   householdMemberUuid,
   reimbursedCents,
+  subcategoryUuid,
   vendorUuid,
 }) => {
   const controllers = expenseCtrl.parent;
   const models = expenseCtrl.models;
   if (!expenseUuid) {
     throw new ExpenseError('Expense is required');
-  } else if (!categoryUuid) {
+  } else if (!subcategoryUuid) {
     throw new ExpenseError('Category is required');
   } else if (!vendorUuid) {
     throw new ExpenseError('Vendor is required');
@@ -71,28 +71,33 @@ module.exports = async({
   const expense = await models.Expense.findOne({
     attributes: [
       'amount_cents',
-      'category_uuid',
       'date',
       'description',
       'household_member_uuid',
       'reimbursed_cents',
+      'subcategory_uuid',
       'uuid',
       'vendor_uuid',
     ],
     include: [{
-      attributes: ['uuid'],
-      model: models.Category,
-      required: true,
-      where: {
-        household_uuid: user.get('household_uuid'),
-      },
-    }, {
       attributes: ['uuid'],
       model: models.HouseholdMember,
       required: true,
       where: {
         household_uuid: user.get('household_uuid'),
       },
+    }, {
+      attributes: ['uuid'],
+      include: [{
+        attributes: ['uuid'],
+        model: models.Category,
+        required: true,
+        where: {
+          household_uuid: user.get('household_uuid'),
+        },
+      }],
+      model: models.Subcategory,
+      required: true,
     }, {
       attributes: ['uuid'],
       model: models.Vendor,
@@ -123,18 +128,25 @@ module.exports = async({
   }
 
   // Validate category UUID.
-  if (categoryUuid !== expense.get('category_uuid')) {
-    const category = await models.Category.findOne({
+  if (subcategoryUuid !== expense.get('subcategory_uuid')) {
+    const subcategory = await models.Subcategory.findOne({
       attributes: ['uuid'],
+      include: [{
+        attributes: ['uuid'],
+        model: models.Category,
+        required: true,
+        where: {
+          household_uuid: user.get('household_uuid'),
+        },
+      }],
       where: {
-        household_uuid: user.get('household_uuid'),
-        uuid: categoryUuid,
+        uuid: subcategoryUuid,
       },
     });
-    if (!category) {
+    if (!subcategory) {
       throw new ExpenseError('Category not found');
     }
-    expense.set('category_uuid', category.get('uuid'));
+    expense.set('subcategory_uuid', subcategory.get('uuid'));
   }
 
   // Validate vendor UUID.

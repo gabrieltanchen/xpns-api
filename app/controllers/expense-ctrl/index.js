@@ -45,24 +45,24 @@ class ExpenseCtrl {
   async updateExpense({
     amountCents,
     auditApiCallUuid,
-    categoryUuid,
     date,
     description,
     expenseUuid,
     householdMemberUuid,
     reimbursedCents,
+    subcategoryUuid,
     vendorUuid,
   }) {
     return updateExpense({
       amountCents,
       auditApiCallUuid,
-      categoryUuid,
       date,
       description,
       expenseCtrl: this,
       expenseUuid,
       householdMemberUuid,
       reimbursedCents,
+      subcategoryUuid,
       vendorUuid,
     });
   }
