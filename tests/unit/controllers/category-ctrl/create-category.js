@@ -147,6 +147,7 @@ describe('Unit:Controllers - CategoryCtrl.createCategory', function() {
     });
     assert.isOk(category);
     assert.strictEqual(category.get('household_uuid'), userHouseholdUuid);
+    assert.strictEqual(category.get('name'), sampleData.categories.category1.name);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
