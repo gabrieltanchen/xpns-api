@@ -1,6 +1,7 @@
 const createCategory = require('./create-category');
 const createSubcategory = require('./create-subcategory');
 const deleteCategory = require('./delete-category');
+const deleteSubcategory = require('./delete-subcategory');
 const updateCategory = require('./update-category');
 const updateSubcategory = require('./update-subcategory');
 
@@ -42,6 +43,17 @@ class CategoryCtrl {
       auditApiCallUuid,
       categoryCtrl: this,
       categoryUuid,
+    });
+  }
+
+  async deleteSubcategory({
+    auditApiCallUuid,
+    subcategoryUuid,
+  }) {
+    return deleteSubcategory({
+      auditApiCallUuid,
+      categoryCtrl: this,
+      subcategoryUuid,
     });
   }
 
