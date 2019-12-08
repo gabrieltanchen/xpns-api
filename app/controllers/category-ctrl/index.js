@@ -2,6 +2,7 @@ const createCategory = require('./create-category');
 const createSubcategory = require('./create-subcategory');
 const deleteCategory = require('./delete-category');
 const updateCategory = require('./update-category');
+const updateSubcategory = require('./update-subcategory');
 
 class CategoryCtrl {
   constructor(parent, models) {
@@ -54,6 +55,21 @@ class CategoryCtrl {
       categoryCtrl: this,
       categoryUuid,
       name,
+    });
+  }
+
+  async updateSubcategory({
+    auditApiCallUuid,
+    categoryUuid,
+    name,
+    subcategoryUuid,
+  }) {
+    return updateSubcategory({
+      auditApiCallUuid,
+      categoryCtrl: this,
+      categoryUuid,
+      name,
+      subcategoryUuid,
     });
   }
 }

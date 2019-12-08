@@ -167,6 +167,7 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
+      assert.isTrue(err instanceof CategoryError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
