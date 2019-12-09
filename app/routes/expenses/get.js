@@ -64,18 +64,25 @@ module.exports = (app) => {
       });
 
       const expenseWhere = {};
-      if (req.query.category_uuid) {
-        const category = await models.Category.findOne({
+      if (req.query.subcategory_uuid) {
+        const subcategory = await models.Subcategory.findOne({
           attributes: ['uuid'],
+          include: [{
+            attributes: ['uuid'],
+            model: models.Category,
+            required: true,
+            where: {
+              household_uuid: user.get('household_uuid'),
+            },
+          }],
           where: {
-            household_uuid: user.get('household_uuid'),
-            uuid: req.query.category_uuid,
+            uuid: req.query.subcategory_uuid,
           },
         });
-        if (!category) {
+        if (!subcategory) {
           throw new CategoryError('Not found');
         }
-        expenseWhere.category_uuid = category.get('uuid');
+        expenseWhere.subcategory_uuid = subcategory.get('uuid');
       } else if (req.query.household_member_id) {
         const householdMember = await models.HouseholdMember.findOne({
           attributes: ['uuid'],
@@ -115,11 +122,11 @@ module.exports = (app) => {
         ],
         include: [{
           attributes: ['name', 'uuid'],
-          model: models.Category,
+          model: models.HouseholdMember,
           required: true,
         }, {
           attributes: ['name', 'uuid'],
-          model: models.HouseholdMember,
+          model: models.Subcategory,
           required: true,
         }, {
           attributes: ['name', 'uuid'],
@@ -133,18 +140,18 @@ module.exports = (app) => {
       });
 
       const included = [];
-      const categoryIds = [];
+      const subcategoryIds = [];
       const householdMemberIds = [];
       const vendorIds = [];
       expenses.rows.forEach((expense) => {
-        if (!categoryIds.includes(expense.Category.get('uuid'))) {
-          categoryIds.push(expense.Category.get('uuid'));
+        if (!subcategoryIds.includes(expense.Subcategory.get('uuid'))) {
+          subcategoryIds.push(expense.Subcategory.get('uuid'));
           included.push({
             'attributes': {
-              'name': expense.Category.get('name'),
+              'name': expense.Subcategory.get('name'),
             },
-            'id': expense.Category.get('uuid'),
-            'type': 'categories',
+            'id': expense.Subcategory.get('uuid'),
+            'type': 'subcategories',
           });
         }
         if (!householdMemberIds.includes(expense.HouseholdMember.get('uuid'))) {
@@ -183,16 +190,16 @@ module.exports = (app) => {
             },
             'id': expense.get('uuid'),
             'relationships': {
-              'category': {
-                'data': {
-                  'id': expense.Category.get('uuid'),
-                  'type': 'categories',
-                },
-              },
               'household-member': {
                 'data': {
                   'id': expense.HouseholdMember.get('uuid'),
                   'type': 'household-members',
+                },
+              },
+              'subcategory': {
+                'data': {
+                  'id': expense.Subcategory.get('uuid'),
+                  'type': 'subcategories',
                 },
               },
               'vendor': {
