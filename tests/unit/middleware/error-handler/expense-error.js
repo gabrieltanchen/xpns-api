@@ -8,7 +8,7 @@ describe('Unit:Middleware - ErrorHandler - ExpenseError', function() {
   it('should return no open queries message', function() {
     const err = new ExpenseError('No open queries');
     assert.deepEqual(err.getApiResponse(), {
-      message: 'Category or vendor ID is required.',
+      message: 'Subcategory or vendor ID is required.',
       status: 403,
     });
   });
