@@ -19,8 +19,8 @@ describe('Integration - DELETE /expenses/:uuid', function() {
   let deleteExpenseSpy;
 
   let expenseUuid;
-  let user1CategoryUuid;
   let user1HouseholdMemberUuid;
+  let user1SubcategoryUuid;
   let user1Token;
   let user1Uuid;
   let user1VendorUuid;
@@ -66,9 +66,14 @@ describe('Integration - DELETE /expenses/:uuid', function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
     });
-    user1CategoryUuid = await controllers.CategoryCtrl.createCategory({
+    const categoryUuid = await controllers.CategoryCtrl.createCategory({
       auditApiCallUuid: apiCall.get('uuid'),
       name: sampleData.categories.category1.name,
+    });
+    user1SubcategoryUuid = await controllers.CategoryCtrl.createSubcategory({
+      auditApiCallUuid: apiCall.get('uuid'),
+      categoryUuid,
+      name: sampleData.categories.category2.name,
     });
   });
 
@@ -114,11 +119,11 @@ describe('Integration - DELETE /expenses/:uuid', function() {
     expenseUuid = await controllers.ExpenseCtrl.createExpense({
       amountCents: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      categoryUuid: user1CategoryUuid,
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
       reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      subcategoryUuid: user1SubcategoryUuid,
       vendorUuid: user1VendorUuid,
     });
   });
