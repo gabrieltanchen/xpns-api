@@ -19,8 +19,8 @@ describe('Integration - PATCH /expenses/:uuid', function() {
   let updateExpenseSpy;
 
   let expenseUuid;
-  let user1Category1Uuid;
-  let user1Category2Uuid;
+  let user1Subcategory1Uuid;
+  let user1Subcategory2Uuid;
   let user1HouseholdMember1Uuid;
   let user1HouseholdMember2Uuid;
   let user1Token;
@@ -65,23 +65,33 @@ describe('Integration - PATCH /expenses/:uuid', function() {
     user1Token = await controllers.UserCtrl.getToken(user1Uuid);
   });
 
-  beforeEach('create user 1 category 1', async function() {
+  beforeEach('create user 1 subcategory 1', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
     });
-    user1Category1Uuid = await controllers.CategoryCtrl.createCategory({
+    const categoryUuid = await controllers.CategoryCtrl.createCategory({
       auditApiCallUuid: apiCall.get('uuid'),
       name: sampleData.categories.category1.name,
     });
+    user1Subcategory1Uuid = await controllers.CategoryCtrl.createSubcategory({
+      auditApiCallUuid: apiCall.get('uuid'),
+      categoryUuid,
+      name: sampleData.categories.category2.name,
+    });
   });
 
-  beforeEach('create user 1 category 2', async function() {
+  beforeEach('create user 1 subcategory 2', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
     });
-    user1Category2Uuid = await controllers.CategoryCtrl.createCategory({
+    const categoryUuid = await controllers.CategoryCtrl.createCategory({
       auditApiCallUuid: apiCall.get('uuid'),
-      name: sampleData.categories.category2.name,
+      name: sampleData.categories.category3.name,
+    });
+    user1Subcategory2Uuid = await controllers.CategoryCtrl.createSubcategory({
+      auditApiCallUuid: apiCall.get('uuid'),
+      categoryUuid,
+      name: sampleData.categories.category4.name,
     });
   });
 
@@ -147,11 +157,11 @@ describe('Integration - PATCH /expenses/:uuid', function() {
     expenseUuid = await controllers.ExpenseCtrl.createExpense({
       amountCents: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      categoryUuid: user1Category1Uuid,
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMember1Uuid,
       reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1Vendor1Uuid,
     });
   });
@@ -178,14 +188,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -221,14 +231,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -251,7 +261,7 @@ describe('Integration - PATCH /expenses/:uuid', function() {
     const updateExpenseParams = updateExpenseSpy.getCall(0).args[0];
     assert.strictEqual(updateExpenseParams.amountCents, sampleData.expenses.expense2.amount_cents);
     assert.isOk(updateExpenseParams.auditApiCallUuid);
-    assert.strictEqual(updateExpenseParams.categoryUuid, user1Category2Uuid);
+    assert.strictEqual(updateExpenseParams.subcategoryUuid, user1Subcategory2Uuid);
     assert.strictEqual(updateExpenseParams.date, sampleData.expenses.expense2.date);
     assert.strictEqual(updateExpenseParams.description, sampleData.expenses.expense2.description);
     assert.strictEqual(updateExpenseParams.householdMemberUuid, user1HouseholdMember2Uuid);
@@ -277,14 +287,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -323,14 +333,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -369,14 +379,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -420,14 +430,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -466,14 +476,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -512,14 +522,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -543,7 +553,7 @@ describe('Integration - PATCH /expenses/:uuid', function() {
     assert.strictEqual(updateExpenseSpy.callCount, 0);
   });
 
-  it('should return 422 with no category uuid', async function() {
+  it('should return 422 with no subcategory uuid', async function() {
     const res = await chai.request(server)
       .patch(`/expenses/${expenseUuid}`)
       .set('Content-Type', 'application/vnd.api+json')
@@ -558,14 +568,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': null,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': null,
               },
             },
             'vendor': {
@@ -580,9 +590,9 @@ describe('Integration - PATCH /expenses/:uuid', function() {
     expect(res).to.have.status(422);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'Category is required.',
+        detail: 'Subcategory is required.',
         source: {
-          pointer: '/data/relationships/category/data/id',
+          pointer: '/data/relationships/subcategory/data/id',
         },
       }],
     });
@@ -604,14 +614,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -650,14 +660,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': null,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -696,14 +706,14 @@ describe('Integration - PATCH /expenses/:uuid', function() {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': user1Category2Uuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': user1HouseholdMember2Uuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': user1Subcategory2Uuid,
               },
             },
             'vendor': {
@@ -730,12 +740,12 @@ describe('Integration - PATCH /expenses/:uuid', function() {
     assert.strictEqual(res.body.data.attributes['reimbursed-cents'], sampleData.expenses.expense2.reimbursed_cents);
     assert.strictEqual(res.body.data.id, expenseUuid);
     assert.isOk(res.body.data.relationships);
-    assert.isOk(res.body.data.relationships.category);
-    assert.isOk(res.body.data.relationships.category.data);
-    assert.strictEqual(res.body.data.relationships.category.data.id, user1Category2Uuid);
     assert.isOk(res.body.data.relationships['household-member']);
     assert.isOk(res.body.data.relationships['household-member'].data);
     assert.strictEqual(res.body.data.relationships['household-member'].data.id, user1HouseholdMember2Uuid);
+    assert.isOk(res.body.data.relationships.subcategory);
+    assert.isOk(res.body.data.relationships.subcategory.data);
+    assert.strictEqual(res.body.data.relationships.subcategory.data.id, user1Subcategory2Uuid);
     assert.isOk(res.body.data.relationships.vendor);
     assert.isOk(res.body.data.relationships.vendor.data);
     assert.strictEqual(res.body.data.relationships.vendor.data.id, user1Vendor2Uuid);
@@ -746,7 +756,6 @@ describe('Integration - PATCH /expenses/:uuid', function() {
     const updateExpenseParams = updateExpenseSpy.getCall(0).args[0];
     assert.strictEqual(updateExpenseParams.amountCents, sampleData.expenses.expense2.amount_cents);
     assert.isOk(updateExpenseParams.auditApiCallUuid);
-    assert.strictEqual(updateExpenseParams.categoryUuid, user1Category2Uuid);
     assert.strictEqual(updateExpenseParams.date, sampleData.expenses.expense2.date);
     assert.strictEqual(updateExpenseParams.description, sampleData.expenses.expense2.description);
     assert.strictEqual(updateExpenseParams.householdMemberUuid, user1HouseholdMember2Uuid);
@@ -754,6 +763,7 @@ describe('Integration - PATCH /expenses/:uuid', function() {
       updateExpenseParams.reimbursedCents,
       sampleData.expenses.expense2.reimbursed_cents,
     );
+    assert.strictEqual(updateExpenseParams.subcategoryUuid, user1Subcategory2Uuid);
     assert.strictEqual(updateExpenseParams.vendorUuid, user1Vendor2Uuid);
 
     // Validate Audit API call.
