@@ -18,10 +18,6 @@ module.exports = (sequelize) => {
       allowNull: false,
       type: Sequelize.STRING,
     },
-    parent_uuid: {
-      allowNull: true,
-      type: Sequelize.UUID,
-    },
     updated_at: {
       allowNull: false,
       type: Sequelize.DATE,

@@ -19,12 +19,12 @@ module.exports = (app) => {
    * @apiSuccess (200) {integer} data.attributes[reimbursed-cents]
    * @apiSuccess (200) {string} data.id
    * @apiSuccess (200) {object} data.relationships
-   * @apiSuccess (200) {object} data.relationships.category
-   * @apiSuccess (200) {object} data.relationships.category.data
-   * @apiSuccess (200) {string} data.relationships.category.data.id
    * @apiSuccess (200) {object} data.relationships[household-member]
    * @apiSuccess (200) {object} data.relationships[household-member].data
    * @apiSuccess (200) {string} data.relationships[household-member].data.id
+   * @apiSuccess (200) {object} data.relationships.subcategory
+   * @apiSuccess (200) {object} data.relationships.subcategory.data
+   * @apiSuccess (200) {string} data.relationships.subcategory.data.id
    * @apiSuccess (200) {object} data.relationships.vendor
    * @apiSuccess (200) {object} data.relationships.vendor.data
    * @apiSuccess (200) {string} data.relationships.vendor.data.id
@@ -61,18 +61,23 @@ module.exports = (app) => {
         ],
         include: [{
           attributes: ['uuid'],
-          model: models.Category,
+          model: models.HouseholdMember,
           required: true,
           where: {
             household_uuid: user.get('household_uuid'),
           },
         }, {
           attributes: ['uuid'],
-          model: models.HouseholdMember,
+          include: [{
+            attributes: ['uuid'],
+            model: models.Category,
+            required: true,
+            where: {
+              household_uuid: user.get('household_uuid'),
+            },
+          }],
+          model: models.Subcategory,
           required: true,
-          where: {
-            household_uuid: user.get('household_uuid'),
-          },
         }, {
           attributes: ['uuid'],
           model: models.Vendor,
@@ -102,16 +107,16 @@ module.exports = (app) => {
           },
           'id': expense.get('uuid'),
           'relationships': {
-            'category': {
-              'data': {
-                'id': expense.Category.get('uuid'),
-                'type': 'categories',
-              },
-            },
             'household-member': {
               'data': {
                 'id': expense.HouseholdMember.get('uuid'),
                 'type': 'household-members',
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': expense.Subcategory.get('uuid'),
+                'type': 'subcategories',
               },
             },
             'vendor': {

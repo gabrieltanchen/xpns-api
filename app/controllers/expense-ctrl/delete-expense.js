@@ -42,18 +42,23 @@ module.exports = async({
     attributes: ['uuid'],
     include: [{
       attributes: ['uuid'],
-      model: models.Category,
+      model: models.HouseholdMember,
       required: true,
       where: {
         household_uuid: user.get('household_uuid'),
       },
     }, {
       attributes: ['uuid'],
-      model: models.HouseholdMember,
+      include: [{
+        attributes: ['uuid'],
+        model: models.Category,
+        required: true,
+        where: {
+          household_uuid: user.get('household_uuid'),
+        },
+      }],
+      model: models.Subcategory,
       required: true,
-      where: {
-        household_uuid: user.get('household_uuid'),
-      },
     }, {
       attributes: ['uuid'],
       model: models.Vendor,

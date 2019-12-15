@@ -103,20 +103,15 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       name: sampleData.users.user1.lastName,
     });
     const auditLog = await models.Audit.Log.create();
-    const category1 = await models.Category.create({
+    const category = await models.Category.create({
       household_uuid: household.get('uuid'),
       name: sampleData.categories.category1.name,
-    });
-    const category2 = await models.Category.create({
-      household_uuid: household.get('uuid'),
-      name: sampleData.categories.category2.name,
-      parent_uuid: category1.get('uuid'),
     });
 
     await models.sequelize.transaction({
       isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
-      await controllers.AuditCtrl._trackNewInstance(auditLog, category2, transaction);
+      await controllers.AuditCtrl._trackNewInstance(auditLog, category, transaction);
     });
 
     const auditChanges = await models.Audit.Change.findAll({
@@ -127,32 +122,25 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     shouldTrackAttribute({
       attribute: 'deleted_at',
       auditChanges,
-      key: category2.get('uuid'),
+      key: category.get('uuid'),
       table: 'categories',
       value: null,
     });
     shouldTrackAttribute({
       attribute: 'household_uuid',
       auditChanges,
-      key: category2.get('uuid'),
+      key: category.get('uuid'),
       table: 'categories',
       value: household.get('uuid'),
     });
     shouldTrackAttribute({
       attribute: 'name',
       auditChanges,
-      key: category2.get('uuid'),
+      key: category.get('uuid'),
       table: 'categories',
-      value: sampleData.categories.category2.name,
+      value: sampleData.categories.category1.name,
     });
-    shouldTrackAttribute({
-      attribute: 'parent_uuid',
-      auditChanges,
-      key: category2.get('uuid'),
-      table: 'categories',
-      value: category1.get('uuid'),
-    });
-    assert.strictEqual(auditChanges.length, 4);
+    assert.strictEqual(auditChanges.length, 3);
   });
 
   it('should track all Expense attributes', async function() {
@@ -162,6 +150,10 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     const category = await models.Category.create({
       household_uuid: household.get('uuid'),
       name: sampleData.categories.category1.name,
+    });
+    const subcategory = await models.Subcategory.create({
+      category_uuid: category.get('uuid'),
+      name: sampleData.categories.category2.name,
     });
     const vendor = await models.Vendor.create({
       household_uuid: household.get('uuid'),
@@ -174,11 +166,11 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     const auditLog = await models.Audit.Log.create();
     const expense = await models.Expense.create({
       amount_cents: sampleData.expenses.expense1.amount_cents,
-      category_uuid: category.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       household_member_uuid: householdMember.get('uuid'),
       reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
+      subcategory_uuid: subcategory.get('uuid'),
       vendor_uuid: vendor.get('uuid'),
     });
 
@@ -208,13 +200,6 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       value: sampleData.expenses.expense1.amount_cents,
     });
     shouldTrackAttribute({
-      attribute: 'category_uuid',
-      auditChanges,
-      key: expense.get('uuid'),
-      table: 'expenses',
-      value: category.get('uuid'),
-    });
-    shouldTrackAttribute({
       attribute: 'date',
       auditChanges,
       key: expense.get('uuid'),
@@ -241,6 +226,13 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       key: expense.get('uuid'),
       table: 'expenses',
       value: sampleData.expenses.expense1.reimbursed_cents,
+    });
+    shouldTrackAttribute({
+      attribute: 'subcategory_uuid',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: subcategory.get('uuid'),
     });
     shouldTrackAttribute({
       attribute: 'vendor_uuid',
@@ -327,6 +319,55 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       key: householdMember.get('uuid'),
       table: 'household_members',
       value: sampleData.users.user1.firstName,
+    });
+    assert.strictEqual(auditChanges.length, 3);
+  });
+
+  it('should track all Subcategory attributes', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const category = await models.Category.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+    const subcategory = await models.Subcategory.create({
+      category_uuid: category.get('uuid'),
+      name: sampleData.categories.category2.name,
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackNewInstance(auditLog, subcategory, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'category_uuid',
+      auditChanges,
+      key: subcategory.get('uuid'),
+      table: 'subcategories',
+      value: category.get('uuid'),
+    });
+    shouldTrackAttribute({
+      attribute: 'deleted_at',
+      auditChanges,
+      key: subcategory.get('uuid'),
+      table: 'subcategories',
+      value: null,
+    });
+    shouldTrackAttribute({
+      attribute: 'name',
+      auditChanges,
+      key: subcategory.get('uuid'),
+      table: 'subcategories',
+      value: sampleData.categories.category2.name,
     });
     assert.strictEqual(auditChanges.length, 3);
   });

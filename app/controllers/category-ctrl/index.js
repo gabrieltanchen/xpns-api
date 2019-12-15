@@ -1,6 +1,9 @@
 const createCategory = require('./create-category');
+const createSubcategory = require('./create-subcategory');
 const deleteCategory = require('./delete-category');
+const deleteSubcategory = require('./delete-subcategory');
 const updateCategory = require('./update-category');
+const updateSubcategory = require('./update-subcategory');
 
 class CategoryCtrl {
   constructor(parent, models) {
@@ -11,13 +14,24 @@ class CategoryCtrl {
   async createCategory({
     auditApiCallUuid,
     name,
-    parentUuid,
   }) {
     return createCategory({
       auditApiCallUuid,
       categoryCtrl: this,
       name,
-      parentUuid,
+    });
+  }
+
+  async createSubcategory({
+    auditApiCallUuid,
+    categoryUuid,
+    name,
+  }) {
+    return createSubcategory({
+      auditApiCallUuid,
+      categoryCtrl: this,
+      categoryUuid,
+      name,
     });
   }
 
@@ -32,18 +46,42 @@ class CategoryCtrl {
     });
   }
 
+  async deleteSubcategory({
+    auditApiCallUuid,
+    subcategoryUuid,
+  }) {
+    return deleteSubcategory({
+      auditApiCallUuid,
+      categoryCtrl: this,
+      subcategoryUuid,
+    });
+  }
+
   async updateCategory({
     auditApiCallUuid,
     categoryUuid,
     name,
-    parentUuid,
   }) {
     return updateCategory({
       auditApiCallUuid,
       categoryCtrl: this,
       categoryUuid,
       name,
-      parentUuid,
+    });
+  }
+
+  async updateSubcategory({
+    auditApiCallUuid,
+    categoryUuid,
+    name,
+    subcategoryUuid,
+  }) {
+    return updateSubcategory({
+      auditApiCallUuid,
+      categoryCtrl: this,
+      categoryUuid,
+      name,
+      subcategoryUuid,
     });
   }
 }

@@ -14,12 +14,12 @@ module.exports = (app) => {
    * @apiParam {string} data.attributes.description
    * @apiParam {integer} data.attributes[reimbursed-cents]
    * @apiParam {object} data.relationships
-   * @apiParam {object} data.relationships.category
-   * @apiParam {object} data.relationships.category.data
-   * @apiParam {string} data.relationships.category.data.id
    * @apiParam {object} data.relationships[household-member]
    * @apiParam {object} data.relationships[household-member].data
    * @apiParam {string} data.relationships[household-member].data.id
+   * @apiParam {object} data.relationships.subcategory
+   * @apiParam {object} data.relationships.subcategory.data
+   * @apiParam {string} data.relationships.subcategory.data.id
    * @apiParam {object} data.relationships.vendor
    * @apiParam {object} data.relationships.vendor.data
    * @apiParam {string} data.relationships.vendor.data.id
@@ -40,11 +40,11 @@ module.exports = (app) => {
       const expenseUuid = await controllers.ExpenseCtrl.createExpense({
         amountCents: req.body.data.attributes['amount-cents'],
         auditApiCallUuid: req.auditApiCallUuid,
-        categoryUuid: req.body.data.relationships.category.data.id,
         date: req.body.data.attributes.date,
         description: req.body.data.attributes.description,
         householdMemberUuid: req.body.data.relationships['household-member'].data.id,
         reimbursedCents: req.body.data.attributes['reimbursed-cents'],
+        subcategoryUuid: req.body.data.relationships.subcategory.data.id,
         vendorUuid: req.body.data.relationships.vendor.data.id,
       });
 
@@ -59,11 +59,11 @@ module.exports = (app) => {
         ],
         include: [{
           attributes: ['name', 'uuid'],
-          model: models.Category,
+          model: models.HouseholdMember,
           required: true,
         }, {
           attributes: ['name', 'uuid'],
-          model: models.HouseholdMember,
+          model: models.Subcategory,
           required: true,
         }, {
           attributes: ['name', 'uuid'],
@@ -88,16 +88,16 @@ module.exports = (app) => {
           },
           'id': expenseUuid,
           'relationships': {
-            'category': {
-              'data': {
-                'id': expense.Category.get('uuid'),
-                'type': 'categories',
-              },
-            },
             'household-member': {
               'data': {
                 'id': expense.HouseholdMember.get('uuid'),
                 'type': 'household-members',
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': expense.Subcategory.get('uuid'),
+                'type': 'subcategories',
               },
             },
             'vendor': {

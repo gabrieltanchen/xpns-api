@@ -16,8 +16,6 @@ describe('Integration - GET /categories', function() {
   const testHelper = new TestHelper();
 
   let category1Uuid;
-  let category1Subcategory1Uuid;
-  let category1Subcategory2Uuid;
   let category2Uuid;
   let category3Uuid;
   let category4Uuid;
@@ -123,28 +121,6 @@ describe('Integration - GET /categories', function() {
     category1Uuid = await controllers.CategoryCtrl.createCategory({
       auditApiCallUuid: apiCall.get('uuid'),
       name: sampleData.categories.category1.name,
-    });
-  });
-
-  before('create category 1 subcategory 1', async function() {
-    const apiCall = await models.Audit.ApiCall.create({
-      user_uuid: user1Uuid,
-    });
-    category1Subcategory1Uuid = await controllers.CategoryCtrl.createCategory({
-      auditApiCallUuid: apiCall.get('uuid'),
-      name: sampleData.categories.category29.name,
-      parentUuid: category1Uuid,
-    });
-  });
-
-  before('create category 1 subcategory 2', async function() {
-    const apiCall = await models.Audit.ApiCall.create({
-      user_uuid: user1Uuid,
-    });
-    category1Subcategory2Uuid = await controllers.CategoryCtrl.createCategory({
-      auditApiCallUuid: apiCall.get('uuid'),
-      name: sampleData.categories.category30.name,
-      parentUuid: category1Uuid,
     });
   });
 
@@ -736,59 +712,5 @@ describe('Integration - GET /categories', function() {
     assert.isOk(res.body.meta);
     assert.strictEqual(res.body.meta.pages, 1);
     assert.strictEqual(res.body.meta.total, 1);
-  });
-
-  it('should return 404 with parent category 1 as user 2', async function() {
-    const res = await chai.request(server)
-      .get(`/categories?parent_uuid=${category1Uuid}`)
-      .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user2Token}`);
-    expect(res).to.have.status(404);
-    assert.deepEqual(res.body, {
-      errors: [{
-        detail: 'Unable to find category.',
-      }],
-    });
-  });
-
-  it('should return 200 and 2 subcategories with parent category 1 as user 1', async function() {
-    const res = await chai.request(server)
-      .get(`/categories?parent_uuid=${category1Uuid}`)
-      .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user1Token}`);
-    expect(res).to.have.status(200);
-    assert.isOk(res.body.data);
-    assert.strictEqual(res.body.data.length, 2);
-
-    // Category 1 Subcategory 1
-    assert.isOk(res.body.data[0].attributes);
-    assert.isOk(res.body.data[0].attributes['created-at']);
-    assert.strictEqual(res.body.data[0].attributes.name, sampleData.categories.category29.name);
-    assert.strictEqual(res.body.data[0].id, category1Subcategory1Uuid);
-    assert.strictEqual(res.body.data[0].type, 'categories');
-
-    // Category 1 Subcategory 2
-    assert.isOk(res.body.data[1].attributes);
-    assert.isOk(res.body.data[1].attributes['created-at']);
-    assert.strictEqual(res.body.data[1].attributes.name, sampleData.categories.category30.name);
-    assert.strictEqual(res.body.data[1].id, category1Subcategory2Uuid);
-    assert.strictEqual(res.body.data[1].type, 'categories');
-
-    assert.isOk(res.body.meta);
-    assert.strictEqual(res.body.meta.pages, 1);
-    assert.strictEqual(res.body.meta.total, 2);
-  });
-
-  it('should return 200 and 0 subcategories with parent category 2 as user 1', async function() {
-    const res = await chai.request(server)
-      .get(`/categories?parent_uuid=${category2Uuid}`)
-      .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user1Token}`);
-    expect(res).to.have.status(200);
-    assert.isOk(res.body.data);
-    assert.strictEqual(res.body.data.length, 0);
-    assert.isOk(res.body.meta);
-    assert.strictEqual(res.body.meta.pages, 0);
-    assert.strictEqual(res.body.meta.total, 0);
   });
 });

@@ -54,13 +54,6 @@ describe('Unit:Model - Expense', function() {
     assert.isNull(attributes.deleted_at.defaultValue);
     assert.isFalse(attributes.deleted_at.primaryKey);
 
-    // category_uuid
-    assert.isOk(attributes.category_uuid);
-    assert.strictEqual(attributes.category_uuid.type, 'UUID');
-    assert.isFalse(attributes.category_uuid.allowNull);
-    assert.isNull(attributes.category_uuid.defaultValue);
-    assert.isFalse(attributes.category_uuid.primaryKey);
-
     // vendor_uuid
     assert.isOk(attributes.vendor_uuid);
     assert.strictEqual(attributes.vendor_uuid.type, 'UUID');
@@ -102,6 +95,13 @@ describe('Unit:Model - Expense', function() {
     assert.isFalse(attributes.household_member_uuid.allowNull);
     assert.isNull(attributes.household_member_uuid.defaultValue);
     assert.isFalse(attributes.household_member_uuid.primaryKey);
+
+    // subcategory_uuid
+    assert.isOk(attributes.subcategory_uuid);
+    assert.strictEqual(attributes.subcategory_uuid.type, 'UUID');
+    assert.isFalse(attributes.subcategory_uuid.allowNull);
+    assert.isNull(attributes.subcategory_uuid.defaultValue);
+    assert.isFalse(attributes.subcategory_uuid.primaryKey);
 
     assert.strictEqual(Object.keys(attributes).length, 11);
   });
