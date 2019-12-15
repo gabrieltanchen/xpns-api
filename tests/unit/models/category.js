@@ -61,13 +61,6 @@ describe('Unit:Model - Category', function() {
     assert.isNull(attributes.household_uuid.defaultValue);
     assert.isFalse(attributes.household_uuid.primaryKey);
 
-    // parent_uuid
-    assert.isOk(attributes.parent_uuid);
-    assert.strictEqual(attributes.parent_uuid.type, 'UUID');
-    assert.isTrue(attributes.parent_uuid.allowNull);
-    assert.isNull(attributes.parent_uuid.defaultValue);
-    assert.isFalse(attributes.parent_uuid.primaryKey);
-
     // name
     assert.isOk(attributes.name);
     assert.strictEqual(attributes.name.type, 'CHARACTER VARYING(255)');
@@ -75,6 +68,6 @@ describe('Unit:Model - Category', function() {
     assert.isNull(attributes.name.defaultValue);
     assert.isFalse(attributes.name.primaryKey);
 
-    assert.strictEqual(Object.keys(attributes).length, 7);
+    assert.strictEqual(Object.keys(attributes).length, 6);
   });
 });

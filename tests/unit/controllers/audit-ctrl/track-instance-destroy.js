@@ -134,6 +134,10 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       household_uuid: household.get('uuid'),
       name: sampleData.categories.category1.name,
     });
+    const subcategory = await models.Subcategory.create({
+      category_uuid: category.get('uuid'),
+      name: sampleData.categories.category2.name,
+    });
     const vendor = await models.Vendor.create({
       household_uuid: household.get('uuid'),
       name: sampleData.vendors.vendor1.name,
@@ -145,11 +149,11 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     const auditLog = await models.Audit.Log.create();
     const expense = await models.Expense.create({
       amount_cents: sampleData.expenses.expense1.amount_cents,
-      category_uuid: category.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       household_member_uuid: householdMember.get('uuid'),
       reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
+      subcategory_uuid: subcategory.get('uuid'),
       vendor_uuid: vendor.get('uuid'),
     });
 
@@ -270,6 +274,55 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       paranoid: false,
       where: {
         uuid: householdMember.get('uuid'),
+      },
+    }));
+  });
+
+  it('should track deleting a Subcategory', async function() {
+    const auditLog = await models.Audit.Log.create();
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const category = await models.Category.create({
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+    const subcategory = await models.Subcategory.create({
+      category_uuid: category.get('uuid'),
+      name: sampleData.categories.category2.name,
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, subcategory, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'subcategories'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === subcategory.get('uuid');
+    });
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the Subcategory is deleted.
+    assert.isNull(await models.Subcategory.findOne({
+      where: {
+        uuid: subcategory.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.Subcategory.findOne({
+      paranoid: false,
+      where: {
+        uuid: subcategory.get('uuid'),
       },
     }));
   });

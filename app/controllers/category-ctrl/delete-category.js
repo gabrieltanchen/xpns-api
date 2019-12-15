@@ -49,13 +49,13 @@ module.exports = async({
     throw new CategoryError('Not found');
   }
 
-  // Search for any child categories. If any exist, don't allow deletion.
-  const childCategoryCount = await models.Category.count({
+  // Search for any subcategories. If any exist, don't allow deletion.
+  const subcategoryCount = await models.Subcategory.count({
     where: {
-      parent_uuid: category.get('uuid'),
+      category_uuid: category.get('uuid'),
     },
   });
-  if (childCategoryCount > 0) {
+  if (subcategoryCount > 0) {
     throw new CategoryError('Cannot delete with subcategories');
   }
 
