@@ -18,8 +18,8 @@ describe('Integration - POST /expenses', function() {
 
   let createExpenseSpy;
 
-  let categoryUuid;
   let householdMemberUuid;
+  let subcategoryUuid;
   let userToken;
   let userUuid;
   let vendorUuid;
@@ -63,9 +63,14 @@ describe('Integration - POST /expenses', function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: userUuid,
     });
-    categoryUuid = await controllers.CategoryCtrl.createCategory({
+    const categoryUuid = await controllers.CategoryCtrl.createCategory({
       auditApiCallUuid: apiCall.get('uuid'),
       name: sampleData.categories.category1.name,
+    });
+    subcategoryUuid = await controllers.CategoryCtrl.createSubcategory({
+      auditApiCallUuid: apiCall.get('uuid'),
+      categoryUuid,
+      name: sampleData.categories.category2.name,
     });
   });
 
@@ -110,14 +115,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -151,14 +156,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -195,14 +200,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -239,14 +244,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -288,14 +293,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -332,14 +337,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': null,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -376,14 +381,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': '12.34',
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -406,7 +411,7 @@ describe('Integration - POST /expenses', function() {
     assert.strictEqual(createExpenseSpy.callCount, 0);
   });
 
-  it('should return 422 with no category uuid', async function() {
+  it('should return 422 with no subcategory uuid', async function() {
     const res = await chai.request(server)
       .post('/expenses')
       .set('Content-Type', 'application/vnd.api+json')
@@ -420,14 +425,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': null,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': null,
               },
             },
             'vendor': {
@@ -441,9 +446,9 @@ describe('Integration - POST /expenses', function() {
     expect(res).to.have.status(422);
     assert.deepEqual(res.body, {
       errors: [{
-        detail: 'Category is required.',
+        detail: 'Subcategory is required.',
         source: {
-          pointer: '/data/relationships/category/data/id',
+          pointer: '/data/relationships/subcategory/data/id',
         },
       }],
     });
@@ -464,14 +469,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -508,14 +513,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': null,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -552,14 +557,14 @@ describe('Integration - POST /expenses', function() {
             'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
-            'category': {
-              'data': {
-                'id': categoryUuid,
-              },
-            },
             'household-member': {
               'data': {
                 'id': householdMemberUuid,
+              },
+            },
+            'subcategory': {
+              'data': {
+                'id': subcategoryUuid,
               },
             },
             'vendor': {
@@ -585,12 +590,12 @@ describe('Integration - POST /expenses', function() {
     assert.strictEqual(res.body.data.attributes['reimbursed-cents'], sampleData.expenses.expense1.reimbursed_cents);
     assert.isOk(res.body.data.id);
     assert.isOk(res.body.data.relationships);
-    assert.isOk(res.body.data.relationships.category);
-    assert.isOk(res.body.data.relationships.category.data);
-    assert.strictEqual(res.body.data.relationships.category.data.id, categoryUuid);
     assert.isOk(res.body.data.relationships['household-member']);
     assert.isOk(res.body.data.relationships['household-member'].data);
     assert.strictEqual(res.body.data.relationships['household-member'].data.id, householdMemberUuid);
+    assert.isOk(res.body.data.relationships.subcategory);
+    assert.isOk(res.body.data.relationships.subcategory.data);
+    assert.strictEqual(res.body.data.relationships.subcategory.data.id, subcategoryUuid);
     assert.isOk(res.body.data.relationships.vendor);
     assert.isOk(res.body.data.relationships.vendor.data);
     assert.strictEqual(res.body.data.relationships.vendor.data.id, vendorUuid);
@@ -602,7 +607,7 @@ describe('Integration - POST /expenses', function() {
     assert.isOk(createExpenseParams.auditApiCallUuid);
     assert.strictEqual(createExpenseParams.amountCents, sampleData.expenses.expense1.amount_cents);
     assert.isOk(createExpenseParams.auditApiCallUuid);
-    assert.strictEqual(createExpenseParams.categoryUuid, categoryUuid);
+    assert.strictEqual(createExpenseParams.subcategoryUuid, subcategoryUuid);
     assert.strictEqual(createExpenseParams.date, sampleData.expenses.expense1.date);
     assert.strictEqual(createExpenseParams.description, sampleData.expenses.expense1.description);
     assert.strictEqual(createExpenseParams.householdMemberUuid, householdMemberUuid);

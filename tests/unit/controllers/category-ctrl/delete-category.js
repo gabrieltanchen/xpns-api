@@ -217,16 +217,16 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
     assert.isOk(trackChangesParams.transaction);
   });
 
-  describe('when the category has a child category', function() {
-    let childCategoryUuid;
+  describe('when the category has a subcategory', function() {
+    let subcategoryUuid;
 
     beforeEach('create child category', async function() {
-      const childCategory = await models.Category.create({
+      const subcategory = await models.Subcategory.create({
+        category_uuid: categoryUuid,
         household_uuid: user1HouseholdUuid,
         name: sampleData.categories.category2.name,
-        parent_uuid: categoryUuid,
       });
-      childCategoryUuid = childCategory.get('uuid');
+      subcategoryUuid = subcategory.get('uuid');
     });
 
     it('should reject when deleting the parent', async function() {
@@ -247,9 +247,9 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
     });
 
     it('should resolve when the child category is deleted', async function() {
-      await models.Category.destroy({
+      await models.Subcategory.destroy({
         where: {
-          uuid: childCategoryUuid,
+          uuid: subcategoryUuid,
         },
       });
 

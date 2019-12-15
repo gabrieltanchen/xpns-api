@@ -16,12 +16,12 @@ describe('Integration - GET /expenses/:uuid', function() {
   const testHelper = new TestHelper();
 
   let expenseUuid;
-  let user1CategoryUuid;
   let user1HouseholdMemberUuid;
+  let user1SubcategoryUuid;
   let user1Token;
   let user1Uuid;
   let user1VendorUuid;
-  let user2CategoryUuid;
+  let user2SubcategoryUuid;
   let user2Token;
   let user2Uuid;
   let user2VendorUuid;
@@ -54,13 +54,18 @@ describe('Integration - GET /expenses/:uuid', function() {
     user1Token = await controllers.UserCtrl.getToken(user1Uuid);
   });
 
-  beforeEach('create user 1 category', async function() {
+  beforeEach('create user 1 subcategory', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
     });
-    user1CategoryUuid = await controllers.CategoryCtrl.createCategory({
+    const categoryUuid = await controllers.CategoryCtrl.createCategory({
       auditApiCallUuid: apiCall.get('uuid'),
       name: sampleData.categories.category1.name,
+    });
+    user1SubcategoryUuid = await controllers.CategoryCtrl.createSubcategory({
+      auditApiCallUuid: apiCall.get('uuid'),
+      categoryUuid,
+      name: sampleData.categories.category2.name,
     });
   });
 
@@ -99,13 +104,18 @@ describe('Integration - GET /expenses/:uuid', function() {
     user2Token = await controllers.UserCtrl.getToken(user2Uuid);
   });
 
-  beforeEach('create user 2 category', async function() {
+  beforeEach('create user 2 subcategory', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user2Uuid,
     });
-    user2CategoryUuid = await controllers.CategoryCtrl.createCategory({
+    const categoryUuid = await controllers.CategoryCtrl.createCategory({
       auditApiCallUuid: apiCall.get('uuid'),
-      name: sampleData.categories.category1.name,
+      name: sampleData.categories.category3.name,
+    });
+    user2SubcategoryUuid = await controllers.CategoryCtrl.createSubcategory({
+      auditApiCallUuid: apiCall.get('uuid'),
+      categoryUuid,
+      name: sampleData.categories.category4.name,
     });
   });
 
@@ -136,11 +146,11 @@ describe('Integration - GET /expenses/:uuid', function() {
     expenseUuid = await controllers.ExpenseCtrl.createExpense({
       amountCents: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      categoryUuid: user1CategoryUuid,
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
       reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      subcategoryUuid: user1SubcategoryUuid,
       vendorUuid: user1VendorUuid,
     });
   });
@@ -195,7 +205,7 @@ describe('Integration - GET /expenses/:uuid', function() {
   // This should not happen.
   it('should return 404 when the expense category belongs to a different household', async function() {
     await models.Expense.update({
-      category_uuid: user2CategoryUuid,
+      subcategory_uuid: user2SubcategoryUuid,
     }, {
       where: {
         uuid: expenseUuid,
@@ -275,12 +285,12 @@ describe('Integration - GET /expenses/:uuid', function() {
     assert.strictEqual(res.body.data.attributes['reimbursed-cents'], sampleData.expenses.expense1.reimbursed_cents);
     assert.strictEqual(res.body.data.id, expenseUuid);
     assert.isOk(res.body.data.relationships);
-    assert.isOk(res.body.data.relationships.category);
-    assert.isOk(res.body.data.relationships.category.data);
-    assert.strictEqual(res.body.data.relationships.category.data.id, user1CategoryUuid);
     assert.isOk(res.body.data.relationships['household-member']);
     assert.isOk(res.body.data.relationships['household-member'].data);
     assert.strictEqual(res.body.data.relationships['household-member'].data.id, user1HouseholdMemberUuid);
+    assert.isOk(res.body.data.relationships.subcategory);
+    assert.isOk(res.body.data.relationships.subcategory.data);
+    assert.strictEqual(res.body.data.relationships.subcategory.data.id, user1SubcategoryUuid);
     assert.isOk(res.body.data.relationships.vendor);
     assert.isOk(res.body.data.relationships.vendor.data);
     assert.strictEqual(res.body.data.relationships.vendor.data.id, user1VendorUuid);

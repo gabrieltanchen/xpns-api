@@ -6,10 +6,6 @@ module.exports = (sequelize) => {
       allowNull: false,
       type: Sequelize.INTEGER,
     },
-    category_uuid: {
-      allowNull: false,
-      type: Sequelize.UUID,
-    },
     created_at: {
       allowNull: false,
       type: Sequelize.DATE,
@@ -33,6 +29,10 @@ module.exports = (sequelize) => {
     reimbursed_cents: {
       allowNull: false,
       type: Sequelize.INTEGER,
+    },
+    subcategory_uuid: {
+      allowNull: false,
+      type: Sequelize.UUID,
     },
     updated_at: {
       allowNull: false,

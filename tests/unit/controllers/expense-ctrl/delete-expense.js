@@ -17,14 +17,14 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
   let trackChangesSpy;
 
   let expenseUuid;
-  let user1CategoryUuid;
   let user1HouseholdMemberUuid;
   let user1HouseholdUuid;
+  let user1SubcategoryUuid;
   let user1Uuid;
   let user1VendorUuid;
-  let user2CategoryUuid;
   let user2HouseholdMemberUuid;
   let user2HouseholdUuid;
+  let user2SubcategoryUuid;
   let user2Uuid;
   let user2VendorUuid;
 
@@ -61,12 +61,16 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     user1Uuid = user.get('uuid');
   });
 
-  beforeEach('create user 1 category', async function() {
+  beforeEach('create user 1 subcategory', async function() {
     const category = await models.Category.create({
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category1.name,
     });
-    user1CategoryUuid = category.get('uuid');
+    const subcategory = await models.Subcategory.create({
+      category_uuid: category.get('uuid'),
+      name: sampleData.categories.category2.name,
+    });
+    user1SubcategoryUuid = subcategory.get('uuid');
   });
 
   beforeEach('create user 1 vendor', async function() {
@@ -99,12 +103,16 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     user2Uuid = user.get('uuid');
   });
 
-  beforeEach('create user 2 category', async function() {
+  beforeEach('create user 2 subcategory', async function() {
     const category = await models.Category.create({
       household_uuid: user2HouseholdUuid,
-      name: sampleData.categories.category2.name,
+      name: sampleData.categories.category3.name,
     });
-    user2CategoryUuid = category.get('uuid');
+    const subcategory = await models.Subcategory.create({
+      category_uuid: category.get('uuid'),
+      name: sampleData.categories.category4.name,
+    });
+    user2SubcategoryUuid = subcategory.get('uuid');
   });
 
   beforeEach('create user 2 vendor', async function() {
@@ -126,11 +134,11 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
   beforeEach('create expense', async function() {
     const expense = await models.Expense.create({
       amount_cents: sampleData.expenses.expense1.amount_cents,
-      category_uuid: user1CategoryUuid,
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       household_member_uuid: user1HouseholdMemberUuid,
       reimbursed_cents: sampleData.expenses.expense1.reimbursed_cents,
+      subcategory_uuid: user1SubcategoryUuid,
       vendor_uuid: user1VendorUuid,
     });
     expenseUuid = expense.get('uuid');
@@ -246,10 +254,10 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
   });
 
   // This should not happen.
-  it('should reject when the expense category belongs to a different household', async function() {
+  it('should reject when the expense subcategory belongs to a different household', async function() {
     try {
       await models.Expense.update({
-        category_uuid: user2CategoryUuid,
+        subcategory_uuid: user2SubcategoryUuid,
       }, {
         where: {
           uuid: expenseUuid,

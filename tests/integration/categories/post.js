@@ -18,10 +18,8 @@ describe('Integration - POST /categories', function() {
 
   let createCategorySpy;
 
-  let user1Token;
-  let user1Uuid;
-  let user2Token;
-  let user2Uuid;
+  let userToken;
+  let userUuid;
 
   before('get server', async function() {
     this.timeout(30000);
@@ -45,7 +43,7 @@ describe('Integration - POST /categories', function() {
 
   beforeEach('create user 1', async function() {
     const apiCall = await models.Audit.ApiCall.create();
-    user1Uuid = await controllers.UserCtrl.signUp({
+    userUuid = await controllers.UserCtrl.signUp({
       auditApiCallUuid: apiCall.get('uuid'),
       email: sampleData.users.user1.email,
       firstName: sampleData.users.user1.firstName,
@@ -55,22 +53,7 @@ describe('Integration - POST /categories', function() {
   });
 
   beforeEach('create user 1 token', async function() {
-    user1Token = await controllers.UserCtrl.getToken(user1Uuid);
-  });
-
-  beforeEach('create user 2', async function() {
-    const apiCall = await models.Audit.ApiCall.create();
-    user2Uuid = await controllers.UserCtrl.signUp({
-      auditApiCallUuid: apiCall.get('uuid'),
-      email: sampleData.users.user2.email,
-      firstName: sampleData.users.user2.firstName,
-      lastName: sampleData.users.user2.lastName,
-      password: sampleData.users.user2.password,
-    });
-  });
-
-  beforeEach('create user 2 token', async function() {
-    user2Token = await controllers.UserCtrl.getToken(user2Uuid);
+    userToken = await controllers.UserCtrl.getToken(userUuid);
   });
 
   afterEach('reset history for sinon spies', function() {
@@ -106,7 +89,7 @@ describe('Integration - POST /categories', function() {
     const res = await chai.request(server)
       .post('/categories')
       .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user1Token}`)
+      .set('Authorization', `Bearer ${userToken}`)
       .send({
         'data': {
           'attributes': {
@@ -131,7 +114,7 @@ describe('Integration - POST /categories', function() {
     const res = await chai.request(server)
       .post('/categories')
       .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user1Token}`)
+      .set('Authorization', `Bearer ${userToken}`)
       .send({
         'data': {
           'attributes': {
@@ -173,97 +156,6 @@ describe('Integration - POST /categories', function() {
     assert.isOk(apiCall.get('ip_address'));
     assert.strictEqual(apiCall.get('route'), '/categories');
     assert.isOk(apiCall.get('user_agent'));
-    assert.strictEqual(apiCall.get('user_uuid'), user1Uuid);
-  });
-
-  describe('when creating a subcategory', function() {
-    let categoryUuid;
-
-    beforeEach('create parent category', async function() {
-      const apiCall = await models.Audit.ApiCall.create({
-        user_uuid: user1Uuid,
-      });
-      categoryUuid = await controllers.CategoryCtrl.createCategory({
-        auditApiCallUuid: apiCall.get('uuid'),
-        name: sampleData.categories.category1.name,
-      });
-    });
-
-    beforeEach('reset createCategory spy', function() {
-      createCategorySpy.resetHistory();
-    });
-
-    it('should return 404 with the wrong auth token', async function() {
-      const res = await chai.request(server)
-        .post('/categories')
-        .set('Content-Type', 'application/vnd.api+json')
-        .set('Authorization', `Bearer ${user2Token}`)
-        .send({
-          'data': {
-            'attributes': {
-              'name': sampleData.categories.category2.name,
-              'parent-uuid': categoryUuid,
-            },
-            'type': 'categories',
-          },
-        });
-      expect(res).to.have.status(404);
-      assert.deepEqual(res.body, {
-        errors: [{
-          detail: 'Could not find parent category.',
-        }],
-      });
-    });
-
-    it('should return 201 with a valid parent category', async function() {
-      const res = await chai.request(server)
-        .post('/categories')
-        .set('Content-Type', 'application/vnd.api+json')
-        .set('Authorization', `Bearer ${user1Token}`)
-        .send({
-          'data': {
-            'attributes': {
-              'name': sampleData.categories.category2.name,
-              'parent-uuid': categoryUuid,
-            },
-            'type': 'categories',
-          },
-        });
-      expect(res).to.have.status(201);
-      assert.isOk(res.body.data);
-      assert.isOk(res.body.data.attributes);
-      assert.isOk(res.body.data.attributes['created-at']);
-      assert.strictEqual(res.body.data.attributes.name, sampleData.categories.category2.name);
-      assert.isOk(res.body.data.id);
-      assert.strictEqual(res.body.data.type, 'categories');
-
-      // Validate CategoryCtrl.createCategory call.
-      assert.strictEqual(createCategorySpy.callCount, 1);
-      const createCategoryParams = createCategorySpy.getCall(0).args[0];
-      assert.isOk(createCategoryParams.auditApiCallUuid);
-      assert.strictEqual(createCategoryParams.name, sampleData.categories.category2.name);
-      assert.strictEqual(createCategoryParams.parentUuid, categoryUuid);
-
-      // Validate Audit API call.
-      const apiCall = await models.Audit.ApiCall.findOne({
-        attributes: [
-          'http_method',
-          'ip_address',
-          'route',
-          'user_agent',
-          'user_uuid',
-          'uuid',
-        ],
-        where: {
-          uuid: createCategoryParams.auditApiCallUuid,
-        },
-      });
-      assert.isOk(apiCall);
-      assert.strictEqual(apiCall.get('http_method'), 'POST');
-      assert.isOk(apiCall.get('ip_address'));
-      assert.strictEqual(apiCall.get('route'), '/categories');
-      assert.isOk(apiCall.get('user_agent'));
-      assert.strictEqual(apiCall.get('user_uuid'), user1Uuid);
-    });
+    assert.strictEqual(apiCall.get('user_uuid'), userUuid);
   });
 });

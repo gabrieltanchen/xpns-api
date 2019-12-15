@@ -12,6 +12,11 @@ module.exports = class CategoryError extends Error {
         message: 'Cannot delete when there are subcategories remaining.',
         status: 422,
       };
+    case 'No open queries':
+      return {
+        message: 'Category ID is required.',
+        status: 403,
+      };
     case 'Not found':
       return {
         message: 'Unable to find category.',

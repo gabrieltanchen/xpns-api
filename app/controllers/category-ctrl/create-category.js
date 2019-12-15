@@ -6,13 +6,11 @@ const { CategoryError } = require('../../middleware/error-handler/');
  * @param {string} auditApiCallUuid
  * @param {object} categoryCtrl Instance of CategoryCtrl
  * @param {string} name
- * @param {string} parentUuid
  */
 module.exports = async({
   auditApiCallUuid,
   categoryCtrl,
   name,
-  parentUuid,
 }) => {
   const controllers = categoryCtrl.parent;
   const models = categoryCtrl.models;
@@ -40,24 +38,9 @@ module.exports = async({
     throw new CategoryError('Audit user does not exist');
   }
 
-  let parentCategory;
-  if (parentUuid) {
-    parentCategory = await models.Category.findOne({
-      attributes: ['uuid'],
-      where: {
-        household_uuid: user.get('household_uuid'),
-        uuid: parentUuid,
-      },
-    });
-    if (!parentCategory) {
-      throw new CategoryError('Parent category not found');
-    }
-  }
-
   const newCategory = models.Category.build({
     household_uuid: user.get('household_uuid'),
     name,
-    parent_uuid: (parentCategory) ? parentCategory.get('uuid') : null,
   });
 
   await models.sequelize.transaction({
