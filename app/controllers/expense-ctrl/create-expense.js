@@ -64,7 +64,7 @@ module.exports = async({
     throw new ExpenseError('Audit user does not exist');
   }
 
-  // Validate category belongs to household.
+  // Validate subcategory belongs to household.
   const subcategory = await models.Subcategory.findOne({
     attributes: ['uuid'],
     include: [{

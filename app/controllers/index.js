@@ -1,4 +1,5 @@
 const AuditCtrl = require('./audit-ctrl/');
+const BudgetCtrl = require('./budget-ctrl/');
 const CategoryCtrl = require('./category-ctrl/');
 const ExpenseCtrl = require('./expense-ctrl/');
 const HouseholdCtrl = require('./household-ctrl/');
@@ -10,6 +11,7 @@ class Controllers {
     this.models = models;
 
     this.AuditCtrl = new AuditCtrl(this, models);
+    this.BudgetCtrl = new BudgetCtrl(this, models);
     this.CategoryCtrl = new CategoryCtrl(this, models);
     this.ExpenseCtrl = new ExpenseCtrl(this, models);
     this.HouseholdCtrl = new HouseholdCtrl(this, models);
