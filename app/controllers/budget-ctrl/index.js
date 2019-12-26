@@ -1,4 +1,5 @@
 const createBudget = require('./create-budget');
+const deleteBudget = require('./delete-budget');
 const updateBudget = require('./update-budget');
 
 class BudgetCtrl {
@@ -21,6 +22,17 @@ class BudgetCtrl {
       month,
       subcategoryUuid,
       year,
+    });
+  }
+
+  async deleteBudget({
+    auditApiCallUuid,
+    budgetUuid,
+  }) {
+    return deleteBudget({
+      auditApiCallUuid,
+      budgetCtrl: this,
+      budgetUuid,
     });
   }
 
