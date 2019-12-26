@@ -69,9 +69,9 @@ module.exports = async({
 
   const newBudget = models.Budget.build({
     budget_cents: budgetCents,
-    month,
+    month: parseInt(month, 10),
     subcategory_uuid: subcategory.get('uuid'),
-    year,
+    year: parseInt(year, 10),
   });
 
   await models.sequelize.transaction({

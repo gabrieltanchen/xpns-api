@@ -1,4 +1,5 @@
 const createBudget = require('./create-budget');
+const updateBudget = require('./update-budget');
 
 class BudgetCtrl {
   constructor(parent, models) {
@@ -17,6 +18,25 @@ class BudgetCtrl {
       auditApiCallUuid,
       budgetCents,
       budgetCtrl: this,
+      month,
+      subcategoryUuid,
+      year,
+    });
+  }
+
+  async updateBudget({
+    auditApiCallUuid,
+    budgetCents,
+    budgetUuid,
+    month,
+    subcategoryUuid,
+    year,
+  }) {
+    return updateBudget({
+      auditApiCallUuid,
+      budgetCents,
+      budgetCtrl: this,
+      budgetUuid,
       month,
       subcategoryUuid,
       year,
