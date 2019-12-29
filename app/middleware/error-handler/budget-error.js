@@ -7,6 +7,16 @@ module.exports = class BudgetError extends Error {
   getApiResponse() {
     const message = this.message;
     switch (message) {
+    case 'Invalid month':
+      return {
+        message: 'Invalid month provided.',
+        status: 403,
+      };
+    case 'Invalid year':
+      return {
+        message: 'Invalid year provided.',
+        status: 403,
+      };
     case 'Not found':
       return {
         message: 'Unable to find budget.',
