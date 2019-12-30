@@ -90,7 +90,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       year: sampleData.budgets.budget1.year,
     });
     user1BudgetUuid = budget.get('uuid');
-  })
+  });
 
   beforeEach('create user 2', async function() {
     const household = await models.Household.create({
