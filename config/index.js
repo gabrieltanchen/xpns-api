@@ -15,6 +15,15 @@ case 'test':
   nconf.set('DATABASE_URL', 'postgres://finance:finance@localhost/finance_test');
   nconf.set('jwtPrivateKey', 'fu&-?4XFPQM^5H@NcZ-#_K6t5XaePQn4-F5?yahA^xX+ywUAzJG5qDpDL6U9PvLn');
   break;
+case 'production':
+  if (!nconf.get('DATABASE_URL')) {
+    nconf.set('DATABASE_URL', 'postgres://finance:finance@localhost/finance_production');
+  }
+  if (!nconf.get('jwtPrivateKey')) {
+    nconf.set('jwtPrivateKey', 'bgTzhX$wdFzg-4%rT!k$tLU-N=*4rz#JfkLgAYtSd$t3JGqd2*CeYVur3g?GmE+e');
+  }
+  nconf.set('NODE_PORT', '8081');
+  break;
 default:
   break;
 }
