@@ -22,6 +22,7 @@ case 'production':
   if (!nconf.get('jwtPrivateKey')) {
     nconf.set('jwtPrivateKey', 'bgTzhX$wdFzg-4%rT!k$tLU-N=*4rz#JfkLgAYtSd$t3JGqd2*CeYVur3g?GmE+e');
   }
+  nconf.set('NODE_PORT', '8081');
   break;
 default:
   break;
