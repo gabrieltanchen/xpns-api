@@ -1,5 +1,6 @@
 const express = require('express');
 
+const budgets = require('./budgets/');
 const categories = require('./categories/');
 const expenses = require('./expenses/');
 const householdMembers = require('./household-members/');
@@ -9,6 +10,7 @@ const users = require('./users/');
 const vendors = require('./vendors/');
 
 module.exports = (app) => {
+  app.use('/budgets', budgets(express.Router(), app));
   app.use('/categories', categories(express.Router(), app));
   app.use('/expenses', expenses(express.Router(), app));
   app.use('/household-members', householdMembers(express.Router(), app));

@@ -2,7 +2,7 @@
 /* istanbul ignore next */
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('subcategories', {
+    return queryInterface.createTable('budgets', {
       uuid: {
         allowNull: false,
         primaryKey: true,
@@ -20,22 +20,30 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DATE,
       },
-      category_uuid: {
+      subcategory_uuid: {
         allowNull: false,
         references: {
           key: 'uuid',
-          model: 'categories',
+          model: 'subcategories',
         },
         type: Sequelize.UUID,
       },
-      name: {
+      year: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+      },
+      month: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      budget_cents: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('subcategories');
+    return queryInterface.dropTable('budgets');
   },
 };

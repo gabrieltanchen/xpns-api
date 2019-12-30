@@ -2,6 +2,7 @@ const nconf = require('nconf');
 const Sequelize = require('sequelize');
 
 const Audit = require('./audit/');
+const Budget = require('./budget');
 const Category = require('./category');
 const Expense = require('./expense');
 const Hash = require('./hash');
@@ -34,6 +35,7 @@ class Models {
     });
 
     this.Audit = Audit(this.sequelize);
+    this.Budget = Budget(this.sequelize);
     this.Category = Category(this.sequelize);
     this.Expense = Expense(this.sequelize);
     this.Hash = Hash(this.sequelize);
@@ -63,6 +65,11 @@ class Models {
     });
     this.Audit.Log.hasMany(this.Audit.Change, {
       foreignKey: 'audit_log_uuid',
+    });
+
+    // Budget
+    this.Budget.belongsTo(this.Subcategory, {
+      foreignKey: 'subcategory_uuid',
     });
 
     // Category
@@ -107,6 +114,9 @@ class Models {
     });
 
     // Subcategory
+    this.Subcategory.hasMany(this.Budget, {
+      foreignKey: 'subcategory_uuid',
+    });
     this.Subcategory.belongsTo(this.Category, {
       foreignKey: 'category_uuid',
     });

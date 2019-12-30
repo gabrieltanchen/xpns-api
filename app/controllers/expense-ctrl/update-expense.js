@@ -127,7 +127,7 @@ module.exports = async({
     expense.set('reimbursed_cents', parseInt(reimbursedCents, 10));
   }
 
-  // Validate category UUID.
+  // Validate subcategory UUID.
   if (subcategoryUuid !== expense.get('subcategory_uuid')) {
     const subcategory = await models.Subcategory.findOne({
       attributes: ['uuid'],
