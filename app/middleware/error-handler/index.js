@@ -1,4 +1,5 @@
 const AuditError = require('./audit-error');
+const BudgetError = require('./budget-error');
 const CategoryError = require('./category-error');
 const ExpenseError = require('./expense-error');
 const HouseholdError = require('./household-error');
@@ -8,6 +9,7 @@ const VendorError = require('./vendor-error');
 
 const errorClasses = {
   AuditError,
+  BudgetError,
   CategoryError,
   ExpenseError,
   HouseholdError,

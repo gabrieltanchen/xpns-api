@@ -137,7 +137,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
     await testHelper.truncateTables();
   });
 
-  it('should reject with no category UUID', async function() {
+  it('should reject with no subcategory UUID', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
         user_uuid: user1Uuid,
@@ -481,7 +481,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
 
-  it('should reject when the category belongs to a different household', async function() {
+  it('should reject when the subcategory belongs to a different household', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
         user_uuid: user1Uuid,
