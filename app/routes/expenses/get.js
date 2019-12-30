@@ -25,12 +25,12 @@ module.exports = (app) => {
    * @apiSuccess (200) {integer} data.expenses[].attributes[reimbursed-cents]
    * @apiSuccess (200) {string} data.expenses[].id
    * @apiSuccess (200) {object} data.expenses[].relationships
-   * @apiSuccess (200) {object} data.expenses[].relationships.category
-   * @apiSuccess (200) {object} data.expenses[].relationships.category.data
-   * @apiSuccess (200) {string} data.expenses[].relationships.category.data.id
    * @apiSuccess (200) {object} data.expenses[].relationships[household-member]
    * @apiSuccess (200) {object} data.expenses[].relationships[household-member].data
    * @apiSuccess (200) {string} data.expenses[].relationships[household-member].data.id
+   * @apiSuccess (200) {object} data.expenses[].relationships.subcategory
+   * @apiSuccess (200) {object} data.expenses[].relationships.subcategory.data
+   * @apiSuccess (200) {string} data.expenses[].relationships.subcategory.data.id
    * @apiSuccess (200) {object} data.expenses[].relationships.vendor
    * @apiSuccess (200) {object} data.expenses[].relationships.vendor.data
    * @apiSuccess (200) {string} data.expenses[].relationships.vendor.data.id

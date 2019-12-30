@@ -1023,7 +1023,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.isOk(trackChangesParams.transaction);
   });
 
-  it('should reject updating the subcategory when the it does not exist', async function() {
+  it('should reject updating the subcategory when it does not exist', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
         user_uuid: user1Uuid,
@@ -1047,7 +1047,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
 
-  it('should reject updating the subcategory when the it belongs to a different household', async function() {
+  it('should reject updating the subcategory when it belongs to a different household', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
         user_uuid: user1Uuid,
