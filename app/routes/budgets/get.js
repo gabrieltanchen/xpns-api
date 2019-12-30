@@ -136,6 +136,7 @@ module.exports = (app) => {
               'subcategory': {
                 'data': {
                   'id': budget.Subcategory.get('uuid'),
+                  'type': 'subcategories',
                 },
               },
             },
