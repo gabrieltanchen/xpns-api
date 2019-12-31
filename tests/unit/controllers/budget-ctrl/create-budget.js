@@ -453,4 +453,31 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
     assert.strictEqual(trackChangesParams.newList.length, 1);
     assert.isOk(trackChangesParams.transaction);
   });
+
+  it('should reject creating a budget with a duplicate month, year and subcategory', async function() {
+    const apiCall = await models.Audit.ApiCall.create({
+      user_uuid: user1Uuid,
+    });
+    await controllers.BudgetCtrl.createBudget({
+      auditApiCallUuid: apiCall.get('uuid'),
+      budgetCents: sampleData.budgets.budget1.budget_cents,
+      month: sampleData.budgets.budget1.month,
+      subcategoryUuid: user1SubcategoryUuid,
+      year: sampleData.budgets.budget1.year,
+    });
+    try {
+      await controllers.BudgetCtrl.createBudget({
+        auditApiCallUuid: apiCall.get('uuid'),
+        budgetCents: sampleData.budgets.budget2.budget_cents,
+        month: sampleData.budgets.budget1.month,
+        subcategoryUuid: user1SubcategoryUuid,
+        year: sampleData.budgets.budget1.year,
+      });
+      throw new Error('Should have rejected');
+    } catch (err) {
+      assert.isOk(err);
+      assert.strictEqual(err.message, 'Duplicate budget');
+      assert.isTrue(err instanceof BudgetError);
+    }
+  });
 });
