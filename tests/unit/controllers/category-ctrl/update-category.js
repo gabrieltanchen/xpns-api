@@ -93,6 +93,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
         categoryUuid: null,
         name: sampleData.categories.category2.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Category is required');
@@ -111,6 +113,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
         categoryUuid,
         name: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Name is required');
@@ -126,6 +130,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
         categoryUuid,
         name: sampleData.categories.category2.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -141,6 +147,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
         categoryUuid,
         name: sampleData.categories.category2.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -164,6 +172,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
         categoryUuid,
         name: sampleData.categories.category2.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -182,6 +192,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
         categoryUuid: uuidv4(),
         name: sampleData.categories.category2.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -200,6 +212,8 @@ describe('Unit:Controllers - CategoryCtrl.updateCategory', function() {
         categoryUuid,
         name: sampleData.categories.category2.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');

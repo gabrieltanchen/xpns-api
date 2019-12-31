@@ -69,6 +69,8 @@ describe('Unit:Controllers - VendorCtrl.createVendor', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         name: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Name is required');
@@ -83,6 +85,8 @@ describe('Unit:Controllers - VendorCtrl.createVendor', function() {
         auditApiCallUuid: null,
         name: sampleData.vendors.vendor1.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -97,6 +101,8 @@ describe('Unit:Controllers - VendorCtrl.createVendor', function() {
         auditApiCallUuid: uuidv4(),
         name: sampleData.vendors.vendor1.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -119,6 +125,8 @@ describe('Unit:Controllers - VendorCtrl.createVendor', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         name: sampleData.vendors.vendor1.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');

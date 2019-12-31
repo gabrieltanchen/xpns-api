@@ -92,6 +92,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         categoryUuid: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Category is required');
@@ -106,6 +108,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
         auditApiCallUuid: null,
         categoryUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -120,6 +124,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
         auditApiCallUuid: uuidv4(),
         categoryUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -142,6 +148,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         categoryUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -159,6 +167,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         categoryUuid: uuidv4(),
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -176,6 +186,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         categoryUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -238,6 +250,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteCategory', function() {
           auditApiCallUuid: apiCall.get('uuid'),
           categoryUuid,
         });
+        /* istanbul ignore next */
+        throw new Error('Expected to reject not resolve.');
       } catch (err) {
         assert.isOk(err);
         assert.strictEqual(err.message, 'Cannot delete with subcategories');

@@ -102,6 +102,8 @@ describe('Unit:Controllers - CategoryCtrl.createSubcategory', function() {
         categoryUuid: null,
         name: sampleData.categories.category3.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Parent category is required');
@@ -120,6 +122,8 @@ describe('Unit:Controllers - CategoryCtrl.createSubcategory', function() {
         categoryUuid: user1CategoryUuid,
         name: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Name is required');
@@ -135,6 +139,8 @@ describe('Unit:Controllers - CategoryCtrl.createSubcategory', function() {
         categoryUuid: user1CategoryUuid,
         name: sampleData.categories.category3.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -150,6 +156,8 @@ describe('Unit:Controllers - CategoryCtrl.createSubcategory', function() {
         categoryUuid: user1CategoryUuid,
         name: sampleData.categories.category3.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -173,6 +181,8 @@ describe('Unit:Controllers - CategoryCtrl.createSubcategory', function() {
         categoryUuid: user1CategoryUuid,
         name: sampleData.categories.category3.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -191,6 +201,8 @@ describe('Unit:Controllers - CategoryCtrl.createSubcategory', function() {
         categoryUuid: uuidv4(),
         name: sampleData.categories.category3.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Parent category not found');
@@ -209,6 +221,8 @@ describe('Unit:Controllers - CategoryCtrl.createSubcategory', function() {
         categoryUuid: user2CategoryUuid,
         name: sampleData.categories.category3.name,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Parent category not found');

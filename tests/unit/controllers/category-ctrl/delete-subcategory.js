@@ -101,6 +101,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteSubcategory', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         subcategoryUuid: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Subcategory is required');
@@ -115,6 +117,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteSubcategory', function() {
         auditApiCallUuid: null,
         subcategoryUuid: user1SubcategoryUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -129,6 +133,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteSubcategory', function() {
         auditApiCallUuid: uuidv4(),
         subcategoryUuid: user1SubcategoryUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -151,6 +157,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteSubcategory', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         subcategoryUuid: user1SubcategoryUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -168,6 +176,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteSubcategory', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         subcategoryUuid: uuidv4(),
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -185,6 +195,8 @@ describe('Unit:Controllers - CategoryCtrl.deleteSubcategory', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         subcategoryUuid: user1SubcategoryUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');

@@ -92,6 +92,8 @@ describe('Unit:Controllers - HouseholdCtrl.deleteMember', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         householdMemberUuid: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Household member is required');
@@ -106,6 +108,8 @@ describe('Unit:Controllers - HouseholdCtrl.deleteMember', function() {
         auditApiCallUuid: null,
         householdMemberUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -120,6 +124,8 @@ describe('Unit:Controllers - HouseholdCtrl.deleteMember', function() {
         auditApiCallUuid: uuidv4(),
         householdMemberUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -142,6 +148,8 @@ describe('Unit:Controllers - HouseholdCtrl.deleteMember', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         householdMemberUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -159,6 +167,8 @@ describe('Unit:Controllers - HouseholdCtrl.deleteMember', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         householdMemberUuid: uuidv4(),
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -176,6 +186,8 @@ describe('Unit:Controllers - HouseholdCtrl.deleteMember', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         householdMemberUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');

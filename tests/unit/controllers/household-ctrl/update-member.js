@@ -93,6 +93,8 @@ describe('Unit:Controllers - HouseholdCtrl.updateMember', function() {
         householdMemberUuid: null,
         name: sampleData.users.user2.firstName,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Household member is required');
@@ -111,6 +113,8 @@ describe('Unit:Controllers - HouseholdCtrl.updateMember', function() {
         householdMemberUuid,
         name: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Name is required');
@@ -126,6 +130,8 @@ describe('Unit:Controllers - HouseholdCtrl.updateMember', function() {
         householdMemberUuid,
         name: sampleData.users.user2.firstName,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -141,6 +147,8 @@ describe('Unit:Controllers - HouseholdCtrl.updateMember', function() {
         householdMemberUuid,
         name: sampleData.users.user2.firstName,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -164,6 +172,8 @@ describe('Unit:Controllers - HouseholdCtrl.updateMember', function() {
         householdMemberUuid,
         name: sampleData.users.user2.firstName,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -182,6 +192,8 @@ describe('Unit:Controllers - HouseholdCtrl.updateMember', function() {
         householdMemberUuid: uuidv4(),
         name: sampleData.users.user2.firstName,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -200,6 +212,8 @@ describe('Unit:Controllers - HouseholdCtrl.updateMember', function() {
         householdMemberUuid,
         name: sampleData.users.user2.firstName,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');

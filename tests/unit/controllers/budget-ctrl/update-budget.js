@@ -139,6 +139,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Budget is required');
@@ -160,6 +162,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: null,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Category is required');
@@ -181,6 +185,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Year is required');
@@ -202,6 +208,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: 'invalid year',
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Year is required');
@@ -223,6 +231,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: 1999,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid year');
@@ -244,6 +254,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2051,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid year');
@@ -265,6 +277,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Month is required');
@@ -286,6 +300,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Month is required');
@@ -307,6 +323,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid month');
@@ -328,6 +346,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid month');
@@ -349,6 +369,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid budget');
@@ -370,6 +392,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid budget');
@@ -388,6 +412,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -406,6 +432,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -432,6 +460,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -453,6 +483,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -474,6 +506,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -503,6 +537,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -698,6 +734,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: uuidv4(),
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Category not found');
@@ -719,6 +757,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user2SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Category not found');

@@ -93,6 +93,8 @@ describe('Unit:Controllers - VendorCtrl.updateVendor', function() {
         name: sampleData.vendors.vendor2.name,
         vendorUuid: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Vendor is required');
@@ -111,6 +113,8 @@ describe('Unit:Controllers - VendorCtrl.updateVendor', function() {
         name: null,
         vendorUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Name is required');
@@ -126,6 +130,8 @@ describe('Unit:Controllers - VendorCtrl.updateVendor', function() {
         name: sampleData.vendors.vendor2.name,
         vendorUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -141,6 +147,8 @@ describe('Unit:Controllers - VendorCtrl.updateVendor', function() {
         name: sampleData.vendors.vendor2.name,
         vendorUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -164,6 +172,8 @@ describe('Unit:Controllers - VendorCtrl.updateVendor', function() {
         name: sampleData.vendors.vendor2.name,
         vendorUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -182,6 +192,8 @@ describe('Unit:Controllers - VendorCtrl.updateVendor', function() {
         name: sampleData.vendors.vendor2.name,
         vendorUuid: uuidv4(),
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -200,6 +212,8 @@ describe('Unit:Controllers - VendorCtrl.updateVendor', function() {
         name: sampleData.vendors.vendor2.name,
         vendorUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
