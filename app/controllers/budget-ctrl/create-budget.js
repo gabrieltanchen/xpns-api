@@ -67,6 +67,18 @@ module.exports = async({
     throw new BudgetError('Category not found');
   }
 
+  const duplicateBudget = await models.Budget.findOne({
+    attributes: ['uuid'],
+    where: {
+      month: parseInt(month, 10),
+      subcategory_uuid: subcategory.get('uuid'),
+      year: parseInt(year, 10),
+    },
+  });
+  if (duplicateBudget) {
+    throw new BudgetError('Duplicate budget');
+  }
+
   const newBudget = models.Budget.build({
     budget_cents: budgetCents,
     month: parseInt(month, 10),

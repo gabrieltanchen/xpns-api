@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const { BudgetError } = require('../../middleware/error-handler/');
 
@@ -122,6 +123,21 @@ module.exports = async({
   }
 
   if (budget.changed()) {
+    const duplicateBudget = await models.Budget.findOne({
+      attributes: ['uuid'],
+      where: {
+        month: budget.get('month'),
+        subcategory_uuid: budget.get('subcategory_uuid'),
+        uuid: {
+          [Op.ne]: budget.get('uuid'),
+        },
+        year: budget.get('year'),
+      },
+    });
+    if (duplicateBudget) {
+      throw new BudgetError('Duplicate budget');
+    }
+
     await models.sequelize.transaction({
       isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
