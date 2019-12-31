@@ -853,7 +853,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         year: sampleData.budgets.budget2.year,
       });
-      throw new Error('Should have rejected');
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Duplicate budget');
