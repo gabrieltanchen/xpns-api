@@ -122,6 +122,8 @@ describe('Unit:Controllers - BudgetCtrl.deleteBudget', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         budgetUuid: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Budget is required');
@@ -136,6 +138,8 @@ describe('Unit:Controllers - BudgetCtrl.deleteBudget', function() {
         auditApiCallUuid: null,
         budgetUuid: user1BudgetUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -150,6 +154,8 @@ describe('Unit:Controllers - BudgetCtrl.deleteBudget', function() {
         auditApiCallUuid: uuidv4(),
         budgetUuid: user1BudgetUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -172,6 +178,8 @@ describe('Unit:Controllers - BudgetCtrl.deleteBudget', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         budgetUuid: user1BudgetUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -189,6 +197,8 @@ describe('Unit:Controllers - BudgetCtrl.deleteBudget', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         budgetUuid: uuidv4(),
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -206,6 +216,8 @@ describe('Unit:Controllers - BudgetCtrl.deleteBudget', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         budgetUuid: user1BudgetUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -231,6 +243,8 @@ describe('Unit:Controllers - BudgetCtrl.deleteBudget', function() {
         auditApiCallUuid: apiCall.get('uuid'),
         budgetUuid: user1BudgetUuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');

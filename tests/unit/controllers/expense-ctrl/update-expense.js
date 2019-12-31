@@ -230,6 +230,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Expense is required');
@@ -254,6 +256,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: null,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Category is required');
@@ -278,6 +282,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: null,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Vendor is required');
@@ -301,6 +307,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Household member is required');
@@ -325,6 +333,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid date');
@@ -349,6 +359,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid date');
@@ -373,6 +385,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid amount');
@@ -397,6 +411,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid amount');
@@ -421,6 +437,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid reimbursed amount');
@@ -445,6 +463,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid reimbursed amount');
@@ -469,6 +489,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid description');
@@ -493,6 +515,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Invalid description');
@@ -514,6 +538,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -535,6 +561,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Missing audit API call');
@@ -564,6 +592,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Audit user does not exist');
@@ -588,6 +618,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -612,6 +644,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user2Subcategory2Uuid,
         vendorUuid: user2Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -644,6 +678,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -676,6 +712,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -708,6 +746,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory2Uuid,
         vendorUuid: user1Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Not found');
@@ -1039,6 +1079,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: uuidv4(),
         vendorUuid: user1Vendor1Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Category not found');
@@ -1063,6 +1105,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user2Subcategory2Uuid,
         vendorUuid: user1Vendor1Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Category not found');
@@ -1159,6 +1203,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: uuidv4(),
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Vendor not found');
@@ -1183,6 +1229,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user2Vendor2Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Vendor not found');
@@ -1279,6 +1327,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1Vendor1Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Household member not found');
@@ -1303,6 +1353,8 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1Vendor1Uuid,
       });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
       assert.strictEqual(err.message, 'Household member not found');
