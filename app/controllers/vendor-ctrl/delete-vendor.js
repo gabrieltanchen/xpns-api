@@ -49,6 +49,16 @@ module.exports = async({
     throw new VendorError('Not found');
   }
 
+  // Search for any expenses. If any exist, don't allow deletion.
+  const expenseCount = await models.Expense.count({
+    where: {
+      vendor_uuid: vendor.get('uuid'),
+    },
+  });
+  if (expenseCount > 0) {
+    throw new VendorError('Cannot delete with expenses');
+  }
+
   await models.sequelize.transaction({
     isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
   }, async(transaction) => {

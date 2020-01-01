@@ -7,6 +7,11 @@ module.exports = class VendorError extends Error {
   getApiResponse() {
     const message = this.message;
     switch (message) {
+    case 'Cannot delete with expenses':
+      return {
+        message: 'Cannot delete when there are expenses remaining.',
+        status: 422,
+      };
     case 'Not found':
       return {
         message: 'Unable to find vendor.',
