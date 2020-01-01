@@ -56,6 +56,26 @@ module.exports = async({
     throw new CategoryError('Not found');
   }
 
+  // Search for any expenses. If any exist, don't allow deletion.
+  const expenseCount = await models.Expense.count({
+    where: {
+      subcategory_uuid: subcategory.get('uuid'),
+    },
+  });
+  if (expenseCount > 0) {
+    throw new CategoryError('Cannot delete with expenses');
+  }
+
+  // Search for any budgets. If any exist, don't allow deletion.
+  const budgetCount = await models.Budget.count({
+    where: {
+      subcategory_uuid: subcategory.get('uuid'),
+    },
+  });
+  if (budgetCount > 0) {
+    throw new CategoryError('Cannot delete with budgets');
+  }
+
   await models.sequelize.transaction({
     isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
   }, async(transaction) => {
