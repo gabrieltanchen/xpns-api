@@ -34,7 +34,7 @@ module.exports = async({
     throw new ExpenseError('Vendor is required');
   } else if (!householdMemberUuid) {
     throw new ExpenseError('Household member is required');
-  } else if (!moment(date).isValid()) {
+  } else if (!moment.utc(date).isValid()) {
     throw new ExpenseError('Invalid date');
   } else if (isNaN(parseInt(amountCents, 10))) {
     throw new ExpenseError('Invalid amount');
@@ -109,7 +109,7 @@ module.exports = async({
 
   const newExpense = models.Expense.build({
     amount_cents: parseInt(amountCents, 10),
-    date: moment(date).format('YYYY-MM-DD'),
+    date: moment.utc(date).format('YYYY-MM-DD'),
     description,
     household_member_uuid: householdMember.get('uuid'),
     reimbursed_cents: parseInt(reimbursedCents, 10),
