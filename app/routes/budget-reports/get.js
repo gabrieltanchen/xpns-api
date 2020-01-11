@@ -112,15 +112,12 @@ module.exports = (app) => {
             && subcategory.Budgets[0].get('budget_cents')
             ? subcategory.Budgets[0].get('budget_cents')
             : 0;
-          const differenceCents = budgetCents - actualCents;
           return {
             'attributes': {
               'actual': parseFloat(actualCents / 100),
               'actual-cents': actualCents,
               'budget': parseFloat(budgetCents / 100),
               'budget-cents': budgetCents,
-              'difference': parseFloat(differenceCents / 100),
-              'difference-cents': differenceCents,
             },
             'id': `${subcategory.get('uuid')}-${year}-${month}`,
             'relationships': {
