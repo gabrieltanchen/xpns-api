@@ -38,7 +38,7 @@ module.exports = async({
     throw new ExpenseError('Vendor is required');
   } else if (!householdMemberUuid) {
     throw new ExpenseError('Household member is required');
-  } else if (!moment(date).isValid()) {
+  } else if (!moment.utc(date).isValid()) {
     throw new ExpenseError('Invalid date');
   } else if (isNaN(parseInt(amountCents, 10))) {
     throw new ExpenseError('Invalid amount');
@@ -117,8 +117,8 @@ module.exports = async({
   if (expense.get('amount_cents') !== parseInt(amountCents, 10)) {
     expense.set('amount_cents', parseInt(amountCents, 10));
   }
-  if (moment(expense.get('date')).format('YYYY-MM-DD') !== moment(date).format('YYYY-MM-DD')) {
-    expense.set('date', moment(date).format('YYYY-MM-DD'));
+  if (moment(expense.get('date')).format('YYYY-MM-DD') !== moment.utc(date).format('YYYY-MM-DD')) {
+    expense.set('date', moment.utc(date).format('YYYY-MM-DD'));
   }
   if (expense.get('description') !== description) {
     expense.set('description', description);
