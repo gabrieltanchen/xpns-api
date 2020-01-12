@@ -280,8 +280,6 @@ describe('Integration - GET /budget-reports', function() {
       assert.strictEqual(res.body.data[0].attributes['actual-cents'], 0);
       assert.strictEqual(res.body.data[0].attributes.budget, 436.89);
       assert.strictEqual(res.body.data[0].attributes['budget-cents'], 43689);
-      assert.strictEqual(res.body.data[0].attributes.difference, 436.89);
-      assert.strictEqual(res.body.data[0].attributes['difference-cents'], 43689);
       assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
       assert.isOk(res.body.data[0].relationships);
       assert.isOk(res.body.data[0].relationships.category);
@@ -342,8 +340,6 @@ describe('Integration - GET /budget-reports', function() {
       assert.strictEqual(res.body.data[0].attributes['actual-cents'], 25694);
       assert.strictEqual(res.body.data[0].attributes.budget, 0);
       assert.strictEqual(res.body.data[0].attributes['budget-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes.difference, -256.94);
-      assert.strictEqual(res.body.data[0].attributes['difference-cents'], -25694);
       assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
       assert.isOk(res.body.data[0].relationships);
       assert.isOk(res.body.data[0].relationships.category);
@@ -403,8 +399,6 @@ describe('Integration - GET /budget-reports', function() {
         assert.strictEqual(res.body.data[0].attributes['actual-cents'], 31714);
         assert.strictEqual(res.body.data[0].attributes.budget, 0);
         assert.strictEqual(res.body.data[0].attributes['budget-cents'], 0);
-        assert.strictEqual(res.body.data[0].attributes.difference, -317.14);
-        assert.strictEqual(res.body.data[0].attributes['difference-cents'], -31714);
         assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
         assert.isOk(res.body.data[0].relationships);
         assert.isOk(res.body.data[0].relationships.category);
@@ -471,8 +465,6 @@ describe('Integration - GET /budget-reports', function() {
         assert.strictEqual(res.body.data[0].attributes['actual-cents'], 38167);
         assert.strictEqual(res.body.data[0].attributes.budget, 0);
         assert.strictEqual(res.body.data[0].attributes['budget-cents'], 0);
-        assert.strictEqual(res.body.data[0].attributes.difference, -381.67);
-        assert.strictEqual(res.body.data[0].attributes['difference-cents'], -38167);
         assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
         assert.isOk(res.body.data[0].relationships);
         assert.isOk(res.body.data[0].relationships.category);
@@ -539,7 +531,7 @@ describe('Integration - GET /budget-reports', function() {
       });
     });
 
-    it('should return the subcategory with the correct difference', async function() {
+    it('should return the subcategory with the correct budget and actual amounts', async function() {
       const res = await chai.request(server)
         .get('/budget-reports?year=2019&month=3')
         .set('Content-Type', 'application/vnd.api+json')
@@ -553,8 +545,6 @@ describe('Integration - GET /budget-reports', function() {
       assert.strictEqual(res.body.data[0].attributes['actual-cents'], 25694);
       assert.strictEqual(res.body.data[0].attributes.budget, 436.89);
       assert.strictEqual(res.body.data[0].attributes['budget-cents'], 43689);
-      assert.strictEqual(res.body.data[0].attributes.difference, 179.95);
-      assert.strictEqual(res.body.data[0].attributes['difference-cents'], 17995);
       assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
       assert.isOk(res.body.data[0].relationships);
       assert.isOk(res.body.data[0].relationships.category);
@@ -614,8 +604,6 @@ describe('Integration - GET /budget-reports', function() {
         assert.strictEqual(res.body.data[0].attributes['actual-cents'], 31714);
         assert.strictEqual(res.body.data[0].attributes.budget, 436.89);
         assert.strictEqual(res.body.data[0].attributes['budget-cents'], 43689);
-        assert.strictEqual(res.body.data[0].attributes.difference, 119.75);
-        assert.strictEqual(res.body.data[0].attributes['difference-cents'], 11975);
         assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
         assert.isOk(res.body.data[0].relationships);
         assert.isOk(res.body.data[0].relationships.category);
@@ -682,8 +670,6 @@ describe('Integration - GET /budget-reports', function() {
         assert.strictEqual(res.body.data[0].attributes['actual-cents'], 38167);
         assert.strictEqual(res.body.data[0].attributes.budget, 436.89);
         assert.strictEqual(res.body.data[0].attributes['budget-cents'], 43689);
-        assert.strictEqual(res.body.data[0].attributes.difference, 55.22);
-        assert.strictEqual(res.body.data[0].attributes['difference-cents'], 5522);
         assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
         assert.isOk(res.body.data[0].relationships);
         assert.isOk(res.body.data[0].relationships.category);
