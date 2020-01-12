@@ -1,4 +1,4 @@
-const scrypt = require('scrypt');
+const crypto = require('crypto');
 
 const { LoginPasswordFailedError } = require('../../middleware/error-handler/');
 
@@ -31,7 +31,7 @@ module.exports = async({
     attributes: ['h1', 's2'],
     where: {
       h1: (
-        await scrypt.hash(password, userCtrl.hashParams, 96, user.UserLogin.get('s1'))
+        await crypto.scryptSync(password, user.UserLogin.get('s1'), 96, userCtrl.hashParams)
       ).toString('base64'),
     },
   });
@@ -40,7 +40,7 @@ module.exports = async({
   }
 
   const h2 = (
-    await scrypt.hash(password, userCtrl.hashParams, 96, hash.get('s2'))
+    await crypto.scryptSync(password, hash.get('s2'), 96, userCtrl.hashParams)
   ).toString('base64');
   if (h2 !== user.UserLogin.get('h2')) {
     throw new LoginPasswordFailedError('H2 does not match');

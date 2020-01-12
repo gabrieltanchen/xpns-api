@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const scrypt = require('scrypt');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
@@ -59,12 +58,12 @@ module.exports = async({
   });
   const hash = await models.Hash.create({
     h1: (
-      await scrypt.hash(password, userCtrl.hashParams, 96, userLogin.get('s1'))
+      await crypto.scryptSync(password, userLogin.get('s1'), 96, userCtrl.hashParams)
     ).toString('base64'),
     s2: crypto.randomBytes(48).toString('base64'),
   });
   userLogin.set('h2', (
-    await scrypt.hash(password, userCtrl.hashParams, 96, hash.get('s2'))
+    await crypto.scryptSync(password, hash.get('s2'), 96, userCtrl.hashParams)
   ).toString('base64'));
 
   await models.sequelize.transaction({

@@ -1,5 +1,5 @@
 const chai = require('chai');
-const scrypt = require('scrypt');
+const crypto = require('crypto');
 const sinon = require('sinon');
 const _ = require('lodash');
 
@@ -207,11 +207,11 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
     assert.isOk(userLogin);
     assert.isOk(userLogin.get('h2'));
     assert.isOk(userLogin.get('s1'));
-    const h1 = (await scrypt.hash(
+    const h1 = (await crypto.scryptSync(
       sampleData.users.user1.password,
-      controllers.UserCtrl.hashParams,
-      96,
       userLogin.get('s1'),
+      96,
+      controllers.UserCtrl.hashParams,
     )).toString('base64');
     const hash = await models.Hash.findOne({
       attributes: ['h1', 's2'],
@@ -220,11 +220,11 @@ describe('Unit:Controllers - UserCtrl.signUp', function() {
       },
     });
     assert.isOk(hash);
-    const h2 = (await scrypt.hash(
+    const h2 = (await crypto.scryptSync(
       sampleData.users.user1.password,
-      controllers.UserCtrl.hashParams,
-      96,
       hash.get('s2'),
+      96,
+      controllers.UserCtrl.hashParams,
     )).toString('base64');
     assert.strictEqual(userLogin.get('h2'), h2);
 
