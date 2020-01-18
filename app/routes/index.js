@@ -7,6 +7,7 @@ const expenses = require('./expenses/');
 const householdMembers = require('./household-members/');
 const households = require('./households/');
 const subcategories = require('./subcategories/');
+const subcategoryAnnualReports = require('./subcategory-annual-reports/');
 const users = require('./users/');
 const vendors = require('./vendors/');
 
@@ -18,6 +19,7 @@ module.exports = (app) => {
   app.use('/household-members', householdMembers(express.Router(), app));
   app.use('/households', households(express.Router(), app));
   app.use('/subcategories', subcategories(express.Router(), app));
+  app.use('/subcategory-annual-reports', subcategoryAnnualReports(express.Router(), app));
   app.use('/users', users(express.Router(), app));
   app.use('/vendors', vendors(express.Router(), app));
 };
