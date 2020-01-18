@@ -10,7 +10,7 @@ module.exports = (app) => {
   return async(req, res, next) => {
     try {
       if (!req.query.subcategory_uuid) {
-        throw new CategoryError('Category is required');
+        throw new CategoryError('No open queries');
       }
 
       const user = await models.User.findOne({
@@ -67,7 +67,6 @@ module.exports = (app) => {
 
       const yearReports = await Promise.all(years.map(async(year) => {
         const monthReports = await Promise.all(months.map(async(month) => {
-          console.log('')
           return {
             budget: await models.Budget.findOne({
               attributes: ['budget_cents'],
