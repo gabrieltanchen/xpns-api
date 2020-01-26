@@ -1,4 +1,5 @@
 const createIncome = require('./create-income');
+const updateIncome = require('./update-income');
 
 class IncomeCtrl {
   constructor(parent, models) {
@@ -18,6 +19,23 @@ class IncomeCtrl {
       description,
       householdMemberUuid,
       incomeCtrl: this,
+    });
+  }
+
+  async updateIncome({
+    amountCents,
+    auditApiCallUuid,
+    description,
+    householdMemberUuid,
+    incomeUuid,
+  }) {
+    return updateIncome({
+      amountCents,
+      auditApiCallUuid,
+      description,
+      householdMemberUuid,
+      incomeCtrl: this,
+      incomeUuid,
     });
   }
 }
