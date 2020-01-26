@@ -1,4 +1,5 @@
 const createIncome = require('./create-income');
+const deleteIncome = require('./delete-income');
 const updateIncome = require('./update-income');
 
 class IncomeCtrl {
@@ -19,6 +20,17 @@ class IncomeCtrl {
       description,
       householdMemberUuid,
       incomeCtrl: this,
+    });
+  }
+
+  async deleteIncome({
+    auditApiCallUuid,
+    incomeUuid,
+  }) {
+    return deleteIncome({
+      auditApiCallUuid,
+      incomeCtrl: this,
+      incomeUuid,
     });
   }
 
