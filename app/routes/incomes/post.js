@@ -10,6 +10,7 @@ module.exports = (app) => {
    * @apiParam {object} data
    * @apiParam {object} data.attributes
    * @apiParam {integer} data.attributes[amount-cents]
+   * @apiParam {string} data.attributes.date
    * @apiParam {string} data.attributes.description
    * @apiParam {object} data.relationships
    * @apiParam {object} data.relationships[household-member]
@@ -32,6 +33,7 @@ module.exports = (app) => {
       const incomeUuid = await controllers.IncomeCtrl.createIncome({
         amountCents: req.body.data.attributes['amount-cents'],
         auditApiCallUuid: req.auditApiCallUuid,
+        date: req.body.data.attributes.date,
         description: req.body.data.attributes.description,
         householdMemberUuid: req.body.data.relationships['household-member'].data.id,
       });
@@ -40,6 +42,7 @@ module.exports = (app) => {
         attributes: [
           'amount_cents',
           'created_at',
+          'date',
           'description',
           'uuid',
         ],
@@ -59,6 +62,7 @@ module.exports = (app) => {
             'amount': parseFloat(income.get('amount_cents') / 100).toFixed(2),
             'amount-cents': income.get('amount_cents'),
             'created-at': income.get('created_at'),
+            'date': income.get('date'),
             'description': income.get('description'),
           },
           'id': incomeUuid,

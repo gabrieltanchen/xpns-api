@@ -11,12 +11,14 @@ class IncomeCtrl {
   async createIncome({
     amountCents,
     auditApiCallUuid,
+    date,
     description,
     householdMemberUuid,
   }) {
     return createIncome({
       amountCents,
       auditApiCallUuid,
+      date,
       description,
       householdMemberUuid,
       incomeCtrl: this,
@@ -37,6 +39,7 @@ class IncomeCtrl {
   async updateIncome({
     amountCents,
     auditApiCallUuid,
+    date,
     description,
     householdMemberUuid,
     incomeUuid,
@@ -44,6 +47,7 @@ class IncomeCtrl {
     return updateIncome({
       amountCents,
       auditApiCallUuid,
+      date,
       description,
       householdMemberUuid,
       incomeCtrl: this,

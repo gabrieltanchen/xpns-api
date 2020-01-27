@@ -101,6 +101,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
         householdMemberUuid: null,
       });
@@ -114,6 +115,50 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
 
+  it('should reject with no date', async function() {
+    try {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.IncomeCtrl.createIncome({
+        amountCents: sampleData.incomes.income1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: null,
+        description: sampleData.incomes.income1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
+      });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
+    } catch (err) {
+      assert.isOk(err);
+      assert.strictEqual(err.message, 'Invalid date');
+      assert.isTrue(err instanceof IncomeError);
+    }
+    assert.strictEqual(trackChangesSpy.callCount, 0);
+  });
+
+  it('should reject with an invalid date', async function() {
+    try {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.IncomeCtrl.createIncome({
+        amountCents: sampleData.incomes.income1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: 'invalid date',
+        description: sampleData.incomes.income1.description,
+        householdMemberUuid: user1HouseholdMemberUuid,
+      });
+      /* istanbul ignore next */
+      throw new Error('Expected to reject not resolve.');
+    } catch (err) {
+      assert.isOk(err);
+      assert.strictEqual(err.message, 'Invalid date');
+      assert.isTrue(err instanceof IncomeError);
+    }
+    assert.strictEqual(trackChangesSpy.callCount, 0);
+  });
+
   it('should reject with no amount', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
@@ -122,6 +167,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: null,
         auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
       });
@@ -143,6 +189,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: 'invalid amount',
         auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
       });
@@ -164,6 +211,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.incomes.income1.date,
         description: null,
         householdMemberUuid: user1HouseholdMemberUuid,
       });
@@ -185,6 +233,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.incomes.income1.date,
         description: 1234,
         householdMemberUuid: user1HouseholdMemberUuid,
       });
@@ -203,6 +252,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: null,
+        date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
       });
@@ -221,6 +271,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: uuidv4(),
+        date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
       });
@@ -247,6 +298,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
       });
@@ -268,6 +320,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
         householdMemberUuid: uuidv4(),
       });
@@ -289,6 +342,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
       await controllers.IncomeCtrl.createIncome({
         amountCents: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
         householdMemberUuid: user2HouseholdMemberUuid,
       });
@@ -309,6 +363,7 @@ describe('Unit:Controllers - IncomeCtrl.createIncome', function() {
     const incomeUuid = await controllers.IncomeCtrl.createIncome({
       amountCents: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
+      date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
     });

@@ -61,6 +61,13 @@ describe('Unit:Model - Income', function() {
     assert.isNull(attributes.household_member_uuid.defaultValue);
     assert.isFalse(attributes.household_member_uuid.primaryKey);
 
+    // date
+    assert.isOk(attributes.date);
+    assert.strictEqual(attributes.date.type, 'DATE');
+    assert.isFalse(attributes.date.allowNull);
+    assert.isNull(attributes.date.defaultValue);
+    assert.isFalse(attributes.date.primaryKey);
+
     // amount_cents
     assert.isOk(attributes.amount_cents);
     assert.strictEqual(attributes.amount_cents.type, 'INTEGER');
@@ -75,6 +82,6 @@ describe('Unit:Model - Income', function() {
     assert.isNull(attributes.description.defaultValue);
     assert.isFalse(attributes.description.primaryKey);
 
-    assert.strictEqual(Object.keys(attributes).length, 7);
+    assert.strictEqual(Object.keys(attributes).length, 8);
   });
 });

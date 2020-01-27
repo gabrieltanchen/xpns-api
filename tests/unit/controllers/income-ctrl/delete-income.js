@@ -68,6 +68,7 @@ describe('Unit:Controllers - IncomeCtrl.deleteIncome', function() {
   beforeEach('create user 1 income', async function() {
     const income = await models.Income.create({
       amount_cents: sampleData.incomes.income1.amount_cents,
+      date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,
       household_member_uuid: user1HouseholdMemberUuid,
     });

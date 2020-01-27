@@ -10,6 +10,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       type: Sequelize.DATE,
     },
+    date: {
+      allowNull: false,
+      type: Sequelize.DATEONLY,
+    },
     deleted_at: {
       allowNull: true,
       type: Sequelize.DATE,

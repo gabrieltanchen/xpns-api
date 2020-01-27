@@ -83,6 +83,7 @@ describe('Integration - POST /incomes', function() {
         'data': {
           'attributes': {
             'amount-cents': sampleData.incomes.income1.amount_cents,
+            'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
           'relationships': {
@@ -112,6 +113,7 @@ describe('Integration - POST /incomes', function() {
         'data': {
           'attributes': {
             'amount-cents': null,
+            'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
           'relationships': {
@@ -144,6 +146,7 @@ describe('Integration - POST /incomes', function() {
         'data': {
           'attributes': {
             'amount-cents': '12.34',
+            'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
           'relationships': {
@@ -167,6 +170,77 @@ describe('Integration - POST /incomes', function() {
     assert.strictEqual(createIncomeSpy.callCount, 0);
   });
 
+  it('should return 422 with no date', async function() {
+    const res = await chai.request(server)
+      .post('/incomes')
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({
+        'data': {
+          'attributes': {
+            'amount-cents': sampleData.incomes.income1.amount_cents,
+            'date': null,
+            'description': sampleData.incomes.income1.description,
+          },
+          'relationships': {
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
+              },
+            },
+          },
+        },
+      });
+    expect(res).to.have.status(422);
+    assert.deepEqual(res.body, {
+      errors: [{
+        detail: 'Date is required.',
+        source: {
+          pointer: '/data/attributes/date',
+        },
+      }, {
+        detail: 'Date must be valid.',
+        source: {
+          pointer: '/data/attributes/date',
+        },
+      }],
+    });
+    assert.strictEqual(createIncomeSpy.callCount, 0);
+  });
+
+  it('should return 422 with an invalid date', async function() {
+    const res = await chai.request(server)
+      .post('/incomes')
+      .set('Content-Type', 'application/vnd.api+json')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({
+        'data': {
+          'attributes': {
+            'amount-cents': sampleData.incomes.income1.amount_cents,
+            'date': 'invalid date',
+            'description': sampleData.incomes.income1.description,
+          },
+          'relationships': {
+            'household-member': {
+              'data': {
+                'id': householdMemberUuid,
+              },
+            },
+          },
+        },
+      });
+    expect(res).to.have.status(422);
+    assert.deepEqual(res.body, {
+      errors: [{
+        detail: 'Date must be valid.',
+        source: {
+          pointer: '/data/attributes/date',
+        },
+      }],
+    });
+    assert.strictEqual(createIncomeSpy.callCount, 0);
+  });
+
   it('should return 422 with no household member uuid', async function() {
     const res = await chai.request(server)
       .post('/incomes')
@@ -176,6 +250,7 @@ describe('Integration - POST /incomes', function() {
         'data': {
           'attributes': {
             'amount-cents': sampleData.incomes.income1.amount_cents,
+            'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
           'relationships': {
@@ -208,6 +283,7 @@ describe('Integration - POST /incomes', function() {
         'data': {
           'attributes': {
             'amount-cents': sampleData.incomes.income1.amount_cents,
+            'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
           'relationships': {
@@ -228,6 +304,7 @@ describe('Integration - POST /incomes', function() {
     );
     assert.strictEqual(res.body.data.attributes['amount-cents'], sampleData.incomes.income1.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
+    assert.strictEqual(res.body.data.attributes.date, sampleData.incomes.income1.date);
     assert.strictEqual(
       res.body.data.attributes.description,
       sampleData.incomes.income1.description,
@@ -244,6 +321,7 @@ describe('Integration - POST /incomes', function() {
     const createIncomeParams = createIncomeSpy.getCall(0).args[0];
     assert.strictEqual(createIncomeParams.amountCents, sampleData.incomes.income1.amount_cents);
     assert.isOk(createIncomeParams.auditApiCallUuid);
+    assert.strictEqual(createIncomeParams.date, sampleData.incomes.income1.date);
     assert.strictEqual(createIncomeParams.description, sampleData.incomes.income1.description);
     assert.strictEqual(createIncomeParams.householdMemberUuid, householdMemberUuid);
 

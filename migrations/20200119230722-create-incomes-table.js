@@ -28,6 +28,10 @@ module.exports = {
         },
         type: Sequelize.UUID,
       },
+      date: {
+        allowNull: false,
+        type: Sequelize.DATEONLY,
+      },
       amount_cents: {
         allowNull: false,
         type: Sequelize.INTEGER,
