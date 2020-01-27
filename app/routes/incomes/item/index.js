@@ -1,19 +1,13 @@
 const { body } = require('express-validator');
-const getFn = require('./get');
-const postFn = require('./post');
-const routeItem = require('./item/');
+const patchFn = require('./patch');
 
 module.exports = (router, app) => {
   const Auditor = app.get('Auditor');
   const Authentication = app.get('Authentication');
   const Validator = app.get('Validator');
 
-  router.route('/')
-    .get(
-      Authentication.UserAuth.can('access-account'),
-      getFn(app),
-    )
-    .post(
+  return router.route('/:uuid')
+    .patch(
       Authentication.UserAuth.can('access-account'),
       [
         body([['data', 'attributes', 'amount-cents']], 'Amount is required.').not().isEmpty(),
@@ -24,10 +18,6 @@ module.exports = (router, app) => {
       ],
       Validator.validateRequest(),
       Auditor.trackApiCall(),
-      postFn(app),
+      patchFn(app),
     );
-
-  routeItem(router, app);
-
-  return router;
 };
