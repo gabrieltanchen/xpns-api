@@ -1,4 +1,5 @@
 const { body } = require('express-validator');
+const getFn = require('./get');
 const patchFn = require('./patch');
 
 module.exports = (router, app) => {
@@ -7,6 +8,10 @@ module.exports = (router, app) => {
   const Validator = app.get('Validator');
 
   return router.route('/:uuid')
+    .get(
+      Authentication.UserAuth.can('access-account'),
+      getFn(app),
+    )
     .patch(
       Authentication.UserAuth.can('access-account'),
       [
