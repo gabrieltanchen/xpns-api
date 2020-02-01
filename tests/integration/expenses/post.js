@@ -604,7 +604,6 @@ describe('Integration - POST /expenses', function() {
     // Validate ExpenseCtrl.createExpense call.
     assert.strictEqual(createExpenseSpy.callCount, 1);
     const createExpenseParams = createExpenseSpy.getCall(0).args[0];
-    assert.isOk(createExpenseParams.auditApiCallUuid);
     assert.strictEqual(createExpenseParams.amountCents, sampleData.expenses.expense1.amount_cents);
     assert.isOk(createExpenseParams.auditApiCallUuid);
     assert.strictEqual(createExpenseParams.subcategoryUuid, subcategoryUuid);
