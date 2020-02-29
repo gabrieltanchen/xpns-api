@@ -123,9 +123,9 @@ module.exports = (app) => {
       return res.status(200).json({
         'data': {
           'attributes': {
-            'actual-cents': amountSum - reimbursedSum,
-            'budget-cents': budgetSum,
-            'income-cents': incomeSum,
+            'actual-cents': amountSum - reimbursedSum || 0,
+            'budget-cents': budgetSum || 0,
+            'income-cents': incomeSum || 0,
           },
           'id': req.params.uuid,
           'type': 'monthly-reports',
