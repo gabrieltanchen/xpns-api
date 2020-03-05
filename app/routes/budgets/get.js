@@ -102,7 +102,7 @@ module.exports = (app) => {
         }],
         limit,
         offset,
-        order: [['year', 'ASC'], ['month', 'ASC']],
+        order: [['year', 'DESC'], ['month', 'DESC']],
         where: budgetWhere,
       });
 
