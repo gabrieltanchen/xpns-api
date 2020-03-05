@@ -711,130 +711,130 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 25);
 
-      // Expense 1
+      // Expense 27
       validateExpense({
-        expectedExpense: sampleData.expenses.expense1,
-        expenseUuid: expense1Uuid,
+        expectedExpense: sampleData.expenses.expense27,
+        expenseUuid: expense27Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 2
+      // Expense 26
       validateExpense({
-        expectedExpense: sampleData.expenses.expense2,
-        expenseUuid: expense2Uuid,
+        expectedExpense: sampleData.expenses.expense26,
+        expenseUuid: expense26Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 3
+      // Expense 25
       validateExpense({
-        expectedExpense: sampleData.expenses.expense3,
-        expenseUuid: expense3Uuid,
+        expectedExpense: sampleData.expenses.expense25,
+        expenseUuid: expense25Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 4
+      // Expense 24
       validateExpense({
-        expectedExpense: sampleData.expenses.expense4,
-        expenseUuid: expense4Uuid,
+        expectedExpense: sampleData.expenses.expense24,
+        expenseUuid: expense24Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 5
+      // Expense 23
       validateExpense({
-        expectedExpense: sampleData.expenses.expense5,
-        expenseUuid: expense5Uuid,
+        expectedExpense: sampleData.expenses.expense23,
+        expenseUuid: expense23Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 6
+      // Expense 22
       validateExpense({
-        expectedExpense: sampleData.expenses.expense6,
-        expenseUuid: expense6Uuid,
+        expectedExpense: sampleData.expenses.expense22,
+        expenseUuid: expense22Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[5],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 7
+      // Expense 21
       validateExpense({
-        expectedExpense: sampleData.expenses.expense7,
-        expenseUuid: expense7Uuid,
+        expectedExpense: sampleData.expenses.expense21,
+        expenseUuid: expense21Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[6],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 8
+      // Expense 20
       validateExpense({
-        expectedExpense: sampleData.expenses.expense8,
-        expenseUuid: expense8Uuid,
+        expectedExpense: sampleData.expenses.expense20,
+        expenseUuid: expense20Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[7],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 9
+      // Expense 19
       validateExpense({
-        expectedExpense: sampleData.expenses.expense9,
-        expenseUuid: expense9Uuid,
+        expectedExpense: sampleData.expenses.expense19,
+        expenseUuid: expense19Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[8],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 10
+      // Expense 18
       validateExpense({
-        expectedExpense: sampleData.expenses.expense10,
-        expenseUuid: expense10Uuid,
+        expectedExpense: sampleData.expenses.expense18,
+        expenseUuid: expense18Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[9],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 11
+      // Expense 17
       validateExpense({
-        expectedExpense: sampleData.expenses.expense11,
-        expenseUuid: expense11Uuid,
+        expectedExpense: sampleData.expenses.expense17,
+        expenseUuid: expense17Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[10],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 12
+      // Expense 16
       validateExpense({
-        expectedExpense: sampleData.expenses.expense12,
-        expenseUuid: expense12Uuid,
+        expectedExpense: sampleData.expenses.expense16,
+        expenseUuid: expense16Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[11],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 13
+      // Expense 15
       validateExpense({
-        expectedExpense: sampleData.expenses.expense13,
-        expenseUuid: expense13Uuid,
+        expectedExpense: sampleData.expenses.expense15,
+        expenseUuid: expense15Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[12],
         subcategoryUuid: subcategory1Uuid,
@@ -851,110 +851,110 @@ describe('Integration - GET /expenses', function() {
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 15
+      // Expense 13
       validateExpense({
-        expectedExpense: sampleData.expenses.expense15,
-        expenseUuid: expense15Uuid,
+        expectedExpense: sampleData.expenses.expense13,
+        expenseUuid: expense13Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[14],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 16
+      // Expense 12
       validateExpense({
-        expectedExpense: sampleData.expenses.expense16,
-        expenseUuid: expense16Uuid,
+        expectedExpense: sampleData.expenses.expense12,
+        expenseUuid: expense12Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[15],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 17
+      // Expense 11
       validateExpense({
-        expectedExpense: sampleData.expenses.expense17,
-        expenseUuid: expense17Uuid,
+        expectedExpense: sampleData.expenses.expense11,
+        expenseUuid: expense11Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[16],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 18
+      // Expense 10
       validateExpense({
-        expectedExpense: sampleData.expenses.expense18,
-        expenseUuid: expense18Uuid,
+        expectedExpense: sampleData.expenses.expense10,
+        expenseUuid: expense10Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[17],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 19
+      // Expense 9
       validateExpense({
-        expectedExpense: sampleData.expenses.expense19,
-        expenseUuid: expense19Uuid,
+        expectedExpense: sampleData.expenses.expense9,
+        expenseUuid: expense9Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[18],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 20
+      // Expense 8
       validateExpense({
-        expectedExpense: sampleData.expenses.expense20,
-        expenseUuid: expense20Uuid,
+        expectedExpense: sampleData.expenses.expense8,
+        expenseUuid: expense8Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[19],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 21
+      // Expense 7
       validateExpense({
-        expectedExpense: sampleData.expenses.expense21,
-        expenseUuid: expense21Uuid,
+        expectedExpense: sampleData.expenses.expense7,
+        expenseUuid: expense7Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[20],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 22
+      // Expense 6
       validateExpense({
-        expectedExpense: sampleData.expenses.expense22,
-        expenseUuid: expense22Uuid,
+        expectedExpense: sampleData.expenses.expense6,
+        expenseUuid: expense6Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[21],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 23
+      // Expense 5
       validateExpense({
-        expectedExpense: sampleData.expenses.expense23,
-        expenseUuid: expense23Uuid,
+        expectedExpense: sampleData.expenses.expense5,
+        expenseUuid: expense5Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[22],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 24
+      // Expense 4
       validateExpense({
-        expectedExpense: sampleData.expenses.expense24,
-        expenseUuid: expense24Uuid,
+        expectedExpense: sampleData.expenses.expense4,
+        expenseUuid: expense4Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[23],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 25
+      // Expense 3
       validateExpense({
-        expectedExpense: sampleData.expenses.expense25,
-        expenseUuid: expense25Uuid,
+        expectedExpense: sampleData.expenses.expense3,
+        expenseUuid: expense3Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[24],
         subcategoryUuid: subcategory1Uuid,
@@ -999,20 +999,20 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 2);
 
-      // Expense 26
+      // Expense 2
       validateExpense({
-        expectedExpense: sampleData.expenses.expense26,
-        expenseUuid: expense26Uuid,
+        expectedExpense: sampleData.expenses.expense2,
+        expenseUuid: expense2Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 27
+      // Expense 1
       validateExpense({
-        expectedExpense: sampleData.expenses.expense27,
-        expenseUuid: expense27Uuid,
+        expectedExpense: sampleData.expenses.expense1,
+        expenseUuid: expense1Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
@@ -1057,50 +1057,50 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 5);
 
-      // Expense 16
+      // Expense 12
       validateExpense({
-        expectedExpense: sampleData.expenses.expense16,
-        expenseUuid: expense16Uuid,
+        expectedExpense: sampleData.expenses.expense12,
+        expenseUuid: expense12Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 17
+      // Expense 11
       validateExpense({
-        expectedExpense: sampleData.expenses.expense17,
-        expenseUuid: expense17Uuid,
+        expectedExpense: sampleData.expenses.expense11,
+        expenseUuid: expense11Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 18
+      // Expense 10
       validateExpense({
-        expectedExpense: sampleData.expenses.expense18,
-        expenseUuid: expense18Uuid,
+        expectedExpense: sampleData.expenses.expense10,
+        expenseUuid: expense10Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 19
+      // Expense 9
       validateExpense({
-        expectedExpense: sampleData.expenses.expense19,
-        expenseUuid: expense19Uuid,
+        expectedExpense: sampleData.expenses.expense9,
+        expenseUuid: expense9Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 20
+      // Expense 8
       validateExpense({
-        expectedExpense: sampleData.expenses.expense20,
-        expenseUuid: expense20Uuid,
+        expectedExpense: sampleData.expenses.expense8,
+        expenseUuid: expense8Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,
@@ -1221,130 +1221,130 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 25);
 
-      // Expense 1
+      // Expense 27
       validateExpense({
-        expectedExpense: sampleData.expenses.expense1,
-        expenseUuid: expense1Uuid,
+        expectedExpense: sampleData.expenses.expense27,
+        expenseUuid: expense27Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 2
+      // Expense 26
       validateExpense({
-        expectedExpense: sampleData.expenses.expense2,
-        expenseUuid: expense2Uuid,
+        expectedExpense: sampleData.expenses.expense26,
+        expenseUuid: expense26Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 3
+      // Expense 25
       validateExpense({
-        expectedExpense: sampleData.expenses.expense3,
-        expenseUuid: expense3Uuid,
+        expectedExpense: sampleData.expenses.expense25,
+        expenseUuid: expense25Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 4
+      // Expense 24
       validateExpense({
-        expectedExpense: sampleData.expenses.expense4,
-        expenseUuid: expense4Uuid,
+        expectedExpense: sampleData.expenses.expense24,
+        expenseUuid: expense24Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 5
+      // Expense 23
       validateExpense({
-        expectedExpense: sampleData.expenses.expense5,
-        expenseUuid: expense5Uuid,
+        expectedExpense: sampleData.expenses.expense23,
+        expenseUuid: expense23Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 6
+      // Expense 22
       validateExpense({
-        expectedExpense: sampleData.expenses.expense6,
-        expenseUuid: expense6Uuid,
+        expectedExpense: sampleData.expenses.expense22,
+        expenseUuid: expense22Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[5],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 7
+      // Expense 21
       validateExpense({
-        expectedExpense: sampleData.expenses.expense7,
-        expenseUuid: expense7Uuid,
+        expectedExpense: sampleData.expenses.expense21,
+        expenseUuid: expense21Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[6],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 8
+      // Expense 20
       validateExpense({
-        expectedExpense: sampleData.expenses.expense8,
-        expenseUuid: expense8Uuid,
+        expectedExpense: sampleData.expenses.expense20,
+        expenseUuid: expense20Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[7],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 9
+      // Expense 19
       validateExpense({
-        expectedExpense: sampleData.expenses.expense9,
-        expenseUuid: expense9Uuid,
+        expectedExpense: sampleData.expenses.expense19,
+        expenseUuid: expense19Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[8],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 10
+      // Expense 18
       validateExpense({
-        expectedExpense: sampleData.expenses.expense10,
-        expenseUuid: expense10Uuid,
+        expectedExpense: sampleData.expenses.expense18,
+        expenseUuid: expense18Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[9],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 11
+      // Expense 17
       validateExpense({
-        expectedExpense: sampleData.expenses.expense11,
-        expenseUuid: expense11Uuid,
+        expectedExpense: sampleData.expenses.expense17,
+        expenseUuid: expense17Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[10],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 12
+      // Expense 16
       validateExpense({
-        expectedExpense: sampleData.expenses.expense12,
-        expenseUuid: expense12Uuid,
+        expectedExpense: sampleData.expenses.expense16,
+        expenseUuid: expense16Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[11],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 13
+      // Expense 15
       validateExpense({
-        expectedExpense: sampleData.expenses.expense13,
-        expenseUuid: expense13Uuid,
+        expectedExpense: sampleData.expenses.expense15,
+        expenseUuid: expense15Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[12],
         subcategoryUuid: subcategory1Uuid,
@@ -1361,110 +1361,110 @@ describe('Integration - GET /expenses', function() {
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 15
+      // Expense 13
       validateExpense({
-        expectedExpense: sampleData.expenses.expense15,
-        expenseUuid: expense15Uuid,
+        expectedExpense: sampleData.expenses.expense13,
+        expenseUuid: expense13Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[14],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 16
+      // Expense 12
       validateExpense({
-        expectedExpense: sampleData.expenses.expense16,
-        expenseUuid: expense16Uuid,
+        expectedExpense: sampleData.expenses.expense12,
+        expenseUuid: expense12Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[15],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 17
+      // Expense 11
       validateExpense({
-        expectedExpense: sampleData.expenses.expense17,
-        expenseUuid: expense17Uuid,
+        expectedExpense: sampleData.expenses.expense11,
+        expenseUuid: expense11Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[16],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 18
+      // Expense 10
       validateExpense({
-        expectedExpense: sampleData.expenses.expense18,
-        expenseUuid: expense18Uuid,
+        expectedExpense: sampleData.expenses.expense10,
+        expenseUuid: expense10Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[17],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 19
+      // Expense 9
       validateExpense({
-        expectedExpense: sampleData.expenses.expense19,
-        expenseUuid: expense19Uuid,
+        expectedExpense: sampleData.expenses.expense9,
+        expenseUuid: expense9Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[18],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 20
+      // Expense 8
       validateExpense({
-        expectedExpense: sampleData.expenses.expense20,
-        expenseUuid: expense20Uuid,
+        expectedExpense: sampleData.expenses.expense8,
+        expenseUuid: expense8Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[19],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 21
+      // Expense 7
       validateExpense({
-        expectedExpense: sampleData.expenses.expense21,
-        expenseUuid: expense21Uuid,
+        expectedExpense: sampleData.expenses.expense7,
+        expenseUuid: expense7Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[20],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 22
+      // Expense 6
       validateExpense({
-        expectedExpense: sampleData.expenses.expense22,
-        expenseUuid: expense22Uuid,
+        expectedExpense: sampleData.expenses.expense6,
+        expenseUuid: expense6Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[21],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 23
+      // Expense 5
       validateExpense({
-        expectedExpense: sampleData.expenses.expense23,
-        expenseUuid: expense23Uuid,
+        expectedExpense: sampleData.expenses.expense5,
+        expenseUuid: expense5Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[22],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 24
+      // Expense 4
       validateExpense({
-        expectedExpense: sampleData.expenses.expense24,
-        expenseUuid: expense24Uuid,
+        expectedExpense: sampleData.expenses.expense4,
+        expenseUuid: expense4Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[23],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 25
+      // Expense 3
       validateExpense({
-        expectedExpense: sampleData.expenses.expense25,
-        expenseUuid: expense25Uuid,
+        expectedExpense: sampleData.expenses.expense3,
+        expenseUuid: expense3Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[24],
         subcategoryUuid: subcategory1Uuid,
@@ -1509,20 +1509,20 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 2);
 
-      // Expense 26
+      // Expense 2
       validateExpense({
-        expectedExpense: sampleData.expenses.expense26,
-        expenseUuid: expense26Uuid,
+        expectedExpense: sampleData.expenses.expense2,
+        expenseUuid: expense2Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 27
+      // Expense 1
       validateExpense({
-        expectedExpense: sampleData.expenses.expense27,
-        expenseUuid: expense27Uuid,
+        expectedExpense: sampleData.expenses.expense1,
+        expenseUuid: expense1Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
@@ -1567,50 +1567,50 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 5);
 
-      // Expense 16
+      // Expense 12
       validateExpense({
-        expectedExpense: sampleData.expenses.expense16,
-        expenseUuid: expense16Uuid,
+        expectedExpense: sampleData.expenses.expense12,
+        expenseUuid: expense12Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 17
+      // Expense 11
       validateExpense({
-        expectedExpense: sampleData.expenses.expense17,
-        expenseUuid: expense17Uuid,
+        expectedExpense: sampleData.expenses.expense11,
+        expenseUuid: expense11Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 18
+      // Expense 10
       validateExpense({
-        expectedExpense: sampleData.expenses.expense18,
-        expenseUuid: expense18Uuid,
+        expectedExpense: sampleData.expenses.expense10,
+        expenseUuid: expense10Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 19
+      // Expense 9
       validateExpense({
-        expectedExpense: sampleData.expenses.expense19,
-        expenseUuid: expense19Uuid,
+        expectedExpense: sampleData.expenses.expense9,
+        expenseUuid: expense9Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 20
+      // Expense 8
       validateExpense({
-        expectedExpense: sampleData.expenses.expense20,
-        expenseUuid: expense20Uuid,
+        expectedExpense: sampleData.expenses.expense8,
+        expenseUuid: expense8Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,
@@ -1718,130 +1718,130 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 25);
 
-      // Expense 1
+      // Expense 27
       validateExpense({
-        expectedExpense: sampleData.expenses.expense1,
-        expenseUuid: expense1Uuid,
+        expectedExpense: sampleData.expenses.expense27,
+        expenseUuid: expense27Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 2
+      // Expense 26
       validateExpense({
-        expectedExpense: sampleData.expenses.expense2,
-        expenseUuid: expense2Uuid,
+        expectedExpense: sampleData.expenses.expense26,
+        expenseUuid: expense26Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 3
+      // Expense 25
       validateExpense({
-        expectedExpense: sampleData.expenses.expense3,
-        expenseUuid: expense3Uuid,
+        expectedExpense: sampleData.expenses.expense25,
+        expenseUuid: expense25Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 4
+      // Expense 24
       validateExpense({
-        expectedExpense: sampleData.expenses.expense4,
-        expenseUuid: expense4Uuid,
+        expectedExpense: sampleData.expenses.expense24,
+        expenseUuid: expense24Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 5
+      // Expense 23
       validateExpense({
-        expectedExpense: sampleData.expenses.expense5,
-        expenseUuid: expense5Uuid,
+        expectedExpense: sampleData.expenses.expense23,
+        expenseUuid: expense23Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 6
+      // Expense 22
       validateExpense({
-        expectedExpense: sampleData.expenses.expense6,
-        expenseUuid: expense6Uuid,
+        expectedExpense: sampleData.expenses.expense22,
+        expenseUuid: expense22Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[5],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 7
+      // Expense 21
       validateExpense({
-        expectedExpense: sampleData.expenses.expense7,
-        expenseUuid: expense7Uuid,
+        expectedExpense: sampleData.expenses.expense21,
+        expenseUuid: expense21Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[6],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 8
+      // Expense 20
       validateExpense({
-        expectedExpense: sampleData.expenses.expense8,
-        expenseUuid: expense8Uuid,
+        expectedExpense: sampleData.expenses.expense20,
+        expenseUuid: expense20Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[7],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 9
+      // Expense 19
       validateExpense({
-        expectedExpense: sampleData.expenses.expense9,
-        expenseUuid: expense9Uuid,
+        expectedExpense: sampleData.expenses.expense19,
+        expenseUuid: expense19Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[8],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 10
+      // Expense 18
       validateExpense({
-        expectedExpense: sampleData.expenses.expense10,
-        expenseUuid: expense10Uuid,
+        expectedExpense: sampleData.expenses.expense18,
+        expenseUuid: expense18Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[9],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 11
+      // Expense 17
       validateExpense({
-        expectedExpense: sampleData.expenses.expense11,
-        expenseUuid: expense11Uuid,
+        expectedExpense: sampleData.expenses.expense17,
+        expenseUuid: expense17Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[10],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 12
+      // Expense 16
       validateExpense({
-        expectedExpense: sampleData.expenses.expense12,
-        expenseUuid: expense12Uuid,
+        expectedExpense: sampleData.expenses.expense16,
+        expenseUuid: expense16Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[11],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 13
+      // Expense 15
       validateExpense({
-        expectedExpense: sampleData.expenses.expense13,
-        expenseUuid: expense13Uuid,
+        expectedExpense: sampleData.expenses.expense15,
+        expenseUuid: expense15Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[12],
         subcategoryUuid: subcategory1Uuid,
@@ -1858,110 +1858,110 @@ describe('Integration - GET /expenses', function() {
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 15
+      // Expense 13
       validateExpense({
-        expectedExpense: sampleData.expenses.expense15,
-        expenseUuid: expense15Uuid,
+        expectedExpense: sampleData.expenses.expense13,
+        expenseUuid: expense13Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[14],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 16
+      // Expense 12
       validateExpense({
-        expectedExpense: sampleData.expenses.expense16,
-        expenseUuid: expense16Uuid,
+        expectedExpense: sampleData.expenses.expense12,
+        expenseUuid: expense12Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[15],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 17
+      // Expense 11
       validateExpense({
-        expectedExpense: sampleData.expenses.expense17,
-        expenseUuid: expense17Uuid,
+        expectedExpense: sampleData.expenses.expense11,
+        expenseUuid: expense11Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[16],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 18
+      // Expense 10
       validateExpense({
-        expectedExpense: sampleData.expenses.expense18,
-        expenseUuid: expense18Uuid,
+        expectedExpense: sampleData.expenses.expense10,
+        expenseUuid: expense10Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[17],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 19
+      // Expense 9
       validateExpense({
-        expectedExpense: sampleData.expenses.expense19,
-        expenseUuid: expense19Uuid,
+        expectedExpense: sampleData.expenses.expense9,
+        expenseUuid: expense9Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[18],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 20
+      // Expense 8
       validateExpense({
-        expectedExpense: sampleData.expenses.expense20,
-        expenseUuid: expense20Uuid,
+        expectedExpense: sampleData.expenses.expense8,
+        expenseUuid: expense8Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[19],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 21
+      // Expense 7
       validateExpense({
-        expectedExpense: sampleData.expenses.expense21,
-        expenseUuid: expense21Uuid,
+        expectedExpense: sampleData.expenses.expense7,
+        expenseUuid: expense7Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[20],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 22
+      // Expense 6
       validateExpense({
-        expectedExpense: sampleData.expenses.expense22,
-        expenseUuid: expense22Uuid,
+        expectedExpense: sampleData.expenses.expense6,
+        expenseUuid: expense6Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[21],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 23
+      // Expense 5
       validateExpense({
-        expectedExpense: sampleData.expenses.expense23,
-        expenseUuid: expense23Uuid,
+        expectedExpense: sampleData.expenses.expense5,
+        expenseUuid: expense5Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[22],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 24
+      // Expense 4
       validateExpense({
-        expectedExpense: sampleData.expenses.expense24,
-        expenseUuid: expense24Uuid,
+        expectedExpense: sampleData.expenses.expense4,
+        expenseUuid: expense4Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[23],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 25
+      // Expense 3
       validateExpense({
-        expectedExpense: sampleData.expenses.expense25,
-        expenseUuid: expense25Uuid,
+        expectedExpense: sampleData.expenses.expense3,
+        expenseUuid: expense3Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[24],
         subcategoryUuid: subcategory1Uuid,
@@ -2006,20 +2006,20 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 2);
 
-      // Expense 26
+      // Expense 2
       validateExpense({
-        expectedExpense: sampleData.expenses.expense26,
-        expenseUuid: expense26Uuid,
+        expectedExpense: sampleData.expenses.expense2,
+        expenseUuid: expense2Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 27
+      // Expense 1
       validateExpense({
-        expectedExpense: sampleData.expenses.expense27,
-        expenseUuid: expense27Uuid,
+        expectedExpense: sampleData.expenses.expense1,
+        expenseUuid: expense1Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
@@ -2064,50 +2064,50 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 5);
 
-      // Expense 16
+      // Expense 12
       validateExpense({
-        expectedExpense: sampleData.expenses.expense16,
-        expenseUuid: expense16Uuid,
+        expectedExpense: sampleData.expenses.expense12,
+        expenseUuid: expense12Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 17
+      // Expense 11
       validateExpense({
-        expectedExpense: sampleData.expenses.expense17,
-        expenseUuid: expense17Uuid,
+        expectedExpense: sampleData.expenses.expense11,
+        expenseUuid: expense11Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 18
+      // Expense 10
       validateExpense({
-        expectedExpense: sampleData.expenses.expense18,
-        expenseUuid: expense18Uuid,
+        expectedExpense: sampleData.expenses.expense10,
+        expenseUuid: expense10Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 19
+      // Expense 9
       validateExpense({
-        expectedExpense: sampleData.expenses.expense19,
-        expenseUuid: expense19Uuid,
+        expectedExpense: sampleData.expenses.expense9,
+        expenseUuid: expense9Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
         vendorUuid: vendor1Uuid,
       });
 
-      // Expense 20
+      // Expense 8
       validateExpense({
-        expectedExpense: sampleData.expenses.expense20,
-        expenseUuid: expense20Uuid,
+        expectedExpense: sampleData.expenses.expense8,
+        expenseUuid: expense8Uuid,
         householdMemberUuid: householdMember1Uuid,
         returnedExpense: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,

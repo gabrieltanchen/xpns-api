@@ -535,195 +535,27 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 25);
 
-      // Budget 18
+      // Budget 22
       validateBudget({
-        budgetUuid: budget18Uuid,
-        expectedBudget: sampleData.budgets.budget18,
+        budgetUuid: budget22Uuid,
+        expectedBudget: sampleData.budgets.budget22,
         returnedBudget: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 12
+      // Budget 15
       validateBudget({
-        budgetUuid: budget12Uuid,
-        expectedBudget: sampleData.budgets.budget12,
+        budgetUuid: budget15Uuid,
+        expectedBudget: sampleData.budgets.budget15,
         returnedBudget: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 3
+      // Budget 1
       validateBudget({
-        budgetUuid: budget3Uuid,
-        expectedBudget: sampleData.budgets.budget3,
+        budgetUuid: budget1Uuid,
+        expectedBudget: sampleData.budgets.budget1,
         returnedBudget: res.body.data[2],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 4
-      validateBudget({
-        budgetUuid: budget4Uuid,
-        expectedBudget: sampleData.budgets.budget4,
-        returnedBudget: res.body.data[3],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 9
-      validateBudget({
-        budgetUuid: budget9Uuid,
-        expectedBudget: sampleData.budgets.budget9,
-        returnedBudget: res.body.data[4],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 20
-      validateBudget({
-        budgetUuid: budget20Uuid,
-        expectedBudget: sampleData.budgets.budget20,
-        returnedBudget: res.body.data[5],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 13
-      validateBudget({
-        budgetUuid: budget13Uuid,
-        expectedBudget: sampleData.budgets.budget13,
-        returnedBudget: res.body.data[6],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 21
-      validateBudget({
-        budgetUuid: budget21Uuid,
-        expectedBudget: sampleData.budgets.budget21,
-        returnedBudget: res.body.data[7],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 14
-      validateBudget({
-        budgetUuid: budget14Uuid,
-        expectedBudget: sampleData.budgets.budget14,
-        returnedBudget: res.body.data[8],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 6
-      validateBudget({
-        budgetUuid: budget6Uuid,
-        expectedBudget: sampleData.budgets.budget6,
-        returnedBudget: res.body.data[9],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 8
-      validateBudget({
-        budgetUuid: budget8Uuid,
-        expectedBudget: sampleData.budgets.budget8,
-        returnedBudget: res.body.data[10],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 16
-      validateBudget({
-        budgetUuid: budget16Uuid,
-        expectedBudget: sampleData.budgets.budget16,
-        returnedBudget: res.body.data[11],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 2
-      validateBudget({
-        budgetUuid: budget2Uuid,
-        expectedBudget: sampleData.budgets.budget2,
-        returnedBudget: res.body.data[12],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 17
-      validateBudget({
-        budgetUuid: budget17Uuid,
-        expectedBudget: sampleData.budgets.budget17,
-        returnedBudget: res.body.data[13],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 19
-      validateBudget({
-        budgetUuid: budget19Uuid,
-        expectedBudget: sampleData.budgets.budget19,
-        returnedBudget: res.body.data[14],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 28
-      validateBudget({
-        budgetUuid: budget28Uuid,
-        expectedBudget: sampleData.budgets.budget28,
-        returnedBudget: res.body.data[15],
-        subcategoryUuid: subcategory2Uuid,
-      });
-
-      // Budget 23
-      validateBudget({
-        budgetUuid: budget23Uuid,
-        expectedBudget: sampleData.budgets.budget23,
-        returnedBudget: res.body.data[16],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 25
-      validateBudget({
-        budgetUuid: budget25Uuid,
-        expectedBudget: sampleData.budgets.budget25,
-        returnedBudget: res.body.data[17],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 27
-      validateBudget({
-        budgetUuid: budget27Uuid,
-        expectedBudget: sampleData.budgets.budget27,
-        returnedBudget: res.body.data[18],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 7
-      validateBudget({
-        budgetUuid: budget7Uuid,
-        expectedBudget: sampleData.budgets.budget7,
-        returnedBudget: res.body.data[19],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 5
-      validateBudget({
-        budgetUuid: budget5Uuid,
-        expectedBudget: sampleData.budgets.budget5,
-        returnedBudget: res.body.data[20],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 10
-      validateBudget({
-        budgetUuid: budget10Uuid,
-        expectedBudget: sampleData.budgets.budget10,
-        returnedBudget: res.body.data[21],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 11
-      validateBudget({
-        budgetUuid: budget11Uuid,
-        expectedBudget: sampleData.budgets.budget11,
-        returnedBudget: res.body.data[22],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
-      // Budget 26
-      validateBudget({
-        budgetUuid: budget26Uuid,
-        expectedBudget: sampleData.budgets.budget26,
-        returnedBudget: res.body.data[23],
         subcategoryUuid: subcategory1Uuid,
       });
 
@@ -731,6 +563,174 @@ describe('Integration - GET /budgets', function() {
       validateBudget({
         budgetUuid: budget24Uuid,
         expectedBudget: sampleData.budgets.budget24,
+        returnedBudget: res.body.data[3],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 26
+      validateBudget({
+        budgetUuid: budget26Uuid,
+        expectedBudget: sampleData.budgets.budget26,
+        returnedBudget: res.body.data[4],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 11
+      validateBudget({
+        budgetUuid: budget11Uuid,
+        expectedBudget: sampleData.budgets.budget11,
+        returnedBudget: res.body.data[5],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 10
+      validateBudget({
+        budgetUuid: budget10Uuid,
+        expectedBudget: sampleData.budgets.budget10,
+        returnedBudget: res.body.data[6],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 5
+      validateBudget({
+        budgetUuid: budget5Uuid,
+        expectedBudget: sampleData.budgets.budget5,
+        returnedBudget: res.body.data[7],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 7
+      validateBudget({
+        budgetUuid: budget7Uuid,
+        expectedBudget: sampleData.budgets.budget7,
+        returnedBudget: res.body.data[8],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 27
+      validateBudget({
+        budgetUuid: budget27Uuid,
+        expectedBudget: sampleData.budgets.budget27,
+        returnedBudget: res.body.data[9],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 25
+      validateBudget({
+        budgetUuid: budget25Uuid,
+        expectedBudget: sampleData.budgets.budget25,
+        returnedBudget: res.body.data[10],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 23
+      validateBudget({
+        budgetUuid: budget23Uuid,
+        expectedBudget: sampleData.budgets.budget23,
+        returnedBudget: res.body.data[11],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 28
+      validateBudget({
+        budgetUuid: budget28Uuid,
+        expectedBudget: sampleData.budgets.budget28,
+        returnedBudget: res.body.data[12],
+        subcategoryUuid: subcategory2Uuid,
+      });
+
+      // Budget 19
+      validateBudget({
+        budgetUuid: budget19Uuid,
+        expectedBudget: sampleData.budgets.budget19,
+        returnedBudget: res.body.data[13],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 17
+      validateBudget({
+        budgetUuid: budget17Uuid,
+        expectedBudget: sampleData.budgets.budget17,
+        returnedBudget: res.body.data[14],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 2
+      validateBudget({
+        budgetUuid: budget2Uuid,
+        expectedBudget: sampleData.budgets.budget2,
+        returnedBudget: res.body.data[15],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 16
+      validateBudget({
+        budgetUuid: budget16Uuid,
+        expectedBudget: sampleData.budgets.budget16,
+        returnedBudget: res.body.data[16],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 8
+      validateBudget({
+        budgetUuid: budget8Uuid,
+        expectedBudget: sampleData.budgets.budget8,
+        returnedBudget: res.body.data[17],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 6
+      validateBudget({
+        budgetUuid: budget6Uuid,
+        expectedBudget: sampleData.budgets.budget6,
+        returnedBudget: res.body.data[18],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 14
+      validateBudget({
+        budgetUuid: budget14Uuid,
+        expectedBudget: sampleData.budgets.budget14,
+        returnedBudget: res.body.data[19],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 21
+      validateBudget({
+        budgetUuid: budget21Uuid,
+        expectedBudget: sampleData.budgets.budget21,
+        returnedBudget: res.body.data[20],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 13
+      validateBudget({
+        budgetUuid: budget13Uuid,
+        expectedBudget: sampleData.budgets.budget13,
+        returnedBudget: res.body.data[21],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 20
+      validateBudget({
+        budgetUuid: budget20Uuid,
+        expectedBudget: sampleData.budgets.budget20,
+        returnedBudget: res.body.data[22],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 9
+      validateBudget({
+        budgetUuid: budget9Uuid,
+        expectedBudget: sampleData.budgets.budget9,
+        returnedBudget: res.body.data[23],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 4
+      validateBudget({
+        budgetUuid: budget4Uuid,
+        expectedBudget: sampleData.budgets.budget4,
         returnedBudget: res.body.data[24],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -766,26 +766,26 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 3);
 
-      // Budget 1
+      // Budget 3
       validateBudget({
-        budgetUuid: budget1Uuid,
-        expectedBudget: sampleData.budgets.budget1,
+        budgetUuid: budget3Uuid,
+        expectedBudget: sampleData.budgets.budget3,
         returnedBudget: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 15
+      // Budget 12
       validateBudget({
-        budgetUuid: budget15Uuid,
-        expectedBudget: sampleData.budgets.budget15,
+        budgetUuid: budget12Uuid,
+        expectedBudget: sampleData.budgets.budget12,
         returnedBudget: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 22
+      // Budget 18
       validateBudget({
-        budgetUuid: budget22Uuid,
-        expectedBudget: sampleData.budgets.budget22,
+        budgetUuid: budget18Uuid,
+        expectedBudget: sampleData.budgets.budget18,
         returnedBudget: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -814,42 +814,42 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 5);
 
-      // Budget 28
+      // Budget 2
       validateBudget({
-        budgetUuid: budget28Uuid,
-        expectedBudget: sampleData.budgets.budget28,
+        budgetUuid: budget2Uuid,
+        expectedBudget: sampleData.budgets.budget2,
         returnedBudget: res.body.data[0],
-        subcategoryUuid: subcategory2Uuid,
+        subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 23
+      // Budget 16
       validateBudget({
-        budgetUuid: budget23Uuid,
-        expectedBudget: sampleData.budgets.budget23,
+        budgetUuid: budget16Uuid,
+        expectedBudget: sampleData.budgets.budget16,
         returnedBudget: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 25
+      // Budget 8
       validateBudget({
-        budgetUuid: budget25Uuid,
-        expectedBudget: sampleData.budgets.budget25,
+        budgetUuid: budget8Uuid,
+        expectedBudget: sampleData.budgets.budget8,
         returnedBudget: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 27
+      // Budget 6
       validateBudget({
-        budgetUuid: budget27Uuid,
-        expectedBudget: sampleData.budgets.budget27,
+        budgetUuid: budget6Uuid,
+        expectedBudget: sampleData.budgets.budget6,
         returnedBudget: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 7
+      // Budget 14
       validateBudget({
-        budgetUuid: budget7Uuid,
-        expectedBudget: sampleData.budgets.budget7,
+        budgetUuid: budget14Uuid,
+        expectedBudget: sampleData.budgets.budget14,
         returnedBudget: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -862,14 +862,7 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(subcategory1Include);
       assert.isOk(subcategory1Include.attributes);
       assert.strictEqual(subcategory1Include.attributes.name, sampleData.categories.category2.name);
-      const subcategory2Include = _.find(res.body.included, (include) => {
-        return include.id === subcategory2Uuid
-          && include.type === 'subcategories';
-      });
-      assert.isOk(subcategory2Include);
-      assert.isOk(subcategory2Include.attributes);
-      assert.strictEqual(subcategory2Include.attributes.name, sampleData.categories.category4.name);
-      assert.strictEqual(res.body.included.length, 2);
+      assert.strictEqual(res.body.included.length, 1);
 
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 6);
@@ -926,18 +919,18 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 2);
 
-      // Budget 4
-      validateBudget({
-        budgetUuid: budget4Uuid,
-        expectedBudget: sampleData.budgets.budget4,
-        returnedBudget: res.body.data[0],
-        subcategoryUuid: subcategory1Uuid,
-      });
-
       // Budget 2
       validateBudget({
         budgetUuid: budget2Uuid,
         expectedBudget: sampleData.budgets.budget2,
+        returnedBudget: res.body.data[0],
+        subcategoryUuid: subcategory1Uuid,
+      });
+
+      // Budget 4
+      validateBudget({
+        budgetUuid: budget4Uuid,
+        expectedBudget: sampleData.budgets.budget4,
         returnedBudget: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -1024,10 +1017,10 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 3);
 
-      // Budget 2
+      // Budget 19
       validateBudget({
-        budgetUuid: budget2Uuid,
-        expectedBudget: sampleData.budgets.budget2,
+        budgetUuid: budget19Uuid,
+        expectedBudget: sampleData.budgets.budget19,
         returnedBudget: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -1040,10 +1033,10 @@ describe('Integration - GET /budgets', function() {
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 19
+      // Budget 2
       validateBudget({
-        budgetUuid: budget19Uuid,
-        expectedBudget: sampleData.budgets.budget19,
+        budgetUuid: budget2Uuid,
+        expectedBudget: sampleData.budgets.budget2,
         returnedBudget: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -1117,106 +1110,106 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 25);
 
-      // Budget 18
+      // Budget 22
       validateBudget({
-        budgetUuid: budget18Uuid,
-        expectedBudget: sampleData.budgets.budget18,
+        budgetUuid: budget22Uuid,
+        expectedBudget: sampleData.budgets.budget22,
         returnedBudget: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 12
+      // Budget 15
       validateBudget({
-        budgetUuid: budget12Uuid,
-        expectedBudget: sampleData.budgets.budget12,
+        budgetUuid: budget15Uuid,
+        expectedBudget: sampleData.budgets.budget15,
         returnedBudget: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 3
+      // Budget 1
       validateBudget({
-        budgetUuid: budget3Uuid,
-        expectedBudget: sampleData.budgets.budget3,
+        budgetUuid: budget1Uuid,
+        expectedBudget: sampleData.budgets.budget1,
         returnedBudget: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 4
+      // Budget 24
       validateBudget({
-        budgetUuid: budget4Uuid,
-        expectedBudget: sampleData.budgets.budget4,
+        budgetUuid: budget24Uuid,
+        expectedBudget: sampleData.budgets.budget24,
         returnedBudget: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 9
+      // Budget 26
       validateBudget({
-        budgetUuid: budget9Uuid,
-        expectedBudget: sampleData.budgets.budget9,
+        budgetUuid: budget26Uuid,
+        expectedBudget: sampleData.budgets.budget26,
         returnedBudget: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 20
+      // Budget 11
       validateBudget({
-        budgetUuid: budget20Uuid,
-        expectedBudget: sampleData.budgets.budget20,
+        budgetUuid: budget11Uuid,
+        expectedBudget: sampleData.budgets.budget11,
         returnedBudget: res.body.data[5],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 13
+      // Budget 10
       validateBudget({
-        budgetUuid: budget13Uuid,
-        expectedBudget: sampleData.budgets.budget13,
+        budgetUuid: budget10Uuid,
+        expectedBudget: sampleData.budgets.budget10,
         returnedBudget: res.body.data[6],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 21
+      // Budget 5
       validateBudget({
-        budgetUuid: budget21Uuid,
-        expectedBudget: sampleData.budgets.budget21,
+        budgetUuid: budget5Uuid,
+        expectedBudget: sampleData.budgets.budget5,
         returnedBudget: res.body.data[7],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 14
+      // Budget 7
       validateBudget({
-        budgetUuid: budget14Uuid,
-        expectedBudget: sampleData.budgets.budget14,
+        budgetUuid: budget7Uuid,
+        expectedBudget: sampleData.budgets.budget7,
         returnedBudget: res.body.data[8],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 6
+      // Budget 27
       validateBudget({
-        budgetUuid: budget6Uuid,
-        expectedBudget: sampleData.budgets.budget6,
+        budgetUuid: budget27Uuid,
+        expectedBudget: sampleData.budgets.budget27,
         returnedBudget: res.body.data[9],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 8
+      // Budget 25
       validateBudget({
-        budgetUuid: budget8Uuid,
-        expectedBudget: sampleData.budgets.budget8,
+        budgetUuid: budget25Uuid,
+        expectedBudget: sampleData.budgets.budget25,
         returnedBudget: res.body.data[10],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 16
+      // Budget 23
       validateBudget({
-        budgetUuid: budget16Uuid,
-        expectedBudget: sampleData.budgets.budget16,
+        budgetUuid: budget23Uuid,
+        expectedBudget: sampleData.budgets.budget23,
         returnedBudget: res.body.data[11],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 2
+      // Budget 19
       validateBudget({
-        budgetUuid: budget2Uuid,
-        expectedBudget: sampleData.budgets.budget2,
+        budgetUuid: budget19Uuid,
+        expectedBudget: sampleData.budgets.budget19,
         returnedBudget: res.body.data[12],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -1229,90 +1222,90 @@ describe('Integration - GET /budgets', function() {
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 19
+      // Budget 2
       validateBudget({
-        budgetUuid: budget19Uuid,
-        expectedBudget: sampleData.budgets.budget19,
+        budgetUuid: budget2Uuid,
+        expectedBudget: sampleData.budgets.budget2,
         returnedBudget: res.body.data[14],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 23
+      // Budget 16
       validateBudget({
-        budgetUuid: budget23Uuid,
-        expectedBudget: sampleData.budgets.budget23,
+        budgetUuid: budget16Uuid,
+        expectedBudget: sampleData.budgets.budget16,
         returnedBudget: res.body.data[15],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 25
+      // Budget 8
       validateBudget({
-        budgetUuid: budget25Uuid,
-        expectedBudget: sampleData.budgets.budget25,
+        budgetUuid: budget8Uuid,
+        expectedBudget: sampleData.budgets.budget8,
         returnedBudget: res.body.data[16],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 27
+      // Budget 6
       validateBudget({
-        budgetUuid: budget27Uuid,
-        expectedBudget: sampleData.budgets.budget27,
+        budgetUuid: budget6Uuid,
+        expectedBudget: sampleData.budgets.budget6,
         returnedBudget: res.body.data[17],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 7
+      // Budget 14
       validateBudget({
-        budgetUuid: budget7Uuid,
-        expectedBudget: sampleData.budgets.budget7,
+        budgetUuid: budget14Uuid,
+        expectedBudget: sampleData.budgets.budget14,
         returnedBudget: res.body.data[18],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 5
+      // Budget 21
       validateBudget({
-        budgetUuid: budget5Uuid,
-        expectedBudget: sampleData.budgets.budget5,
+        budgetUuid: budget21Uuid,
+        expectedBudget: sampleData.budgets.budget21,
         returnedBudget: res.body.data[19],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 10
+      // Budget 13
       validateBudget({
-        budgetUuid: budget10Uuid,
-        expectedBudget: sampleData.budgets.budget10,
+        budgetUuid: budget13Uuid,
+        expectedBudget: sampleData.budgets.budget13,
         returnedBudget: res.body.data[20],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 11
+      // Budget 20
       validateBudget({
-        budgetUuid: budget11Uuid,
-        expectedBudget: sampleData.budgets.budget11,
+        budgetUuid: budget20Uuid,
+        expectedBudget: sampleData.budgets.budget20,
         returnedBudget: res.body.data[21],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 26
+      // Budget 9
       validateBudget({
-        budgetUuid: budget26Uuid,
-        expectedBudget: sampleData.budgets.budget26,
+        budgetUuid: budget9Uuid,
+        expectedBudget: sampleData.budgets.budget9,
         returnedBudget: res.body.data[22],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 24
+      // Budget 4
       validateBudget({
-        budgetUuid: budget24Uuid,
-        expectedBudget: sampleData.budgets.budget24,
+        budgetUuid: budget4Uuid,
+        expectedBudget: sampleData.budgets.budget4,
         returnedBudget: res.body.data[23],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 1
+      // Budget 3
       validateBudget({
-        budgetUuid: budget1Uuid,
-        expectedBudget: sampleData.budgets.budget1,
+        budgetUuid: budget3Uuid,
+        expectedBudget: sampleData.budgets.budget3,
         returnedBudget: res.body.data[24],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -1341,18 +1334,18 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 2);
 
-      // Budget 15
+      // Budget 12
       validateBudget({
-        budgetUuid: budget15Uuid,
-        expectedBudget: sampleData.budgets.budget15,
+        budgetUuid: budget12Uuid,
+        expectedBudget: sampleData.budgets.budget12,
         returnedBudget: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 22
+      // Budget 18
       validateBudget({
-        budgetUuid: budget22Uuid,
-        expectedBudget: sampleData.budgets.budget22,
+        budgetUuid: budget18Uuid,
+        expectedBudget: sampleData.budgets.budget18,
         returnedBudget: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -1381,42 +1374,42 @@ describe('Integration - GET /budgets', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 5);
 
-      // Budget 23
+      // Budget 16
       validateBudget({
-        budgetUuid: budget23Uuid,
-        expectedBudget: sampleData.budgets.budget23,
+        budgetUuid: budget16Uuid,
+        expectedBudget: sampleData.budgets.budget16,
         returnedBudget: res.body.data[0],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 25
+      // Budget 8
       validateBudget({
-        budgetUuid: budget25Uuid,
-        expectedBudget: sampleData.budgets.budget25,
+        budgetUuid: budget8Uuid,
+        expectedBudget: sampleData.budgets.budget8,
         returnedBudget: res.body.data[1],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 27
+      // Budget 6
       validateBudget({
-        budgetUuid: budget27Uuid,
-        expectedBudget: sampleData.budgets.budget27,
+        budgetUuid: budget6Uuid,
+        expectedBudget: sampleData.budgets.budget6,
         returnedBudget: res.body.data[2],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 7
+      // Budget 14
       validateBudget({
-        budgetUuid: budget7Uuid,
-        expectedBudget: sampleData.budgets.budget7,
+        budgetUuid: budget14Uuid,
+        expectedBudget: sampleData.budgets.budget14,
         returnedBudget: res.body.data[3],
         subcategoryUuid: subcategory1Uuid,
       });
 
-      // Budget 5
+      // Budget 21
       validateBudget({
-        budgetUuid: budget5Uuid,
-        expectedBudget: sampleData.budgets.budget5,
+        budgetUuid: budget21Uuid,
+        expectedBudget: sampleData.budgets.budget21,
         returnedBudget: res.body.data[4],
         subcategoryUuid: subcategory1Uuid,
       });
@@ -1436,7 +1429,7 @@ describe('Integration - GET /budgets', function() {
       assert.strictEqual(res.body.meta.total, 27);
     });
 
-    it('should return 200 and 1 budget as user 1 with subcateogry 2', async function() {
+    it('should return 200 and 1 budget as user 1 with subcategory 2', async function() {
       const res = await chai.request(server)
         .get(`/budgets?subcategory_uuid=${subcategory2Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')

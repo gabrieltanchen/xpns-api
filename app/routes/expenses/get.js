@@ -135,7 +135,7 @@ module.exports = (app) => {
         }],
         limit,
         offset,
-        order: [['date', 'ASC']],
+        order: [['date', 'DESC']],
         where: expenseWhere,
       });
 
