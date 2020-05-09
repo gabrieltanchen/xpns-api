@@ -1,6 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
 const sampleData = require('../../sample-data/');

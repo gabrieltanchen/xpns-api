@@ -1,6 +1,6 @@
 const chai = require('chai');
 const sinon = require('sinon');
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
 const sampleData = require('../../../sample-data/');

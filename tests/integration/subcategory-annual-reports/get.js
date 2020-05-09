@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const moment = require('moment');
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const sampleData = require('../../sample-data/');
 const TestHelper = require('../../test-helper/');
