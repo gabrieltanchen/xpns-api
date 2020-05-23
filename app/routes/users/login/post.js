@@ -58,7 +58,7 @@ module.exports = (app) => {
             'token': token,
           },
           'id': user.get('uuid'),
-          'type': 'users',
+          'type': 'login-users',
         },
       });
     } catch (err) {

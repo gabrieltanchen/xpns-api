@@ -42,7 +42,7 @@ module.exports = (app) => {
             'last-name': user.last_name,
           },
           'id': user.uuid,
-          'type': 'users',
+          'type': 'login-token',
         },
       });
     } catch (err) {
