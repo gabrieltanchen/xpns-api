@@ -180,12 +180,12 @@ module.exports = (app) => {
         'data': expenses.rows.map((expense) => {
           return {
             'attributes': {
-              'amount': parseFloat(expense.get('amount_cents') / 100),
+              // 'amount': parseFloat(expense.get('amount_cents') / 100),
               'amount-cents': expense.get('amount_cents'),
               'created-at': expense.get('created_at'),
               'date': expense.get('date'),
               'description': expense.get('description'),
-              'reimbursed-amount': parseFloat(expense.get('reimbursed_cents') / 100),
+              // 'reimbursed-amount': parseFloat(expense.get('reimbursed_cents') / 100),
               'reimbursed-cents': expense.get('reimbursed_cents'),
             },
             'id': expense.get('uuid'),

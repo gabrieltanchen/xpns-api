@@ -1,4 +1,4 @@
-const { VendorError } = require('../../../middleware/error-handler/');
+const { VendorError } = require('../../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -46,11 +46,30 @@ module.exports = (app) => {
         throw new VendorError('Not found');
       }
 
+      const expenseCount = await models.Expense.count({
+        where: {
+          vendor_uuid: vendor.get('uuid'),
+        },
+      });
+      const sumAmountCents = await models.Expense.sum('amount_cents', {
+        where: {
+          vendor_uuid: vendor.get('uuid'),
+        },
+      });
+      const sumReimbursedCents = await models.Expense.sum('reimbursed_cents', {
+        where: {
+          vendor_uuid: vendor.get('uuid'),
+        },
+      });
+
       return res.status(200).json({
         'data': {
           'attributes': {
             'created-at': vendor.get('created_at'),
+            'expense-count': expenseCount,
             'name': vendor.get('name'),
+            'sum-amount-cents': sumAmountCents,
+            'sum-reimbursed-cents': sumReimbursedCents,
           },
           'id': vendor.get('uuid'),
           'type': 'vendors',
