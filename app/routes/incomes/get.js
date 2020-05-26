@@ -1,3 +1,7 @@
+const {
+  HouseholdError,
+} = require('../../middleware/error-handler');
+
 module.exports = (app) => {
   const models = app.get('models');
 
@@ -48,6 +52,21 @@ module.exports = (app) => {
         },
       });
 
+      const incomeWhere = {};
+      if (req.query.household_member_id) {
+        const householdMember = await models.HouseholdMember.findOne({
+          attributes: ['uuid'],
+          where: {
+            household_uuid: user.get('household_uuid'),
+            uuid: req.query.household_member_id,
+          },
+        });
+        if (!householdMember) {
+          throw new HouseholdError('Not found');
+        }
+        incomeWhere.household_member_uuid = householdMember.get('uuid');
+      }
+
       const incomes = await models.Income.findAndCountAll({
         attributes: [
           'amount_cents',
@@ -67,6 +86,7 @@ module.exports = (app) => {
         limit,
         offset,
         order: [['date', 'DESC']],
+        where: incomeWhere,
       });
 
       const included = [];

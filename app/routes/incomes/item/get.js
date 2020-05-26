@@ -1,4 +1,4 @@
-const { IncomeError } = require('../../../middleware/error-handler/');
+const { IncomeError } = require('../../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');

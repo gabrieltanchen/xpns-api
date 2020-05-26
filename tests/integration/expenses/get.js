@@ -3,8 +3,8 @@ const chaiHttp = require('chai-http');
 const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
-const sampleData = require('../../sample-data/');
-const TestHelper = require('../../test-helper/');
+const sampleData = require('../../sample-data');
+const TestHelper = require('../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
