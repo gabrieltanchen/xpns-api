@@ -1,4 +1,4 @@
-const { HouseholdError } = require('../../../middleware/error-handler/');
+const { HouseholdError } = require('../../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -46,11 +46,36 @@ module.exports = (app) => {
         throw new HouseholdError('Not found');
       }
 
+      const expenseCount = await models.Expense.count({
+        where: {
+          household_member_uuid: householdMember.get('uuid'),
+        },
+      });
+      const sumAmountCents = await models.Expense.sum('amount_cents', {
+        where: {
+          household_member_uuid: householdMember.get('uuid'),
+        },
+      });
+      const sumReimbursedCents = await models.Expense.sum('reimbursed_cents', {
+        where: {
+          household_member_uuid: householdMember.get('uuid'),
+        },
+      });
+      const sumIncomeCents = await models.Income.sum('amount_cents', {
+        where: {
+          household_member_uuid: householdMember.get('uuid'),
+        },
+      });
+
       return res.status(200).json({
         'data': {
           'attributes': {
             'created-at': householdMember.get('created_at'),
+            'expense-count': expenseCount,
             'name': householdMember.get('name'),
+            'sum-amount-cents': sumAmountCents,
+            'sum-income-cents': sumIncomeCents,
+            'sum-reimbursed-cents': sumReimbursedCents,
           },
           'id': householdMember.get('uuid'),
           'type': 'household-members',

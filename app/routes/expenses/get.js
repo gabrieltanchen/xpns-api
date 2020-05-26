@@ -3,7 +3,7 @@ const {
   ExpenseError,
   HouseholdError,
   VendorError,
-} = require('../../middleware/error-handler/');
+} = require('../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
