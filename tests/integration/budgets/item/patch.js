@@ -298,7 +298,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
     assert.strictEqual(updateBudgetSpy.callCount, 0);
   });
 
-  it('should retu4n 422 with an invalid month', async function() {
+  it('should return 422 with an invalid month', async function() {
     const res = await chai.request(server)
       .patch(`/budgets/${user1BudgetUuid}`)
       .set('Content-Type', 'application/vnd.api+json')

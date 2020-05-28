@@ -1,8 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -182,7 +182,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-03-31',
       description: sampleData.incomes.income1.description,
@@ -195,7 +195,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income2.amount_cents,
+      amount: sampleData.incomes.income2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-05-01',
       description: sampleData.incomes.income2.description,
@@ -283,7 +283,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user2Uuid,
     });
     await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income3.amount_cents,
+      amount: sampleData.incomes.income3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-04-01',
       description: sampleData.incomes.income3.description,
@@ -451,7 +451,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income4.amount_cents,
+        amount: sampleData.incomes.income4.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.incomes.income4.description,
@@ -464,7 +464,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income5.amount_cents,
+        amount: sampleData.incomes.income5.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-15',
         description: sampleData.incomes.income5.description,
@@ -477,7 +477,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income6.amount_cents,
+        amount: sampleData.incomes.income6.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-30',
         description: sampleData.incomes.income6.description,
@@ -594,7 +594,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income7.amount_cents,
+        amount: sampleData.incomes.income7.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.incomes.income7.description,
@@ -607,7 +607,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income8.amount_cents,
+        amount: sampleData.incomes.income8.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-15',
         description: sampleData.incomes.income8.description,
@@ -620,7 +620,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income9.amount_cents,
+        amount: sampleData.incomes.income9.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-30',
         description: sampleData.incomes.income9.description,

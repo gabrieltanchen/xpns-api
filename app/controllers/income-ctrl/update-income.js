@@ -2,10 +2,10 @@ const moment = require('moment');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
-const { IncomeError } = require('../../middleware/error-handler/');
+const { IncomeError } = require('../../middleware/error-handler');
 
 /**
- * @param {integer} amountCents
+ * @param {integer} amount
  * @param {string} auditApiCallUuid
  * @param {string} date
  * @param {string} description
@@ -14,7 +14,7 @@ const { IncomeError } = require('../../middleware/error-handler/');
  * @param {string} incomeUuid
  */
 module.exports = async({
-  amountCents,
+  amount,
   auditApiCallUuid,
   date,
   description,
@@ -30,7 +30,7 @@ module.exports = async({
     throw new IncomeError('Household member is required');
   } else if (!moment.utc(date).isValid()) {
     throw new IncomeError('Invalid date');
-  } else if (isNaN(parseInt(amountCents, 10))) {
+  } else if (isNaN(parseInt(amount, 10))) {
     throw new IncomeError('Invalid amount');
   } else if (!_.isString(description)) {
     throw new IncomeError('Invalid description');
@@ -80,8 +80,8 @@ module.exports = async({
     throw new IncomeError('Not found');
   }
 
-  if (income.get('amount_cents') !== parseInt(amountCents, 10)) {
-    income.set('amount_cents', parseInt(amountCents, 10));
+  if (income.get('amount_cents') !== parseInt(amount, 10)) {
+    income.set('amount_cents', parseInt(amount, 10));
   }
   if (moment(income.get('date')).format('YYYY-MM-DD') !== moment.utc(date).format('YYYY-MM-DD')) {
     income.set('date', moment.utc(date).format('YYYY-MM-DD'));

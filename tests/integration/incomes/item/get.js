@@ -1,8 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -65,7 +65,7 @@ describe('Integration - GET /incomes/:uuid', function() {
       user_uuid: user1Uuid,
     });
     user1IncomeUuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,
@@ -174,11 +174,7 @@ describe('Integration - GET /incomes/:uuid', function() {
     expect(res).to.have.status(200);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(
-      parseFloat(res.body.data.attributes.amount),
-      sampleData.incomes.income1.amount,
-    );
-    assert.strictEqual(res.body.data.attributes['amount-cents'], sampleData.incomes.income1.amount_cents);
+    assert.strictEqual(res.body.data.attributes.amount, sampleData.incomes.income1.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.date, sampleData.incomes.income1.date);
     assert.strictEqual(

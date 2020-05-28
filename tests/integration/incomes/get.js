@@ -16,8 +16,7 @@ const validateIncome = ({
   returnedIncome,
 }) => {
   assert.isOk(returnedIncome.attributes);
-  assert.strictEqual(parseFloat(returnedIncome.attributes.amount), expectedIncome.amount);
-  assert.strictEqual(returnedIncome.attributes['amount-cents'], expectedIncome.amount_cents);
+  assert.strictEqual(parseFloat(returnedIncome.attributes.amount), expectedIncome.amount_cents);
   assert.isOk(returnedIncome.attributes['created-at']);
   assert.strictEqual(returnedIncome.attributes.date, expectedIncome.date);
   assert.strictEqual(returnedIncome.id, incomeUuid);
@@ -121,7 +120,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income1Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,
@@ -134,7 +133,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income2Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income2.amount_cents,
+      amount: sampleData.incomes.income2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income2.date,
       description: sampleData.incomes.income2.description,
@@ -147,7 +146,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income3Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income3.amount_cents,
+      amount: sampleData.incomes.income3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income3.date,
       description: sampleData.incomes.income3.description,
@@ -160,7 +159,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income4Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income4.amount_cents,
+      amount: sampleData.incomes.income4.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income4.date,
       description: sampleData.incomes.income4.description,
@@ -173,7 +172,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income5Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income5.amount_cents,
+      amount: sampleData.incomes.income5.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income5.date,
       description: sampleData.incomes.income5.description,
@@ -186,7 +185,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income6Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income6.amount_cents,
+      amount: sampleData.incomes.income6.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income6.date,
       description: sampleData.incomes.income6.description,
@@ -199,7 +198,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income7Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income7.amount_cents,
+      amount: sampleData.incomes.income7.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income7.date,
       description: sampleData.incomes.income7.description,
@@ -212,7 +211,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income8Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income8.amount_cents,
+      amount: sampleData.incomes.income8.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income8.date,
       description: sampleData.incomes.income8.description,
@@ -225,7 +224,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income9Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income9.amount_cents,
+      amount: sampleData.incomes.income9.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income9.date,
       description: sampleData.incomes.income9.description,
@@ -238,7 +237,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income10Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income10.amount_cents,
+      amount: sampleData.incomes.income10.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income10.date,
       description: sampleData.incomes.income10.description,
@@ -251,7 +250,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income11Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income11.amount_cents,
+      amount: sampleData.incomes.income11.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income11.date,
       description: sampleData.incomes.income11.description,
@@ -264,7 +263,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income12Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income12.amount_cents,
+      amount: sampleData.incomes.income12.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income12.date,
       description: sampleData.incomes.income12.description,
@@ -277,7 +276,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income13Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income13.amount_cents,
+      amount: sampleData.incomes.income13.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income13.date,
       description: sampleData.incomes.income13.description,
@@ -290,7 +289,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income14Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income14.amount_cents,
+      amount: sampleData.incomes.income14.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income14.date,
       description: sampleData.incomes.income14.description,
@@ -303,7 +302,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income15Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income15.amount_cents,
+      amount: sampleData.incomes.income15.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income15.date,
       description: sampleData.incomes.income15.description,
@@ -316,7 +315,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income16Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income16.amount_cents,
+      amount: sampleData.incomes.income16.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income16.date,
       description: sampleData.incomes.income16.description,
@@ -329,7 +328,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income17Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income17.amount_cents,
+      amount: sampleData.incomes.income17.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income17.date,
       description: sampleData.incomes.income17.description,
@@ -342,7 +341,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income18Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income18.amount_cents,
+      amount: sampleData.incomes.income18.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income18.date,
       description: sampleData.incomes.income18.description,
@@ -355,7 +354,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income19Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income19.amount_cents,
+      amount: sampleData.incomes.income19.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income19.date,
       description: sampleData.incomes.income19.description,
@@ -368,7 +367,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income20Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income20.amount_cents,
+      amount: sampleData.incomes.income20.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income20.date,
       description: sampleData.incomes.income20.description,
@@ -381,7 +380,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income21Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income21.amount_cents,
+      amount: sampleData.incomes.income21.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income21.date,
       description: sampleData.incomes.income21.description,
@@ -394,7 +393,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income22Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income22.amount_cents,
+      amount: sampleData.incomes.income22.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income22.date,
       description: sampleData.incomes.income22.description,
@@ -407,7 +406,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income23Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income23.amount_cents,
+      amount: sampleData.incomes.income23.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income23.date,
       description: sampleData.incomes.income23.description,
@@ -420,7 +419,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income24Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income24.amount_cents,
+      amount: sampleData.incomes.income24.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income24.date,
       description: sampleData.incomes.income24.description,
@@ -433,7 +432,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income25Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income25.amount_cents,
+      amount: sampleData.incomes.income25.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income25.date,
       description: sampleData.incomes.income25.description,
@@ -446,7 +445,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income26Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income26.amount_cents,
+      amount: sampleData.incomes.income26.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income26.date,
       description: sampleData.incomes.income26.description,
@@ -459,7 +458,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income27Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income27.amount_cents,
+      amount: sampleData.incomes.income27.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income27.date,
       description: sampleData.incomes.income27.description,
@@ -472,7 +471,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user1Uuid,
     });
     user1Income28Uuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income28.amount_cents,
+      amount: sampleData.incomes.income28.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income28.date,
       description: sampleData.incomes.income28.description,
@@ -510,7 +509,7 @@ describe('Integration - GET /incomes', function() {
       user_uuid: user2Uuid,
     });
     user2IncomeUuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income29.amount_cents,
+      amount: sampleData.incomes.income29.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income29.date,
       description: sampleData.incomes.income29.description,

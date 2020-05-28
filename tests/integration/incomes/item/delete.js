@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -75,7 +75,7 @@ describe('Integration - DELETE /incomes/:uuid', function() {
       user_uuid: user1Uuid,
     });
     user1IncomeUuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,

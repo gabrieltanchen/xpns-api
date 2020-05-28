@@ -13,8 +13,7 @@ module.exports = (app) => {
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object[]} data.incomes
    * @apiSuccess (200) {object} data.incomes[].attributes
-   * @apiSuccess (200) {decimal} data.incomes[].attributes.amount
-   * @apiSuccess (200) {integer} data.incomes[].attributes[amount-cents]
+   * @apiSuccess (200) {integer} data.incomes[].attributes.amount
    * @apiSuccess (200) {string} data.incomes[].attributes[created-at]
    * @apiSuccess (200) {string} data.incomes[].attributes.date
    * @apiSuccess (200) {string} data.incomes[].attributes.description
@@ -108,8 +107,7 @@ module.exports = (app) => {
         'data': incomes.rows.map((income) => {
           return {
             'attributes': {
-              'amount': parseFloat(income.get('amount_cents') / 100).toFixed(2),
-              'amount-cents': income.get('amount_cents'),
+              'amount': income.get('amount_cents'),
               'created-at': income.get('created_at'),
               'date': income.get('date'),
               'description': income.get('description'),

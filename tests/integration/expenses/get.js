@@ -18,12 +18,12 @@ const validateExpense = ({
   vendorUuid,
 }) => {
   assert.isOk(returnedExpense.attributes);
-  assert.strictEqual(returnedExpense.attributes.amount, expectedExpense.amount);
+  // assert.strictEqual(returnedExpense.attributes.amount, expectedExpense.amount);
   assert.strictEqual(returnedExpense.attributes['amount-cents'], expectedExpense.amount_cents);
   assert.isOk(returnedExpense.attributes['created-at']);
   assert.strictEqual(returnedExpense.attributes.date, expectedExpense.date);
   assert.strictEqual(returnedExpense.attributes.description, expectedExpense.description);
-  assert.strictEqual(returnedExpense.attributes['reimbursed-amount'], expectedExpense.reimbursed_amount);
+  // assert.strictEqual(returnedExpense.attributes['reimbursed-amount'], expectedExpense.reimbursed_amount);
   assert.strictEqual(returnedExpense.attributes['reimbursed-cents'], expectedExpense.reimbursed_cents);
   assert.strictEqual(returnedExpense.id, expenseUuid);
   assert.isOk(returnedExpense.relationships);

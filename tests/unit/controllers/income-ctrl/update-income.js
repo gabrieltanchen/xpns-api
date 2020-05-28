@@ -3,9 +3,9 @@ const sinon = require('sinon');
 const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { IncomeError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { IncomeError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -120,7 +120,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -143,7 +143,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -166,7 +166,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: null,
         description: sampleData.incomes.income2.description,
@@ -189,7 +189,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: 'invalid date',
         description: sampleData.incomes.income2.description,
@@ -212,7 +212,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: null,
+        amount: null,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -235,7 +235,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: 'invalid amount',
+        amount: 'invalid amount',
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -258,7 +258,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: null,
@@ -281,7 +281,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: 1234,
@@ -301,7 +301,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
   it('should reject with no audit API call', async function() {
     try {
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: null,
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -321,7 +321,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
   it('should reject when the audit API call does not exist', async function() {
     try {
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: uuidv4(),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -349,7 +349,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -372,7 +372,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -395,7 +395,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user2Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -426,7 +426,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income2.amount_cents,
+        amount: sampleData.incomes.income2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income2.date,
         description: sampleData.incomes.income2.description,
@@ -448,7 +448,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.updateIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,
@@ -464,7 +464,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.updateIncome({
-      amountCents: sampleData.incomes.income2.amount_cents,
+      amount: sampleData.incomes.income2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,
@@ -517,7 +517,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.updateIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income2.date,
       description: sampleData.incomes.income1.description,
@@ -570,7 +570,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.updateIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income2.description,
@@ -624,7 +624,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income1.amount_cents,
+        amount: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
@@ -647,7 +647,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: sampleData.incomes.income1.amount_cents,
+        amount: sampleData.incomes.income1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.incomes.income1.date,
         description: sampleData.incomes.income1.description,
@@ -669,7 +669,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.updateIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,
@@ -722,7 +722,7 @@ describe('Unit:Controllers - IncomeCtrl.updateIncome', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.updateIncome({
-      amountCents: sampleData.incomes.income2.amount_cents,
+      amount: sampleData.incomes.income2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income2.date,
       description: sampleData.incomes.income2.description,
