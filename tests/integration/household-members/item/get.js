@@ -221,12 +221,12 @@ describe('Integration - GET /household-members/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMember1Uuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -237,12 +237,12 @@ describe('Integration - GET /household-members/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.expenses.expense2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense2.date,
         description: sampleData.expenses.expense2.description,
         householdMemberUuid: user1HouseholdMember1Uuid,
-        reimbursedCents: sampleData.expenses.expense2.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -253,12 +253,12 @@ describe('Integration - GET /household-members/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense3.amount_cents,
+        amount: sampleData.expenses.expense3.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense3.date,
         description: sampleData.expenses.expense3.description,
         householdMemberUuid: user1HouseholdMember2Uuid,
-        reimbursedCents: sampleData.expenses.expense2.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });

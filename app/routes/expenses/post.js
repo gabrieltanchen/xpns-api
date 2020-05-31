@@ -9,10 +9,10 @@ module.exports = (app) => {
    *
    * @apiParam {object} data
    * @apiParam {object} data.attributes
-   * @apiParam {integer} data.attributes[amount-cents]
+   * @apiParam {integer} data.attributes.amount
    * @apiParam {string} data.attributes.date
    * @apiParam {string} data.attributes.description
-   * @apiParam {integer} data.attributes[reimbursed-cents]
+   * @apiParam {integer} data.attributes[reimbursed-amount]
    * @apiParam {object} data.relationships
    * @apiParam {object} data.relationships[household-member]
    * @apiParam {object} data.relationships[household-member].data
@@ -38,12 +38,12 @@ module.exports = (app) => {
   return async(req, res, next) => {
     try {
       const expenseUuid = await controllers.ExpenseCtrl.createExpense({
-        amountCents: req.body.data.attributes['amount-cents'],
+        amount: req.body.data.attributes.amount,
         auditApiCallUuid: req.auditApiCallUuid,
         date: req.body.data.attributes.date,
         description: req.body.data.attributes.description,
         householdMemberUuid: req.body.data.relationships['household-member'].data.id,
-        reimbursedCents: req.body.data.attributes['reimbursed-cents'],
+        reimbursedAmount: req.body.data.attributes['reimbursed-amount'],
         subcategoryUuid: req.body.data.relationships.subcategory.data.id,
         vendorUuid: req.body.data.relationships.vendor.data.id,
       });
@@ -78,13 +78,11 @@ module.exports = (app) => {
       return res.status(201).json({
         'data': {
           'attributes': {
-            'amount': parseFloat(expense.get('amount_cents') / 100),
-            'amount-cents': expense.get('amount_cents'),
+            'amount': expense.get('amount_cents'),
             'created-at': expense.get('created_at'),
             'date': expense.get('date'),
             'description': expense.get('description'),
-            'reimbursed-amount': parseFloat(expense.get('reimbursed_cents') / 100),
-            'reimbursed-cents': expense.get('reimbursed_cents'),
+            'reimbursed-amount': expense.get('reimbursed_cents'),
           },
           'id': expenseUuid,
           'relationships': {

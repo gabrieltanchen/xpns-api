@@ -1,8 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -144,12 +144,12 @@ describe('Integration - GET /expenses/:uuid', function() {
       user_uuid: user1Uuid,
     });
     expenseUuid = await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
       subcategoryUuid: user1SubcategoryUuid,
       vendorUuid: user1VendorUuid,
     });
@@ -273,16 +273,14 @@ describe('Integration - GET /expenses/:uuid', function() {
     expect(res).to.have.status(200);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(res.body.data.attributes.amount, sampleData.expenses.expense1.amount);
-    assert.strictEqual(res.body.data.attributes['amount-cents'], sampleData.expenses.expense1.amount_cents);
+    assert.strictEqual(res.body.data.attributes.amount, sampleData.expenses.expense1.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.date, sampleData.expenses.expense1.date);
     assert.strictEqual(
       res.body.data.attributes.description,
       sampleData.expenses.expense1.description,
     );
-    assert.strictEqual(res.body.data.attributes['reimbursed-amount'], sampleData.expenses.expense1.reimbursed_amount);
-    assert.strictEqual(res.body.data.attributes['reimbursed-cents'], sampleData.expenses.expense1.reimbursed_cents);
+    assert.strictEqual(res.body.data.attributes['reimbursed-amount'], sampleData.expenses.expense1.reimbursed_cents);
     assert.strictEqual(res.body.data.id, expenseUuid);
     assert.isOk(res.body.data.relationships);
     assert.isOk(res.body.data.relationships['household-member']);

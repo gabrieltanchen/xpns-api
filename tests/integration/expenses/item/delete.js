@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -117,12 +117,12 @@ describe('Integration - DELETE /expenses/:uuid', function() {
       user_uuid: user1Uuid,
     });
     expenseUuid = await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
       subcategoryUuid: user1SubcategoryUuid,
       vendorUuid: user1VendorUuid,
     });

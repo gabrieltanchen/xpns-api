@@ -150,12 +150,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-03-31',
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -166,12 +166,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense2.amount_cents,
+      amount: sampleData.expenses.expense2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-05-01',
       description: sampleData.expenses.expense2.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense2.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -267,12 +267,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user2Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense3.amount_cents,
+      amount: sampleData.expenses.expense3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-04-01',
       description: sampleData.expenses.expense3.description,
       householdMemberUuid: user2HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense3.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense3.reimbursed_cents,
       subcategoryUuid: user2SubcategoryUuid,
       vendorUuid: user2VendorUuid,
     });
@@ -386,12 +386,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense4.amount_cents,
+        amount: sampleData.expenses.expense4.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.expenses.expense4.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense4.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense4.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -402,12 +402,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense5.amount_cents,
+        amount: sampleData.expenses.expense5.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-15',
         description: sampleData.expenses.expense5.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense5.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense5.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -418,12 +418,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense6.amount_cents,
+        amount: sampleData.expenses.expense6.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-30',
         description: sampleData.expenses.expense6.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense6.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense6.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -546,12 +546,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense7.amount_cents,
+        amount: sampleData.expenses.expense7.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.expenses.expense7.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense7.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense7.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -562,12 +562,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense8.amount_cents,
+        amount: sampleData.expenses.expense8.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-15',
         description: sampleData.expenses.expense8.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense8.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense8.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -578,12 +578,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense9.amount_cents,
+        amount: sampleData.expenses.expense9.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-30',
         description: sampleData.expenses.expense9.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense9.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense9.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });

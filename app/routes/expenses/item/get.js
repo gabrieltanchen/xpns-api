@@ -1,4 +1,4 @@
-const { ExpenseError } = require('../../../middleware/error-handler/');
+const { ExpenseError } = require('../../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -10,13 +10,11 @@ module.exports = (app) => {
    *
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object} data.attributes
-   * @apiSuccess (200) {decimal} data.attributes.amount
-   * @apiSuccess (200) {integer} data.attributes[amount-cents]
+   * @apiSuccess (200) {integer} data.attributes.amount
    * @apiSuccess (200) {string} data.attributes[created-at]
    * @apiSuccess (200) {string} data.attributes.date
    * @apiSuccess (200) {string} data.attributes.description
-   * @apiSuccess (200) {decimal} data.attributes[reimbursed-amount]
-   * @apiSuccess (200) {integer} data.attributes[reimbursed-cents]
+   * @apiSuccess (200) {integer} data.attributes[reimbursed-amount]
    * @apiSuccess (200) {string} data.id
    * @apiSuccess (200) {object} data.relationships
    * @apiSuccess (200) {object} data.relationships[household-member]
@@ -97,13 +95,11 @@ module.exports = (app) => {
       return res.status(200).json({
         'data': {
           'attributes': {
-            'amount': parseFloat(expense.get('amount_cents') / 100),
-            'amount-cents': expense.get('amount_cents'),
+            'amount': expense.get('amount_cents'),
             'created-at': expense.get('created_at'),
             'date': expense.get('date'),
             'description': expense.get('description'),
-            'reimbursed-amount': parseFloat(expense.get('reimbursed_cents') / 100),
-            'reimbursed-cents': expense.get('reimbursed_cents'),
+            'reimbursed-amount': expense.get('reimbursed_cents'),
           },
           'id': expense.get('uuid'),
           'relationships': {
