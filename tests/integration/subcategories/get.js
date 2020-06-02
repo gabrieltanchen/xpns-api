@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { v4: uuidv4 } = require('uuid');
 
-const sampleData = require('../../sample-data/');
-const TestHelper = require('../../test-helper/');
+const sampleData = require('../../sample-data');
+const TestHelper = require('../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -450,10 +450,10 @@ describe('Integration - GET /subcategories', function() {
     });
   });
 
-  describe('when called with the category_uuid query param', function() {
+  describe('when called with the category_id query param', function() {
     it('should return 404 when the category does not exist', async function() {
       const res = await chai.request(server)
-        .get(`/subcategories?category_uuid=${uuidv4()}`)
+        .get(`/subcategories?category_id=${uuidv4()}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(404);
@@ -466,7 +466,7 @@ describe('Integration - GET /subcategories', function() {
 
     it('should return 404 when the category belongs to a different household', async function() {
       const res = await chai.request(server)
-        .get(`/subcategories?category_uuid=${category1Uuid}`)
+        .get(`/subcategories?category_id=${category1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user2Token}`);
       expect(res).to.have.status(404);
@@ -479,7 +479,7 @@ describe('Integration - GET /subcategories', function() {
 
     it('should return 200 and 25 subcategories as user 1 with category 1 and no limit or page specified', async function() {
       const res = await chai.request(server)
-        .get(`/subcategories?category_uuid=${category1Uuid}`)
+        .get(`/subcategories?category_id=${category1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -668,7 +668,7 @@ describe('Integration - GET /subcategories', function() {
 
     it('should return 200 and 2 subcategories as user 1 with category 1 and no limit and page=2', async function() {
       const res = await chai.request(server)
-        .get(`/subcategories?category_uuid=${category1Uuid}&page=2`)
+        .get(`/subcategories?category_id=${category1Uuid}&page=2`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -696,7 +696,7 @@ describe('Integration - GET /subcategories', function() {
 
     it('should return 200 and 5 subcategories as user 1 with category 1 limit=5 and page=4', async function() {
       const res = await chai.request(server)
-        .get(`/subcategories?category_uuid=${category1Uuid}&limit=5&page=4`)
+        .get(`/subcategories?category_id=${category1Uuid}&limit=5&page=4`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -745,7 +745,7 @@ describe('Integration - GET /subcategories', function() {
 
     it('should return 200 and 1 subcategory as user 1 with category 2', async function() {
       const res = await chai.request(server)
-        .get(`/subcategories?category_uuid=${category2Uuid}`)
+        .get(`/subcategories?category_id=${category2Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);

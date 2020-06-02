@@ -58,6 +58,11 @@ module.exports = (app) => {
       const subcategoryUuids = category.Subcategories.map((subcategory) => {
         return subcategory.get('uuid');
       });
+      const subcategoryCount = await models.Subcategory.count({
+        where: {
+          category_uuid: category.get('uuid'),
+        },
+      });
       const expenseCount = await models.Expense.count({
         where: {
           subcategory_uuid: {
@@ -86,6 +91,7 @@ module.exports = (app) => {
             'created-at': category.get('created_at'),
             'expense-count': expenseCount || 0,
             'name': category.get('name'),
+            'subcategory-count': subcategoryCount || 0,
             'sum-amount': sumAmountCents || 0,
             'sum-reimbursed': sumReimbursedCents || 0,
           },

@@ -131,6 +131,7 @@ describe('Integration - GET /categories/:uuid', function() {
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes['expense-count'], 0);
     assert.strictEqual(res.body.data.attributes.name, sampleData.categories.category1.name);
+    assert.strictEqual(res.body.data.attributes['subcategory-count'], 0);
     assert.strictEqual(res.body.data.attributes['sum-amount'], 0);
     assert.strictEqual(res.body.data.attributes['sum-reimbursed'], 0);
     assert.strictEqual(res.body.data.id, user1Category1Uuid);
@@ -283,6 +284,7 @@ describe('Integration - GET /categories/:uuid', function() {
       assert.isOk(res.body.data.attributes['created-at']);
       assert.strictEqual(res.body.data.attributes['expense-count'], 3);
       assert.strictEqual(res.body.data.attributes.name, sampleData.categories.category1.name);
+      assert.strictEqual(res.body.data.attributes['subcategory-count'], 2);
       assert.strictEqual(res.body.data.attributes['sum-amount'], 202371);
       assert.strictEqual(res.body.data.attributes['sum-reimbursed'], 1199);
       assert.strictEqual(res.body.data.id, user1Category1Uuid);

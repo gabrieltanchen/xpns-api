@@ -1,4 +1,4 @@
-const { CategoryError } = require('../../middleware/error-handler/');
+const { CategoryError } = require('../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -44,12 +44,12 @@ module.exports = (app) => {
       });
 
       const subcategoryWhere = {};
-      if (req.query.category_uuid) {
+      if (req.query.category_id) {
         const category = await models.Category.findOne({
           attributes: ['uuid'],
           where: {
             household_uuid: user.get('household_uuid'),
-            uuid: req.query.category_uuid,
+            uuid: req.query.category_id,
           },
         });
         if (!category) {
