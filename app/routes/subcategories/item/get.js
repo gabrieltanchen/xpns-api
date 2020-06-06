@@ -1,4 +1,4 @@
-const { CategoryError } = require('../../../middleware/error-handler/');
+const { CategoryError } = require('../../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -57,11 +57,30 @@ module.exports = (app) => {
         throw new CategoryError('Not found');
       }
 
+      const expenseCount = await models.Expense.count({
+        where: {
+          subcategory_uuid: subcategory.get('uuid'),
+        },
+      });
+      const sumAmountCents = await models.Expense.sum('amount_cents', {
+        where: {
+          subcategory_uuid: subcategory.get('uuid'),
+        },
+      });
+      const sumReimbursedCents = await models.Expense.sum('reimbursed_cents', {
+        where: {
+          subcategory_uuid: subcategory.get('uuid'),
+        },
+      });
+
       return res.status(200).json({
         'data': {
           'attributes': {
             'created-at': subcategory.get('created_at'),
+            'expense-count': expenseCount,
             'name': subcategory.get('name'),
+            'sum-amount': sumAmountCents || 0,
+            'sum-reimbursed': sumReimbursedCents || 0,
           },
           'id': subcategory.get('uuid'),
           'relationships': {

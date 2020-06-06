@@ -129,6 +129,7 @@ describe('Integration - GET /vendors/:uuid', function() {
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
     assert.isOk(res.body.data.attributes['created-at']);
+    assert.strictEqual(res.body.data.attributes['expense-count'], 0);
     assert.strictEqual(res.body.data.attributes.name, sampleData.vendors.vendor1.name);
     assert.strictEqual(res.body.data.attributes['sum-amount'], 0);
     assert.strictEqual(res.body.data.attributes['sum-reimbursed'], 0);
@@ -136,7 +137,7 @@ describe('Integration - GET /vendors/:uuid', function() {
     assert.strictEqual(res.body.data.type, 'vendors');
   });
 
-  describe('when the vendor has income and expense data', async function() {
+  describe('when the vendor has income and expense data', function() {
     let user1HouseholdMemberUuid;
     let user1SubcategoryUuid;
     let user1Vendor2Uuid;
@@ -233,6 +234,7 @@ describe('Integration - GET /vendors/:uuid', function() {
       assert.isOk(res.body.data);
       assert.isOk(res.body.data.attributes);
       assert.isOk(res.body.data.attributes['created-at']);
+      assert.strictEqual(res.body.data.attributes['expense-count'], 2);
       assert.strictEqual(res.body.data.attributes.name, sampleData.vendors.vendor1.name);
       assert.strictEqual(res.body.data.attributes['sum-amount'], 110376);
       assert.strictEqual(res.body.data.attributes['sum-reimbursed'], 332);
