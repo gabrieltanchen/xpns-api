@@ -62,7 +62,7 @@ module.exports = (app) => {
       });
 
       const expenseWhere = {};
-      if (req.query.subcategory_uuid) {
+      if (req.query.subcategory_id) {
         const subcategory = await models.Subcategory.findOne({
           attributes: ['uuid'],
           include: [{
@@ -74,7 +74,7 @@ module.exports = (app) => {
             },
           }],
           where: {
-            uuid: req.query.subcategory_uuid,
+            uuid: req.query.subcategory_id,
           },
         });
         if (!subcategory) {
