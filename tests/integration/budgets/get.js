@@ -1074,10 +1074,10 @@ describe('Integration - GET /budgets', function() {
     });
   });
 
-  describe('when called with the subcategory_uuid query param', function() {
+  describe('when called with the subcategory_id query param', function() {
     it('should return 404 when the subcategory does not exist', async function() {
       const res = await chai.request(server)
-        .get(`/budgets?subcategory_uuid=${uuidv4()}`)
+        .get(`/budgets?subcategory_id=${uuidv4()}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(404);
@@ -1090,7 +1090,7 @@ describe('Integration - GET /budgets', function() {
 
     it('should return 404 when the subcategory belongs to a different household', async function() {
       const res = await chai.request(server)
-        .get(`/budgets?subcategory_uuid=${subcategory1Uuid}`)
+        .get(`/budgets?subcategory_id=${subcategory1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user2Token}`);
       expect(res).to.have.status(404);
@@ -1103,7 +1103,7 @@ describe('Integration - GET /budgets', function() {
 
     it('should return 200 and 25 budgets as user 1 with subcategory 1 and no limit or page specified', async function() {
       const res = await chai.request(server)
-        .get(`/budgets?subcategory_uuid=${subcategory1Uuid}`)
+        .get(`/budgets?subcategory_id=${subcategory1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -1327,7 +1327,7 @@ describe('Integration - GET /budgets', function() {
 
     it('should return 200 and 2 budgets as user 1 with subcategory 1 and no limit and page=2', async function() {
       const res = await chai.request(server)
-        .get(`/budgets?subcategory_uuid=${subcategory1Uuid}&page=2`)
+        .get(`/budgets?subcategory_id=${subcategory1Uuid}&page=2`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -1367,7 +1367,7 @@ describe('Integration - GET /budgets', function() {
 
     it('should return 200 and 5 budgets as user 1 with subcategory 1 and limit=5 and page=4', async function() {
       const res = await chai.request(server)
-        .get(`/budgets?subcategory_uuid=${subcategory1Uuid}&limit=5&page=4`)
+        .get(`/budgets?subcategory_id=${subcategory1Uuid}&limit=5&page=4`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -1431,7 +1431,7 @@ describe('Integration - GET /budgets', function() {
 
     it('should return 200 and 1 budget as user 1 with subcategory 2', async function() {
       const res = await chai.request(server)
-        .get(`/budgets?subcategory_uuid=${subcategory2Uuid}`)
+        .get(`/budgets?subcategory_id=${subcategory2Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);

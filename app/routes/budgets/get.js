@@ -1,4 +1,4 @@
-const { BudgetError, CategoryError } = require('../../middleware/error-handler/');
+const { BudgetError, CategoryError } = require('../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -66,7 +66,7 @@ module.exports = (app) => {
         }
         budgetWhere.year = parseInt(req.query.year, 10);
       }
-      if (req.query.subcategory_uuid) {
+      if (req.query.subcategory_id) {
         const subcategory = await models.Subcategory.findOne({
           attributes: ['uuid'],
           include: [{
@@ -78,7 +78,7 @@ module.exports = (app) => {
             },
           }],
           where: {
-            uuid: req.query.subcategory_uuid,
+            uuid: req.query.subcategory_id,
           },
         });
         if (!subcategory) {
