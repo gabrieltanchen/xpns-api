@@ -1,4 +1,4 @@
-const { BudgetError } = require('../../../middleware/error-handler/');
+const { BudgetError } = require('../../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -10,8 +10,7 @@ module.exports = (app) => {
    *
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object} data.attributes
-   * @apiSuccess (200) {decimal} data.attributes.budget
-   * @apiSuccess (200) {integer} data.attributes[budget-cents]
+   * @apiSuccess (200) {integer} data.attributes.amount
    * @apiSuccess (200) {string} data.attributes[created-at]
    * @apiSuccess (200) {integer} data.attributes.month
    * @apiSuccess (200) {integer} data.attributes.year
@@ -44,7 +43,7 @@ module.exports = (app) => {
 
       const budget = await models.Budget.findOne({
         attributes: [
-          'budget_cents',
+          'amount_cents',
           'created_at',
           'month',
           'uuid',
@@ -74,8 +73,7 @@ module.exports = (app) => {
       return res.status(200).json({
         'data': {
           'attributes': {
-            'budget': parseFloat(budget.get('budget_cents') / 100),
-            'budget-cents': budget.get('budget_cents'),
+            'amount': budget.get('amount_cents'),
             'created-at': budget.get('created_at'),
             'month': budget.get('month'),
             'year': budget.get('year'),

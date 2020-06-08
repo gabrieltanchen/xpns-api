@@ -70,8 +70,8 @@ describe('Integration - GET /budgets/:uuid', function() {
       user_uuid: user1Uuid,
     });
     user1BudgetUuid = await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1SubcategoryUuid,
       year: sampleData.budgets.budget1.year,
@@ -184,8 +184,7 @@ describe('Integration - GET /budgets/:uuid', function() {
     expect(res).to.have.status(200);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(res.body.data.attributes.budget, sampleData.budgets.budget1.budget);
-    assert.strictEqual(res.body.data.attributes['budget-cents'], sampleData.budgets.budget1.budget_cents);
+    assert.strictEqual(res.body.data.attributes.amount, sampleData.budgets.budget1.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.month, sampleData.budgets.budget1.month);
     assert.strictEqual(res.body.data.attributes.year, sampleData.budgets.budget1.year);

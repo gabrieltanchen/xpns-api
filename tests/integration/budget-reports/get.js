@@ -96,8 +96,8 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: 2,
       subcategoryUuid: user1SubcategoryUuid,
       year: 2019,
@@ -109,8 +109,8 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget2.budget_cents,
       month: 4,
       subcategoryUuid: user1SubcategoryUuid,
       year: 2019,
@@ -200,8 +200,8 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user2Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget3.budget_cents,
       month: 3,
       subcategoryUuid: user2SubcategoryUuid,
       year: 2019,
@@ -258,8 +258,8 @@ describe('Integration - GET /budget-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: 43689,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: 43689,
         month: 3,
         subcategoryUuid: user1SubcategoryUuid,
         year: 2019,
@@ -507,8 +507,8 @@ describe('Integration - GET /budget-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: 43689,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: 43689,
         month: 3,
         subcategoryUuid: user1SubcategoryUuid,
         year: 2019,

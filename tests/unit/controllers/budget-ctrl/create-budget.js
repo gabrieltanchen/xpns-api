@@ -3,9 +3,9 @@ const sinon = require('sinon');
 const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { BudgetError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { BudgetError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -93,8 +93,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: null,
         year: sampleData.budgets.budget1.year,
@@ -115,8 +115,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: null,
@@ -137,8 +137,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: 'invalid year',
@@ -159,8 +159,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: 1999,
@@ -181,8 +181,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: 2051,
@@ -203,8 +203,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: null,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -225,8 +225,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: 'invalid month',
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -247,8 +247,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: -1,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -269,8 +269,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: 12,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -285,14 +285,14 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
 
-  it('should reject with no budget', async function() {
+  it('should reject with no amount', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: null,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: null,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -307,14 +307,14 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
 
-  it('should reject with an invalid budget', async function() {
+  it('should reject with an invalid amount', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: 'invalid amount',
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: 'invalid budgetCents',
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -332,8 +332,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
   it('should reject with no audit API call', async function() {
     try {
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: null,
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -351,8 +351,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
   it('should reject when the audit API call does not exist', async function() {
     try {
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: uuidv4(),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -378,8 +378,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -400,8 +400,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: uuidv4(),
         year: sampleData.budgets.budget1.year,
@@ -422,8 +422,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
         user_uuid: user2Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,
@@ -443,8 +443,8 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
       user_uuid: user1Uuid,
     });
     const budgetUuid = await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1SubcategoryUuid,
       year: sampleData.budgets.budget1.year,
@@ -455,7 +455,7 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
     // Verify the Budget instance.
     const budget = await models.Budget.findOne({
       attributes: [
-        'budget_cents',
+        'amount_cents',
         'month',
         'subcategory_uuid',
         'uuid',
@@ -466,7 +466,7 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
       },
     });
     assert.isOk(budget);
-    assert.strictEqual(budget.get('budget_cents'), sampleData.budgets.budget1.budget_cents);
+    assert.strictEqual(budget.get('amount_cents'), sampleData.budgets.budget1.amount_cents);
     assert.strictEqual(budget.get('month'), sampleData.budgets.budget1.month);
     assert.strictEqual(budget.get('subcategory_uuid'), user1SubcategoryUuid);
     assert.strictEqual(budget.get('year'), sampleData.budgets.budget1.year);
@@ -491,16 +491,16 @@ describe('Unit:Controllers - BudgetCtrl.createBudget', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1SubcategoryUuid,
       year: sampleData.budgets.budget1.year,
     });
     try {
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget2.budget_cents,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,

@@ -87,7 +87,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget1.budget_cents,
+            'amount': sampleData.budgets.budget1.amount_cents,
             'month': sampleData.budgets.budget1.month,
             'year': sampleData.budgets.budget1.year,
           },
@@ -109,7 +109,7 @@ describe('Integration - POST /budgets', function() {
     assert.strictEqual(createBudgetSpy.callCount, 0);
   });
 
-  it('should return 422 with no budget cents', async function() {
+  it('should return 422 with no amount', async function() {
     const res = await chai.request(server)
       .post('/budgets')
       .set('Content-Type', 'application/vnd.api+json')
@@ -117,7 +117,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': null,
+            'amount': null,
             'month': sampleData.budgets.budget1.month,
             'year': sampleData.budgets.budget1.year,
           },
@@ -135,14 +135,14 @@ describe('Integration - POST /budgets', function() {
       errors: [{
         detail: 'Budget is required.',
         source: {
-          pointer: '/data/attributes/budget-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
     assert.strictEqual(createBudgetSpy.callCount, 0);
   });
 
-  it('should return 422 with an invalid budget cents', async function() {
+  it('should return 422 with an invalid amount', async function() {
     const res = await chai.request(server)
       .post('/budgets')
       .set('Content-Type', 'application/vnd.api+json')
@@ -150,7 +150,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': '12.34',
+            'amount': '12.34',
             'month': sampleData.budgets.budget1.month,
             'year': sampleData.budgets.budget1.year,
           },
@@ -168,7 +168,7 @@ describe('Integration - POST /budgets', function() {
       errors: [{
         detail: 'Budget must be an integer.',
         source: {
-          pointer: '/data/attributes/budget-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
@@ -183,7 +183,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget1.budget_cents,
+            'amount': sampleData.budgets.budget1.amount_cents,
             'month': null,
             'year': sampleData.budgets.budget1.year,
           },
@@ -216,7 +216,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget1.budget_cents,
+            'amount': sampleData.budgets.budget1.amount_cents,
             'month': '1.0',
             'year': sampleData.budgets.budget1.year,
           },
@@ -249,7 +249,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget1.budget_cents,
+            'amount': sampleData.budgets.budget1.amount_cents,
             'month': sampleData.budgets.budget1.month,
             'year': null,
           },
@@ -282,7 +282,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget1.budget_cents,
+            'amount': sampleData.budgets.budget1.amount_cents,
             'month': sampleData.budgets.budget1.month,
             'year': '1.0',
           },
@@ -315,7 +315,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget1.budget_cents,
+            'amount': sampleData.budgets.budget1.amount_cents,
             'month': sampleData.budgets.budget1.month,
             'year': sampleData.budgets.budget1.year,
           },
@@ -348,7 +348,7 @@ describe('Integration - POST /budgets', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget1.budget_cents,
+            'amount': sampleData.budgets.budget1.amount_cents,
             'month': sampleData.budgets.budget1.month,
             'year': sampleData.budgets.budget1.year,
           },
@@ -364,7 +364,7 @@ describe('Integration - POST /budgets', function() {
     expect(res).to.have.status(201);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(res.body.data.attributes['budget-cents'], sampleData.budgets.budget1.budget_cents);
+    assert.strictEqual(res.body.data.attributes.amount, sampleData.budgets.budget1.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.month, sampleData.budgets.budget1.month);
     assert.strictEqual(res.body.data.attributes.year, sampleData.budgets.budget1.year);
@@ -378,8 +378,8 @@ describe('Integration - POST /budgets', function() {
     // Validate BudgetCtrl.createBudget call.
     assert.strictEqual(createBudgetSpy.callCount, 1);
     const createBudgetParams = createBudgetSpy.getCall(0).args[0];
+    assert.strictEqual(createBudgetParams.amount, sampleData.budgets.budget1.amount_cents);
     assert.isOk(createBudgetParams.auditApiCallUuid);
-    assert.strictEqual(createBudgetParams.budgetCents, sampleData.budgets.budget1.budget_cents);
     assert.strictEqual(createBudgetParams.month, sampleData.budgets.budget1.month);
     assert.strictEqual(createBudgetParams.subcategoryUuid, subcategoryUuid);
     assert.strictEqual(createBudgetParams.year, sampleData.budgets.budget1.year);

@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -80,8 +80,8 @@ describe('Integration - DELETE /budgets/:uuid', function() {
       user_uuid: user1Uuid,
     });
     user1BudgetUuid = await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1SubcategoryUuid,
       year: sampleData.budgets.budget1.year,

@@ -34,7 +34,7 @@ module.exports = (app) => {
       const toDate = fromDate.clone().add(1, 'M');
 
       const [budgetSum, incomeSum, amountSum, reimbursedSum] = await Promise.all([
-        models.Budget.sum('budget_cents', {
+        models.Budget.sum('amount_cents', {
           where: {
             [Op.and]: [
               {

@@ -69,7 +69,7 @@ module.exports = (app) => {
         const monthReports = await Promise.all(months.map(async(month) => {
           return {
             budget: await models.Budget.findOne({
-              attributes: ['budget_cents'],
+              attributes: ['amount_cents'],
               where: {
                 month,
                 subcategory_uuid: subcategory.get('uuid'),
@@ -95,29 +95,29 @@ module.exports = (app) => {
 
         return {
           apr_actual_cents: monthReports[3].expenseSum[0].get('amount_cents') - monthReports[3].expenseSum[0].get('reimbursed_cents'),
-          apr_budget_cents: monthReports[3].budget ? monthReports[3].budget.get('budget_cents') : 0,
+          apr_budget_cents: monthReports[3].budget ? monthReports[3].budget.get('amount_cents') : 0,
           aug_actual_cents: monthReports[7].expenseSum[0].get('amount_cents') - monthReports[7].expenseSum[0].get('reimbursed_cents'),
-          aug_budget_cents: monthReports[7].budget ? monthReports[7].budget.get('budget_cents') : 0,
+          aug_budget_cents: monthReports[7].budget ? monthReports[7].budget.get('amount_cents') : 0,
           dec_actual_cents: monthReports[11].expenseSum[0].get('amount_cents') - monthReports[11].expenseSum[0].get('reimbursed_cents'),
-          dec_budget_cents: monthReports[11].budget ? monthReports[11].budget.get('budget_cents') : 0,
+          dec_budget_cents: monthReports[11].budget ? monthReports[11].budget.get('amount_cents') : 0,
           feb_actual_cents: monthReports[1].expenseSum[0].get('amount_cents') - monthReports[1].expenseSum[0].get('reimbursed_cents'),
-          feb_budget_cents: monthReports[1].budget ? monthReports[1].budget.get('budget_cents') : 0,
+          feb_budget_cents: monthReports[1].budget ? monthReports[1].budget.get('amount_cents') : 0,
           mar_actual_cents: monthReports[2].expenseSum[0].get('amount_cents') - monthReports[2].expenseSum[0].get('reimbursed_cents'),
-          mar_budget_cents: monthReports[2].budget ? monthReports[2].budget.get('budget_cents') : 0,
+          mar_budget_cents: monthReports[2].budget ? monthReports[2].budget.get('amount_cents') : 0,
           may_actual_cents: monthReports[4].expenseSum[0].get('amount_cents') - monthReports[4].expenseSum[0].get('reimbursed_cents'),
-          may_budget_cents: monthReports[4].budget ? monthReports[4].budget.get('budget_cents') : 0,
+          may_budget_cents: monthReports[4].budget ? monthReports[4].budget.get('amount_cents') : 0,
           jan_actual_cents: monthReports[0].expenseSum[0].get('amount_cents') - monthReports[0].expenseSum[0].get('reimbursed_cents'),
-          jan_budget_cents: monthReports[0].budget ? monthReports[0].budget.get('budget_cents') : 0,
+          jan_budget_cents: monthReports[0].budget ? monthReports[0].budget.get('amount_cents') : 0,
           jul_actual_cents: monthReports[6].expenseSum[0].get('amount_cents') - monthReports[6].expenseSum[0].get('reimbursed_cents'),
-          jul_budget_cents: monthReports[6].budget ? monthReports[6].budget.get('budget_cents') : 0,
+          jul_budget_cents: monthReports[6].budget ? monthReports[6].budget.get('amount_cents') : 0,
           jun_actual_cents: monthReports[5].expenseSum[0].get('amount_cents') - monthReports[5].expenseSum[0].get('reimbursed_cents'),
-          jun_budget_cents: monthReports[5].budget ? monthReports[5].budget.get('budget_cents') : 0,
+          jun_budget_cents: monthReports[5].budget ? monthReports[5].budget.get('amount_cents') : 0,
           nov_actual_cents: monthReports[10].expenseSum[0].get('amount_cents') - monthReports[10].expenseSum[0].get('reimbursed_cents'),
-          nov_budget_cents: monthReports[10].budget ? monthReports[10].budget.get('budget_cents') : 0,
+          nov_budget_cents: monthReports[10].budget ? monthReports[10].budget.get('amount_cents') : 0,
           oct_actual_cents: monthReports[9].expenseSum[0].get('amount_cents') - monthReports[9].expenseSum[0].get('reimbursed_cents'),
-          oct_budget_cents: monthReports[9].budget ? monthReports[9].budget.get('budget_cents') : 0,
+          oct_budget_cents: monthReports[9].budget ? monthReports[9].budget.get('amount_cents') : 0,
           sep_actual_cents: monthReports[8].expenseSum[0].get('amount_cents') - monthReports[8].expenseSum[0].get('reimbursed_cents'),
-          sep_budget_cents: monthReports[8].budget ? monthReports[8].budget.get('budget_cents') : 0,
+          sep_budget_cents: monthReports[8].budget ? monthReports[8].budget.get('amount_cents') : 0,
           year,
         };
       }));

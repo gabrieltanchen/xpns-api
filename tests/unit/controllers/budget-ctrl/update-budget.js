@@ -3,9 +3,9 @@ const sinon = require('sinon');
 const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { BudgetError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { BudgetError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -84,7 +84,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
 
   beforeEach('create user 1 budget', async function() {
     const budget = await models.Budget.create({
-      budget_cents: sampleData.budgets.budget1.budget_cents,
+      amount_cents: sampleData.budgets.budget1.amount_cents,
       month: sampleData.budgets.budget1.month,
       subcategory_uuid: user1Subcategory1Uuid,
       year: sampleData.budgets.budget1.year,
@@ -132,8 +132,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: null,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -155,8 +155,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: null,
@@ -178,8 +178,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -201,8 +201,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -224,8 +224,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -247,8 +247,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -270,8 +270,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: null,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -293,8 +293,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: 'invalid month',
         subcategoryUuid: user1Subcategory1Uuid,
@@ -316,8 +316,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: -1,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -339,8 +339,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: 12,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -356,14 +356,14 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
 
-  it('should reject with no budget', async function() {
+  it('should reject with no amount', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: null,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: null,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -379,14 +379,14 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
 
-  it('should reject with an invalid budget', async function() {
+  it('should reject with an invalid amount', async function() {
     try {
       const apiCall = await models.Audit.ApiCall.create({
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: 'invalid amount',
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: 'invalid budgetCents',
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -405,8 +405,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
   it('should reject with no audit API call', async function() {
     try {
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: null,
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -425,8 +425,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
   it('should reject when the audit API call does not exist', async function() {
     try {
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: uuidv4(),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -453,8 +453,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -476,8 +476,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: uuidv4(),
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -499,8 +499,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user2Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -530,8 +530,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user1Subcategory1Uuid,
@@ -552,8 +552,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.updateBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       budgetUuid: user1BudgetUuid,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1Subcategory1Uuid,
@@ -562,13 +562,13 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
     assert.strictEqual(trackChangesSpy.callCount, 0);
   });
 
-  it('should resolve updating the budget', async function() {
+  it('should resolve updating the amount', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.updateBudget({
+      amount: sampleData.budgets.budget2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget2.budget_cents,
       budgetUuid: user1BudgetUuid,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1Subcategory1Uuid,
@@ -578,7 +578,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
     // Verify the Budget insnace.
     const budget = await models.Budget.findOne({
       attributes: [
-        'budget_cents',
+        'amount_cents',
         'month',
         'subcategory_uuid',
         'uuid',
@@ -594,7 +594,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       },
     });
     assert.isOk(budget);
-    assert.strictEqual(budget.get('budget_cents'), sampleData.budgets.budget2.budget_cents);
+    assert.strictEqual(budget.get('amount_cents'), sampleData.budgets.budget2.amount_cents);
     assert.strictEqual(budget.get('month'), sampleData.budgets.budget1.month);
     assert.strictEqual(budget.get('subcategory_uuid'), user1Subcategory1Uuid);
     assert.strictEqual(budget.Subcategory.get('uuid'), user1Subcategory1Uuid);
@@ -620,8 +620,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.updateBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       budgetUuid: user1BudgetUuid,
       month: sampleData.budgets.budget2.month,
       subcategoryUuid: user1Subcategory1Uuid,
@@ -631,7 +631,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
     // Verify the Budget insnace.
     const budget = await models.Budget.findOne({
       attributes: [
-        'budget_cents',
+        'amount_cents',
         'month',
         'subcategory_uuid',
         'uuid',
@@ -647,7 +647,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       },
     });
     assert.isOk(budget);
-    assert.strictEqual(budget.get('budget_cents'), sampleData.budgets.budget1.budget_cents);
+    assert.strictEqual(budget.get('amount_cents'), sampleData.budgets.budget1.amount_cents);
     assert.strictEqual(budget.get('month'), sampleData.budgets.budget2.month);
     assert.strictEqual(budget.get('subcategory_uuid'), user1Subcategory1Uuid);
     assert.strictEqual(budget.Subcategory.get('uuid'), user1Subcategory1Uuid);
@@ -673,8 +673,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.updateBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       budgetUuid: user1BudgetUuid,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1Subcategory1Uuid,
@@ -684,7 +684,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
     // Verify the Budget insnace.
     const budget = await models.Budget.findOne({
       attributes: [
-        'budget_cents',
+        'amount_cents',
         'month',
         'subcategory_uuid',
         'uuid',
@@ -700,7 +700,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       },
     });
     assert.isOk(budget);
-    assert.strictEqual(budget.get('budget_cents'), sampleData.budgets.budget1.budget_cents);
+    assert.strictEqual(budget.get('amount_cents'), sampleData.budgets.budget1.amount_cents);
     assert.strictEqual(budget.get('month'), sampleData.budgets.budget1.month);
     assert.strictEqual(budget.get('subcategory_uuid'), user1Subcategory1Uuid);
     assert.strictEqual(budget.Subcategory.get('uuid'), user1Subcategory1Uuid);
@@ -727,8 +727,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: uuidv4(),
@@ -750,8 +750,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget1.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget1.month,
         subcategoryUuid: user2SubcategoryUuid,
@@ -772,8 +772,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.updateBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       budgetUuid: user1BudgetUuid,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1Subcategory2Uuid,
@@ -783,7 +783,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
     // Verify the Budget insnace.
     const budget = await models.Budget.findOne({
       attributes: [
-        'budget_cents',
+        'amount_cents',
         'month',
         'subcategory_uuid',
         'uuid',
@@ -799,7 +799,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       },
     });
     assert.isOk(budget);
-    assert.strictEqual(budget.get('budget_cents'), sampleData.budgets.budget1.budget_cents);
+    assert.strictEqual(budget.get('amount_cents'), sampleData.budgets.budget1.amount_cents);
     assert.strictEqual(budget.get('month'), sampleData.budgets.budget1.month);
     assert.strictEqual(budget.get('subcategory_uuid'), user1Subcategory2Uuid);
     assert.strictEqual(budget.Subcategory.get('uuid'), user1Subcategory2Uuid);
@@ -825,8 +825,8 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.updateBudget({
+      amount: sampleData.budgets.budget2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget2.budget_cents,
       budgetUuid: user1BudgetUuid,
       month: sampleData.budgets.budget2.month,
       subcategoryUuid: user1Subcategory2Uuid,
@@ -836,7 +836,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
     // Verify the Budget insnace.
     const budget = await models.Budget.findOne({
       attributes: [
-        'budget_cents',
+        'amount_cents',
         'month',
         'subcategory_uuid',
         'uuid',
@@ -852,7 +852,7 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       },
     });
     assert.isOk(budget);
-    assert.strictEqual(budget.get('budget_cents'), sampleData.budgets.budget2.budget_cents);
+    assert.strictEqual(budget.get('amount_cents'), sampleData.budgets.budget2.amount_cents);
     assert.strictEqual(budget.get('month'), sampleData.budgets.budget2.month);
     assert.strictEqual(budget.get('subcategory_uuid'), user1Subcategory2Uuid);
     assert.strictEqual(budget.Subcategory.get('uuid'), user1Subcategory2Uuid);
@@ -878,16 +878,16 @@ describe('Unit:Controllers - BudgetCtrl.updateBudget', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget2.budget_cents,
       month: sampleData.budgets.budget2.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: sampleData.budgets.budget2.year,
     });
     try {
       await controllers.BudgetCtrl.updateBudget({
+        amount: sampleData.budgets.budget2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget2.budget_cents,
         budgetUuid: user1BudgetUuid,
         month: sampleData.budgets.budget2.month,
         subcategoryUuid: user1Subcategory2Uuid,

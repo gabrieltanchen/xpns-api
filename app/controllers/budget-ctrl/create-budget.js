@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 
-const { BudgetError } = require('../../middleware/error-handler/');
+const { BudgetError } = require('../../middleware/error-handler');
 
 module.exports = async({
+  amount,
   auditApiCallUuid,
-  budgetCents,
   budgetCtrl,
   month,
   subcategoryUuid,
@@ -24,7 +24,7 @@ module.exports = async({
   } else if (parseInt(month, 10) < 0
       || parseInt(month, 10) > 11) {
     throw new BudgetError('Invalid month');
-  } else if (isNaN(parseInt(budgetCents, 10))) {
+  } else if (isNaN(parseInt(amount, 10))) {
     throw new BudgetError('Invalid budget');
   }
 
@@ -80,7 +80,7 @@ module.exports = async({
   }
 
   const newBudget = models.Budget.build({
-    budget_cents: budgetCents,
+    amount_cents: amount,
     month: parseInt(month, 10),
     subcategory_uuid: subcategory.get('uuid'),
     year: parseInt(year, 10),
