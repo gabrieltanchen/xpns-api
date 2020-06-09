@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const Op = Sequelize.Op;
 
-const { CategoryError } = require('../../middleware/error-handler/');
+const { CategoryError } = require('../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -126,30 +126,30 @@ module.exports = (app) => {
         'data': yearReports.map((yearReport) => {
           return {
             'attributes': {
-              'apr-actual-cents': parseInt(yearReport.apr_actual_cents, 10),
-              'apr-budget-cents': parseInt(yearReport.apr_budget_cents, 10),
-              'aug-actual-cents': parseInt(yearReport.aug_actual_cents, 10),
-              'aug-budget-cents': parseInt(yearReport.aug_budget_cents, 10),
-              'dec-actual-cents': parseInt(yearReport.dec_actual_cents, 10),
-              'dec-budget-cents': parseInt(yearReport.dec_budget_cents, 10),
-              'feb-actual-cents': parseInt(yearReport.feb_actual_cents, 10),
-              'feb-budget-cents': parseInt(yearReport.feb_budget_cents, 10),
-              'mar-actual-cents': parseInt(yearReport.mar_actual_cents, 10),
-              'mar-budget-cents': parseInt(yearReport.mar_budget_cents, 10),
-              'may-actual-cents': parseInt(yearReport.may_actual_cents, 10),
-              'may-budget-cents': parseInt(yearReport.may_budget_cents, 10),
-              'jan-actual-cents': parseInt(yearReport.jan_actual_cents, 10),
-              'jan-budget-cents': parseInt(yearReport.jan_budget_cents, 10),
-              'jul-actual-cents': parseInt(yearReport.jul_actual_cents, 10),
-              'jul-budget-cents': parseInt(yearReport.jul_budget_cents, 10),
-              'jun-actual-cents': parseInt(yearReport.jun_actual_cents, 10),
-              'jun-budget-cents': parseInt(yearReport.jun_budget_cents, 10),
-              'nov-actual-cents': parseInt(yearReport.nov_actual_cents, 10),
-              'nov-budget-cents': parseInt(yearReport.nov_budget_cents, 10),
-              'oct-actual-cents': parseInt(yearReport.oct_actual_cents, 10),
-              'oct-budget-cents': parseInt(yearReport.oct_budget_cents, 10),
-              'sep-actual-cents': parseInt(yearReport.sep_actual_cents, 10),
-              'sep-budget-cents': parseInt(yearReport.sep_budget_cents, 10),
+              'apr-actual': parseInt(yearReport.apr_actual_cents, 10),
+              'apr-budget': parseInt(yearReport.apr_budget_cents, 10),
+              'aug-actual': parseInt(yearReport.aug_actual_cents, 10),
+              'aug-budget': parseInt(yearReport.aug_budget_cents, 10),
+              'dec-actual': parseInt(yearReport.dec_actual_cents, 10),
+              'dec-budget': parseInt(yearReport.dec_budget_cents, 10),
+              'feb-actual': parseInt(yearReport.feb_actual_cents, 10),
+              'feb-budget': parseInt(yearReport.feb_budget_cents, 10),
+              'mar-actual': parseInt(yearReport.mar_actual_cents, 10),
+              'mar-budget': parseInt(yearReport.mar_budget_cents, 10),
+              'may-actual': parseInt(yearReport.may_actual_cents, 10),
+              'may-budget': parseInt(yearReport.may_budget_cents, 10),
+              'jan-actual': parseInt(yearReport.jan_actual_cents, 10),
+              'jan-budget': parseInt(yearReport.jan_budget_cents, 10),
+              'jul-actual': parseInt(yearReport.jul_actual_cents, 10),
+              'jul-budget': parseInt(yearReport.jul_budget_cents, 10),
+              'jun-actual': parseInt(yearReport.jun_actual_cents, 10),
+              'jun-budget': parseInt(yearReport.jun_budget_cents, 10),
+              'nov-actual': parseInt(yearReport.nov_actual_cents, 10),
+              'nov-budget': parseInt(yearReport.nov_budget_cents, 10),
+              'oct-actual': parseInt(yearReport.oct_actual_cents, 10),
+              'oct-budget': parseInt(yearReport.oct_budget_cents, 10),
+              'sep-actual': parseInt(yearReport.sep_actual_cents, 10),
+              'sep-budget': parseInt(yearReport.sep_budget_cents, 10),
               'year': yearReport.year,
             },
             'id': `${subcategory.get('uuid')}-${yearReport.year}`,
