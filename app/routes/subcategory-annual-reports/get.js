@@ -9,7 +9,7 @@ module.exports = (app) => {
 
   return async(req, res, next) => {
     try {
-      if (!req.query.subcategory_uuid) {
+      if (!req.query.subcategory_id) {
         throw new CategoryError('No open queries');
       }
 
@@ -31,7 +31,7 @@ module.exports = (app) => {
           },
         }],
         where: {
-          uuid: req.query.subcategory_uuid,
+          uuid: req.query.subcategory_id,
         },
       });
       if (!subcategory) {

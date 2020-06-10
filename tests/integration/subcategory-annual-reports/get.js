@@ -693,7 +693,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
   it('should return 401 with no auth token', async function() {
     const res = await chai.request(server)
-      .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+      .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
       .set('Content-Type', 'application/vnd.api+json');
     expect(res).to.have.status(401);
     assert.deepEqual(res.body, {
@@ -718,7 +718,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
   it('should return 404 when the subcategory does not exist', async function() {
     const res = await chai.request(server)
-      .get(`/subcategory-annual-reports?subcategory_uuid=${uuidv4()}`)
+      .get(`/subcategory-annual-reports?subcategory_id=${uuidv4()}`)
       .set('Content-Type', 'application/vnd.api+json')
       .set('Authorization', `Bearer ${user1Token}`);
     expect(res).to.have.status(404);
@@ -731,7 +731,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
   it('should return 404 when the subcategory belongs to a different household', async function() {
     const res = await chai.request(server)
-      .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+      .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
       .set('Content-Type', 'application/vnd.api+json')
       .set('Authorization', `Bearer ${user2Token}`);
     expect(res).to.have.status(404);
@@ -744,7 +744,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
   it('should return 200 and the correct totals for 2018', async function() {
     const res = await chai.request(server)
-      .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+      .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
       .set('Content-Type', 'application/vnd.api+json')
       .set('Authorization', `Bearer ${user1Token}`);
     expect(res).to.have.status(200);
@@ -901,7 +901,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
     it('should also return budget data for 2019', async function() {
       const res = await chai.request(server)
-        .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+        .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -1130,7 +1130,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
     it('should also return expense data for 2019', async function() {
       const res = await chai.request(server)
-        .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+        .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
