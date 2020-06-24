@@ -58,16 +58,16 @@ module.exports = (app) => {
           'uuid',
         ],
         include: [{
-          attributes: ['uuid'],
+          attributes: ['name', 'uuid'],
           model: models.HouseholdMember,
           required: true,
           where: {
             household_uuid: user.get('household_uuid'),
           },
         }, {
-          attributes: ['uuid'],
+          attributes: ['name', 'uuid'],
           include: [{
-            attributes: ['uuid'],
+            attributes: ['name', 'uuid'],
             model: models.Category,
             required: true,
             where: {
@@ -77,7 +77,7 @@ module.exports = (app) => {
           model: models.Subcategory,
           required: true,
         }, {
-          attributes: ['uuid'],
+          attributes: ['name', 'uuid'],
           model: models.Vendor,
           required: true,
           where: {
@@ -124,6 +124,39 @@ module.exports = (app) => {
           },
           'type': 'expenses',
         },
+        'included': [{
+          'attributes': {
+            'name': expense.Subcategory.Category.get('name'),
+          },
+          'id': expense.Subcategory.Category.get('uuid'),
+          'type': 'categories',
+        }, {
+          'attributes': {
+            'name': expense.HouseholdMember.get('name'),
+          },
+          'id': expense.HouseholdMember.get('uuid'),
+          'type': 'household-members',
+        }, {
+          'attributes': {
+            'name': expense.Subcategory.get('name'),
+          },
+          'id': expense.Subcategory.get('uuid'),
+          'relationships': {
+            'category': {
+              'data': {
+                'id': expense.Subcategory.Category.get('uuid'),
+                'type': 'categories',
+              },
+            },
+          },
+          'type': 'subcategories',
+        }, {
+          'attributes': {
+            'name': expense.Vendor.get('name'),
+          },
+          'id': expense.Vendor.get('uuid'),
+          'type': 'vendors',
+        }],
       });
     } catch (err) {
       return next(err);

@@ -437,19 +437,6 @@ describe('Integration - GET /subcategories', function() {
     });
   });
 
-  it('should return 403 with no category id', async function() {
-    const res = await chai.request(server)
-      .get('/subcategories')
-      .set('Content-Type', 'application/vnd.api+json')
-      .set('Authorization', `Bearer ${user1Token}`);
-    expect(res).to.have.status(403);
-    assert.deepEqual(res.body, {
-      errors: [{
-        detail: 'Category ID is required.',
-      }],
-    });
-  });
-
   describe('when called with the category_id query param', function() {
     it('should return 404 when the category does not exist', async function() {
       const res = await chai.request(server)

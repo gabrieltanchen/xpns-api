@@ -1,4 +1,8 @@
+const Sequelize = require('sequelize');
+
 const { CategoryError } = require('../../middleware/error-handler');
+
+const Op = Sequelize.Op;
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -44,7 +48,7 @@ module.exports = (app) => {
       });
 
       const subcategoryWhere = {};
-      if (req.query.category_id) {
+      if (req.query && req.query.category_id) {
         const category = await models.Category.findOne({
           attributes: ['uuid'],
           where: {
@@ -56,8 +60,11 @@ module.exports = (app) => {
           throw new CategoryError('Not found');
         }
         subcategoryWhere.category_uuid = category.get('uuid');
-      } else {
-        throw new CategoryError('No open queries');
+      } else if (req.query && req.query.search) {
+        offset = 0;
+        subcategoryWhere.name = {
+          [Op.iLike]: `%${req.query.search}%`,
+        };
       }
 
       const subcategories = await models.Subcategory.findAndCountAll({
@@ -66,10 +73,30 @@ module.exports = (app) => {
           'name',
           'uuid',
         ],
+        include: [{
+          attributes: ['name', 'uuid'],
+          model: models.Category,
+          required: true,
+        }],
         limit,
         offset,
         order: [['name', 'ASC']],
         where: subcategoryWhere,
+      });
+
+      const included = [];
+      const categoryIds = [];
+      subcategories.rows.forEach((subcategory) => {
+        if (!categoryIds.includes(subcategory.Category.get('uuid'))) {
+          categoryIds.push(subcategory.Category.get('uuid'));
+          included.push({
+            'attributes': {
+              'name': subcategory.Category.get('name'),
+            },
+            'id': subcategory.Category.get('uuid'),
+            'type': 'categories',
+          });
+        }
       });
 
       return res.status(200).json({
@@ -80,9 +107,18 @@ module.exports = (app) => {
               'name': subcategory.get('name'),
             },
             'id': subcategory.get('uuid'),
+            'relationships': {
+              'category': {
+                'data': {
+                  'id': subcategory.Category.get('uuid'),
+                  'type': 'categories',
+                },
+              },
+            },
             'type': 'subcategories',
           };
         }),
+        'included': included,
         'meta': {
           'pages': Math.ceil(subcategories.count / limit),
           'total': subcategories.count,
