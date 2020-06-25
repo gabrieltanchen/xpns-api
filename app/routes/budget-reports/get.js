@@ -114,10 +114,8 @@ module.exports = (app) => {
             : 0;
           return {
             'attributes': {
-              'actual': parseFloat(actualCents / 100),
-              'actual-cents': actualCents,
-              'budget': parseFloat(budgetCents / 100),
-              'budget-cents': budgetCents,
+              'actual': actualCents,
+              'budget': budgetCents,
             },
             'id': `${subcategory.get('uuid')}-${year}-${month}`,
             'relationships': {
