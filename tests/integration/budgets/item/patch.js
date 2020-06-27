@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -92,8 +92,8 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       user_uuid: user1Uuid,
     });
     user1BudgetUuid = await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: sampleData.budgets.budget1.year,
@@ -130,7 +130,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget_cents,
+            'amount': sampleData.budgets.budget2.amount_cents,
             'month': sampleData.budgets.budget2.month,
             'year': sampleData.budgets.budget2.year,
           },
@@ -162,7 +162,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget_cents,
+            'amount': sampleData.budgets.budget2.amount_cents,
             'month': sampleData.budgets.budget2.month,
             'year': sampleData.budgets.budget2.year,
           },
@@ -185,15 +185,15 @@ describe('Integration - PATCH /budgets/:uuid', function() {
     });
     assert.strictEqual(updateBudgetSpy.callCount, 1);
     const updateBudgetParams = updateBudgetSpy.getCall(0).args[0];
+    assert.strictEqual(updateBudgetParams.amount, sampleData.budgets.budget2.amount_cents);
     assert.isOk(updateBudgetParams.auditApiCallUuid);
-    assert.strictEqual(updateBudgetParams.budgetCents, sampleData.budgets.budget2.budget_cents);
     assert.strictEqual(updateBudgetParams.budgetUuid, user1BudgetUuid);
     assert.strictEqual(updateBudgetParams.month, sampleData.budgets.budget2.month);
     assert.strictEqual(updateBudgetParams.subcategoryUuid, user1Subcategory2Uuid);
     assert.strictEqual(updateBudgetParams.year, sampleData.budgets.budget2.year);
   });
 
-  it('should return 422 with no budget cents', async function() {
+  it('should return 422 with no amount', async function() {
     const res = await chai.request(server)
       .patch(`/budgets/${user1BudgetUuid}`)
       .set('Content-Type', 'application/vnd.api+json')
@@ -201,7 +201,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': null,
+            'amount': null,
             'month': sampleData.budgets.budget2.month,
             'year': sampleData.budgets.budget2.year,
           },
@@ -221,14 +221,14 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       errors: [{
         detail: 'Budget is required.',
         source: {
-          pointer: '/data/attributes/budget-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
     assert.strictEqual(updateBudgetSpy.callCount, 0);
   });
 
-  it('should return 422 with an invalid budget cents', async function() {
+  it('should return 422 with an invalid amount', async function() {
     const res = await chai.request(server)
       .patch(`/budgets/${user1BudgetUuid}`)
       .set('Content-Type', 'application/vnd.api+json')
@@ -236,7 +236,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget,
+            'amount': '12.34',
             'month': sampleData.budgets.budget2.month,
             'year': sampleData.budgets.budget2.year,
           },
@@ -256,7 +256,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       errors: [{
         detail: 'Budget must be an integer.',
         source: {
-          pointer: '/data/attributes/budget-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
@@ -271,7 +271,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget_cents,
+            'amount': sampleData.budgets.budget2.amount_cents,
             'month': null,
             'year': sampleData.budgets.budget2.year,
           },
@@ -298,7 +298,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
     assert.strictEqual(updateBudgetSpy.callCount, 0);
   });
 
-  it('should retu4n 422 with an invalid month', async function() {
+  it('should return 422 with an invalid month', async function() {
     const res = await chai.request(server)
       .patch(`/budgets/${user1BudgetUuid}`)
       .set('Content-Type', 'application/vnd.api+json')
@@ -306,7 +306,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget_cents,
+            'amount': sampleData.budgets.budget2.amount_cents,
             'month': '1.0',
             'year': sampleData.budgets.budget2.year,
           },
@@ -341,7 +341,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget_cents,
+            'amount': sampleData.budgets.budget2.amount_cents,
             'month': sampleData.budgets.budget2.month,
             'year': null,
           },
@@ -376,7 +376,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget_cents,
+            'amount': sampleData.budgets.budget2.amount_cents,
             'month': sampleData.budgets.budget2.month,
             'year': '1.0',
           },
@@ -411,7 +411,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget_cents,
+            'amount': sampleData.budgets.budget2.amount_cents,
             'month': sampleData.budgets.budget2.month,
             'year': sampleData.budgets.budget2.year,
           },
@@ -446,7 +446,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'budget-cents': sampleData.budgets.budget2.budget_cents,
+            'amount': sampleData.budgets.budget2.amount_cents,
             'month': sampleData.budgets.budget2.month,
             'year': sampleData.budgets.budget2.year,
           },
@@ -464,7 +464,7 @@ describe('Integration - PATCH /budgets/:uuid', function() {
     expect(res).to.have.status(200);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(res.body.data.attributes['budget-cents'], sampleData.budgets.budget2.budget_cents);
+    assert.strictEqual(res.body.data.attributes.amount, sampleData.budgets.budget2.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.month, sampleData.budgets.budget2.month);
     assert.strictEqual(res.body.data.attributes.year, sampleData.budgets.budget2.year);
@@ -478,8 +478,8 @@ describe('Integration - PATCH /budgets/:uuid', function() {
     // Validate BudgetCtrl.updateBudget call.
     assert.strictEqual(updateBudgetSpy.callCount, 1);
     const updateBudgetParams = updateBudgetSpy.getCall(0).args[0];
+    assert.strictEqual(updateBudgetParams.amount, sampleData.budgets.budget2.amount_cents);
     assert.isOk(updateBudgetParams.auditApiCallUuid);
-    assert.strictEqual(updateBudgetParams.budgetCents, sampleData.budgets.budget2.budget_cents);
     assert.strictEqual(updateBudgetParams.budgetUuid, user1BudgetUuid);
     assert.strictEqual(updateBudgetParams.month, sampleData.budgets.budget2.month);
     assert.strictEqual(updateBudgetParams.subcategoryUuid, user1Subcategory2Uuid);

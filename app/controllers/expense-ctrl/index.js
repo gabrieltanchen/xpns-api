@@ -9,23 +9,23 @@ class ExpenseCtrl {
   }
 
   async createExpense({
-    amountCents,
+    amount,
     auditApiCallUuid,
     date,
     description,
     householdMemberUuid,
-    reimbursedCents,
+    reimbursedAmount,
     subcategoryUuid,
     vendorUuid,
   }) {
     return createExpense({
-      amountCents,
+      amount,
       auditApiCallUuid,
       date,
       description,
       expenseCtrl: this,
       householdMemberUuid,
-      reimbursedCents,
+      reimbursedAmount,
       subcategoryUuid,
       vendorUuid,
     });
@@ -43,25 +43,25 @@ class ExpenseCtrl {
   }
 
   async updateExpense({
-    amountCents,
+    amount,
     auditApiCallUuid,
     date,
     description,
     expenseUuid,
     householdMemberUuid,
-    reimbursedCents,
+    reimbursedAmount,
     subcategoryUuid,
     vendorUuid,
   }) {
     return updateExpense({
-      amountCents,
+      amount,
       auditApiCallUuid,
       date,
       description,
       expenseCtrl: this,
       expenseUuid,
       householdMemberUuid,
-      reimbursedCents,
+      reimbursedAmount,
       subcategoryUuid,
       vendorUuid,
     });

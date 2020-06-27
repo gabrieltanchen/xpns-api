@@ -1,5 +1,5 @@
 const chai = require('chai');
-const TestHelper = require('../../test-helper/');
+const TestHelper = require('../../test-helper');
 
 const assert = chai.assert;
 
@@ -75,12 +75,12 @@ describe('Unit:Model - Budget', function() {
     assert.isNull(attributes.month.defaultValue);
     assert.isFalse(attributes.month.primaryKey);
 
-    // budget_cents
-    assert.isOk(attributes.budget_cents);
-    assert.strictEqual(attributes.budget_cents.type, 'INTEGER');
-    assert.isFalse(attributes.budget_cents.allowNull);
-    assert.isNull(attributes.budget_cents.defaultValue);
-    assert.isFalse(attributes.budget_cents.primaryKey);
+    // amount_cents
+    assert.isOk(attributes.amount_cents);
+    assert.strictEqual(attributes.amount_cents.type, 'INTEGER');
+    assert.isFalse(attributes.amount_cents.allowNull);
+    assert.isNull(attributes.amount_cents.defaultValue);
+    assert.isFalse(attributes.amount_cents.primaryKey);
 
     assert.strictEqual(Object.keys(attributes).length, 8);
   });

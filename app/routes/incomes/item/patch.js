@@ -10,7 +10,6 @@ module.exports = (app) => {
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object} data.attributes
    * @apiSuccess (200) {decimal} data.attributes.amount
-   * @apiSuccess (200) {integer} data.attributes[amount-cents]
    * @apiSuccess (200) {string} data.attributes[created-at]
    * @apiSuccess (200) {string} data.attributes.date
    * @apiSuccess (200) {string} data.attributes.description
@@ -32,7 +31,7 @@ module.exports = (app) => {
   return async(req, res, next) => {
     try {
       await controllers.IncomeCtrl.updateIncome({
-        amountCents: req.body.data.attributes['amount-cents'],
+        amount: req.body.data.attributes.amount,
         auditApiCallUuid: req.auditApiCallUuid,
         date: req.body.data.attributes.date,
         description: req.body.data.attributes.description,
@@ -61,8 +60,7 @@ module.exports = (app) => {
       return res.status(200).json({
         'data': {
           'attributes': {
-            'amount': parseFloat(income.get('amount_cents') / 100).toFixed(2),
-            'amount-cents': income.get('amount_cents'),
+            'amount': income.get('amount_cents'),
             'created-at': income.get('created_at'),
             'date': income.get('date'),
             'description': income.get('description'),

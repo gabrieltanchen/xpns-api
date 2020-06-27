@@ -1,4 +1,4 @@
-const { BudgetError, CategoryError } = require('../../middleware/error-handler/');
+const { BudgetError, CategoryError } = require('../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -11,7 +11,7 @@ module.exports = (app) => {
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object[]} data.budgets
    * @apiSuccess (200) {object} data.budgets[].attributes
-   * @apiSuccess (200) {integer} data.budgets[].attributes[budget-cents]
+   * @apiSuccess (200) {integer} data.budgets[].attributes.amount
    * @apiSuccess (200) {string} data.budgets[].attributes[created-at]
    * @apiSuccess (200) {integer} data.budgets[].attributes.month
    * @apiSuccess (200) {integer} data.budgets[].attributes.year
@@ -66,7 +66,7 @@ module.exports = (app) => {
         }
         budgetWhere.year = parseInt(req.query.year, 10);
       }
-      if (req.query.subcategory_uuid) {
+      if (req.query.subcategory_id) {
         const subcategory = await models.Subcategory.findOne({
           attributes: ['uuid'],
           include: [{
@@ -78,7 +78,7 @@ module.exports = (app) => {
             },
           }],
           where: {
-            uuid: req.query.subcategory_uuid,
+            uuid: req.query.subcategory_id,
           },
         });
         if (!subcategory) {
@@ -89,7 +89,7 @@ module.exports = (app) => {
 
       const budgets = await models.Budget.findAndCountAll({
         attributes: [
-          'budget_cents',
+          'amount_cents',
           'created_at',
           'month',
           'uuid',
@@ -125,8 +125,7 @@ module.exports = (app) => {
         'data': budgets.rows.map((budget) => {
           return {
             'attributes': {
-              'budget': parseFloat(budget.get('budget_cents') / 100),
-              'budget-cents': budget.get('budget_cents'),
+              'amount': budget.get('amount_cents'),
               'created-at': budget.get('created_at'),
               'month': budget.get('month'),
               'year': budget.get('year'),

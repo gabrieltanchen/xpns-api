@@ -34,7 +34,7 @@ module.exports = (app) => {
       const toDate = fromDate.clone().add(1, 'M');
 
       const [budgetSum, incomeSum, amountSum, reimbursedSum] = await Promise.all([
-        models.Budget.sum('budget_cents', {
+        models.Budget.sum('amount_cents', {
           where: {
             [Op.and]: [
               {
@@ -123,9 +123,9 @@ module.exports = (app) => {
       return res.status(200).json({
         'data': {
           'attributes': {
-            'actual-cents': amountSum - reimbursedSum || 0,
-            'budget-cents': budgetSum || 0,
-            'income-cents': incomeSum || 0,
+            'actual': amountSum - reimbursedSum || 0,
+            'budget': budgetSum || 0,
+            'income': incomeSum || 0,
           },
           'id': req.params.uuid,
           'type': 'monthly-reports',

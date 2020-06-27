@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { BudgetError } = require('../../middleware/error-handler/');
+const { BudgetError } = require('../../middleware/error-handler');
 
 module.exports = async({
   auditApiCallUuid,

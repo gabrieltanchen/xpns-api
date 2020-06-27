@@ -3,8 +3,8 @@ const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -32,7 +32,7 @@ describe('Integration - POST /users/login', function() {
             'email': attributes.email,
             'password': attributes.password,
           },
-          'type': 'users',
+          'type': 'login-users',
         },
       });
     expect(res).to.have.status(expectedStatus);
@@ -156,7 +156,7 @@ describe('Integration - POST /users/login', function() {
             'email': sampleData.users.user1.email,
             'password': sampleData.users.user1.password,
           },
-          'type': 'users',
+          'type': 'login-users',
         },
       });
     expect(res).to.have.status(200);
@@ -168,7 +168,7 @@ describe('Integration - POST /users/login', function() {
     assert.strictEqual(res.body.data.attributes['last-name'], sampleData.users.user1.lastName);
     assert.isOk(res.body.data.attributes.token);
     assert.strictEqual(res.body.data.id, userUuid);
-    assert.strictEqual(res.body.data.type, 'users');
+    assert.strictEqual(res.body.data.type, 'login-users');
 
     // Validate UserCtrl.getToken call.
     assert.strictEqual(getTokenSpy.callCount, 1);

@@ -3,9 +3,9 @@ const sinon = require('sinon');
 const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { BudgetError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { BudgetError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -71,7 +71,7 @@ describe('Unit:Controllers - BudgetCtrl.deleteBudget', function() {
 
   beforeEach('create user 1 budget', async function() {
     const budget = await models.Budget.create({
-      budget_cents: sampleData.budgets.budget1.budget_cents,
+      amount_cents: sampleData.budgets.budget1.amount_cents,
       month: sampleData.budgets.budget1.month,
       subcategory_uuid: user1SubcategoryUuid,
       year: sampleData.budgets.budget1.year,

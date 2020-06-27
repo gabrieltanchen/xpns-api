@@ -2,29 +2,29 @@ const moment = require('moment');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
-const { ExpenseError } = require('../../middleware/error-handler/');
+const { ExpenseError } = require('../../middleware/error-handler');
 
 /**
- * @param {integer} amountCents
+ * @param {integer} amount
  * @param {string} auditApiCallUuid
  * @param {string} date
  * @param {string} description
  * @param {object} expenseCtrl Instance of ExpenseCtrl
  * @param {string} expenseUuid
  * @param {string} householdMemberUuid
- * @param {integer} reimbursedCents
+ * @param {integer} reimbursedAmount
  * @param {string} subcategoryUuid
  * @param {string} vendorUuid
  */
 module.exports = async({
-  amountCents,
+  amount,
   auditApiCallUuid,
   date,
   description,
   expenseCtrl,
   expenseUuid,
   householdMemberUuid,
-  reimbursedCents,
+  reimbursedAmount,
   subcategoryUuid,
   vendorUuid,
 }) => {
@@ -40,9 +40,9 @@ module.exports = async({
     throw new ExpenseError('Household member is required');
   } else if (!moment.utc(date).isValid()) {
     throw new ExpenseError('Invalid date');
-  } else if (isNaN(parseInt(amountCents, 10))) {
+  } else if (isNaN(parseInt(amount, 10))) {
     throw new ExpenseError('Invalid amount');
-  } else if (isNaN(parseInt(reimbursedCents, 10))) {
+  } else if (isNaN(parseInt(reimbursedAmount, 10))) {
     throw new ExpenseError('Invalid reimbursed amount');
   } else if (!_.isString(description)) {
     throw new ExpenseError('Invalid description');
@@ -114,8 +114,8 @@ module.exports = async({
     throw new ExpenseError('Not found');
   }
 
-  if (expense.get('amount_cents') !== parseInt(amountCents, 10)) {
-    expense.set('amount_cents', parseInt(amountCents, 10));
+  if (expense.get('amount_cents') !== parseInt(amount, 10)) {
+    expense.set('amount_cents', parseInt(amount, 10));
   }
   if (moment(expense.get('date')).format('YYYY-MM-DD') !== moment.utc(date).format('YYYY-MM-DD')) {
     expense.set('date', moment.utc(date).format('YYYY-MM-DD'));
@@ -123,8 +123,8 @@ module.exports = async({
   if (expense.get('description') !== description) {
     expense.set('description', description);
   }
-  if (expense.get('reimbursed_cents') !== parseInt(reimbursedCents, 10)) {
-    expense.set('reimbursed_cents', parseInt(reimbursedCents, 10));
+  if (expense.get('reimbursed_cents') !== parseInt(reimbursedAmount, 10)) {
+    expense.set('reimbursed_cents', parseInt(reimbursedAmount, 10));
   }
 
   // Validate subcategory UUID.

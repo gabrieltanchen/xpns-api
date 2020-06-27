@@ -2,27 +2,27 @@ const moment = require('moment');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
-const { ExpenseError } = require('../../middleware/error-handler/');
+const { ExpenseError } = require('../../middleware/error-handler');
 
 /**
- * @param {integer} amountCents
+ * @param {integer} amount
  * @param {string} auditApiCallUuid
  * @param {string} date
  * @param {string} description
  * @param {object} expenseCtrl Instance of ExpenseCtrl
  * @param {string} householdMemberUuid
- * @param {integer} reimbursedCents
+ * @param {integer} reimbursedAmount
  * @param {string} subcategoryUuid
  * @param {string} vendorUuid
  */
 module.exports = async({
-  amountCents,
+  amount,
   auditApiCallUuid,
   date,
   description,
   expenseCtrl,
   householdMemberUuid,
-  reimbursedCents,
+  reimbursedAmount,
   subcategoryUuid,
   vendorUuid,
 }) => {
@@ -36,9 +36,9 @@ module.exports = async({
     throw new ExpenseError('Household member is required');
   } else if (!moment.utc(date).isValid()) {
     throw new ExpenseError('Invalid date');
-  } else if (isNaN(parseInt(amountCents, 10))) {
+  } else if (isNaN(parseInt(amount, 10))) {
     throw new ExpenseError('Invalid amount');
-  } else if (isNaN(parseInt(reimbursedCents, 10))) {
+  } else if (isNaN(parseInt(reimbursedAmount, 10))) {
     throw new ExpenseError('Invalid reimbursed amount');
   } else if (!_.isString(description)) {
     throw new ExpenseError('Invalid description');
@@ -108,11 +108,11 @@ module.exports = async({
   }
 
   const newExpense = models.Expense.build({
-    amount_cents: parseInt(amountCents, 10),
+    amount_cents: parseInt(amount, 10),
     date: moment.utc(date).format('YYYY-MM-DD'),
     description,
     household_member_uuid: householdMember.get('uuid'),
-    reimbursed_cents: parseInt(reimbursedCents, 10),
+    reimbursed_cents: parseInt(reimbursedAmount, 10),
     subcategory_uuid: subcategory.get('uuid'),
     vendor_uuid: vendor.get('uuid'),
   });

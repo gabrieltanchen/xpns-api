@@ -1,3 +1,7 @@
+const Sequelize = require('sequelize');
+
+const Op = Sequelize.Op;
+
 module.exports = (app) => {
   const models = app.get('models');
 
@@ -20,14 +24,23 @@ module.exports = (app) => {
         },
       });
 
+      const householdMemberWhere = {
+        household_uuid: user.get('household_uuid'),
+      };
+
+      if (req.query && req.query.search) {
+        offset = 0;
+        householdMemberWhere.name = {
+          [Op.iLike]: `%${req.query.search}%`,
+        };
+      }
+
       const householdMembers = await models.HouseholdMember.findAndCountAll({
         attributes: ['created_at', 'name', 'uuid'],
         limit,
         offset,
         order: [['name', 'ASC']],
-        where: {
-          household_uuid: user.get('household_uuid'),
-        },
+        where: householdMemberWhere,
       });
 
       return res.status(200).json({

@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
-const sampleData = require('../../sample-data/');
-const TestHelper = require('../../test-helper/');
+const sampleData = require('../../sample-data');
+const TestHelper = require('../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -82,7 +82,7 @@ describe('Integration - POST /incomes', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income1.amount_cents,
+            'amount': sampleData.incomes.income1.amount_cents,
             'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
@@ -112,7 +112,7 @@ describe('Integration - POST /incomes', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': null,
+            'amount': null,
             'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
@@ -130,7 +130,7 @@ describe('Integration - POST /incomes', function() {
       errors: [{
         detail: 'Amount is required.',
         source: {
-          pointer: '/data/attributes/amount-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
@@ -145,7 +145,7 @@ describe('Integration - POST /incomes', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': '12.34',
+            'amount': '12.34',
             'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
@@ -163,7 +163,7 @@ describe('Integration - POST /incomes', function() {
       errors: [{
         detail: 'Amount must be an integer.',
         source: {
-          pointer: '/data/attributes/amount-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
@@ -178,7 +178,7 @@ describe('Integration - POST /incomes', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income1.amount_cents,
+            'amount': sampleData.incomes.income1.amount_cents,
             'date': null,
             'description': sampleData.incomes.income1.description,
           },
@@ -216,7 +216,7 @@ describe('Integration - POST /incomes', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income1.amount_cents,
+            'amount': sampleData.incomes.income1.amount_cents,
             'date': 'invalid date',
             'description': sampleData.incomes.income1.description,
           },
@@ -249,7 +249,7 @@ describe('Integration - POST /incomes', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income1.amount_cents,
+            'amount': sampleData.incomes.income1.amount_cents,
             'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
@@ -282,7 +282,7 @@ describe('Integration - POST /incomes', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income1.amount_cents,
+            'amount': sampleData.incomes.income1.amount_cents,
             'date': sampleData.incomes.income1.date,
             'description': sampleData.incomes.income1.description,
           },
@@ -298,11 +298,7 @@ describe('Integration - POST /incomes', function() {
     expect(res).to.have.status(201);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(
-      parseFloat(res.body.data.attributes.amount),
-      sampleData.incomes.income1.amount,
-    );
-    assert.strictEqual(res.body.data.attributes['amount-cents'], sampleData.incomes.income1.amount_cents);
+    assert.strictEqual(res.body.data.attributes.amount, sampleData.incomes.income1.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.date, sampleData.incomes.income1.date);
     assert.strictEqual(
@@ -319,7 +315,7 @@ describe('Integration - POST /incomes', function() {
     // Validate IncomeCtrl.createIncome call.
     assert.strictEqual(createIncomeSpy.callCount, 1);
     const createIncomeParams = createIncomeSpy.getCall(0).args[0];
-    assert.strictEqual(createIncomeParams.amountCents, sampleData.incomes.income1.amount_cents);
+    assert.strictEqual(createIncomeParams.amount, sampleData.incomes.income1.amount_cents);
     assert.isOk(createIncomeParams.auditApiCallUuid);
     assert.strictEqual(createIncomeParams.date, sampleData.incomes.income1.date);
     assert.strictEqual(createIncomeParams.description, sampleData.incomes.income1.description);

@@ -9,7 +9,7 @@ module.exports = (app) => {
    *
    * @apiParam {object} data
    * @apiParam {object} data.attributes
-   * @apiParam {integer} data.attributes[budget-cents]
+   * @apiParam {integer} data.attributes.amount
    * @apiParam {integer} data.attributes.month
    * @apiParam {integer} data.attributes.year
    * @apiParam {object} data.relationships
@@ -31,8 +31,8 @@ module.exports = (app) => {
   return async(req, res, next) => {
     try {
       const budgetUuid = await controllers.BudgetCtrl.createBudget({
+        amount: req.body.data.attributes.amount,
         auditApiCallUuid: req.auditApiCallUuid,
-        budgetCents: req.body.data.attributes['budget-cents'],
         month: req.body.data.attributes.month,
         subcategoryUuid: req.body.data.relationships.subcategory.data.id,
         year: req.body.data.attributes.year,
@@ -40,7 +40,7 @@ module.exports = (app) => {
 
       const budget = await models.Budget.findOne({
         attributes: [
-          'budget_cents',
+          'amount_cents',
           'created_at',
           'month',
           'uuid',
@@ -59,7 +59,7 @@ module.exports = (app) => {
       return res.status(201).json({
         'data': {
           'attributes': {
-            'budget-cents': budget.get('budget_cents'),
+            'amount': budget.get('amount_cents'),
             'created-at': budget.get('created_at'),
             'month': budget.get('month'),
             'year': budget.get('year'),

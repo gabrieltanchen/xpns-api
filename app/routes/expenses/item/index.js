@@ -21,12 +21,12 @@ module.exports = (router, app) => {
     .patch(
       Authentication.UserAuth.can('access-account'),
       [
-        body([['data', 'attributes', 'amount-cents']], 'Amount is required.').not().isEmpty(),
-        body([['data', 'attributes', 'amount-cents']], 'Amount must be an integer.').isWhitelisted('0123456789'),
+        body([['data', 'attributes', 'amount']], 'Amount is required.').not().isEmpty(),
+        body([['data', 'attributes', 'amount']], 'Amount must be an integer.').isWhitelisted('0123456789'),
         body([['data', 'attributes', 'date']], 'Date is required.').not().isEmpty(),
         body([['data', 'attributes', 'date']], 'Date must be valid.').isISO8601(),
-        body([['data', 'attributes', 'reimbursed-cents']], 'Reimbursed amount is required.').not().isEmpty(),
-        body([['data', 'attributes', 'reimbursed-cents']], 'Reimbursed amount must be an integer.').isWhitelisted('0123456789'),
+        body([['data', 'attributes', 'reimbursed-amount']], 'Reimbursed amount is required.').not().isEmpty(),
+        body([['data', 'attributes', 'reimbursed-amount']], 'Reimbursed amount must be an integer.').isWhitelisted('0123456789'),
         body([['data', 'relationships', 'household-member', 'data', 'id']], 'Member is required.').not().isEmpty(),
         body([['data', 'relationships', 'subcategory', 'data', 'id']], 'Subcategory is required.').not().isEmpty(),
         body([['data', 'relationships', 'vendor', 'data', 'id']], 'Vendor is required.').not().isEmpty(),

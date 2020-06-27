@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const _ = require('lodash');
 
-const sampleData = require('../../sample-data/');
-const TestHelper = require('../../test-helper/');
+const sampleData = require('../../sample-data');
+const TestHelper = require('../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -96,8 +96,8 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: 2,
       subcategoryUuid: user1SubcategoryUuid,
       year: 2019,
@@ -109,8 +109,8 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget2.budget_cents,
       month: 4,
       subcategoryUuid: user1SubcategoryUuid,
       year: 2019,
@@ -122,12 +122,12 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-03-31',
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
       subcategoryUuid: user1SubcategoryUuid,
       vendorUuid: user1VendorUuid,
     });
@@ -138,12 +138,12 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense2.amount_cents,
+      amount: sampleData.expenses.expense2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-05-01',
       description: sampleData.expenses.expense2.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense2.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
       subcategoryUuid: user1SubcategoryUuid,
       vendorUuid: user1VendorUuid,
     });
@@ -200,8 +200,8 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user2Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget3.budget_cents,
       month: 3,
       subcategoryUuid: user2SubcategoryUuid,
       year: 2019,
@@ -213,12 +213,12 @@ describe('Integration - GET /budget-reports', function() {
       user_uuid: user2Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense3.amount_cents,
+      amount: sampleData.expenses.expense3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-04-01',
       description: sampleData.expenses.expense3.description,
       householdMemberUuid: user2HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense3.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense3.reimbursed_cents,
       subcategoryUuid: user2SubcategoryUuid,
       vendorUuid: user2VendorUuid,
     });
@@ -258,8 +258,8 @@ describe('Integration - GET /budget-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: 43689,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: 43689,
         month: 3,
         subcategoryUuid: user1SubcategoryUuid,
         year: 2019,
@@ -277,9 +277,7 @@ describe('Integration - GET /budget-reports', function() {
       assert.strictEqual(res.body.data.length, 1);
       assert.isOk(res.body.data[0].attributes);
       assert.strictEqual(res.body.data[0].attributes.actual, 0);
-      assert.strictEqual(res.body.data[0].attributes['actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes.budget, 436.89);
-      assert.strictEqual(res.body.data[0].attributes['budget-cents'], 43689);
+      assert.strictEqual(res.body.data[0].attributes.budget, 43689);
       assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
       assert.isOk(res.body.data[0].relationships);
       assert.isOk(res.body.data[0].relationships.category);
@@ -315,12 +313,12 @@ describe('Integration - GET /budget-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: 25694,
+        amount: 25694,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.expenses.expense4.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: 0,
+        reimbursedAmount: 0,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -336,10 +334,8 @@ describe('Integration - GET /budget-reports', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 1);
       assert.isOk(res.body.data[0].attributes);
-      assert.strictEqual(res.body.data[0].attributes.actual, 256.94);
-      assert.strictEqual(res.body.data[0].attributes['actual-cents'], 25694);
+      assert.strictEqual(res.body.data[0].attributes.actual, 25694);
       assert.strictEqual(res.body.data[0].attributes.budget, 0);
-      assert.strictEqual(res.body.data[0].attributes['budget-cents'], 0);
       assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
       assert.isOk(res.body.data[0].relationships);
       assert.isOk(res.body.data[0].relationships.category);
@@ -374,12 +370,12 @@ describe('Integration - GET /budget-reports', function() {
           user_uuid: user1Uuid,
         });
         await controllers.ExpenseCtrl.createExpense({
-          amountCents: 6020,
+          amount: 6020,
           auditApiCallUuid: apiCall.get('uuid'),
           date: '2019-04-30',
           description: sampleData.expenses.expense5.description,
           householdMemberUuid: user1HouseholdMemberUuid,
-          reimbursedCents: 0,
+          reimbursedAmount: 0,
           subcategoryUuid: user1SubcategoryUuid,
           vendorUuid: user1VendorUuid,
         });
@@ -395,10 +391,8 @@ describe('Integration - GET /budget-reports', function() {
         assert.isOk(res.body.data);
         assert.strictEqual(res.body.data.length, 1);
         assert.isOk(res.body.data[0].attributes);
-        assert.strictEqual(res.body.data[0].attributes.actual, 317.14);
-        assert.strictEqual(res.body.data[0].attributes['actual-cents'], 31714);
+        assert.strictEqual(res.body.data[0].attributes.actual, 31714);
         assert.strictEqual(res.body.data[0].attributes.budget, 0);
-        assert.strictEqual(res.body.data[0].attributes['budget-cents'], 0);
         assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
         assert.isOk(res.body.data[0].relationships);
         assert.isOk(res.body.data[0].relationships.category);
@@ -440,12 +434,12 @@ describe('Integration - GET /budget-reports', function() {
           user_uuid: user1Uuid,
         });
         await controllers.ExpenseCtrl.createExpense({
-          amountCents: 17968,
+          amount: 17968,
           auditApiCallUuid: apiCall.get('uuid'),
           date: '2019-04-15',
           description: sampleData.expenses.expense5.description,
           householdMemberUuid: user1HouseholdMemberUuid,
-          reimbursedCents: 5495,
+          reimbursedAmount: 5495,
           subcategoryUuid: user1SubcategoryUuid,
           vendorUuid: user1VendorUuid,
         });
@@ -461,10 +455,8 @@ describe('Integration - GET /budget-reports', function() {
         assert.isOk(res.body.data);
         assert.strictEqual(res.body.data.length, 1);
         assert.isOk(res.body.data[0].attributes);
-        assert.strictEqual(res.body.data[0].attributes.actual, 381.67);
-        assert.strictEqual(res.body.data[0].attributes['actual-cents'], 38167);
+        assert.strictEqual(res.body.data[0].attributes.actual, 38167);
         assert.strictEqual(res.body.data[0].attributes.budget, 0);
-        assert.strictEqual(res.body.data[0].attributes['budget-cents'], 0);
         assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
         assert.isOk(res.body.data[0].relationships);
         assert.isOk(res.body.data[0].relationships.category);
@@ -507,8 +499,8 @@ describe('Integration - GET /budget-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: 43689,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: 43689,
         month: 3,
         subcategoryUuid: user1SubcategoryUuid,
         year: 2019,
@@ -520,12 +512,12 @@ describe('Integration - GET /budget-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: 25694,
+        amount: 25694,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.expenses.expense4.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: 0,
+        reimbursedAmount: 0,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -541,10 +533,8 @@ describe('Integration - GET /budget-reports', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 1);
       assert.isOk(res.body.data[0].attributes);
-      assert.strictEqual(res.body.data[0].attributes.actual, 256.94);
-      assert.strictEqual(res.body.data[0].attributes['actual-cents'], 25694);
-      assert.strictEqual(res.body.data[0].attributes.budget, 436.89);
-      assert.strictEqual(res.body.data[0].attributes['budget-cents'], 43689);
+      assert.strictEqual(res.body.data[0].attributes.actual, 25694);
+      assert.strictEqual(res.body.data[0].attributes.budget, 43689);
       assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
       assert.isOk(res.body.data[0].relationships);
       assert.isOk(res.body.data[0].relationships.category);
@@ -579,12 +569,12 @@ describe('Integration - GET /budget-reports', function() {
           user_uuid: user1Uuid,
         });
         await controllers.ExpenseCtrl.createExpense({
-          amountCents: 6020,
+          amount: 6020,
           auditApiCallUuid: apiCall.get('uuid'),
           date: '2019-04-30',
           description: sampleData.expenses.expense5.description,
           householdMemberUuid: user1HouseholdMemberUuid,
-          reimbursedCents: 0,
+          reimbursedAmount: 0,
           subcategoryUuid: user1SubcategoryUuid,
           vendorUuid: user1VendorUuid,
         });
@@ -600,10 +590,8 @@ describe('Integration - GET /budget-reports', function() {
         assert.isOk(res.body.data);
         assert.strictEqual(res.body.data.length, 1);
         assert.isOk(res.body.data[0].attributes);
-        assert.strictEqual(res.body.data[0].attributes.actual, 317.14);
-        assert.strictEqual(res.body.data[0].attributes['actual-cents'], 31714);
-        assert.strictEqual(res.body.data[0].attributes.budget, 436.89);
-        assert.strictEqual(res.body.data[0].attributes['budget-cents'], 43689);
+        assert.strictEqual(res.body.data[0].attributes.actual, 31714);
+        assert.strictEqual(res.body.data[0].attributes.budget, 43689);
         assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
         assert.isOk(res.body.data[0].relationships);
         assert.isOk(res.body.data[0].relationships.category);
@@ -645,12 +633,12 @@ describe('Integration - GET /budget-reports', function() {
           user_uuid: user1Uuid,
         });
         await controllers.ExpenseCtrl.createExpense({
-          amountCents: 17968,
+          amount: 17968,
           auditApiCallUuid: apiCall.get('uuid'),
           date: '2019-04-15',
           description: sampleData.expenses.expense5.description,
           householdMemberUuid: user1HouseholdMemberUuid,
-          reimbursedCents: 5495,
+          reimbursedAmount: 5495,
           subcategoryUuid: user1SubcategoryUuid,
           vendorUuid: user1VendorUuid,
         });
@@ -666,10 +654,8 @@ describe('Integration - GET /budget-reports', function() {
         assert.isOk(res.body.data);
         assert.strictEqual(res.body.data.length, 1);
         assert.isOk(res.body.data[0].attributes);
-        assert.strictEqual(res.body.data[0].attributes.actual, 381.67);
-        assert.strictEqual(res.body.data[0].attributes['actual-cents'], 38167);
-        assert.strictEqual(res.body.data[0].attributes.budget, 436.89);
-        assert.strictEqual(res.body.data[0].attributes['budget-cents'], 43689);
+        assert.strictEqual(res.body.data[0].attributes.actual, 38167);
+        assert.strictEqual(res.body.data[0].attributes.budget, 43689);
         assert.strictEqual(res.body.data[0].id, `${user1SubcategoryUuid}-2019-3`);
         assert.isOk(res.body.data[0].relationships);
         assert.isOk(res.body.data[0].relationships.category);

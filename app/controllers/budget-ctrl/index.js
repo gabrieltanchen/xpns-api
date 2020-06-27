@@ -9,15 +9,15 @@ class BudgetCtrl {
   }
 
   async createBudget({
+    amount,
     auditApiCallUuid,
-    budgetCents,
     month,
     subcategoryUuid,
     year,
   }) {
     return createBudget({
+      amount,
       auditApiCallUuid,
-      budgetCents,
       budgetCtrl: this,
       month,
       subcategoryUuid,
@@ -37,16 +37,16 @@ class BudgetCtrl {
   }
 
   async updateBudget({
+    amount,
     auditApiCallUuid,
-    budgetCents,
     budgetUuid,
     month,
     subcategoryUuid,
     year,
   }) {
     return updateBudget({
+      amount,
       auditApiCallUuid,
-      budgetCents,
       budgetCtrl: this,
       budgetUuid,
       month,

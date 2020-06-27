@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -86,7 +86,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       user_uuid: user1Uuid,
     });
     user1IncomeUuid = await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.incomes.income1.date,
       description: sampleData.incomes.income1.description,
@@ -124,7 +124,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income2.amount_cents,
+            'amount': sampleData.incomes.income2.amount_cents,
             'date': sampleData.incomes.income2.date,
             'description': sampleData.incomes.income2.description,
           },
@@ -156,7 +156,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income2.amount_cents,
+            'amount': sampleData.incomes.income2.amount_cents,
             'date': sampleData.incomes.income2.date,
             'description': sampleData.incomes.income2.description,
           },
@@ -188,7 +188,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': null,
+            'amount': null,
             'date': sampleData.incomes.income2.date,
             'description': sampleData.incomes.income2.description,
           },
@@ -208,7 +208,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       errors: [{
         detail: 'Amount is required.',
         source: {
-          pointer: '/data/attributes/amount-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
@@ -223,7 +223,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': '12.34',
+            'amount': '12.34',
             'date': sampleData.incomes.income2.date,
             'description': sampleData.incomes.income2.description,
           },
@@ -243,7 +243,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       errors: [{
         detail: 'Amount must be an integer.',
         source: {
-          pointer: '/data/attributes/amount-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
@@ -258,7 +258,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income2.amount_cents,
+            'amount': sampleData.incomes.income2.amount_cents,
             'date': null,
             'description': sampleData.incomes.income2.description,
           },
@@ -298,7 +298,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income2.amount_cents,
+            'amount': sampleData.incomes.income2.amount_cents,
             'date': 'invalid date',
             'description': sampleData.incomes.income2.description,
           },
@@ -333,7 +333,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income2.amount_cents,
+            'amount': sampleData.incomes.income2.amount_cents,
             'date': sampleData.incomes.income2.date,
             'description': sampleData.incomes.income2.description,
           },
@@ -368,7 +368,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.incomes.income2.amount_cents,
+            'amount': sampleData.incomes.income2.amount_cents,
             'date': sampleData.incomes.income2.date,
             'description': sampleData.incomes.income2.description,
           },
@@ -386,11 +386,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
     expect(res).to.have.status(200);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(
-      parseFloat(res.body.data.attributes.amount),
-      sampleData.incomes.income2.amount,
-    );
-    assert.strictEqual(res.body.data.attributes['amount-cents'], sampleData.incomes.income2.amount_cents);
+    assert.strictEqual(res.body.data.attributes.amount, sampleData.incomes.income2.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.date, sampleData.incomes.income2.date);
     assert.strictEqual(
@@ -407,7 +403,7 @@ describe('Integration - PATCH /incomes/:uuid', function() {
     // Validate IncomeCtrl.updateIncome call.
     assert.strictEqual(updateIncomeSpy.callCount, 1);
     const updateIncomeParams = updateIncomeSpy.getCall(0).args[0];
-    assert.strictEqual(updateIncomeParams.amountCents, sampleData.incomes.income2.amount_cents);
+    assert.strictEqual(updateIncomeParams.amount, sampleData.incomes.income2.amount_cents);
     assert.isOk(updateIncomeParams.auditApiCallUuid);
     assert.strictEqual(updateIncomeParams.date, sampleData.incomes.income2.date);
     assert.strictEqual(updateIncomeParams.description, sampleData.incomes.income2.description);

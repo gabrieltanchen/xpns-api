@@ -1,4 +1,8 @@
-const { CategoryError } = require('../../../middleware/error-handler/');
+const Sequelize = require('sequelize');
+
+const { CategoryError } = require('../../../middleware/error-handler');
+
+const Op = Sequelize.Op;
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -37,6 +41,11 @@ module.exports = (app) => {
 
       const category = await models.Category.findOne({
         attributes: ['created_at', 'name', 'uuid'],
+        include: [{
+          attributes: ['uuid'],
+          model: models.Subcategory,
+          required: false,
+        }],
         where: {
           household_uuid: user.get('household_uuid'),
           uuid: req.params.uuid,
@@ -46,11 +55,45 @@ module.exports = (app) => {
         throw new CategoryError('Not found');
       }
 
+      const subcategoryUuids = category.Subcategories.map((subcategory) => {
+        return subcategory.get('uuid');
+      });
+      const subcategoryCount = await models.Subcategory.count({
+        where: {
+          category_uuid: category.get('uuid'),
+        },
+      });
+      const expenseCount = await models.Expense.count({
+        where: {
+          subcategory_uuid: {
+            [Op.in]: subcategoryUuids,
+          },
+        },
+      });
+      const sumAmountCents = await models.Expense.sum('amount_cents', {
+        where: {
+          subcategory_uuid: {
+            [Op.in]: subcategoryUuids,
+          },
+        },
+      });
+      const sumReimbursedCents = await models.Expense.sum('reimbursed_cents', {
+        where: {
+          subcategory_uuid: {
+            [Op.in]: subcategoryUuids,
+          },
+        },
+      });
+
       return res.status(200).json({
         'data': {
           'attributes': {
             'created-at': category.get('created_at'),
+            'expense-count': expenseCount || 0,
             'name': category.get('name'),
+            'subcategory-count': subcategoryCount || 0,
+            'sum-amount': sumAmountCents || 0,
+            'sum-reimbursed': sumReimbursedCents || 0,
           },
           'id': category.get('uuid'),
           'type': 'categories',

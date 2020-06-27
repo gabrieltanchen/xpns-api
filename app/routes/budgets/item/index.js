@@ -21,8 +21,8 @@ module.exports = (router, app) => {
     .patch(
       Authentication.UserAuth.can('access-account'),
       [
-        body([['data', 'attributes', 'budget-cents']], 'Budget is required.').not().isEmpty(),
-        body([['data', 'attributes', 'budget-cents']], 'Budget must be an integer.').isWhitelisted('0123456789'),
+        body([['data', 'attributes', 'amount']], 'Budget is required.').not().isEmpty(),
+        body([['data', 'attributes', 'amount']], 'Budget must be an integer.').isWhitelisted('0123456789'),
         body([['data', 'attributes', 'month']], 'Month is required.').not().isEmpty(),
         body([['data', 'attributes', 'month']], 'Month must be an integer.').isWhitelisted('0123456789'),
         body([['data', 'attributes', 'year']], 'Year is required.').not().isEmpty(),

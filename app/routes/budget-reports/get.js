@@ -37,12 +37,12 @@ module.exports = (app) => {
         attributes: [
           'name',
           'uuid',
-          [Sequelize.fn('sum', Sequelize.col('Expenses.amount_cents')), 'amount_cents'],
+          [Sequelize.fn('sum', Sequelize.col('Expenses.amount_cents')), 'expense_amount_cents'],
           [Sequelize.fn('sum', Sequelize.col('Expenses.reimbursed_cents')), 'reimbursed_cents'],
         ],
         group: ['Subcategory.uuid', 'Category.uuid', 'Budgets.uuid'],
         include: [{
-          attributes: ['budget_cents', 'uuid'],
+          attributes: ['amount_cents', 'uuid'],
           model: models.Budget,
           required: false,
           where: {
@@ -73,9 +73,9 @@ module.exports = (app) => {
         ],
         where: {
           [Op.or]: [
-            Sequelize.literal('"amount_cents" > 0'),
-            Sequelize.literal('"reimbursed_cents" > 0'),
-            Sequelize.literal('"Budgets"."budget_cents" > 0'),
+            Sequelize.literal('"Expenses"."amount_cents" > 0'),
+            Sequelize.literal('"Expenses"."reimbursed_cents" > 0'),
+            Sequelize.literal('"Budgets"."amount_cents" > 0'),
           ],
         },
       });
@@ -104,20 +104,18 @@ module.exports = (app) => {
 
       return res.status(200).json({
         'data': subcategories.map((subcategory) => {
-          const amountCents = subcategory.get('amount_cents') || 0;
+          const amountCents = subcategory.get('expense_amount_cents') || 0;
           const reimbursedCents = subcategory.get('reimbursed_cents') || 0;
           const actualCents = amountCents - reimbursedCents;
           const budgetCents = subcategory.Budgets
             && subcategory.Budgets[0]
-            && subcategory.Budgets[0].get('budget_cents')
-            ? subcategory.Budgets[0].get('budget_cents')
+            && subcategory.Budgets[0].get('amount_cents')
+            ? subcategory.Budgets[0].get('amount_cents')
             : 0;
           return {
             'attributes': {
-              'actual': parseFloat(actualCents / 100),
-              'actual-cents': actualCents,
-              'budget': parseFloat(budgetCents / 100),
-              'budget-cents': budgetCents,
+              'actual': actualCents,
+              'budget': budgetCents,
             },
             'id': `${subcategory.get('uuid')}-${year}-${month}`,
             'relationships': {

@@ -1,9 +1,9 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
-const sampleData = require('../../../../sample-data/');
 const sinon = require('sinon');
-const TestHelper = require('../../../../test-helper/');
+const sampleData = require('../../../../sample-data');
+const TestHelper = require('../../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -73,7 +73,7 @@ describe('Integration - POST /users/login/token', function() {
           'attributes': {
             'token': null,
           },
-          'type': 'users',
+          'type': 'login-token',
         },
       });
     expect(res).to.have.status(422);
@@ -104,7 +104,7 @@ describe('Integration - POST /users/login/token', function() {
           'attributes': {
             'token': invalidToken,
           },
-          'type': 'users',
+          'type': 'login-token',
         },
       });
     expect(res).to.have.status(403);
@@ -126,7 +126,7 @@ describe('Integration - POST /users/login/token', function() {
           'attributes': {
             'token': userToken,
           },
-          'type': 'users',
+          'type': 'login-token',
         },
       });
     expect(res).to.have.status(200);
@@ -136,7 +136,7 @@ describe('Integration - POST /users/login/token', function() {
     assert.strictEqual(res.body.data.attributes['first-name'], sampleData.users.user1.firstName);
     assert.strictEqual(res.body.data.attributes['last-name'], sampleData.users.user1.lastName);
     assert.strictEqual(res.body.data.id, userUuid);
-    assert.strictEqual(res.body.data.type, 'users');
+    assert.strictEqual(res.body.data.type, 'login-token');
 
     // Validate UserCtrl.loginWithToken call.
     assert.strictEqual(loginWithTokenSpy.callCount, 1);

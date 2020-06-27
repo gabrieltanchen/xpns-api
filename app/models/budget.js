@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
   return sequelize.define('Budget', {
-    budget_cents: {
+    amount_cents: {
       allowNull: false,
       type: Sequelize.INTEGER,
     },

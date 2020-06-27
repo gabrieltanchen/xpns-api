@@ -9,7 +9,7 @@ module.exports = (app) => {
    *
    * @apiParam {object} data
    * @apiParam {object} data.attributes
-   * @apiParam {integer} data.attributes[amount-cents]
+   * @apiParam {integer} data.attributes.amount
    * @apiParam {string} data.attributes.date
    * @apiParam {string} data.attributes.description
    * @apiParam {object} data.relationships
@@ -31,7 +31,7 @@ module.exports = (app) => {
   return async(req, res, next) => {
     try {
       const incomeUuid = await controllers.IncomeCtrl.createIncome({
-        amountCents: req.body.data.attributes['amount-cents'],
+        amount: req.body.data.attributes.amount,
         auditApiCallUuid: req.auditApiCallUuid,
         date: req.body.data.attributes.date,
         description: req.body.data.attributes.description,
@@ -59,8 +59,7 @@ module.exports = (app) => {
       return res.status(201).json({
         'data': {
           'attributes': {
-            'amount': parseFloat(income.get('amount_cents') / 100).toFixed(2),
-            'amount-cents': income.get('amount_cents'),
+            'amount': income.get('amount_cents'),
             'created-at': income.get('created_at'),
             'date': income.get('date'),
             'description': income.get('description'),

@@ -2,8 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
-const sampleData = require('../../sample-data/');
-const TestHelper = require('../../test-helper/');
+const sampleData = require('../../sample-data');
+const TestHelper = require('../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -109,10 +109,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -142,7 +142,7 @@ describe('Integration - POST /expenses', function() {
     assert.strictEqual(createExpenseSpy.callCount, 0);
   });
 
-  it('should return 422 with no amount cents', async function() {
+  it('should return 422 with no amount', async function() {
     const res = await chai.request(server)
       .post('/expenses')
       .set('Content-Type', 'application/vnd.api+json')
@@ -150,10 +150,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': null,
+            'amount': null,
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -179,14 +179,14 @@ describe('Integration - POST /expenses', function() {
       errors: [{
         detail: 'Amount is required.',
         source: {
-          pointer: '/data/attributes/amount-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
     assert.strictEqual(createExpenseSpy.callCount, 0);
   });
 
-  it('should return 422 with an invalid amount cents', async function() {
+  it('should return 422 with an invalid amount', async function() {
     const res = await chai.request(server)
       .post('/expenses')
       .set('Content-Type', 'application/vnd.api+json')
@@ -194,10 +194,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': '12.34',
+            'amount': '12.34',
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -223,7 +223,7 @@ describe('Integration - POST /expenses', function() {
       errors: [{
         detail: 'Amount must be an integer.',
         source: {
-          pointer: '/data/attributes/amount-cents',
+          pointer: '/data/attributes/amount',
         },
       }],
     });
@@ -238,10 +238,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': null,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -287,10 +287,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': 'invalid date',
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -323,7 +323,7 @@ describe('Integration - POST /expenses', function() {
     assert.strictEqual(createExpenseSpy.callCount, 0);
   });
 
-  it('should return 422 with no reimbursed cents', async function() {
+  it('should return 422 with no reimbursed amount', async function() {
     const res = await chai.request(server)
       .post('/expenses')
       .set('Content-Type', 'application/vnd.api+json')
@@ -331,10 +331,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': null,
+            'reimbursed-amount': null,
           },
           'relationships': {
             'household-member': {
@@ -360,14 +360,14 @@ describe('Integration - POST /expenses', function() {
       errors: [{
         detail: 'Reimbursed amount is required.',
         source: {
-          pointer: '/data/attributes/reimbursed-cents',
+          pointer: '/data/attributes/reimbursed-amount',
         },
       }],
     });
     assert.strictEqual(createExpenseSpy.callCount, 0);
   });
 
-  it('should return 422 with an invalid reimbursed cents', async function() {
+  it('should return 422 with an invalid reimbursed amount', async function() {
     const res = await chai.request(server)
       .post('/expenses')
       .set('Content-Type', 'application/vnd.api+json')
@@ -375,10 +375,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': '12.34',
+            'reimbursed-amount': '12.34',
           },
           'relationships': {
             'household-member': {
@@ -404,7 +404,7 @@ describe('Integration - POST /expenses', function() {
       errors: [{
         detail: 'Reimbursed amount must be an integer.',
         source: {
-          pointer: '/data/attributes/reimbursed-cents',
+          pointer: '/data/attributes/reimbursed-amount',
         },
       }],
     });
@@ -419,10 +419,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -463,10 +463,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -507,10 +507,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -551,10 +551,10 @@ describe('Integration - POST /expenses', function() {
       .send({
         'data': {
           'attributes': {
-            'amount-cents': sampleData.expenses.expense1.amount_cents,
+            'amount': sampleData.expenses.expense1.amount_cents,
             'date': sampleData.expenses.expense1.date,
             'description': sampleData.expenses.expense1.description,
-            'reimbursed-cents': sampleData.expenses.expense1.reimbursed_cents,
+            'reimbursed-amount': sampleData.expenses.expense1.reimbursed_cents,
           },
           'relationships': {
             'household-member': {
@@ -578,16 +578,14 @@ describe('Integration - POST /expenses', function() {
     expect(res).to.have.status(201);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(res.body.data.attributes.amount, sampleData.expenses.expense1.amount);
-    assert.strictEqual(res.body.data.attributes['amount-cents'], sampleData.expenses.expense1.amount_cents);
+    assert.strictEqual(res.body.data.attributes.amount, sampleData.expenses.expense1.amount_cents);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.date, sampleData.expenses.expense1.date);
     assert.strictEqual(
       res.body.data.attributes.description,
       sampleData.expenses.expense1.description,
     );
-    assert.strictEqual(res.body.data.attributes['reimbursed-amount'], sampleData.expenses.expense1.reimbursed_amount);
-    assert.strictEqual(res.body.data.attributes['reimbursed-cents'], sampleData.expenses.expense1.reimbursed_cents);
+    assert.strictEqual(res.body.data.attributes['reimbursed-amount'], sampleData.expenses.expense1.reimbursed_cents);
     assert.isOk(res.body.data.id);
     assert.isOk(res.body.data.relationships);
     assert.isOk(res.body.data.relationships['household-member']);
@@ -604,14 +602,14 @@ describe('Integration - POST /expenses', function() {
     // Validate ExpenseCtrl.createExpense call.
     assert.strictEqual(createExpenseSpy.callCount, 1);
     const createExpenseParams = createExpenseSpy.getCall(0).args[0];
-    assert.strictEqual(createExpenseParams.amountCents, sampleData.expenses.expense1.amount_cents);
+    assert.strictEqual(createExpenseParams.amount, sampleData.expenses.expense1.amount_cents);
     assert.isOk(createExpenseParams.auditApiCallUuid);
     assert.strictEqual(createExpenseParams.subcategoryUuid, subcategoryUuid);
     assert.strictEqual(createExpenseParams.date, sampleData.expenses.expense1.date);
     assert.strictEqual(createExpenseParams.description, sampleData.expenses.expense1.description);
     assert.strictEqual(createExpenseParams.householdMemberUuid, householdMemberUuid);
     assert.strictEqual(
-      createExpenseParams.reimbursedCents,
+      createExpenseParams.reimbursedAmount,
       sampleData.expenses.expense1.reimbursed_cents,
     );
     assert.strictEqual(createExpenseParams.vendorUuid, vendorUuid);

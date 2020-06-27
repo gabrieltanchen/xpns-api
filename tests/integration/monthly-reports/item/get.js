@@ -1,8 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -124,8 +124,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: 2,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2019,
@@ -137,8 +137,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget2.budget_cents,
       month: 4,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2019,
@@ -150,12 +150,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-03-31',
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -166,12 +166,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense2.amount_cents,
+      amount: sampleData.expenses.expense2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-05-01',
       description: sampleData.expenses.expense2.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense2.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -182,7 +182,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income1.amount_cents,
+      amount: sampleData.incomes.income1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-03-31',
       description: sampleData.incomes.income1.description,
@@ -195,7 +195,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user1Uuid,
     });
     await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income2.amount_cents,
+      amount: sampleData.incomes.income2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-05-01',
       description: sampleData.incomes.income2.description,
@@ -254,8 +254,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user2Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget3.budget_cents,
       month: 3,
       subcategoryUuid: user2SubcategoryUuid,
       year: 2019,
@@ -267,12 +267,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user2Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense3.amount_cents,
+      amount: sampleData.expenses.expense3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-04-01',
       description: sampleData.expenses.expense3.description,
       householdMemberUuid: user2HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense3.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense3.reimbursed_cents,
       subcategoryUuid: user2SubcategoryUuid,
       vendorUuid: user2VendorUuid,
     });
@@ -283,7 +283,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       user_uuid: user2Uuid,
     });
     await controllers.IncomeCtrl.createIncome({
-      amountCents: sampleData.incomes.income3.amount_cents,
+      amount: sampleData.incomes.income3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: '2019-04-01',
       description: sampleData.incomes.income3.description,
@@ -316,9 +316,9 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       expect(res).to.have.status(200);
       assert.isOk(res.body.data);
       assert.isOk(res.body.data.attributes);
-      assert.strictEqual(res.body.data.attributes['actual-cents'], 0);
-      assert.strictEqual(res.body.data.attributes['budget-cents'], 0);
-      assert.strictEqual(res.body.data.attributes['income-cents'], 0);
+      assert.strictEqual(res.body.data.attributes.actual, 0);
+      assert.strictEqual(res.body.data.attributes.budget, 0);
+      assert.strictEqual(res.body.data.attributes.income, 0);
       assert.strictEqual(res.body.data.id, '2019-3');
       assert.strictEqual(res.body.data.type, 'monthly-reports');
     });
@@ -330,8 +330,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget4.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget4.budget_cents,
         month: 3,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -343,8 +343,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget5.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget5.budget_cents,
         month: 3,
         subcategoryUuid: user1Subcategory2Uuid,
         year: 2019,
@@ -356,8 +356,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget6.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget6.budget_cents,
         month: 3,
         subcategoryUuid: user1Subcategory3Uuid,
         year: 2019,
@@ -372,9 +372,9 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       expect(res).to.have.status(200);
       assert.isOk(res.body.data);
       assert.isOk(res.body.data.attributes);
-      assert.strictEqual(res.body.data.attributes['actual-cents'], 0);
-      assert.strictEqual(res.body.data.attributes['budget-cents'], 96214);
-      assert.strictEqual(res.body.data.attributes['income-cents'], 0);
+      assert.strictEqual(res.body.data.attributes.actual, 0);
+      assert.strictEqual(res.body.data.attributes.budget, 96214);
+      assert.strictEqual(res.body.data.attributes.income, 0);
       assert.strictEqual(res.body.data.id, '2019-3');
       assert.strictEqual(res.body.data.type, 'monthly-reports');
     });
@@ -386,12 +386,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense4.amount_cents,
+        amount: sampleData.expenses.expense4.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.expenses.expense4.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense4.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense4.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -402,12 +402,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense5.amount_cents,
+        amount: sampleData.expenses.expense5.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-15',
         description: sampleData.expenses.expense5.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense5.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense5.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -418,12 +418,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense6.amount_cents,
+        amount: sampleData.expenses.expense6.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-30',
         description: sampleData.expenses.expense6.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense6.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense6.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -437,9 +437,9 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       expect(res).to.have.status(200);
       assert.isOk(res.body.data);
       assert.isOk(res.body.data.attributes);
-      assert.strictEqual(res.body.data.attributes['actual-cents'], 180829);
-      assert.strictEqual(res.body.data.attributes['budget-cents'], 0);
-      assert.strictEqual(res.body.data.attributes['income-cents'], 0);
+      assert.strictEqual(res.body.data.attributes.actual, 180829);
+      assert.strictEqual(res.body.data.attributes.budget, 0);
+      assert.strictEqual(res.body.data.attributes.income, 0);
       assert.strictEqual(res.body.data.id, '2019-3');
       assert.strictEqual(res.body.data.type, 'monthly-reports');
     });
@@ -451,7 +451,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income4.amount_cents,
+        amount: sampleData.incomes.income4.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.incomes.income4.description,
@@ -464,7 +464,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income5.amount_cents,
+        amount: sampleData.incomes.income5.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-15',
         description: sampleData.incomes.income5.description,
@@ -477,7 +477,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income6.amount_cents,
+        amount: sampleData.incomes.income6.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-30',
         description: sampleData.incomes.income6.description,
@@ -493,9 +493,9 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       expect(res).to.have.status(200);
       assert.isOk(res.body.data);
       assert.isOk(res.body.data.attributes);
-      assert.strictEqual(res.body.data.attributes['actual-cents'], 0);
-      assert.strictEqual(res.body.data.attributes['budget-cents'], 0);
-      assert.strictEqual(res.body.data.attributes['income-cents'], 1473374);
+      assert.strictEqual(res.body.data.attributes.actual, 0);
+      assert.strictEqual(res.body.data.attributes.budget, 0);
+      assert.strictEqual(res.body.data.attributes.income, 1473374);
       assert.strictEqual(res.body.data.id, '2019-3');
       assert.strictEqual(res.body.data.type, 'monthly-reports');
     });
@@ -507,8 +507,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget7.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget7.budget_cents,
         month: 3,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -520,8 +520,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget8.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget8.budget_cents,
         month: 3,
         subcategoryUuid: user1Subcategory2Uuid,
         year: 2019,
@@ -533,8 +533,8 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget9.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget9.budget_cents,
         month: 3,
         subcategoryUuid: user1Subcategory3Uuid,
         year: 2019,
@@ -546,12 +546,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense7.amount_cents,
+        amount: sampleData.expenses.expense7.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.expenses.expense7.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense7.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense7.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -562,12 +562,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense8.amount_cents,
+        amount: sampleData.expenses.expense8.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-15',
         description: sampleData.expenses.expense8.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense8.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense8.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -578,12 +578,12 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense9.amount_cents,
+        amount: sampleData.expenses.expense9.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-30',
         description: sampleData.expenses.expense9.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense9.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense9.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -594,7 +594,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income7.amount_cents,
+        amount: sampleData.incomes.income7.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-01',
         description: sampleData.incomes.income7.description,
@@ -607,7 +607,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income8.amount_cents,
+        amount: sampleData.incomes.income8.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-15',
         description: sampleData.incomes.income8.description,
@@ -620,7 +620,7 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
         user_uuid: user1Uuid,
       });
       await controllers.IncomeCtrl.createIncome({
-        amountCents: sampleData.incomes.income9.amount_cents,
+        amount: sampleData.incomes.income9.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: '2019-04-30',
         description: sampleData.incomes.income9.description,
@@ -636,9 +636,9 @@ describe('Integration - GET /monthly-reports/:uuid', function() {
       expect(res).to.have.status(200);
       assert.isOk(res.body.data);
       assert.isOk(res.body.data.attributes);
-      assert.strictEqual(res.body.data.attributes['actual-cents'], 165435);
-      assert.strictEqual(res.body.data.attributes['budget-cents'], 83990);
-      assert.strictEqual(res.body.data.attributes['income-cents'], 2477454);
+      assert.strictEqual(res.body.data.attributes.actual, 165435);
+      assert.strictEqual(res.body.data.attributes.budget, 83990);
+      assert.strictEqual(res.body.data.attributes.income, 2477454);
       assert.strictEqual(res.body.data.id, '2019-3');
       assert.strictEqual(res.body.data.type, 'monthly-reports');
     });

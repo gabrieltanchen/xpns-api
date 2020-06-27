@@ -2,10 +2,10 @@ const moment = require('moment');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
-const { IncomeError } = require('../../middleware/error-handler/');
+const { IncomeError } = require('../../middleware/error-handler');
 
 /**
- * @param {integer} amountCents
+ * @param {integer} amount
  * @param {string} auditApiCallUuid
  * @param {string} date
  * @param {string} description
@@ -13,7 +13,7 @@ const { IncomeError } = require('../../middleware/error-handler/');
  * @param {object} incomeCtrl Instance of IncomeCtrl
  */
 module.exports = async({
-  amountCents,
+  amount,
   auditApiCallUuid,
   date,
   description,
@@ -26,7 +26,7 @@ module.exports = async({
     throw new IncomeError('Household member is required');
   } else if (!moment.utc(date).isValid()) {
     throw new IncomeError('Invalid date');
-  } else if (isNaN(parseInt(amountCents, 10))) {
+  } else if (isNaN(parseInt(amount, 10))) {
     throw new IncomeError('Invalid amount');
   } else if (!_.isString(description)) {
     throw new IncomeError('Invalid description');
@@ -65,7 +65,7 @@ module.exports = async({
   }
 
   const newIncome = models.Income.build({
-    amount_cents: parseInt(amountCents, 10),
+    amount_cents: parseInt(amount, 10),
     date: moment.utc(date).format('YYYY-MM-DD'),
     description,
     household_member_uuid: householdMember.get('uuid'),

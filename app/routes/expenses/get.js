@@ -3,7 +3,7 @@ const {
   ExpenseError,
   HouseholdError,
   VendorError,
-} = require('../../middleware/error-handler/');
+} = require('../../middleware/error-handler');
 
 module.exports = (app) => {
   const models = app.get('models');
@@ -16,13 +16,11 @@ module.exports = (app) => {
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object[]} data.expenses
    * @apiSuccess (200) {object} data.expenses[].attributes
-   * @apiSuccess (200) {decimal} data.expenses[].attributes.amount
-   * @apiSuccess (200) {integer} data.expenses[].attributes[amount-cents]
+   * @apiSuccess (200) {integer} data.expenses[].attributes.amount
    * @apiSuccess (200) {string} data.expenses[].attributes[created-at]
    * @apiSuccess (200) {string} data.expenses[].attributes.date
    * @apiSuccess (200) {string} data.expenses[].attributes.description
-   * @apiSuccess (200) {decimal} data.expenses[].attributes[reimbursed-amount]
-   * @apiSuccess (200) {integer} data.expenses[].attributes[reimbursed-cents]
+   * @apiSuccess (200) {integer} data.expenses[].attributes[reimbursed-amount]
    * @apiSuccess (200) {string} data.expenses[].id
    * @apiSuccess (200) {object} data.expenses[].relationships
    * @apiSuccess (200) {object} data.expenses[].relationships[household-member]
@@ -64,7 +62,7 @@ module.exports = (app) => {
       });
 
       const expenseWhere = {};
-      if (req.query.subcategory_uuid) {
+      if (req.query.subcategory_id) {
         const subcategory = await models.Subcategory.findOne({
           attributes: ['uuid'],
           include: [{
@@ -76,7 +74,7 @@ module.exports = (app) => {
             },
           }],
           where: {
-            uuid: req.query.subcategory_uuid,
+            uuid: req.query.subcategory_id,
           },
         });
         if (!subcategory) {
@@ -180,13 +178,11 @@ module.exports = (app) => {
         'data': expenses.rows.map((expense) => {
           return {
             'attributes': {
-              'amount': parseFloat(expense.get('amount_cents') / 100),
-              'amount-cents': expense.get('amount_cents'),
+              'amount': expense.get('amount_cents'),
               'created-at': expense.get('created_at'),
               'date': expense.get('date'),
               'description': expense.get('description'),
-              'reimbursed-amount': parseFloat(expense.get('reimbursed_cents') / 100),
-              'reimbursed-cents': expense.get('reimbursed_cents'),
+              'reimbursed-amount': expense.get('reimbursed_cents'),
             },
             'id': expense.get('uuid'),
             'relationships': {

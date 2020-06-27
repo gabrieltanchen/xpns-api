@@ -336,7 +336,7 @@ describe('Unit:Controllers - CategoryCtrl.deleteSubcategory', function() {
 
     beforeEach('create budget', async function() {
       const budget = await models.Budget.create({
-        budget_cents: sampleData.budgets.budget1.budget_cents,
+        amount_cents: sampleData.budgets.budget1.amount_cents,
         month: sampleData.budgets.budget1.month,
         subcategory_uuid: user1SubcategoryUuid,
         year: sampleData.budgets.budget1.year,

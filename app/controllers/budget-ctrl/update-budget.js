@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 
-const { BudgetError } = require('../../middleware/error-handler/');
+const { BudgetError } = require('../../middleware/error-handler');
+
+const Op = Sequelize.Op;
 
 /**
  * @param {string} auditApiCallUuid
@@ -13,8 +14,8 @@ const { BudgetError } = require('../../middleware/error-handler/');
  * @param {integer} year
  */
 module.exports = async({
+  amount,
   auditApiCallUuid,
-  budgetCents,
   budgetCtrl,
   budgetUuid,
   month,
@@ -37,7 +38,7 @@ module.exports = async({
   } else if (parseInt(month, 10) < 0
       || parseInt(month, 10) > 11) {
     throw new BudgetError('Invalid month');
-  } else if (isNaN(parseInt(budgetCents, 10))) {
+  } else if (isNaN(parseInt(amount, 10))) {
     throw new BudgetError('Invalid budget');
   }
 
@@ -63,7 +64,7 @@ module.exports = async({
 
   const budget = await models.Budget.findOne({
     attributes: [
-      'budget_cents',
+      'amount_cents',
       'month',
       'subcategory_uuid',
       'uuid',
@@ -90,8 +91,8 @@ module.exports = async({
     throw new BudgetError('Not found');
   }
 
-  if (budget.get('budget_cents') !== parseInt(budgetCents, 10)) {
-    budget.set('budget_cents', parseInt(budgetCents, 10));
+  if (budget.get('amount_cents') !== parseInt(amount, 10)) {
+    budget.set('amount_cents', parseInt(amount, 10));
   }
   if (budget.get('month') !== parseInt(month, 10)) {
     budget.set('month', parseInt(month, 10));

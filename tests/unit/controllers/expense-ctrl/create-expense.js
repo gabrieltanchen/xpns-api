@@ -3,10 +3,10 @@ const sinon = require('sinon');
 const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
-const { ExpenseError } = require('../../../../app/middleware/error-handler/');
+const { ExpenseError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -143,12 +143,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: null,
         vendorUuid: user1VendorUuid,
       });
@@ -168,12 +168,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: null,
       });
@@ -193,12 +193,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: null,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -218,12 +218,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: null,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -243,12 +243,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: 'invalid date',
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -268,12 +268,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: null,
+        amount: null,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -293,12 +293,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: 'invalid amount',
+        amount: 'invalid amount',
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -318,12 +318,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: null,
+        reimbursedAmount: null,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -343,12 +343,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: 'invalid reimbursed amount',
+        reimbursedAmount: 'invalid reimbursed amount',
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -368,12 +368,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: null,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -393,12 +393,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: 1234,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -415,12 +415,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
   it('should reject with no audit API call', async function() {
     try {
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: null,
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -437,12 +437,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
   it('should reject when the audit API call does not exist', async function() {
     try {
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: uuidv4(),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -467,12 +467,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -492,12 +492,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: uuidv4(),
         vendorUuid: user1VendorUuid,
       });
@@ -517,12 +517,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user2SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -542,12 +542,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: uuidv4(),
       });
@@ -567,12 +567,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user2VendorUuid,
       });
@@ -592,12 +592,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: uuidv4(),
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -617,12 +617,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.expenses.expense1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: sampleData.expenses.expense1.date,
         description: sampleData.expenses.expense1.description,
         householdMemberUuid: user2HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
         subcategoryUuid: user1SubcategoryUuid,
         vendorUuid: user1VendorUuid,
       });
@@ -641,12 +641,12 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
       user_uuid: user1Uuid,
     });
     const expenseUuid = await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
       subcategoryUuid: user1SubcategoryUuid,
       vendorUuid: user1VendorUuid,
     });

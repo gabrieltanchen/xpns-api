@@ -3,8 +3,8 @@ const chaiHttp = require('chai-http');
 const moment = require('moment');
 const { v4: uuidv4 } = require('uuid');
 
-const sampleData = require('../../sample-data/');
-const TestHelper = require('../../test-helper/');
+const sampleData = require('../../sample-data');
+const TestHelper = require('../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -95,8 +95,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget1.budget_cents,
       month: sampleData.budgets.budget1.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -108,8 +108,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget2.budget_cents,
       month: sampleData.budgets.budget2.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -121,8 +121,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget3.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget3.budget_cents,
       month: sampleData.budgets.budget3.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -134,8 +134,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget5.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget5.budget_cents,
       month: sampleData.budgets.budget5.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -147,8 +147,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget6.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget6.budget_cents,
       month: sampleData.budgets.budget6.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -160,8 +160,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget7.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget7.budget_cents,
       month: sampleData.budgets.budget7.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -173,8 +173,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget9.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget9.budget_cents,
       month: sampleData.budgets.budget9.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -186,8 +186,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget11.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget11.budget_cents,
       month: sampleData.budgets.budget11.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -199,8 +199,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget13.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget13.budget_cents,
       month: sampleData.budgets.budget13.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -212,8 +212,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget17.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget17.budget_cents,
       month: sampleData.budgets.budget17.month,
       subcategoryUuid: user1Subcategory1Uuid,
       year: 2018,
@@ -225,12 +225,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.expenses.expense1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense1.date,
       description: sampleData.expenses.expense1.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense1.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -241,12 +241,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense4.amount_cents,
+      amount: sampleData.expenses.expense4.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense4.date,
       description: sampleData.expenses.expense4.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense4.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense4.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -257,12 +257,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense7.amount_cents,
+      amount: sampleData.expenses.expense7.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense7.date,
       description: sampleData.expenses.expense7.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense7.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense7.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -273,12 +273,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense10.amount_cents,
+      amount: sampleData.expenses.expense10.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense10.date,
       description: sampleData.expenses.expense10.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense10.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense10.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -289,12 +289,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense13.amount_cents,
+      amount: sampleData.expenses.expense13.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense13.date,
       description: sampleData.expenses.expense13.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense13.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense13.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -305,12 +305,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense16.amount_cents,
+      amount: sampleData.expenses.expense16.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense16.date,
       description: sampleData.expenses.expense16.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense16.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense16.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -321,12 +321,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense19.amount_cents,
+      amount: sampleData.expenses.expense19.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense19.date,
       description: sampleData.expenses.expense19.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense19.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense19.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -337,12 +337,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense22.amount_cents,
+      amount: sampleData.expenses.expense22.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense22.date,
       description: sampleData.expenses.expense22.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense22.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense22.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -353,12 +353,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense25.amount_cents,
+      amount: sampleData.expenses.expense25.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense25.date,
       description: sampleData.expenses.expense25.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense25.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense25.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -369,12 +369,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense28.amount_cents,
+      amount: sampleData.expenses.expense28.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense28.date,
       description: sampleData.expenses.expense28.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense28.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense28.reimbursed_cents,
       subcategoryUuid: user1Subcategory1Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -400,8 +400,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget4.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget4.budget_cents,
       month: sampleData.budgets.budget4.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -413,8 +413,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget8.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget8.budget_cents,
       month: sampleData.budgets.budget8.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -426,8 +426,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget10.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget10.budget_cents,
       month: sampleData.budgets.budget10.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -439,8 +439,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget14.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget14.budget_cents,
       month: sampleData.budgets.budget14.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -452,8 +452,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget15.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget15.budget_cents,
       month: sampleData.budgets.budget15.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -465,8 +465,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget20.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget20.budget_cents,
       month: sampleData.budgets.budget20.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -478,8 +478,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget21.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget21.budget_cents,
       month: sampleData.budgets.budget21.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -491,8 +491,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget22.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget22.budget_cents,
       month: sampleData.budgets.budget22.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -504,8 +504,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.BudgetCtrl.createBudget({
+      amount: sampleData.budgets.budget27.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      budgetCents: sampleData.budgets.budget27.budget_cents,
       month: sampleData.budgets.budget27.month,
       subcategoryUuid: user1Subcategory2Uuid,
       year: 2018,
@@ -517,12 +517,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense2.amount_cents,
+      amount: sampleData.expenses.expense2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense2.date,
       description: sampleData.expenses.expense2.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense2.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -533,12 +533,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense5.amount_cents,
+      amount: sampleData.expenses.expense5.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense5.date,
       description: sampleData.expenses.expense5.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense5.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense5.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -549,12 +549,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense8.amount_cents,
+      amount: sampleData.expenses.expense8.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense8.date,
       description: sampleData.expenses.expense8.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense8.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense8.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -565,12 +565,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense11.amount_cents,
+      amount: sampleData.expenses.expense11.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense11.date,
       description: sampleData.expenses.expense11.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense11.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense11.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -581,12 +581,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense14.amount_cents,
+      amount: sampleData.expenses.expense14.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense14.date,
       description: sampleData.expenses.expense14.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense14.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense14.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -597,12 +597,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense17.amount_cents,
+      amount: sampleData.expenses.expense17.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense17.date,
       description: sampleData.expenses.expense17.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense17.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense17.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -613,12 +613,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense20.amount_cents,
+      amount: sampleData.expenses.expense20.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense20.date,
       description: sampleData.expenses.expense20.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense20.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense20.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -629,12 +629,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense23.amount_cents,
+      amount: sampleData.expenses.expense23.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense23.date,
       description: sampleData.expenses.expense23.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense23.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense23.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -645,12 +645,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense26.amount_cents,
+      amount: sampleData.expenses.expense26.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense26.date,
       description: sampleData.expenses.expense26.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense26.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense26.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -661,12 +661,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       user_uuid: user1Uuid,
     });
     await controllers.ExpenseCtrl.createExpense({
-      amountCents: sampleData.expenses.expense29.amount_cents,
+      amount: sampleData.expenses.expense29.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
       date: sampleData.expenses.expense29.date,
       description: sampleData.expenses.expense29.description,
       householdMemberUuid: user1HouseholdMemberUuid,
-      reimbursedCents: sampleData.expenses.expense29.reimbursed_cents,
+      reimbursedAmount: sampleData.expenses.expense29.reimbursed_cents,
       subcategoryUuid: user1Subcategory2Uuid,
       vendorUuid: user1VendorUuid,
     });
@@ -693,7 +693,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
   it('should return 401 with no auth token', async function() {
     const res = await chai.request(server)
-      .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+      .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
       .set('Content-Type', 'application/vnd.api+json');
     expect(res).to.have.status(401);
     assert.deepEqual(res.body, {
@@ -718,7 +718,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
   it('should return 404 when the subcategory does not exist', async function() {
     const res = await chai.request(server)
-      .get(`/subcategory-annual-reports?subcategory_uuid=${uuidv4()}`)
+      .get(`/subcategory-annual-reports?subcategory_id=${uuidv4()}`)
       .set('Content-Type', 'application/vnd.api+json')
       .set('Authorization', `Bearer ${user1Token}`);
     expect(res).to.have.status(404);
@@ -731,7 +731,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
   it('should return 404 when the subcategory belongs to a different household', async function() {
     const res = await chai.request(server)
-      .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+      .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
       .set('Content-Type', 'application/vnd.api+json')
       .set('Authorization', `Bearer ${user2Token}`);
     expect(res).to.have.status(404);
@@ -744,7 +744,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
   it('should return 200 and the correct totals for 2018', async function() {
     const res = await chai.request(server)
-      .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+      .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
       .set('Content-Type', 'application/vnd.api+json')
       .set('Authorization', `Bearer ${user1Token}`);
     expect(res).to.have.status(200);
@@ -752,30 +752,30 @@ describe('Integration - GET /subcategory-annual-reports', function() {
     assert.isOk(res.body.data);
     assert.strictEqual(res.body.data.length, 1);
     assert.isOk(res.body.data[0].attributes);
-    assert.strictEqual(res.body.data[0].attributes['apr-actual-cents'], 0);
-    assert.strictEqual(res.body.data[0].attributes['apr-budget-cents'], 28617);
-    assert.strictEqual(res.body.data[0].attributes['aug-actual-cents'], 44177);
-    assert.strictEqual(res.body.data[0].attributes['aug-budget-cents'], 0);
-    assert.strictEqual(res.body.data[0].attributes['dec-actual-cents'], 66540);
-    assert.strictEqual(res.body.data[0].attributes['dec-budget-cents'], 99763);
-    assert.strictEqual(res.body.data[0].attributes['feb-actual-cents'], 0);
-    assert.strictEqual(res.body.data[0].attributes['feb-budget-cents'], 90756);
-    assert.strictEqual(res.body.data[0].attributes['mar-actual-cents'], 181457);
-    assert.strictEqual(res.body.data[0].attributes['mar-budget-cents'], 39746);
-    assert.strictEqual(res.body.data[0].attributes['may-actual-cents'], 65709);
-    assert.strictEqual(res.body.data[0].attributes['may-budget-cents'], 20839);
-    assert.strictEqual(res.body.data[0].attributes['jan-actual-cents'], 60493);
-    assert.strictEqual(res.body.data[0].attributes['jan-budget-cents'], 7114);
-    assert.strictEqual(res.body.data[0].attributes['jul-actual-cents'], 74918);
-    assert.strictEqual(res.body.data[0].attributes['jul-budget-cents'], 78861);
-    assert.strictEqual(res.body.data[0].attributes['jun-actual-cents'], 0);
-    assert.strictEqual(res.body.data[0].attributes['jun-budget-cents'], 14156);
-    assert.strictEqual(res.body.data[0].attributes['nov-actual-cents'], 0);
-    assert.strictEqual(res.body.data[0].attributes['nov-budget-cents'], 21742);
-    assert.strictEqual(res.body.data[0].attributes['oct-actual-cents'], 149529);
-    assert.strictEqual(res.body.data[0].attributes['oct-budget-cents'], 64671);
-    assert.strictEqual(res.body.data[0].attributes['sep-actual-cents'], 0);
-    assert.strictEqual(res.body.data[0].attributes['sep-budget-cents'], 0);
+    assert.strictEqual(res.body.data[0].attributes['apr-actual'], 0);
+    assert.strictEqual(res.body.data[0].attributes['apr-budget'], 28617);
+    assert.strictEqual(res.body.data[0].attributes['aug-actual'], 44177);
+    assert.strictEqual(res.body.data[0].attributes['aug-budget'], 0);
+    assert.strictEqual(res.body.data[0].attributes['dec-actual'], 66540);
+    assert.strictEqual(res.body.data[0].attributes['dec-budget'], 99763);
+    assert.strictEqual(res.body.data[0].attributes['feb-actual'], 0);
+    assert.strictEqual(res.body.data[0].attributes['feb-budget'], 90756);
+    assert.strictEqual(res.body.data[0].attributes['mar-actual'], 181457);
+    assert.strictEqual(res.body.data[0].attributes['mar-budget'], 39746);
+    assert.strictEqual(res.body.data[0].attributes['may-actual'], 65709);
+    assert.strictEqual(res.body.data[0].attributes['may-budget'], 20839);
+    assert.strictEqual(res.body.data[0].attributes['jan-actual'], 60493);
+    assert.strictEqual(res.body.data[0].attributes['jan-budget'], 7114);
+    assert.strictEqual(res.body.data[0].attributes['jul-actual'], 74918);
+    assert.strictEqual(res.body.data[0].attributes['jul-budget'], 78861);
+    assert.strictEqual(res.body.data[0].attributes['jun-actual'], 0);
+    assert.strictEqual(res.body.data[0].attributes['jun-budget'], 14156);
+    assert.strictEqual(res.body.data[0].attributes['nov-actual'], 0);
+    assert.strictEqual(res.body.data[0].attributes['nov-budget'], 21742);
+    assert.strictEqual(res.body.data[0].attributes['oct-actual'], 149529);
+    assert.strictEqual(res.body.data[0].attributes['oct-budget'], 64671);
+    assert.strictEqual(res.body.data[0].attributes['sep-actual'], 0);
+    assert.strictEqual(res.body.data[0].attributes['sep-budget'], 0);
     assert.strictEqual(res.body.data[0].attributes.year, 2018);
     assert.strictEqual(res.body.data[0].id, `${user1Subcategory1Uuid}-2018`);
     assert.strictEqual(res.body.data[0].type, 'subcategory-annual-reports');
@@ -787,8 +787,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget4.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget4.budget_cents,
         month: sampleData.budgets.budget4.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -800,8 +800,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget8.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget8.budget_cents,
         month: sampleData.budgets.budget8.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -813,8 +813,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget10.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget10.budget_cents,
         month: sampleData.budgets.budget10.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -826,8 +826,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget14.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget14.budget_cents,
         month: sampleData.budgets.budget14.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -839,8 +839,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget15.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget15.budget_cents,
         month: sampleData.budgets.budget15.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -852,8 +852,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget20.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget20.budget_cents,
         month: sampleData.budgets.budget20.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -865,8 +865,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget21.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget21.budget_cents,
         month: sampleData.budgets.budget21.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -878,8 +878,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget22.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget22.budget_cents,
         month: sampleData.budgets.budget22.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -891,8 +891,8 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.BudgetCtrl.createBudget({
+        amount: sampleData.budgets.budget27.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        budgetCents: sampleData.budgets.budget27.budget_cents,
         month: sampleData.budgets.budget27.month,
         subcategoryUuid: user1Subcategory1Uuid,
         year: 2019,
@@ -901,7 +901,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
     it('should also return budget data for 2019', async function() {
       const res = await chai.request(server)
-        .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+        .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -909,58 +909,58 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 2);
       assert.isOk(res.body.data[0].attributes);
-      assert.strictEqual(res.body.data[0].attributes['apr-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['apr-budget-cents'], 28617);
-      assert.strictEqual(res.body.data[0].attributes['aug-actual-cents'], 44177);
-      assert.strictEqual(res.body.data[0].attributes['aug-budget-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['dec-actual-cents'], 66540);
-      assert.strictEqual(res.body.data[0].attributes['dec-budget-cents'], 99763);
-      assert.strictEqual(res.body.data[0].attributes['feb-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['feb-budget-cents'], 90756);
-      assert.strictEqual(res.body.data[0].attributes['mar-actual-cents'], 181457);
-      assert.strictEqual(res.body.data[0].attributes['mar-budget-cents'], 39746);
-      assert.strictEqual(res.body.data[0].attributes['may-actual-cents'], 65709);
-      assert.strictEqual(res.body.data[0].attributes['may-budget-cents'], 20839);
-      assert.strictEqual(res.body.data[0].attributes['jan-actual-cents'], 60493);
-      assert.strictEqual(res.body.data[0].attributes['jan-budget-cents'], 7114);
-      assert.strictEqual(res.body.data[0].attributes['jul-actual-cents'], 74918);
-      assert.strictEqual(res.body.data[0].attributes['jul-budget-cents'], 78861);
-      assert.strictEqual(res.body.data[0].attributes['jun-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['jun-budget-cents'], 14156);
-      assert.strictEqual(res.body.data[0].attributes['nov-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['nov-budget-cents'], 21742);
-      assert.strictEqual(res.body.data[0].attributes['oct-actual-cents'], 149529);
-      assert.strictEqual(res.body.data[0].attributes['oct-budget-cents'], 64671);
-      assert.strictEqual(res.body.data[0].attributes['sep-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['sep-budget-cents'], 0);
+      assert.strictEqual(res.body.data[0].attributes['apr-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['apr-budget'], 28617);
+      assert.strictEqual(res.body.data[0].attributes['aug-actual'], 44177);
+      assert.strictEqual(res.body.data[0].attributes['aug-budget'], 0);
+      assert.strictEqual(res.body.data[0].attributes['dec-actual'], 66540);
+      assert.strictEqual(res.body.data[0].attributes['dec-budget'], 99763);
+      assert.strictEqual(res.body.data[0].attributes['feb-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['feb-budget'], 90756);
+      assert.strictEqual(res.body.data[0].attributes['mar-actual'], 181457);
+      assert.strictEqual(res.body.data[0].attributes['mar-budget'], 39746);
+      assert.strictEqual(res.body.data[0].attributes['may-actual'], 65709);
+      assert.strictEqual(res.body.data[0].attributes['may-budget'], 20839);
+      assert.strictEqual(res.body.data[0].attributes['jan-actual'], 60493);
+      assert.strictEqual(res.body.data[0].attributes['jan-budget'], 7114);
+      assert.strictEqual(res.body.data[0].attributes['jul-actual'], 74918);
+      assert.strictEqual(res.body.data[0].attributes['jul-budget'], 78861);
+      assert.strictEqual(res.body.data[0].attributes['jun-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['jun-budget'], 14156);
+      assert.strictEqual(res.body.data[0].attributes['nov-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['nov-budget'], 21742);
+      assert.strictEqual(res.body.data[0].attributes['oct-actual'], 149529);
+      assert.strictEqual(res.body.data[0].attributes['oct-budget'], 64671);
+      assert.strictEqual(res.body.data[0].attributes['sep-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['sep-budget'], 0);
       assert.strictEqual(res.body.data[0].attributes.year, 2018);
       assert.strictEqual(res.body.data[0].id, `${user1Subcategory1Uuid}-2018`);
       assert.strictEqual(res.body.data[0].type, 'subcategory-annual-reports');
       assert.isOk(res.body.data[1].attributes);
-      assert.strictEqual(res.body.data[1].attributes['apr-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['apr-budget-cents'], 59887);
-      assert.strictEqual(res.body.data[1].attributes['aug-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['aug-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['dec-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['dec-budget-cents'], 5702);
-      assert.strictEqual(res.body.data[1].attributes['feb-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['feb-budget-cents'], 71135);
-      assert.strictEqual(res.body.data[1].attributes['mar-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['mar-budget-cents'], 20064);
-      assert.strictEqual(res.body.data[1].attributes['may-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['may-budget-cents'], 75993);
-      assert.strictEqual(res.body.data[1].attributes['jan-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['jan-budget-cents'], 2926);
-      assert.strictEqual(res.body.data[1].attributes['jul-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['jul-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['jun-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['jun-budget-cents'], 85985);
-      assert.strictEqual(res.body.data[1].attributes['nov-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['nov-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['oct-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['oct-budget-cents'], 22502);
-      assert.strictEqual(res.body.data[1].attributes['sep-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['sep-budget-cents'], 76914);
+      assert.strictEqual(res.body.data[1].attributes['apr-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['apr-budget'], 59887);
+      assert.strictEqual(res.body.data[1].attributes['aug-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['aug-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['dec-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['dec-budget'], 5702);
+      assert.strictEqual(res.body.data[1].attributes['feb-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['feb-budget'], 71135);
+      assert.strictEqual(res.body.data[1].attributes['mar-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['mar-budget'], 20064);
+      assert.strictEqual(res.body.data[1].attributes['may-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['may-budget'], 75993);
+      assert.strictEqual(res.body.data[1].attributes['jan-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['jan-budget'], 2926);
+      assert.strictEqual(res.body.data[1].attributes['jul-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['jul-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['jun-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['jun-budget'], 85985);
+      assert.strictEqual(res.body.data[1].attributes['nov-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['nov-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['oct-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['oct-budget'], 22502);
+      assert.strictEqual(res.body.data[1].attributes['sep-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['sep-budget'], 76914);
       assert.strictEqual(res.body.data[1].attributes.year, 2019);
       assert.strictEqual(res.body.data[1].id, `${user1Subcategory1Uuid}-2019`);
       assert.strictEqual(res.body.data[1].type, 'subcategory-annual-reports');
@@ -973,12 +973,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense3.amount_cents,
+        amount: sampleData.expenses.expense3.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense3.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense3.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense3.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense3.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -989,12 +989,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense6.amount_cents,
+        amount: sampleData.expenses.expense6.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense6.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense6.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense6.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense6.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1005,12 +1005,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense9.amount_cents,
+        amount: sampleData.expenses.expense9.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense9.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense9.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense9.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense9.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1021,12 +1021,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense12.amount_cents,
+        amount: sampleData.expenses.expense12.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense12.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense12.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense12.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense12.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1037,12 +1037,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense15.amount_cents,
+        amount: sampleData.expenses.expense15.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense15.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense15.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense15.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense15.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1053,12 +1053,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense18.amount_cents,
+        amount: sampleData.expenses.expense18.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense18.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense18.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense18.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense18.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1069,12 +1069,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense21.amount_cents,
+        amount: sampleData.expenses.expense21.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense21.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense21.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense21.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense21.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1085,12 +1085,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense24.amount_cents,
+        amount: sampleData.expenses.expense24.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense24.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense24.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense24.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense24.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1101,12 +1101,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense27.amount_cents,
+        amount: sampleData.expenses.expense27.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense27.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense27.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense27.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense27.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1117,12 +1117,12 @@ describe('Integration - GET /subcategory-annual-reports', function() {
         user_uuid: user1Uuid,
       });
       await controllers.ExpenseCtrl.createExpense({
-        amountCents: sampleData.expenses.expense30.amount_cents,
+        amount: sampleData.expenses.expense30.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: moment(sampleData.expenses.expense30.date).add(1, 'y').format('YYYY-MM-DD'),
         description: sampleData.expenses.expense30.description,
         householdMemberUuid: user1HouseholdMemberUuid,
-        reimbursedCents: sampleData.expenses.expense30.reimbursed_cents,
+        reimbursedAmount: sampleData.expenses.expense30.reimbursed_cents,
         subcategoryUuid: user1Subcategory1Uuid,
         vendorUuid: user1VendorUuid,
       });
@@ -1130,7 +1130,7 @@ describe('Integration - GET /subcategory-annual-reports', function() {
 
     it('should also return expense data for 2019', async function() {
       const res = await chai.request(server)
-        .get(`/subcategory-annual-reports?subcategory_uuid=${user1Subcategory1Uuid}`)
+        .get(`/subcategory-annual-reports?subcategory_id=${user1Subcategory1Uuid}`)
         .set('Content-Type', 'application/vnd.api+json')
         .set('Authorization', `Bearer ${user1Token}`);
       expect(res).to.have.status(200);
@@ -1138,58 +1138,58 @@ describe('Integration - GET /subcategory-annual-reports', function() {
       assert.isOk(res.body.data);
       assert.strictEqual(res.body.data.length, 2);
       assert.isOk(res.body.data[0].attributes);
-      assert.strictEqual(res.body.data[0].attributes['apr-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['apr-budget-cents'], 28617);
-      assert.strictEqual(res.body.data[0].attributes['aug-actual-cents'], 44177);
-      assert.strictEqual(res.body.data[0].attributes['aug-budget-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['dec-actual-cents'], 66540);
-      assert.strictEqual(res.body.data[0].attributes['dec-budget-cents'], 99763);
-      assert.strictEqual(res.body.data[0].attributes['feb-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['feb-budget-cents'], 90756);
-      assert.strictEqual(res.body.data[0].attributes['mar-actual-cents'], 181457);
-      assert.strictEqual(res.body.data[0].attributes['mar-budget-cents'], 39746);
-      assert.strictEqual(res.body.data[0].attributes['may-actual-cents'], 65709);
-      assert.strictEqual(res.body.data[0].attributes['may-budget-cents'], 20839);
-      assert.strictEqual(res.body.data[0].attributes['jan-actual-cents'], 60493);
-      assert.strictEqual(res.body.data[0].attributes['jan-budget-cents'], 7114);
-      assert.strictEqual(res.body.data[0].attributes['jul-actual-cents'], 74918);
-      assert.strictEqual(res.body.data[0].attributes['jul-budget-cents'], 78861);
-      assert.strictEqual(res.body.data[0].attributes['jun-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['jun-budget-cents'], 14156);
-      assert.strictEqual(res.body.data[0].attributes['nov-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['nov-budget-cents'], 21742);
-      assert.strictEqual(res.body.data[0].attributes['oct-actual-cents'], 149529);
-      assert.strictEqual(res.body.data[0].attributes['oct-budget-cents'], 64671);
-      assert.strictEqual(res.body.data[0].attributes['sep-actual-cents'], 0);
-      assert.strictEqual(res.body.data[0].attributes['sep-budget-cents'], 0);
+      assert.strictEqual(res.body.data[0].attributes['apr-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['apr-budget'], 28617);
+      assert.strictEqual(res.body.data[0].attributes['aug-actual'], 44177);
+      assert.strictEqual(res.body.data[0].attributes['aug-budget'], 0);
+      assert.strictEqual(res.body.data[0].attributes['dec-actual'], 66540);
+      assert.strictEqual(res.body.data[0].attributes['dec-budget'], 99763);
+      assert.strictEqual(res.body.data[0].attributes['feb-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['feb-budget'], 90756);
+      assert.strictEqual(res.body.data[0].attributes['mar-actual'], 181457);
+      assert.strictEqual(res.body.data[0].attributes['mar-budget'], 39746);
+      assert.strictEqual(res.body.data[0].attributes['may-actual'], 65709);
+      assert.strictEqual(res.body.data[0].attributes['may-budget'], 20839);
+      assert.strictEqual(res.body.data[0].attributes['jan-actual'], 60493);
+      assert.strictEqual(res.body.data[0].attributes['jan-budget'], 7114);
+      assert.strictEqual(res.body.data[0].attributes['jul-actual'], 74918);
+      assert.strictEqual(res.body.data[0].attributes['jul-budget'], 78861);
+      assert.strictEqual(res.body.data[0].attributes['jun-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['jun-budget'], 14156);
+      assert.strictEqual(res.body.data[0].attributes['nov-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['nov-budget'], 21742);
+      assert.strictEqual(res.body.data[0].attributes['oct-actual'], 149529);
+      assert.strictEqual(res.body.data[0].attributes['oct-budget'], 64671);
+      assert.strictEqual(res.body.data[0].attributes['sep-actual'], 0);
+      assert.strictEqual(res.body.data[0].attributes['sep-budget'], 0);
       assert.strictEqual(res.body.data[0].attributes.year, 2018);
       assert.strictEqual(res.body.data[0].id, `${user1Subcategory1Uuid}-2018`);
       assert.strictEqual(res.body.data[0].type, 'subcategory-annual-reports');
       assert.isOk(res.body.data[1].attributes);
-      assert.strictEqual(res.body.data[1].attributes['apr-actual-cents'], 3296);
-      assert.strictEqual(res.body.data[1].attributes['apr-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['aug-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['aug-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['dec-actual-cents'], 39638);
-      assert.strictEqual(res.body.data[1].attributes['dec-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['feb-actual-cents'], 91128);
-      assert.strictEqual(res.body.data[1].attributes['feb-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['mar-actual-cents'], 137462);
-      assert.strictEqual(res.body.data[1].attributes['mar-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['may-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['may-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['jan-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['jan-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['jul-actual-cents'], 66607);
-      assert.strictEqual(res.body.data[1].attributes['jul-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['jun-actual-cents'], 51316);
-      assert.strictEqual(res.body.data[1].attributes['jun-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['nov-actual-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['nov-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['oct-actual-cents'], 113158);
-      assert.strictEqual(res.body.data[1].attributes['oct-budget-cents'], 0);
-      assert.strictEqual(res.body.data[1].attributes['sep-actual-cents'], 28159);
-      assert.strictEqual(res.body.data[1].attributes['sep-budget-cents'], 0);
+      assert.strictEqual(res.body.data[1].attributes['apr-actual'], 3296);
+      assert.strictEqual(res.body.data[1].attributes['apr-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['aug-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['aug-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['dec-actual'], 39638);
+      assert.strictEqual(res.body.data[1].attributes['dec-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['feb-actual'], 91128);
+      assert.strictEqual(res.body.data[1].attributes['feb-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['mar-actual'], 137462);
+      assert.strictEqual(res.body.data[1].attributes['mar-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['may-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['may-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['jan-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['jan-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['jul-actual'], 66607);
+      assert.strictEqual(res.body.data[1].attributes['jul-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['jun-actual'], 51316);
+      assert.strictEqual(res.body.data[1].attributes['jun-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['nov-actual'], 0);
+      assert.strictEqual(res.body.data[1].attributes['nov-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['oct-actual'], 113158);
+      assert.strictEqual(res.body.data[1].attributes['oct-budget'], 0);
+      assert.strictEqual(res.body.data[1].attributes['sep-actual'], 28159);
+      assert.strictEqual(res.body.data[1].attributes['sep-budget'], 0);
       assert.strictEqual(res.body.data[1].attributes.year, 2019);
       assert.strictEqual(res.body.data[1].id, `${user1Subcategory1Uuid}-2019`);
       assert.strictEqual(res.body.data[1].type, 'subcategory-annual-reports');
