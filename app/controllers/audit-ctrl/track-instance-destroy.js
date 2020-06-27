@@ -1,4 +1,4 @@
-const { AuditError } = require('../../middleware/error-handler/');
+const { AuditError } = require('../../middleware/error-handler');
 
 /**
 * Save audit change for deletion of paranoid instances. Only delete instances
@@ -24,14 +24,14 @@ module.exports = async({
     throw new AuditError('Sequelize transaction is required');
   }
 
-  if (instance._modelOptions.paranoid) {
+  if (models[instance.constructor.name].options.paranoid) {
     // Only destroy paranoid models. Deleting non-paranoid models must be done
     // manually.
     await instance.destroy({
       transaction,
     });
 
-    const tableName = instance._modelOptions.tableName;
+    const tableName = models[instance.constructor.name].tableName;
     const primaryKey = auditCtrl.getPrimaryKey(tableName);
     await models.Audit.Change.create({
       attribute: 'deleted_at',
