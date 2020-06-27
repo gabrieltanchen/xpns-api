@@ -1,4 +1,4 @@
-const { AuditError } = require('../../middleware/error-handler/');
+const { AuditError } = require('../../middleware/error-handler');
 
 /**
  * Save audit changes for the changed attributes for this instance using
@@ -31,7 +31,7 @@ module.exports = async({
   const changedAttributes = instance.changed() || [];
 
   const suppressLogChanges = auditCtrl.suppressLogChanges;
-  const tableName = instance._modelOptions.tableName;
+  const tableName = models[instance.constructor.name].tableName;
   const primaryKey = auditCtrl.getPrimaryKey(tableName);
   suppressLogChanges.push(primaryKey);
 

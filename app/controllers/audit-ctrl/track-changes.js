@@ -1,4 +1,4 @@
-const { AuditError } = require('../../middleware/error-handler/');
+const { AuditError } = require('../../middleware/error-handler');
 
 /**
  * Track the changes in the change list. The change list must be a list of

@@ -3,9 +3,9 @@ const crypto = require('crypto');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { AuditError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { AuditError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
