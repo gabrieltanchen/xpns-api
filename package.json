@@ -34,7 +34,7 @@
     "moment": "2.27.0",
     "nconf": "0.10.0",
     "pg": "8.2.1",
-    "sequelize": "6.2.3",
+    "sequelize": "6.3.1",
     "sequelize-cli": "6.1.0",
     "umzug": "2.3.0",
     "uuid": "8.2.0",
