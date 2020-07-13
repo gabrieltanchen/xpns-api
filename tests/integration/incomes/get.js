@@ -29,7 +29,7 @@ const validateIncome = ({
 
 chai.use(chaiHttp);
 
-describe('Integration - GET /incomes', function() {
+describe.only('Integration - GET /incomes', function() {
   let controllers;
   let models;
   let server;
@@ -1297,5 +1297,69 @@ describe('Integration - GET /incomes', function() {
         }],
       });
     });
+  });
+
+  describe('with query param sort=date and sortDirection=ASC', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
+  });
+
+  describe('with query param sort=date and sortDirection=DESC', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
+  });
+
+  describe('with query param sort=member and sortDirection=ASC', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
+  });
+
+  describe('with query param sort=member and sortDirection=DESC', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
+  });
+
+  describe('with query param sort=description and sortDirection=ASC', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
+  });
+
+  describe('with query param sort=description and sortDirection=DESC', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
+  });
+
+  describe('with query param sort=amount and sortDirection=ASC', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
+  });
+
+  describe('with query param sort=amount and sortDirection=DESC', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
   });
 });

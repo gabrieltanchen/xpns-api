@@ -66,6 +66,26 @@ module.exports = (app) => {
         incomeWhere.household_member_uuid = householdMember.get('uuid');
       }
 
+      let incomeOrder = [['date', 'DESC']];
+      let sortField;
+      if (req.query.sort && req.query.sort === 'date') {
+        sortField = 'date';
+      } else if (req.query.sort && req.query.sort === 'member') {
+        sortField = 'HouseholdMember.name';
+      } else if (req.query.sort && req.query.sort === 'description') {
+        sortField = 'description';
+      } else if (req.query.sort && req.query.sort === 'amount') {
+        sortField = 'amount_cents';
+      }
+      if (sortField) {
+        incomeOrder = [];
+        if (req.query.sortDirection && req.query.sortDirection === 'desc') {
+          incomeOrder.push([sortField, 'DESC']);
+        } else {
+          incomeOrder.push([sortField, 'ASC']);
+        }
+      }
+
       const incomes = await models.Income.findAndCountAll({
         attributes: [
           'amount_cents',
@@ -84,7 +104,7 @@ module.exports = (app) => {
         }],
         limit,
         offset,
-        order: [['date', 'DESC']],
+        order: incomeOrder,
         where: incomeWhere,
       });
 
