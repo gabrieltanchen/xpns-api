@@ -1299,7 +1299,225 @@ describe.only('Integration - GET /incomes', function() {
     });
   });
 
-  describe('with query param sort=date and sortDirection=ASC', function() {
+  describe('with query param sort=date and sortDirection=asc', function() {
+    it('should return 200 and 25 incomes as user 1 with no limit or page specified', async function() {
+      const res = await chai.request(server)
+        .get('/incomes?sort=date&sortDirection=asc')
+        .set('Content-Type', 'application/vnd.api+json')
+        .set('Authorization', `Bearer ${user1Token}`);
+      expect(res).to.have.status(200);
+      assert.isOk(res.body.data);
+      assert.strictEqual(res.body.data.length, 25);
+
+      // Income 1
+      validateIncome({
+        expectedIncome: sampleData.incomes.income1,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income1Uuid,
+        returnedIncome: res.body.data[0],
+      });
+
+      // Income 2
+      validateIncome({
+        expectedIncome: sampleData.incomes.income2,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income2Uuid,
+        returnedIncome: res.body.data[1],
+      });
+
+      // Income 3
+      validateIncome({
+        expectedIncome: sampleData.incomes.income3,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income3Uuid,
+        returnedIncome: res.body.data[2],
+      });
+
+      // Income 4
+      validateIncome({
+        expectedIncome: sampleData.incomes.income4,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income4Uuid,
+        returnedIncome: res.body.data[3],
+      });
+
+      // Income 5
+      validateIncome({
+        expectedIncome: sampleData.incomes.income5,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income5Uuid,
+        returnedIncome: res.body.data[4],
+      });
+
+      // Income 6
+      validateIncome({
+        expectedIncome: sampleData.incomes.income6,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income6Uuid,
+        returnedIncome: res.body.data[5],
+      });
+
+      // Income 7
+      validateIncome({
+        expectedIncome: sampleData.incomes.income7,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income7Uuid,
+        returnedIncome: res.body.data[6],
+      });
+
+      // Income 8
+      validateIncome({
+        expectedIncome: sampleData.incomes.income8,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income8Uuid,
+        returnedIncome: res.body.data[7],
+      });
+
+      // Income 9
+      validateIncome({
+        expectedIncome: sampleData.incomes.income9,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income9Uuid,
+        returnedIncome: res.body.data[8],
+      });
+
+      // Income 10
+      validateIncome({
+        expectedIncome: sampleData.incomes.income10,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income10Uuid,
+        returnedIncome: res.body.data[9],
+      });
+
+      // Income 11
+      validateIncome({
+        expectedIncome: sampleData.incomes.income11,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income11Uuid,
+        returnedIncome: res.body.data[10],
+      });
+
+      // Income 12
+      validateIncome({
+        expectedIncome: sampleData.incomes.income12,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income12Uuid,
+        returnedIncome: res.body.data[11],
+      });
+
+      // Income 13
+      validateIncome({
+        expectedIncome: sampleData.incomes.income13,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income13Uuid,
+        returnedIncome: res.body.data[12],
+      });
+
+      // Income 14
+      validateIncome({
+        expectedIncome: sampleData.incomes.income14,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income14Uuid,
+        returnedIncome: res.body.data[13],
+      });
+
+      // Income 15
+      validateIncome({
+        expectedIncome: sampleData.incomes.income15,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income15Uuid,
+        returnedIncome: res.body.data[14],
+      });
+
+      // Income 16
+      validateIncome({
+        expectedIncome: sampleData.incomes.income16,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income16Uuid,
+        returnedIncome: res.body.data[15],
+      });
+
+      // Income 17
+      validateIncome({
+        expectedIncome: sampleData.incomes.income17,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income17Uuid,
+        returnedIncome: res.body.data[16],
+      });
+
+      // Income 18
+      validateIncome({
+        expectedIncome: sampleData.incomes.income18,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income18Uuid,
+        returnedIncome: res.body.data[17],
+      });
+
+      // Income 19
+      validateIncome({
+        expectedIncome: sampleData.incomes.income19,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income19Uuid,
+        returnedIncome: res.body.data[18],
+      });
+
+      // Income 20
+      validateIncome({
+        expectedIncome: sampleData.incomes.income20,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income20Uuid,
+        returnedIncome: res.body.data[19],
+      });
+
+      // Income 21
+      validateIncome({
+        expectedIncome: sampleData.incomes.income21,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income21Uuid,
+        returnedIncome: res.body.data[20],
+      });
+
+      // Income 22
+      validateIncome({
+        expectedIncome: sampleData.incomes.income22,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income22Uuid,
+        returnedIncome: res.body.data[21],
+      });
+
+      // Income 23
+      validateIncome({
+        expectedIncome: sampleData.incomes.income23,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income23Uuid,
+        returnedIncome: res.body.data[22],
+      });
+
+      // Income 24
+      validateIncome({
+        expectedIncome: sampleData.incomes.income24,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income24Uuid,
+        returnedIncome: res.body.data[23],
+      });
+
+      // Income 25
+      validateIncome({
+        expectedIncome: sampleData.incomes.income25,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        incomeUuid: user1Income25Uuid,
+        returnedIncome: res.body.data[24],
+      });
+
+      assert.isOk(res.body.included);
+    });
+
+    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
+
+    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
+  });
+
+  describe('with query param sort=date and sortDirection=desc', function() {
     it('should return 200 and 25 incomes as user 1 with no limit or page specified');
 
     it('should return 200 and 3 incomes as user 1 with no limit and page=2');
@@ -1307,7 +1525,7 @@ describe.only('Integration - GET /incomes', function() {
     it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
   });
 
-  describe('with query param sort=date and sortDirection=DESC', function() {
+  describe('with query param sort=member and sortDirection=asc', function() {
     it('should return 200 and 25 incomes as user 1 with no limit or page specified');
 
     it('should return 200 and 3 incomes as user 1 with no limit and page=2');
@@ -1315,7 +1533,7 @@ describe.only('Integration - GET /incomes', function() {
     it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
   });
 
-  describe('with query param sort=member and sortDirection=ASC', function() {
+  describe('with query param sort=member and sortDirection=desc', function() {
     it('should return 200 and 25 incomes as user 1 with no limit or page specified');
 
     it('should return 200 and 3 incomes as user 1 with no limit and page=2');
@@ -1323,7 +1541,7 @@ describe.only('Integration - GET /incomes', function() {
     it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
   });
 
-  describe('with query param sort=member and sortDirection=DESC', function() {
+  describe('with query param sort=description and sortDirection=asc', function() {
     it('should return 200 and 25 incomes as user 1 with no limit or page specified');
 
     it('should return 200 and 3 incomes as user 1 with no limit and page=2');
@@ -1331,7 +1549,7 @@ describe.only('Integration - GET /incomes', function() {
     it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
   });
 
-  describe('with query param sort=description and sortDirection=ASC', function() {
+  describe('with query param sort=description and sortDirection=desc', function() {
     it('should return 200 and 25 incomes as user 1 with no limit or page specified');
 
     it('should return 200 and 3 incomes as user 1 with no limit and page=2');
@@ -1339,7 +1557,7 @@ describe.only('Integration - GET /incomes', function() {
     it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
   });
 
-  describe('with query param sort=description and sortDirection=DESC', function() {
+  describe('with query param sort=amount and sortDirection=asc', function() {
     it('should return 200 and 25 incomes as user 1 with no limit or page specified');
 
     it('should return 200 and 3 incomes as user 1 with no limit and page=2');
@@ -1347,15 +1565,7 @@ describe.only('Integration - GET /incomes', function() {
     it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
   });
 
-  describe('with query param sort=amount and sortDirection=ASC', function() {
-    it('should return 200 and 25 incomes as user 1 with no limit or page specified');
-
-    it('should return 200 and 3 incomes as user 1 with no limit and page=2');
-
-    it('should return 200 and 5 incomes as user 1 with limit=5 and page=4');
-  });
-
-  describe('with query param sort=amount and sortDirection=DESC', function() {
+  describe('with query param sort=amount and sortDirection=desc', function() {
     it('should return 200 and 25 incomes as user 1 with no limit or page specified');
 
     it('should return 200 and 3 incomes as user 1 with no limit and page=2');
