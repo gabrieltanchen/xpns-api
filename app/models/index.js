@@ -17,9 +17,9 @@ const Vendor = require('./vendor');
 class Models {
   constructor(databaseUrl) {
     let logging = console.log;
-    if (nconf.get('NODE_ENV') === 'test') {
-      logging = null;
-    }
+    // if (nconf.get('NODE_ENV') === 'test') {
+    //   logging = null;
+    // }
     this.sequelize = new Sequelize(databaseUrl, {
       define: {
         createdAt: 'created_at',

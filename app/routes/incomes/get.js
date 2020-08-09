@@ -84,6 +84,9 @@ module.exports = (app) => {
         } else {
           incomeOrder.push([sortField, 'ASC']);
         }
+        if (sortField !== 'date') {
+          incomeOrder.push(['date', 'ASC']);
+        }
       }
 
       const incomes = await models.Income.findAndCountAll({
