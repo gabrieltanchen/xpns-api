@@ -59,6 +59,7 @@ describe('Integration - GET /users/:uuid', function() {
   });
 
   after('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

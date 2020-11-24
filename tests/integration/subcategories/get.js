@@ -418,6 +418,7 @@ describe('Integration - GET /subcategories', function() {
   });
 
   after('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 
