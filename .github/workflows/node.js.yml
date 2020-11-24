@@ -6,7 +6,7 @@ name: Node.js CI
 on: [push, pull_request]
 
 jobs:
-  test_finance_api:
+  test:
 
     strategy:
       matrix:
@@ -40,3 +40,19 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+      - name: Send partial coverage report
+        uses: coverallsapp/github-actions@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          flag-name: run-${{ matrix.os }}-${{ matrix.node-version }}
+          parallel: true
+
+  send_coverage_report:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send final coverage report
+        uses: coverallsapp/github-action@master
+        with:
+            github-token: ${{ secrets.github_token }}
+            parallel-finished: true
