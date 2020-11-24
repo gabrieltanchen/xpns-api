@@ -395,6 +395,7 @@ describe('Integration - GET /categories', function() {
   });
 
   after('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

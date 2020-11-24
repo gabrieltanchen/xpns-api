@@ -39,6 +39,7 @@ describe('Unit:Controllers - UserCtrl.getToken', function() {
   });
 
   afterEach('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 
