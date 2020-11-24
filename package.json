@@ -9,7 +9,7 @@
     "production": "NODE_ENV=production node index",
     "start": "node index",
     "test": "NODE_ENV=test mocha --recursive tests",
-    "test:ci": "NODE_ENV=test nyc --reporter=none mocha --recursive --forbid-only tests"
+    "test:ci": "NODE_ENV=test nyc --reporter=lcov mocha --recursive --forbid-only tests"
   },
   "repository": {
     "type": "git",
