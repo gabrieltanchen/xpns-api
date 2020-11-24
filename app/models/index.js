@@ -1,7 +1,7 @@
 const nconf = require('nconf');
 const Sequelize = require('sequelize');
 
-const Audit = require('./audit/');
+const Audit = require('./audit');
 const Budget = require('./budget');
 const Category = require('./category');
 const Expense = require('./expense');
@@ -16,7 +16,7 @@ const Vendor = require('./vendor');
 
 class Models {
   constructor(databaseUrl) {
-    let logging = console.log;
+    let logging = console.log; // eslint-disable-line no-console
     if (nconf.get('NODE_ENV') === 'test') {
       logging = null;
     }

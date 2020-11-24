@@ -3,9 +3,9 @@ const crypto = require('crypto');
 const sinon = require('sinon');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { UserError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { UserError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 

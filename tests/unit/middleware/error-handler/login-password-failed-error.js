@@ -2,7 +2,7 @@ const chai = require('chai');
 
 const assert = chai.assert;
 
-const { LoginPasswordFailedError } = require('../../../../app/middleware/error-handler/');
+const { LoginPasswordFailedError } = require('../../../../app/middleware/error-handler');
 
 describe('Unit:Middleware - ErrorHandler - LoginPasswordFailedError', function() {
   it('should return invalid combination even for an unknown error', function() {

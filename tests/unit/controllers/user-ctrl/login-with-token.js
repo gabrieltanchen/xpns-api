@@ -1,7 +1,7 @@
 const chai = require('chai');
 const jwt = require('jsonwebtoken');
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 

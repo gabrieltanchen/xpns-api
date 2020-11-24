@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const { LoginPasswordFailedError } = require('../../middleware/error-handler/');
+const { LoginPasswordFailedError } = require('../../middleware/error-handler');
 
 module.exports = async({
   email,

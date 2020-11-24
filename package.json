@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "eslint . --ext .js",
     "migration:generate": "sequelize migration:generate",
     "production": "NODE_ENV=production node index",
     "start": "node index",

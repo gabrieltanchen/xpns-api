@@ -451,7 +451,6 @@ describe('Integration - GET /budgets', function() {
     });
   });
 
-
   before('create budget 25', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
