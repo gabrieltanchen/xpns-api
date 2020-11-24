@@ -57,6 +57,7 @@ describe('Unit:Controllers - CategoryCtrl.createCategory', function() {
   });
 
   afterEach('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

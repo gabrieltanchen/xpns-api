@@ -89,6 +89,7 @@ describe('Integration - PATCH /household-members/:uuid', function() {
   });
 
   afterEach('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 
