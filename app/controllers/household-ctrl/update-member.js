@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { HouseholdError } = require('../../middleware/error-handler/');
+const { HouseholdError } = require('../../middleware/error-handler');
 
 /**
  * @param {string} auditApiCallUuid

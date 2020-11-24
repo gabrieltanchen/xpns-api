@@ -1,5 +1,5 @@
 const chai = require('chai');
-const TestHelper = require('../../../test-helper/');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 

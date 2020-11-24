@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const nconf = require('nconf');
 
-const { UserError } = require('../../middleware/error-handler/');
+const { UserError } = require('../../middleware/error-handler');
 
 module.exports = async({
   userCtrl,

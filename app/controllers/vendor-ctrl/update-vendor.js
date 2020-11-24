@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { VendorError } = require('../../middleware/error-handler/');
+const { VendorError } = require('../../middleware/error-handler');
 
 /**
  * @param {string} auditApiCallUuid
