@@ -1,6 +1,5 @@
 # finance-api
 
-[![Build Status](https://www.travis-ci.com/gabrieltanchen/finance-api.svg?branch=master)](https://www.travis-ci.com/gabrieltanchen/finance-api)
+[![Node.js CI](https://github.com/gabrieltanchen/finance-api/workflows/Node.js%20CI/badge.svg)](https://github.com/gabrieltanchen/finance-api/actions?query=workflow%3A%22Node.js+CI%22)
 [![Coverage Status](https://coveralls.io/repos/github/gabrieltanchen/finance-api/badge.svg?branch=master)](https://coveralls.io/github/gabrieltanchen/finance-api?branch=master)
-[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=gabrieltanchen/finance-api)](https://dependabot.com)
