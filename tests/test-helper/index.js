@@ -1,5 +1,5 @@
-require('../../config/');
-const App = require('../../app/');
+require('../../config');
+const App = require('../../app');
 
 class TestHelper {
   async cleanup() {

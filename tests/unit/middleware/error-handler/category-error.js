@@ -2,7 +2,7 @@ const chai = require('chai');
 
 const assert = chai.assert;
 
-const { CategoryError } = require('../../../../app/middleware/error-handler/');
+const { CategoryError } = require('../../../../app/middleware/error-handler');
 
 describe('Unit:Middleware - ErrorHandler - CategoryError', function() {
   it('should return cannot delete with subcategories message', function() {

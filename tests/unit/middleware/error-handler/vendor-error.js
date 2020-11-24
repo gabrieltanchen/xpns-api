@@ -2,7 +2,7 @@ const chai = require('chai');
 
 const assert = chai.assert;
 
-const { VendorError } = require('../../../../app/middleware/error-handler/');
+const { VendorError } = require('../../../../app/middleware/error-handler');
 
 describe('Unit:Middleware - ErrorHandler - VendorError', function() {
   it('should return not found message', function() {

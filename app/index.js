@@ -5,10 +5,10 @@ const nconf = require('nconf');
 const Sequelize = require('sequelize');
 const Umzug = require('umzug');
 
-const Controllers = require('./controllers/');
-const Middleware = require('./middleware/');
-const Models = require('./models/');
-const routes = require('./routes/');
+const Controllers = require('./controllers');
+const Middleware = require('./middleware');
+const Models = require('./models');
+const routes = require('./routes');
 
 class App {
   constructor({ logger }) {

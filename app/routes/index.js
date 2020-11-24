@@ -1,17 +1,17 @@
 const express = require('express');
 
-const budgetReports = require('./budget-reports/');
-const budgets = require('./budgets/');
-const categories = require('./categories/');
-const expenses = require('./expenses/');
-const householdMembers = require('./household-members/');
-const households = require('./households/');
-const incomes = require('./incomes/');
-const monthlyReports = require('./monthly-reports/');
-const subcategories = require('./subcategories/');
-const subcategoryAnnualReports = require('./subcategory-annual-reports/');
-const users = require('./users/');
-const vendors = require('./vendors/');
+const budgetReports = require('./budget-reports');
+const budgets = require('./budgets');
+const categories = require('./categories');
+const expenses = require('./expenses');
+const householdMembers = require('./household-members');
+const households = require('./households');
+const incomes = require('./incomes');
+const monthlyReports = require('./monthly-reports');
+const subcategories = require('./subcategories');
+const subcategoryAnnualReports = require('./subcategory-annual-reports');
+const users = require('./users');
+const vendors = require('./vendors');
 
 module.exports = (app) => {
   app.use('/budget-reports', budgetReports(express.Router(), app));
