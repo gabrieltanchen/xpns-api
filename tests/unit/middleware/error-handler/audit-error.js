@@ -2,7 +2,7 @@ const chai = require('chai');
 
 const assert = chai.assert;
 
-const { AuditError } = require('../../../../app/middleware/error-handler/');
+const { AuditError } = require('../../../../app/middleware/error-handler');
 
 describe('Unit:Middleware - ErrorHandler - AuditError', function() {
   it('should return 500 with unknown error', function() {

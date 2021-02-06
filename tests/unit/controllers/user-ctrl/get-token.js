@@ -3,9 +3,9 @@ const nconf = require('nconf');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { UserError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { UserError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -39,6 +39,7 @@ describe('Unit:Controllers - UserCtrl.getToken', function() {
   });
 
   afterEach('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

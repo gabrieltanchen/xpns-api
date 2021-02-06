@@ -3,9 +3,9 @@ const sinon = require('sinon');
 const { v4: uuidv4 } = require('uuid');
 const _ = require('lodash');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { CategoryError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { CategoryError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -89,6 +89,7 @@ describe('Unit:Controllers - CategoryCtrl.createSubcategory', function() {
   });
 
   afterEach('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

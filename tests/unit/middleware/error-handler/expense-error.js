@@ -2,7 +2,7 @@ const chai = require('chai');
 
 const assert = chai.assert;
 
-const { ExpenseError } = require('../../../../app/middleware/error-handler/');
+const { ExpenseError } = require('../../../../app/middleware/error-handler');
 
 describe('Unit:Middleware - ErrorHandler - ExpenseError', function() {
   it('should return no open queries message', function() {

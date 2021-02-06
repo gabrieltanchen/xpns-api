@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
-const { UserError } = require('../../middleware/error-handler/');
+const { UserError } = require('../../middleware/error-handler');
 
 /**
  * @param {string} auditApiCallUuid

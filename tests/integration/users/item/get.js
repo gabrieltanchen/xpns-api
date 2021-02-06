@@ -1,8 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 const expect = chai.expect;
@@ -59,6 +59,7 @@ describe('Integration - GET /users/:uuid', function() {
   });
 
   after('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { CategoryError } = require('../../middleware/error-handler/');
+const { CategoryError } = require('../../middleware/error-handler');
 
 /**
  * @param {string} auditApiCallUuid

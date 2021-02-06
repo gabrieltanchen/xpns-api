@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 const postFn = require('./post');
-const routeItem = require('./item/');
-const routeLogin = require('./login/');
+const routeItem = require('./item');
+const routeLogin = require('./login');
 
 module.exports = (router, app) => {
   const Auditor = app.get('Auditor');

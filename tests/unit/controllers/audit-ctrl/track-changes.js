@@ -2,9 +2,9 @@ const chai = require('chai');
 const Sequelize = require('sequelize');
 const sinon = require('sinon');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { AuditError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { AuditError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -47,6 +47,7 @@ describe('Unit:Controllers - AuditCtrl.trackChanges', function() {
   });
 
   afterEach('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

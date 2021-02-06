@@ -451,7 +451,6 @@ describe('Integration - GET /budgets', function() {
     });
   });
 
-
   before('create budget 25', async function() {
     const apiCall = await models.Audit.ApiCall.create({
       user_uuid: user1Uuid,
@@ -505,6 +504,7 @@ describe('Integration - GET /budgets', function() {
   });
 
   after('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

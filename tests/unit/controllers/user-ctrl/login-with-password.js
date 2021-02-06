@@ -1,8 +1,8 @@
 const chai = require('chai');
 
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
-const { LoginPasswordFailedError } = require('../../../../app/middleware/error-handler/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
+const { LoginPasswordFailedError } = require('../../../../app/middleware/error-handler');
 
 const assert = chai.assert;
 
@@ -36,6 +36,7 @@ describe('Unit:Controllers - UserCtrl.loginWithPassword', function() {
   });
 
   afterEach('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

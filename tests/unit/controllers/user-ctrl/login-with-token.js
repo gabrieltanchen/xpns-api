@@ -1,7 +1,7 @@
 const chai = require('chai');
 const jwt = require('jsonwebtoken');
-const sampleData = require('../../../sample-data/');
-const TestHelper = require('../../../test-helper/');
+const sampleData = require('../../../sample-data');
+const TestHelper = require('../../../test-helper');
 
 const assert = chai.assert;
 
@@ -40,6 +40,7 @@ describe('Unit:Controllers - UserCtrl.loginWithToken', function() {
   });
 
   afterEach('truncate tables', async function() {
+    this.timeout(10000);
     await testHelper.truncateTables();
   });
 

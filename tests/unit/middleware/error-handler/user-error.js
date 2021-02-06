@@ -2,7 +2,7 @@ const chai = require('chai');
 
 const assert = chai.assert;
 
-const { UserError } = require('../../../../app/middleware/error-handler/');
+const { UserError } = require('../../../../app/middleware/error-handler');
 
 describe('Unit:Middleware - ErrorHandler - UserError', function() {
   it('should return not found message', function() {
