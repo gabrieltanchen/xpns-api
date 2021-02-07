@@ -67,25 +67,25 @@ module.exports = (app) => {
       }
 
       let incomeOrder = [['date', 'DESC']];
-      let sortField;
+      let sortField = [];
       if (req.query.sort && req.query.sort === 'date') {
-        sortField = 'date';
+        sortField = ['date'];
       } else if (req.query.sort && req.query.sort === 'member') {
-        sortField = 'HouseholdMember.name';
+        sortField = ['HouseholdMember', 'name'];
       } else if (req.query.sort && req.query.sort === 'description') {
-        sortField = 'description';
+        sortField = ['description'];
       } else if (req.query.sort && req.query.sort === 'amount') {
-        sortField = 'amount_cents';
+        sortField = ['amount_cents'];
       }
-      if (sortField) {
+      if (sortField.length) {
         incomeOrder = [];
         if (req.query.sortDirection && req.query.sortDirection === 'desc') {
-          incomeOrder.push([sortField, 'DESC']);
+          incomeOrder.push([...sortField, 'DESC']);
         } else {
-          incomeOrder.push([sortField, 'ASC']);
+          incomeOrder.push([...sortField, 'ASC']);
         }
-        if (sortField !== 'date') {
-          incomeOrder.push(['date', 'ASC']);
+        if (sortField[0] !== 'date') {
+          incomeOrder.push(['date', 'DESC']);
         }
       }
 

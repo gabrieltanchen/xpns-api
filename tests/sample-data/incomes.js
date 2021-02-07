@@ -27,7 +27,7 @@ module.exports = {
     amount: 9894.74,
     amount_cents: 989474,
     date: '2017-05-12',
-    description: ' Banh mi air plant cold-pressed, yr meditation wolf keffiyeh poutine neutra fixie.',
+    description: 'Banh mi air plant cold-pressed, yr meditation wolf keffiyeh poutine neutra fixie.',
   },
   income6: {
     amount: 2950.45,
