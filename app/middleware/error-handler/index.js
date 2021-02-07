@@ -42,8 +42,6 @@ module.exports = {
       });
     }
 
-    console.log(err);
-
     return next(err);
   },
 };
