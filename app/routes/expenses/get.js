@@ -109,6 +109,25 @@ module.exports = (app) => {
         throw new ExpenseError('No open queries');
       }
 
+      let incomeOrder = [['date', 'DESC']];
+      let sortField = [];
+      if (req.query.sort && req.query.sort === 'amount') {
+        sortField = ['amount_cents'];
+      } else if (req.query.sort && req.query.sort === 'date') {
+        sortField = ['date'];
+      } else if (req.query.sort && req.query.sort === 'description') {
+        sortField = ['description'];
+      } else if (req.query.sort && req.query.sort === 'member') {
+        sortField = ['HouseholdMember', 'name'];
+      } else if (req.query.sort && req.query.sort === 'reimbursed_amount') {
+        sortField = ['reimbursed_cents'];
+      } else if (req.query.sort && req.query.sort === 'vendor') {
+        sortField = ['Vendor', 'name'];
+      }
+      if (sortField.length) {
+        incomeOrder = [];
+      }
+
       const expenses = await models.Expense.findAndCountAll({
         attributes: [
           'amount_cents',
@@ -133,7 +152,7 @@ module.exports = (app) => {
         }],
         limit,
         offset,
-        order: [['date', 'DESC']],
+        order: incomeOrder,
         where: expenseWhere,
       });
 
