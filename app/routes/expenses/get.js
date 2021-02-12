@@ -126,6 +126,14 @@ module.exports = (app) => {
       }
       if (sortField.length) {
         incomeOrder = [];
+        if (req.query.sortDirection && req.query.sortDirection === 'desc') {
+          incomeOrder.push([...sortField, 'DESC']);
+        } else {
+          incomeOrder.push([...sortField, 'ASC']);
+        }
+        if (sortField[0] !== 'date') {
+          incomeOrder.push(['date', 'DESC']);
+        }
       }
 
       const expenses = await models.Expense.findAndCountAll({

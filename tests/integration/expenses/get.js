@@ -1182,6 +1182,102 @@ describe('Integration - GET /expenses', function() {
       assert.strictEqual(res.body.meta.pages, 1);
       assert.strictEqual(res.body.meta.total, 1);
     });
+
+    describe('with subcategory 1 and sort=date and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=date and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=vendor and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=vendor and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=member and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=member and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=description and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=description and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=amount and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=amount and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=reimbursed_amount and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with subcategory 1 and sort=reimbursed_amount and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
   });
 
   describe('when called with the vendor_id query param', function() {
@@ -1692,6 +1788,102 @@ describe('Integration - GET /expenses', function() {
       assert.strictEqual(res.body.meta.pages, 1);
       assert.strictEqual(res.body.meta.total, 1);
     });
+
+    describe('with vendor 1 and sort=date and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=date and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=subcategory and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=subcategory and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=member and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=member and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=description and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=description and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=amount and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=amount and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=reimbursed_amount and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with vendor 1 and sort=reimbursed_amount and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
   });
 
   describe('when called with the household_member_id query param', function() {
@@ -2188,6 +2380,102 @@ describe('Integration - GET /expenses', function() {
       assert.isOk(res.body.meta);
       assert.strictEqual(res.body.meta.pages, 1);
       assert.strictEqual(res.body.meta.total, 1);
+    });
+
+    describe('with household member 1 and sort=date and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=date and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=subcategory and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=subcategory and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=vendor and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=vendor and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=description and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=description and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=amount and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=amount and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=reimbursed_amount and sortDirection=asc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+    });
+
+    describe('with household member 1 and sort=reimbursed_amount and sortDirection=desc', function() {
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
     });
   });
 });
