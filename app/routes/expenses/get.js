@@ -121,6 +121,8 @@ module.exports = (app) => {
         sortField = ['HouseholdMember', 'name'];
       } else if (req.query.sort && req.query.sort === 'reimbursed_amount') {
         sortField = ['reimbursed_cents'];
+      } else if (req.query.sort && req.query.sort === 'subcategory') {
+        sortField = ['Subcategory', 'name'];
       } else if (req.query.sort && req.query.sort === 'vendor') {
         sortField = ['Vendor', 'name'];
       }
