@@ -14155,99 +14155,6003 @@ describe('Integration - GET /expenses', function() {
     });
 
     describe('with household member 1 and sort=date and sortDirection=asc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=date&sortDirection=asc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=date&sortDirection=asc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 2);
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=date&sortDirection=asc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
     });
 
     describe('with household member 1 and sort=date and sortDirection=desc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=date&sortDirection=desc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=date&sortDirection=desc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 2);
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=date&sortDirection=desc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
     });
 
     describe('with household member 1 and sort=subcategory and sortDirection=asc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      let expense29Uuid;
+      let expense30Uuid;
+      let subcategory3Uuid;
+      let subcategory4Uuid;
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+      before('create subcategory 3', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        const categoryUuid = await controllers.CategoryCtrl.createCategory({
+          auditApiCallUuid: apiCall.get('uuid'),
+          name: sampleData.categories.category5.name,
+        });
+        subcategory3Uuid = await controllers.CategoryCtrl.createSubcategory({
+          auditApiCallUuid: apiCall.get('uuid'),
+          categoryUuid,
+          name: sampleData.categories.category6.name,
+        });
+      });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+      before('create subcategory 4', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        const categoryUuid = await controllers.CategoryCtrl.createCategory({
+          auditApiCallUuid: apiCall.get('uuid'),
+          name: sampleData.categories.category7.name,
+        });
+        subcategory4Uuid = await controllers.CategoryCtrl.createSubcategory({
+          auditApiCallUuid: apiCall.get('uuid'),
+          categoryUuid,
+          name: sampleData.categories.category8.name,
+        });
+      });
+
+      before('create expense 29', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        expense29Uuid = await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense29.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense29.date,
+          description: sampleData.expenses.expense29.description,
+          householdMemberUuid: householdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense29.reimbursed_cents,
+          subcategoryUuid: subcategory3Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+      });
+
+      before('create expense 30', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        expense30Uuid = await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense30.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense30.date,
+          description: sampleData.expenses.expense30.description,
+          householdMemberUuid: householdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense30.reimbursed_cents,
+          subcategoryUuid: subcategory4Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+      });
+
+      after('delete expense 29', async function() {
+        await models.Expense.destroy({
+          where: {
+            uuid: expense29Uuid,
+          },
+        });
+      });
+
+      after('delete expense 30', async function() {
+        await models.Expense.destroy({
+          where: {
+            uuid: expense30Uuid,
+          },
+        });
+      });
+
+      after('delete subcategory 3', async function() {
+        const subcategory = await models.Subcategory.findOne({
+          attributes: ['category_uuid', 'uuid'],
+          where: {
+            uuid: subcategory3Uuid,
+          },
+        });
+        await models.Category.destroy({
+          where: {
+            uuid: subcategory.get('category_uuid'),
+          },
+        });
+        await subcategory.destroy();
+      });
+
+      after('delete subcategory 4', async function() {
+        const subcategory = await models.Subcategory.findOne({
+          attributes: ['category_uuid', 'uuid'],
+          where: {
+            uuid: subcategory4Uuid,
+          },
+        });
+        await models.Category.destroy({
+          where: {
+            uuid: subcategory.get('category_uuid'),
+          },
+        });
+        await subcategory.destroy();
+      });
+
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=subcategory&sortDirection=asc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
+
+        // Expense 30
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense30,
+          expenseUuid: expense30Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory4Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 29
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense29,
+          expenseUuid: expense29Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory3Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategory1Include = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategory1Include);
+        assert.isOk(subcategory1Include.attributes);
+        assert.strictEqual(
+          subcategory1Include.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const subcategory3Include = _.find(res.body.included, (include) => {
+          return include.id === subcategory3Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategory3Include);
+        assert.isOk(subcategory3Include.attributes);
+        assert.strictEqual(
+          subcategory3Include.attributes.name,
+          sampleData.categories.category6.name,
+        );
+        const subcategory4Include = _.find(res.body.included, (include) => {
+          return include.id === subcategory4Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategory4Include);
+        assert.isOk(subcategory4Include.attributes);
+        assert.strictEqual(
+          subcategory4Include.attributes.name,
+          sampleData.categories.category8.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 5);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
+
+      it('should return 200 and 4 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=subcategory&sortDirection=asc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 4);
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=subcategory&sortDirection=asc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
     });
 
     describe('with household member 1 and sort=subcategory and sortDirection=desc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      let expense29Uuid;
+      let expense30Uuid;
+      let subcategory3Uuid;
+      let subcategory4Uuid;
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+      before('create subcategory 3', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        const categoryUuid = await controllers.CategoryCtrl.createCategory({
+          auditApiCallUuid: apiCall.get('uuid'),
+          name: sampleData.categories.category5.name,
+        });
+        subcategory3Uuid = await controllers.CategoryCtrl.createSubcategory({
+          auditApiCallUuid: apiCall.get('uuid'),
+          categoryUuid,
+          name: sampleData.categories.category6.name,
+        });
+      });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+      before('create subcategory 4', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        const categoryUuid = await controllers.CategoryCtrl.createCategory({
+          auditApiCallUuid: apiCall.get('uuid'),
+          name: sampleData.categories.category7.name,
+        });
+        subcategory4Uuid = await controllers.CategoryCtrl.createSubcategory({
+          auditApiCallUuid: apiCall.get('uuid'),
+          categoryUuid,
+          name: sampleData.categories.category8.name,
+        });
+      });
+
+      before('create expense 29', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        expense29Uuid = await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense29.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense29.date,
+          description: sampleData.expenses.expense29.description,
+          householdMemberUuid: householdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense29.reimbursed_cents,
+          subcategoryUuid: subcategory3Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+      });
+
+      before('create expense 30', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        expense30Uuid = await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense30.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense30.date,
+          description: sampleData.expenses.expense30.description,
+          householdMemberUuid: householdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense30.reimbursed_cents,
+          subcategoryUuid: subcategory4Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+      });
+
+      after('delete expense 29', async function() {
+        await models.Expense.destroy({
+          where: {
+            uuid: expense29Uuid,
+          },
+        });
+      });
+
+      after('delete expense 30', async function() {
+        await models.Expense.destroy({
+          where: {
+            uuid: expense30Uuid,
+          },
+        });
+      });
+
+      after('delete subcategory 3', async function() {
+        const subcategory = await models.Subcategory.findOne({
+          attributes: ['category_uuid', 'uuid'],
+          where: {
+            uuid: subcategory3Uuid,
+          },
+        });
+        await models.Category.destroy({
+          where: {
+            uuid: subcategory.get('category_uuid'),
+          },
+        });
+        await subcategory.destroy();
+      });
+
+      after('delete subcategory 4', async function() {
+        const subcategory = await models.Subcategory.findOne({
+          attributes: ['category_uuid', 'uuid'],
+          where: {
+            uuid: subcategory4Uuid,
+          },
+        });
+        await models.Category.destroy({
+          where: {
+            uuid: subcategory.get('category_uuid'),
+          },
+        });
+        await subcategory.destroy();
+      });
+
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=subcategory&sortDirection=desc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
+
+      it('should return 200 and 4 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=subcategory&sortDirection=desc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 4);
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 29
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense29,
+          expenseUuid: expense29Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory3Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 30
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense30,
+          expenseUuid: expense30Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory4Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategory1Include = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategory1Include);
+        assert.isOk(subcategory1Include.attributes);
+        assert.strictEqual(
+          subcategory1Include.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const subcategory3Include = _.find(res.body.included, (include) => {
+          return include.id === subcategory3Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategory3Include);
+        assert.isOk(subcategory3Include.attributes);
+        assert.strictEqual(
+          subcategory3Include.attributes.name,
+          sampleData.categories.category6.name,
+        );
+        const subcategory4Include = _.find(res.body.included, (include) => {
+          return include.id === subcategory4Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategory4Include);
+        assert.isOk(subcategory4Include.attributes);
+        assert.strictEqual(
+          subcategory4Include.attributes.name,
+          sampleData.categories.category8.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 5);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=subcategory&sortDirection=desc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
     });
 
     describe('with household member 1 and sort=vendor and sortDirection=asc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      let expense29Uuid;
+      let expense30Uuid;
+      let vendor3Uuid;
+      let vendor4Uuid;
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+      before('create vendor 3', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        vendor3Uuid = await controllers.VendorCtrl.createVendor({
+          auditApiCallUuid: apiCall.get('uuid'),
+          name: sampleData.vendors.vendor3.name,
+        });
+      });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+      before('create vendor 4', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        vendor4Uuid = await controllers.VendorCtrl.createVendor({
+          auditApiCallUuid: apiCall.get('uuid'),
+          name: sampleData.vendors.vendor4.name,
+        });
+      });
+
+      before('create expense 29', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        expense29Uuid = await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense29.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense29.date,
+          description: sampleData.expenses.expense29.description,
+          householdMemberUuid: householdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense29.reimbursed_cents,
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor3Uuid,
+        });
+      });
+
+      before('create expense 30', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        expense30Uuid = await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense30.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense30.date,
+          description: sampleData.expenses.expense30.description,
+          householdMemberUuid: householdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense30.reimbursed_cents,
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor4Uuid,
+        });
+      });
+
+      after('delete expense 29', async function() {
+        await models.Expense.destroy({
+          where: {
+            uuid: expense29Uuid,
+          },
+        });
+      });
+
+      after('delete expense 30', async function() {
+        await models.Expense.destroy({
+          where: {
+            uuid: expense30Uuid,
+          },
+        });
+      });
+
+      after('delete vendor 3', async function() {
+        await models.Vendor.destroy({
+          where: {
+            uuid: vendor3Uuid,
+          },
+        });
+      });
+
+      after('delete vendor 4', async function() {
+        await models.Vendor.destroy({
+          where: {
+            uuid: vendor4Uuid,
+          },
+        });
+      });
+
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=vendor&sortDirection=asc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
+
+      it('should return 200 and 4 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=vendor&sortDirection=asc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 4);
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 30
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense30,
+          expenseUuid: expense30Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor4Uuid,
+        });
+
+        // Expense 29
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense29,
+          expenseUuid: expense29Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor3Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendor1Include = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendor1Include);
+        assert.isOk(vendor1Include.attributes);
+        assert.strictEqual(vendor1Include.attributes.name, sampleData.vendors.vendor1.name);
+        const vendor3Include = _.find(res.body.included, (include) => {
+          return include.id === vendor3Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendor3Include);
+        assert.isOk(vendor3Include.attributes);
+        assert.strictEqual(vendor3Include.attributes.name, sampleData.vendors.vendor3.name);
+        const vendor4Include = _.find(res.body.included, (include) => {
+          return include.id === vendor4Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendor4Include);
+        assert.isOk(vendor4Include.attributes);
+        assert.strictEqual(vendor4Include.attributes.name, sampleData.vendors.vendor4.name);
+        assert.strictEqual(res.body.included.length, 5);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=vendor&sortDirection=asc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
     });
 
     describe('with household member 1 and sort=vendor and sortDirection=desc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      let expense29Uuid;
+      let expense30Uuid;
+      let vendor3Uuid;
+      let vendor4Uuid;
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+      before('create vendor 3', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        vendor3Uuid = await controllers.VendorCtrl.createVendor({
+          auditApiCallUuid: apiCall.get('uuid'),
+          name: sampleData.vendors.vendor3.name,
+        });
+      });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+      before('create vendor 4', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        vendor4Uuid = await controllers.VendorCtrl.createVendor({
+          auditApiCallUuid: apiCall.get('uuid'),
+          name: sampleData.vendors.vendor4.name,
+        });
+      });
+
+      before('create expense 29', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        expense29Uuid = await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense29.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense29.date,
+          description: sampleData.expenses.expense29.description,
+          householdMemberUuid: householdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense29.reimbursed_cents,
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor3Uuid,
+        });
+      });
+
+      before('create expense 30', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        expense30Uuid = await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense30.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense30.date,
+          description: sampleData.expenses.expense30.description,
+          householdMemberUuid: householdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense30.reimbursed_cents,
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor4Uuid,
+        });
+      });
+
+      after('delete expense 29', async function() {
+        await models.Expense.destroy({
+          where: {
+            uuid: expense29Uuid,
+          },
+        });
+      });
+
+      after('delete expense 30', async function() {
+        await models.Expense.destroy({
+          where: {
+            uuid: expense30Uuid,
+          },
+        });
+      });
+
+      after('delete vendor 3', async function() {
+        await models.Vendor.destroy({
+          where: {
+            uuid: vendor3Uuid,
+          },
+        });
+      });
+
+      after('delete vendor 4', async function() {
+        await models.Vendor.destroy({
+          where: {
+            uuid: vendor4Uuid,
+          },
+        });
+      });
+
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=vendor&sortDirection=desc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
+
+        // Expense 29
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense29,
+          expenseUuid: expense29Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor3Uuid,
+        });
+
+        // Expense 30
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense30,
+          expenseUuid: expense30Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor4Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendor1Include = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendor1Include);
+        assert.isOk(vendor1Include.attributes);
+        assert.strictEqual(vendor1Include.attributes.name, sampleData.vendors.vendor1.name);
+        const vendor3Include = _.find(res.body.included, (include) => {
+          return include.id === vendor3Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendor3Include);
+        assert.isOk(vendor3Include.attributes);
+        assert.strictEqual(vendor3Include.attributes.name, sampleData.vendors.vendor3.name);
+        const vendor4Include = _.find(res.body.included, (include) => {
+          return include.id === vendor4Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendor4Include);
+        assert.isOk(vendor4Include.attributes);
+        assert.strictEqual(vendor4Include.attributes.name, sampleData.vendors.vendor4.name);
+        assert.strictEqual(res.body.included.length, 5);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
+
+      it('should return 200 and 4 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=vendor&sortDirection=desc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 4);
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=vendor&sortDirection=desc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 29);
+      });
     });
 
     describe('with household member 1 and sort=description and sortDirection=asc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=description&sortDirection=asc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=description&sortDirection=asc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 2);
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=description&sortDirection=asc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
     });
 
     describe('with household member 1 and sort=description and sortDirection=desc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=description&sortDirection=desc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=description&sortDirection=desc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 2);
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=description&sortDirection=desc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
     });
 
     describe('with household member 1 and sort=amount and sortDirection=asc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=amount&sortDirection=asc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=amount&sortDirection=asc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 2);
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=amount&sortDirection=asc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
     });
 
     describe('with household member 1 and sort=amount and sortDirection=desc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=amount&sortDirection=desc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=amount&sortDirection=desc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 2);
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=amount&sortDirection=desc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
     });
 
     describe('with household member 1 and sort=reimbursed_amount and sortDirection=asc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=reimbursed_amount&sortDirection=asc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=reimbursed_amount&sortDirection=asc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 2);
+
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=reimbursed_amount&sortDirection=asc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
     });
 
     describe('with household member 1 and sort=reimbursed_amount and sortDirection=desc', function() {
-      it('should return 200 and 25 expenses as user 1 with no limit or page specified');
+      it('should return 200 and 25 expenses as user 1 with no limit or page specified', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=reimbursed_amount&sortDirection=desc`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 25);
 
-      it('should return 200 and 2 expenses as user 1 with no limit and page=2');
+        // Expense 24
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense24,
+          expenseUuid: expense24Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
 
-      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4');
+        // Expense 26
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense26,
+          expenseUuid: expense26Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 22
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense22,
+          expenseUuid: expense22Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 3
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense3,
+          expenseUuid: expense3Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 25
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense25,
+          expenseUuid: expense25Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 15
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense15,
+          expenseUuid: expense15Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[5],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 8
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense8,
+          expenseUuid: expense8Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[6],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 14
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense14,
+          expenseUuid: expense14Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[7],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 20
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense20,
+          expenseUuid: expense20Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[8],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 4
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense4,
+          expenseUuid: expense4Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[9],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 17
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense17,
+          expenseUuid: expense17Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[10],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 23
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense23,
+          expenseUuid: expense23Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[11],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 21
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense21,
+          expenseUuid: expense21Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[12],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 6
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense6,
+          expenseUuid: expense6Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[13],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 7
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense7,
+          expenseUuid: expense7Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[14],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[15],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[16],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[17],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[18],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[19],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 16
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense16,
+          expenseUuid: expense16Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[20],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 9
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense9,
+          expenseUuid: expense9Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[21],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 11
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense11,
+          expenseUuid: expense11Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[22],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 13
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense13,
+          expenseUuid: expense13Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[23],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 5
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense5,
+          expenseUuid: expense5Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[24],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 2 expenses as user 1 with no limit and page=2', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=reimbursed_amount&sortDirection=desc&page=2`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 2);
+
+        // Expense 19
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense19,
+          expenseUuid: expense19Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 2
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense2,
+          expenseUuid: expense2Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 2);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
+
+      it('should return 200 and 5 expenses as user 1 with limit=5 and page=4', async function() {
+        const res = await chai.request(server)
+          .get(`/expenses?household_member_id=${householdMember1Uuid}&sort=reimbursed_amount&sortDirection=desc&limit=5&page=4`)
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', `Bearer ${user1Token}`);
+        expect(res).to.have.status(200);
+        assert.isOk(res.body.data);
+        assert.strictEqual(res.body.data.length, 5);
+
+        // Expense 27
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense27,
+          expenseUuid: expense27Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[0],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 10
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense10,
+          expenseUuid: expense10Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[1],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 12
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense12,
+          expenseUuid: expense12Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[2],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 18
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense18,
+          expenseUuid: expense18Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[3],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        // Expense 1
+        validateExpense({
+          expectedExpense: sampleData.expenses.expense1,
+          expenseUuid: expense1Uuid,
+          householdMemberUuid: householdMember1Uuid,
+          returnedExpense: res.body.data[4],
+          subcategoryUuid: subcategory1Uuid,
+          vendorUuid: vendor1Uuid,
+        });
+
+        assert.isOk(res.body.included);
+        const subcategoryInclude = _.find(res.body.included, (include) => {
+          return include.id === subcategory1Uuid
+            && include.type === 'subcategories';
+        });
+        assert.isOk(subcategoryInclude);
+        assert.isOk(subcategoryInclude.attributes);
+        assert.strictEqual(
+          subcategoryInclude.attributes.name,
+          sampleData.categories.category2.name,
+        );
+        const householdMemberInclude = _.find(res.body.included, (include) => {
+          return include.id === householdMember1Uuid
+            && include.type === 'household-members';
+        });
+        assert.isOk(householdMemberInclude);
+        assert.isOk(householdMemberInclude.attributes);
+        assert.strictEqual(
+          householdMemberInclude.attributes.name,
+          sampleData.users.user1.firstName,
+        );
+        const vendorInclude = _.find(res.body.included, (include) => {
+          return include.id === vendor1Uuid
+            && include.type === 'vendors';
+        });
+        assert.isOk(vendorInclude);
+        assert.isOk(vendorInclude.attributes);
+        assert.strictEqual(vendorInclude.attributes.name, sampleData.vendors.vendor1.name);
+        assert.strictEqual(res.body.included.length, 3);
+
+        assert.isOk(res.body.meta);
+        assert.strictEqual(res.body.meta.pages, 6);
+        assert.strictEqual(res.body.meta.total, 27);
+      });
     });
   });
 });
