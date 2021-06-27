@@ -4,7 +4,9 @@ const Sequelize = require('sequelize');
 const Audit = require('./audit');
 const Budget = require('./budget');
 const Category = require('./category');
+const Deposit = require('./deposit');
 const Expense = require('./expense');
+const Fund = require('./fund');
 const Hash = require('./hash');
 const Household = require('./household');
 const HouseholdMember = require('./household-member');
@@ -38,7 +40,9 @@ class Models {
     this.Audit = Audit(this.sequelize);
     this.Budget = Budget(this.sequelize);
     this.Category = Category(this.sequelize);
+    this.Deposit = Deposit(this.sequelize);
     this.Expense = Expense(this.sequelize);
+    this.Fund = Fund(this.sequelize);
     this.Hash = Hash(this.sequelize);
     this.Household = Household(this.sequelize);
     this.HouseholdMember = HouseholdMember(this.sequelize);
@@ -82,19 +86,41 @@ class Models {
       foreignKey: 'household_uuid',
     });
 
+    // Deposit
+    this.Deposit.belongsTo(this.Fund, {
+      foreignKey: 'fund_uuid',
+    });
+
     // Expense
-    this.Expense.belongsTo(this.Subcategory, {
-      foreignKey: 'subcategory_uuid',
+    this.Expense.belongsTo(this.Fund, {
+      foreignKey: 'fund_uuid',
     });
     this.Expense.belongsTo(this.HouseholdMember, {
       foreignKey: 'household_member_uuid',
+    });
+    this.Expense.belongsTo(this.Subcategory, {
+      foreignKey: 'subcategory_uuid',
     });
     this.Expense.belongsTo(this.Vendor, {
       foreignKey: 'vendor_uuid',
     });
 
+    // Fund
+    this.Fund.hasMany(this.Deposit, {
+      foreignKey: 'fund_uuid',
+    });
+    this.Fund.hasMany(this.Expense, {
+      foreignKey: 'fund_uuid',
+    });
+    this.Fund.belongsTo(this.Household, {
+      foreignKey: 'household_uuid',
+    });
+
     // Household
     this.Household.hasMany(this.Category, {
+      foreignKey: 'household_uuid',
+    });
+    this.Household.hasMany(this.Fund, {
       foreignKey: 'household_uuid',
     });
     this.Household.hasMany(this.HouseholdMember, {

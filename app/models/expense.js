@@ -22,6 +22,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       type: Sequelize.STRING,
     },
+    fund_uuid: {
+      allowNull: false,
+      type: Sequelize.UUID,
+    },
     household_member_uuid: {
       allowNull: false,
       type: Sequelize.UUID,
