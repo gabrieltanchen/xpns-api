@@ -144,6 +144,64 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     assert.strictEqual(auditChanges.length, 3);
   });
 
+  it('should track all Deposit attributes', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const fund = await models.Fund.create({
+      amount_cents: 0,
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const deposit = await models.Deposit.create({
+      amount_cents: sampleData.expenses.expense1.amount_cents,
+      date: sampleData.expenses.expense1.date,
+      fund_uuid: fund.get('uuid'),
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackNewInstance(auditLog, deposit, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'deleted_at',
+      auditChanges,
+      key: deposit.get('uuid'),
+      table: 'deposits',
+      value: null,
+    });
+    shouldTrackAttribute({
+      attribute: 'fund_uuid',
+      auditChanges,
+      key: deposit.get('uuid'),
+      table: 'deposits',
+      value: fund.get('uuid'),
+    });
+    shouldTrackAttribute({
+      attribute: 'amount_cents',
+      auditChanges,
+      key: deposit.get('uuid'),
+      table: 'deposits',
+      value: sampleData.expenses.expense1.amount_cents,
+    });
+    shouldTrackAttribute({
+      attribute: 'date',
+      auditChanges,
+      key: deposit.get('uuid'),
+      table: 'deposits',
+      value: sampleData.expenses.expense1.date,
+    });
+    assert.strictEqual(auditChanges.length, 4);
+  });
+
   it('should track all Expense attributes', async function() {
     const household = await models.Household.create({
       name: sampleData.users.user1.lastName,
@@ -242,7 +300,67 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       table: 'expenses',
       value: vendor.get('uuid'),
     });
-    assert.strictEqual(auditChanges.length, 8);
+    shouldTrackAttribute({
+      attribute: 'fund_uuid',
+      auditChanges,
+      key: expense.get('uuid'),
+      table: 'expenses',
+      value: null,
+    });
+    assert.strictEqual(auditChanges.length, 9);
+  });
+
+  it('should track all Fund attributes', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const fund = await models.Fund.create({
+      amount_cents: 0,
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackNewInstance(auditLog, fund, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    shouldTrackAttribute({
+      attribute: 'deleted_at',
+      auditChanges,
+      key: fund.get('uuid'),
+      table: 'funds',
+      value: null,
+    });
+    shouldTrackAttribute({
+      attribute: 'amount_cents',
+      auditChanges,
+      key: fund.get('uuid'),
+      table: 'funds',
+      value: 0,
+    });
+    shouldTrackAttribute({
+      attribute: 'name',
+      auditChanges,
+      key: fund.get('uuid'),
+      table: 'funds',
+      value: sampleData.categories.category1.name,
+    });
+    shouldTrackAttribute({
+      attribute: 'household_uuid',
+      auditChanges,
+      key: fund.get('uuid'),
+      table: 'funds',
+      value: household.get('uuid'),
+    });
+    assert.strictEqual(auditChanges.length, 4);
   });
 
   it('should track all Household attributes', async function() {

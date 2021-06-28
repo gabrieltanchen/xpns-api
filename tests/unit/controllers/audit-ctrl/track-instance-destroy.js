@@ -127,6 +127,57 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     }));
   });
 
+  it('should track deleting a Deposit', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const fund = await models.Fund.create({
+      amount_cents: 0,
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const deposit = await models.Deposit.create({
+      amount_cents: sampleData.expenses.expense1.amount_cents,
+      date: sampleData.expenses.expense1.date,
+      fund_uuid: fund.get('uuid'),
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, deposit, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'deposits'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === deposit.get('uuid');
+    });
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the Deposit is deleted.
+    assert.isNull(await models.Deposit.findOne({
+      where: {
+        uuid: deposit.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.Deposit.findOne({
+      paranoid: false,
+      where: {
+        uuid: deposit.get('uuid'),
+      },
+    }));
+  });
+
   it('should track deleting an Expense', async function() {
     const household = await models.Household.create({
       name: sampleData.users.user1.lastName,
@@ -189,6 +240,52 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
       paranoid: false,
       where: {
         uuid: expense.get('uuid'),
+      },
+    }));
+  });
+
+  it('should track deleting a Fund', async function() {
+    const household = await models.Household.create({
+      name: sampleData.users.user1.lastName,
+    });
+    const auditLog = await models.Audit.Log.create();
+    const fund = await models.Fund.create({
+      amount_cents: 0,
+      household_uuid: household.get('uuid'),
+      name: sampleData.categories.category1.name,
+    });
+
+    await models.sequelize.transaction({
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }, async(transaction) => {
+      await controllers.AuditCtrl._trackInstanceDestroy(auditLog, fund, transaction);
+    });
+
+    const auditChanges = await models.Audit.Change.findAll({
+      where: {
+        audit_log_uuid: auditLog.get('uuid'),
+      },
+    });
+    const trackDeletedAt = _.find(auditChanges, (auditChange) => {
+      return auditChange.get('table') === 'funds'
+        && auditChange.get('attribute') === 'deleted_at'
+        && auditChange.get('key') === fund.get('uuid');
+    });
+    assert.isOk(trackDeletedAt);
+    assert.isNull(trackDeletedAt.get('old_value'));
+    assert.isOk(trackDeletedAt.get('new_value'));
+    assert.strictEqual(auditChanges.length, 1);
+
+    // Verify that the Fund is deleted.
+    assert.isNull(await models.Fund.findOne({
+      where: {
+        uuid: fund.get('uuid'),
+      },
+    }));
+    assert.isOk(await models.Fund.findOne({
+      paranoid: false,
+      where: {
+        uuid: fund.get('uuid'),
       },
     }));
   });

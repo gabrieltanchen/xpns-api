@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
       type: Sequelize.STRING,
     },
     fund_uuid: {
-      allowNull: false,
+      allowNull: true,
       type: Sequelize.UUID,
     },
     household_member_uuid: {
