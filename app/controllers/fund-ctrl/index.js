@@ -1,4 +1,5 @@
 const createFund = require('./create-fund');
+const deleteFund = require('./delete-fund');
 const updateFund = require('./update-fund');
 
 class FundCtrl {
@@ -15,6 +16,17 @@ class FundCtrl {
       auditApiCallUuid,
       fundCtrl: this,
       name,
+    });
+  }
+
+  async deleteFund({
+    auditApiCallUuid,
+    fundUuid,
+  }) {
+    return deleteFund({
+      auditApiCallUuid,
+      fundCtrl: this,
+      fundUuid,
     });
   }
 
