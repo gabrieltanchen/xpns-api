@@ -1,3 +1,4 @@
+const createDeposit = require('./create-deposit');
 const createFund = require('./create-fund');
 const deleteFund = require('./delete-fund');
 const updateFund = require('./update-fund');
@@ -8,38 +9,31 @@ class FundCtrl {
     this.models = models;
   }
 
-  async createFund({
-    auditApiCallUuid,
-    name,
-  }) {
+  async createDeposit(params) {
+    return createDeposit({
+      ...params,
+      fundCtrl: this,
+    });
+  }
+
+  async createFund(params) {
     return createFund({
-      auditApiCallUuid,
+      ...params,
       fundCtrl: this,
-      name,
     });
   }
 
-  async deleteFund({
-    auditApiCallUuid,
-    fundUuid,
-  }) {
+  async deleteFund(params) {
     return deleteFund({
-      auditApiCallUuid,
+      ...params,
       fundCtrl: this,
-      fundUuid,
     });
   }
 
-  async updateFund({
-    auditApiCallUuid,
-    fundUuid,
-    name,
-  }) {
+  async updateFund(params) {
     return updateFund({
-      auditApiCallUuid,
+      ...params,
       fundCtrl: this,
-      fundUuid,
-      name,
     });
   }
 }
