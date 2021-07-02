@@ -1,6 +1,7 @@
 const createDeposit = require('./create-deposit');
 const createFund = require('./create-fund');
 const deleteFund = require('./delete-fund');
+const updateDeposit = require('./update-deposit');
 const updateFund = require('./update-fund');
 
 class FundCtrl {
@@ -25,6 +26,13 @@ class FundCtrl {
 
   async deleteFund(params) {
     return deleteFund({
+      ...params,
+      fundCtrl: this,
+    });
+  }
+
+  async updateDeposit(params) {
+    return updateDeposit({
       ...params,
       fundCtrl: this,
     });
