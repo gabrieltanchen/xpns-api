@@ -4,10 +4,10 @@ const TestHelper = require('../../test-helper');
 const assert = chai.assert;
 
 describe('Unit:Model - Fund', function() {
-	let models;
-	const testHelper = new TestHelper();
+  let models;
+  const testHelper = new TestHelper();
 
-	before('get models', async function() {
+  before('get models', async function() {
     this.timeout(30000);
     const app = await testHelper.getApp();
     models = app.get('models');
@@ -18,15 +18,15 @@ describe('Unit:Model - Fund', function() {
   });
 
   it('should have the correct table name', function() {
-  	assert.strictEqual(models.Fund.getTableName(), 'funds');
+    assert.strictEqual(models.Fund.getTableName(), 'funds');
   });
 
   it('should have the correct attributes', async function() {
-  	const attributes = await models.Fund.describe();
+    const attributes = await models.Fund.describe();
 
-  	assert.isOk(attributes);
+    assert.isOk(attributes);
 
-  	// uuid
+    // uuid
     assert.isOk(attributes.uuid);
     assert.strictEqual(attributes.uuid.type, 'UUID');
     assert.isFalse(attributes.uuid.allowNull);
@@ -75,6 +75,6 @@ describe('Unit:Model - Fund', function() {
     assert.isNull(attributes.amount_cents.defaultValue);
     assert.isFalse(attributes.amount_cents.primaryKey);
 
-    assert.strictEqual(Object.keys(attributes).length, 7)
+    assert.strictEqual(Object.keys(attributes).length, 7);
   });
 });

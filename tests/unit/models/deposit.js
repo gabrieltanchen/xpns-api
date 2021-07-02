@@ -4,7 +4,7 @@ const TestHelper = require('../../test-helper');
 const assert = chai.assert;
 
 describe('Unit:Model - Deposit', function() {
-	let models;
+  let models;
   const testHelper = new TestHelper();
 
   before('get models', async function() {
@@ -18,13 +18,13 @@ describe('Unit:Model - Deposit', function() {
   });
 
   it('should have the correct table name', function() {
-  	assert.strictEqual(models.Deposit.getTableName(), 'deposits');
+    assert.strictEqual(models.Deposit.getTableName(), 'deposits');
   });
 
   it('should have the correct attributes', async function() {
-  	const attributes = await models.Deposit.describe();
+    const attributes = await models.Deposit.describe();
 
-  	assert.isOk(attributes);
+    assert.isOk(attributes);
 
     // uuid
     assert.isOk(attributes.uuid);
