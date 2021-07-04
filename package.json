@@ -33,7 +33,7 @@
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.21",
     "moment": "2.29.1",
-    "nconf": "0.11.2",
+    "nconf": "0.11.3",
     "pg": "8.6.0",
     "sequelize": "6.6.2",
     "sequelize-cli": "6.2.0",
