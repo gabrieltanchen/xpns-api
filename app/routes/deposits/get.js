@@ -38,7 +38,7 @@ module.exports = (app) => {
       }
       let offset = 0;
       if (req.query && req.query.page) {
-        offset = limit * (parseInt(req.querypage, 10) - 1);
+        offset = limit * (parseInt(req.query.page, 10) - 1);
       }
 
       const user = await models.User.findOne({
@@ -62,7 +62,28 @@ module.exports = (app) => {
         }
         depositWhere.fund_uuid = fund.get('uuid');
       } else {
-        throw new FundError('No open queries');
+        throw new FundError('No open deposit queries');
+      }
+
+      let depositOrder = [['date', 'DESC']];
+      let sortField = [];
+      if (req.query.sort && req.query.sort === 'amount') {
+        sortField = ['amount_cents'];
+      } else if (req.query.sort && req.query.sort === 'date') {
+        sortField = ['date'];
+      } else if (req.query.sort && req.query.sort === 'fund') {
+        sortField = ['Fund', 'name'];
+      }
+      if (sortField.length) {
+        depositOrder = [];
+        if (req.query.sortDirection && req.query.sortDirection === 'desc') {
+          depositOrder.push([...sortField, 'DESC']);
+        } else {
+          depositOrder.push([...sortField, 'ASC']);
+        }
+        if (sortField[0] !== 'date') {
+          depositOrder.push(['date', 'DESC']);
+        }
       }
 
       const deposits = await models.Deposit.findAndCountAll({
@@ -74,7 +95,7 @@ module.exports = (app) => {
         }],
         limit,
         offset,
-        order: [['date', 'DESC']],
+        order: depositOrder,
         where: depositWhere,
       });
 
@@ -110,6 +131,7 @@ module.exports = (app) => {
                 },
               },
             },
+            'type': 'deposits',
           };
         }),
         'included': included,

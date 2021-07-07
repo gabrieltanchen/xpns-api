@@ -7,6 +7,11 @@ module.exports = class FundError extends Error {
   getApiResponse() {
     const message = this.message;
     switch (message) {
+    case 'No open deposit queries':
+      return {
+        message: 'Fund ID is required.',
+        status: 403,
+      };
     case 'Not found':
       return {
         message: 'Unable to find fund.',
