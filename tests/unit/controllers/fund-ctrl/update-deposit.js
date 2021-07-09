@@ -340,7 +340,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Not found');
+      assert.strictEqual(err.message, 'Deposit not found');
       assert.isTrue(err instanceof FundError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
@@ -362,7 +362,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Not found');
+      assert.strictEqual(err.message, 'Deposit not found');
       assert.isTrue(err instanceof FundError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);
@@ -392,7 +392,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       throw new Error('Expected to reject not resolve.');
     } catch (err) {
       assert.isOk(err);
-      assert.strictEqual(err.message, 'Not found');
+      assert.strictEqual(err.message, 'Deposit not found');
       assert.isTrue(err instanceof FundError);
     }
     assert.strictEqual(trackChangesSpy.callCount, 0);

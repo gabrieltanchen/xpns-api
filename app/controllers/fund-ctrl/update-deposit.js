@@ -71,7 +71,7 @@ module.exports = async({
     },
   });
   if (!deposit) {
-    throw new FundError('Not found');
+    throw new FundError('Deposit not found');
   }
 
   if (deposit.get('amount_cents') !== parseInt(amount, 10)) {
