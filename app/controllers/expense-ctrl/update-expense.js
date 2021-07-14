@@ -11,6 +11,7 @@ const { ExpenseError } = require('../../middleware/error-handler');
  * @param {string} description
  * @param {object} expenseCtrl Instance of ExpenseCtrl
  * @param {string} expenseUuid
+ * @param {string} fundUuid
  * @param {string} householdMemberUuid
  * @param {integer} reimbursedAmount
  * @param {string} subcategoryUuid
@@ -23,6 +24,7 @@ module.exports = async({
   description,
   expenseCtrl,
   expenseUuid,
+  fundUuid = null,
   householdMemberUuid,
   reimbursedAmount,
   subcategoryUuid,
@@ -73,6 +75,7 @@ module.exports = async({
       'amount_cents',
       'date',
       'description',
+      'fund_uuid',
       'household_member_uuid',
       'reimbursed_cents',
       'subcategory_uuid',
@@ -113,9 +116,24 @@ module.exports = async({
   if (!expense) {
     throw new ExpenseError('Not found');
   }
+  if (expense.get('fund_uuid')) {
+    const fund = await models.Fund.findOne({
+      attributes: ['uuid'],
+      where: {
+        household_uuid: user.get('household_uuid'),
+        uuid: expense.get('fund_uuid'),
+      },
+    });
+    if (!fund) {
+      throw new ExpenseError('Not found');
+    }
+  }
 
+  const oldAmount = expense.get('amount_cents');
+  let newAmount = oldAmount;
   if (expense.get('amount_cents') !== parseInt(amount, 10)) {
     expense.set('amount_cents', parseInt(amount, 10));
+    newAmount = expense.get('amount_cents');
   }
   if (moment(expense.get('date')).format('YYYY-MM-DD') !== moment.utc(date).format('YYYY-MM-DD')) {
     expense.set('date', moment.utc(date).format('YYYY-MM-DD'));
@@ -164,6 +182,7 @@ module.exports = async({
     expense.set('vendor_uuid', vendor.get('uuid'));
   }
 
+  // Validate household member UUID.
   if (householdMemberUuid !== expense.get('household_member_uuid')) {
     const householdMember = await models.HouseholdMember.findOne({
       attributes: ['uuid'],
@@ -178,13 +197,81 @@ module.exports = async({
     expense.set('household_member_uuid', householdMember.get('uuid'));
   }
 
+  // Validate fund UUID.
+  const oldFundUuid = expense.get('fund_uuid');
+  let newFundUuid = oldFundUuid;
+  if (fundUuid !== expense.get('fund_uuid')) {
+    if (fundUuid) {
+      const fund = await models.Fund.findOne({
+        attributes: ['uuid'],
+        where: {
+          household_uuid: user.get('household_uuid'),
+          uuid: fundUuid,
+        },
+      });
+      if (!fund) {
+        throw new ExpenseError('Fund not found');
+      }
+      expense.set('fund_uuid', fund.get('uuid'));
+    } else {
+      expense.set('fund_uuid', null);
+    }
+    newFundUuid = expense.get('fund_uuid');
+  }
+
   if (expense.changed()) {
     await models.sequelize.transaction({
       isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
+      const changeList = [expense];
+      if (expense.changed('fund_uuid')) {
+        // The fund is being changed, so we need to subtract the expense amount
+        // from the old fund and add to the new fund.
+        if (oldFundUuid) {
+          // Old fund might not exist if we're adding a fund to the expense.
+          const oldTrackedFund = await models.Fund.findOne({
+            attributes: ['balance_cents', 'uuid'],
+            transaction,
+            where: {
+              uuid: oldFundUuid,
+            },
+          });
+          // Use oldAmount because that's the amount that would have been
+          // subtracted previously.
+          oldTrackedFund.set('balance_cents', oldTrackedFund.get('balance_cents') + oldAmount);
+          changeList.push(oldTrackedFund);
+        }
+        if (newFundUuid) {
+          // New fund might not exist if we're removing a fund from the expense.
+          const newTrackedFund = await models.Fund.findOne({
+            attributes: ['balance_cents', 'uuid'],
+            transaction,
+            where: {
+              uuid: newFundUuid,
+            },
+          });
+          // Use newAmount in case the amount is also being updated.
+          newTrackedFund.set('balance_cents', newTrackedFund.get('balance_cents') - newAmount);
+          changeList.push(newTrackedFund);
+        }
+      } else if (expense.changed('amount_cents')) {
+        // Simply update the fund balance (if exists) with the difference of the
+        // old nad new amounts.
+        if (oldFundUuid) {
+          const trackedFund = await models.Fund.findOne({
+            attributes: ['balance_cents', 'uuid'],
+            transaction,
+            where: {
+              uuid: oldFundUuid,
+            },
+          });
+          trackedFund.set('balance_cents', trackedFund.get('balance_cents') + (oldAmount - newAmount));
+          changeList.push(trackedFund);
+        }
+      }
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid,
-        changeList: [expense],
+        changeList,
         transaction,
       });
     });

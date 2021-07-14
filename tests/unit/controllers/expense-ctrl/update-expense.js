@@ -798,6 +798,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -827,6 +828,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
@@ -870,6 +872,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -899,6 +902,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense2.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
@@ -942,6 +946,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -971,6 +976,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense2.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
@@ -1014,6 +1020,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -1043,6 +1050,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense2.reimbursed_cents);
@@ -1138,6 +1146,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -1167,6 +1176,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory2Uuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
@@ -1262,6 +1272,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -1291,6 +1302,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
@@ -1386,6 +1398,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -1415,6 +1428,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember2Uuid);
     assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember2Uuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
@@ -1458,6 +1472,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -1487,6 +1502,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory2Uuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense2.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense2.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember2Uuid);
     assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember2Uuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense2.reimbursed_cents);
@@ -1506,5 +1522,1381 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
     assert.isNotOk(trackChangesParams.deleteList);
     assert.isNotOk(trackChangesParams.newList);
     assert.isOk(trackChangesParams.transaction);
+  });
+
+  describe('when updating an expense for a fund', function() {
+    const FUND1_INITIAL_BALANCE = 100000;
+    const FUND2_INITIAL_BALANCE = 150000;
+
+    let user1Fund1Uuid;
+    let user1Fund2Uuid;
+    let user2FundUuid;
+
+    beforeEach('create user 1 fund 1', async function() {
+      const fund = await models.Fund.create({
+        balance_cents: FUND1_INITIAL_BALANCE,
+        household_uuid: user1HouseholdUuid,
+        name: sampleData.funds.fund1.name,
+      });
+      user1Fund1Uuid = fund.get('uuid');
+    });
+
+    beforeEach('create user 1 fund 2', async function() {
+      const fund = await models.Fund.create({
+        balance_cents: FUND2_INITIAL_BALANCE,
+        household_uuid: user1HouseholdUuid,
+        name: sampleData.funds.fund2.name,
+      });
+      user1Fund2Uuid = fund.get('uuid');
+    });
+
+    beforeEach('create user 2 fund', async function() {
+      const fund = await models.Fund.create({
+        household_uuid: user2HouseholdUuid,
+        name: sampleData.funds.fund3.name,
+      });
+      user2FundUuid = fund.get('uuid');
+    });
+
+    beforeEach('update expense to belong to fund 1', async function() {
+      await models.Expense.update({
+        fund_uuid: user1Fund1Uuid,
+      }, {
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+    });
+
+    // This should not happen.
+    it('should reject when the expense fund belongs to a different household', async function() {
+      try {
+        await models.Expense.update({
+          fund_uuid: user2FundUuid,
+        }, {
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.updateExpense({
+          amount: sampleData.expenses.expense2.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense2.date,
+          description: sampleData.expenses.expense2.description,
+          expenseUuid,
+          fundUuid: user1Fund1Uuid,
+          householdMemberUuid: user1HouseholdMember2Uuid,
+          reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
+          subcategoryUuid: user1Subcategory2Uuid,
+          vendorUuid: user1Vendor2Uuid,
+        });
+        /* istanbul ignore next */
+        throw new Error('Expected to reject not resolve.');
+      } catch (err) {
+        assert.isOk(err);
+        assert.strictEqual(err.message, 'Not found');
+        assert.isTrue(err instanceof ExpenseError);
+      }
+      assert.strictEqual(trackChangesSpy.callCount, 0);
+    });
+
+    it('should resolve updating the amount', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.updateExpense({
+        amount: sampleData.expenses.expense2.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        expenseUuid,
+        fundUuid: user1Fund1Uuid,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+        subcategoryUuid: user1Subcategory1Uuid,
+        vendorUuid: user1Vendor1Uuid,
+      });
+
+      // Verify the Expense instance.
+      const expense = await models.Expense.findOne({
+        attributes: [
+          'amount_cents',
+          'date',
+          'description',
+          'fund_uuid',
+          'household_member_uuid',
+          'reimbursed_cents',
+          'subcategory_uuid',
+          'uuid',
+          'vendor_uuid',
+        ],
+        include: [{
+          attributes: ['uuid'],
+          model: models.HouseholdMember,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Subcategory,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Vendor,
+          required: true,
+        }],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isOk(expense);
+      assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense2.amount_cents);
+      assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+      assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+      assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+      assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+      assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+      assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+      // Verify that the Fund balance was updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1Fund1Uuid,
+        },
+      });
+      assert.isOk(fund);
+      const expenseDifference = sampleData.expenses.expense1.amount_cents
+        - sampleData.expenses.expense2.amount_cents;
+      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE + expenseDifference);
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Expense
+          && updateInstance.get('uuid') === expenseUuid;
+      });
+      assert.isOk(updateExpense);
+      const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Fund
+          && updateInstance.get('uuid') === user1Fund1Uuid;
+      });
+      assert.isOk(updateFund);
+      assert.strictEqual(trackChangesParams.changeList.length, 2);
+      assert.isNotOk(trackChangesParams.deleteList);
+      assert.isNotOk(trackChangesParams.newList);
+      assert.isOk(trackChangesParams.transaction);
+    });
+
+    it('should resolve updating the date', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.updateExpense({
+        amount: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.expenses.expense2.date,
+        description: sampleData.expenses.expense1.description,
+        expenseUuid,
+        fundUuid: user1Fund1Uuid,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+        subcategoryUuid: user1Subcategory1Uuid,
+        vendorUuid: user1Vendor1Uuid,
+      });
+
+      // Verify the Expense instance.
+      const expense = await models.Expense.findOne({
+        attributes: [
+          'amount_cents',
+          'date',
+          'description',
+          'fund_uuid',
+          'household_member_uuid',
+          'reimbursed_cents',
+          'subcategory_uuid',
+          'uuid',
+          'vendor_uuid',
+        ],
+        include: [{
+          attributes: ['uuid'],
+          model: models.HouseholdMember,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Subcategory,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Vendor,
+          required: true,
+        }],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isOk(expense);
+      assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+      assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.get('date'), sampleData.expenses.expense2.date);
+      assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+      assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+      assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+      assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+      assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+      // Verify that the Fund balance wasn't updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1Fund1Uuid,
+        },
+      });
+      assert.isOk(fund);
+      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE);
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Expense
+          && updateInstance.get('uuid') === expenseUuid;
+      });
+      assert.isOk(updateExpense);
+      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      assert.isNotOk(trackChangesParams.deleteList);
+      assert.isNotOk(trackChangesParams.newList);
+      assert.isOk(trackChangesParams.transaction);
+    });
+
+    it('should resolve updating the description', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.updateExpense({
+        amount: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense2.description,
+        expenseUuid,
+        fundUuid: user1Fund1Uuid,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+        subcategoryUuid: user1Subcategory1Uuid,
+        vendorUuid: user1Vendor1Uuid,
+      });
+
+      // Verify the Expense instance.
+      const expense = await models.Expense.findOne({
+        attributes: [
+          'amount_cents',
+          'date',
+          'description',
+          'fund_uuid',
+          'household_member_uuid',
+          'reimbursed_cents',
+          'subcategory_uuid',
+          'uuid',
+          'vendor_uuid',
+        ],
+        include: [{
+          attributes: ['uuid'],
+          model: models.HouseholdMember,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Subcategory,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Vendor,
+          required: true,
+        }],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isOk(expense);
+      assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+      assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+      assert.strictEqual(expense.get('description'), sampleData.expenses.expense2.description);
+      assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+      assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+      assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+      assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+      // Verify that the Fund balance wasn't updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1Fund1Uuid,
+        },
+      });
+      assert.isOk(fund);
+      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE);
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Expense
+          && updateInstance.get('uuid') === expenseUuid;
+      });
+      assert.isOk(updateExpense);
+      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      assert.isNotOk(trackChangesParams.deleteList);
+      assert.isNotOk(trackChangesParams.newList);
+      assert.isOk(trackChangesParams.transaction);
+    });
+
+    it('should resolve updating the reimbursed amount', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.updateExpense({
+        amount: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        expenseUuid,
+        fundUuid: user1Fund1Uuid,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
+        subcategoryUuid: user1Subcategory1Uuid,
+        vendorUuid: user1Vendor1Uuid,
+      });
+
+      // Verify the Expense instance.
+      const expense = await models.Expense.findOne({
+        attributes: [
+          'amount_cents',
+          'date',
+          'description',
+          'fund_uuid',
+          'household_member_uuid',
+          'reimbursed_cents',
+          'subcategory_uuid',
+          'uuid',
+          'vendor_uuid',
+        ],
+        include: [{
+          attributes: ['uuid'],
+          model: models.HouseholdMember,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Subcategory,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Vendor,
+          required: true,
+        }],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isOk(expense);
+      assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+      assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+      assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+      assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+      assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense2.reimbursed_cents);
+      assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+      assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+      // Verify that the Fund balance wasn't updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1Fund1Uuid,
+        },
+      });
+      assert.isOk(fund);
+      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE);
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Expense
+          && updateInstance.get('uuid') === expenseUuid;
+      });
+      assert.isOk(updateExpense);
+      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      assert.isNotOk(trackChangesParams.deleteList);
+      assert.isNotOk(trackChangesParams.newList);
+      assert.isOk(trackChangesParams.transaction);
+    });
+
+    it('should resolve updating the subcategory', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.updateExpense({
+        amount: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        expenseUuid,
+        fundUuid: user1Fund1Uuid,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+        subcategoryUuid: user1Subcategory2Uuid,
+        vendorUuid: user1Vendor1Uuid,
+      });
+
+      // Verify the Expense instance.
+      const expense = await models.Expense.findOne({
+        attributes: [
+          'amount_cents',
+          'date',
+          'description',
+          'fund_uuid',
+          'household_member_uuid',
+          'reimbursed_cents',
+          'subcategory_uuid',
+          'uuid',
+          'vendor_uuid',
+        ],
+        include: [{
+          attributes: ['uuid'],
+          model: models.HouseholdMember,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Subcategory,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Vendor,
+          required: true,
+        }],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isOk(expense);
+      assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+      assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory2Uuid);
+      assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory2Uuid);
+      assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+      assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+      assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+      assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+      assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+      assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+      // Verify that the Fund balance wasn't updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1Fund1Uuid,
+        },
+      });
+      assert.isOk(fund);
+      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE);
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Expense
+          && updateInstance.get('uuid') === expenseUuid;
+      });
+      assert.isOk(updateExpense);
+      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      assert.isNotOk(trackChangesParams.deleteList);
+      assert.isNotOk(trackChangesParams.newList);
+      assert.isOk(trackChangesParams.transaction);
+    });
+
+    it('should resolve updating the vendor', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.updateExpense({
+        amount: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        expenseUuid,
+        fundUuid: user1Fund1Uuid,
+        householdMemberUuid: user1HouseholdMember1Uuid,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+        subcategoryUuid: user1Subcategory1Uuid,
+        vendorUuid: user1Vendor2Uuid,
+      });
+
+      // Verify the Expense instance.
+      const expense = await models.Expense.findOne({
+        attributes: [
+          'amount_cents',
+          'date',
+          'description',
+          'fund_uuid',
+          'household_member_uuid',
+          'reimbursed_cents',
+          'subcategory_uuid',
+          'uuid',
+          'vendor_uuid',
+        ],
+        include: [{
+          attributes: ['uuid'],
+          model: models.HouseholdMember,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Subcategory,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Vendor,
+          required: true,
+        }],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isOk(expense);
+      assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+      assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+      assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+      assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+      assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+      assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+      assert.strictEqual(expense.get('vendor_uuid'), user1Vendor2Uuid);
+      assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor2Uuid);
+
+      // Verify that the Fund balance wasn't updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1Fund1Uuid,
+        },
+      });
+      assert.isOk(fund);
+      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE);
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Expense
+          && updateInstance.get('uuid') === expenseUuid;
+      });
+      assert.isOk(updateExpense);
+      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      assert.isNotOk(trackChangesParams.deleteList);
+      assert.isNotOk(trackChangesParams.newList);
+      assert.isOk(trackChangesParams.transaction);
+    });
+
+    it('should resolve updating the household member', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.updateExpense({
+        amount: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        expenseUuid,
+        fundUuid: user1Fund1Uuid,
+        householdMemberUuid: user1HouseholdMember2Uuid,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+        subcategoryUuid: user1Subcategory1Uuid,
+        vendorUuid: user1Vendor1Uuid,
+      });
+
+      // Verify the Expense instance.
+      const expense = await models.Expense.findOne({
+        attributes: [
+          'amount_cents',
+          'date',
+          'description',
+          'fund_uuid',
+          'household_member_uuid',
+          'reimbursed_cents',
+          'subcategory_uuid',
+          'uuid',
+          'vendor_uuid',
+        ],
+        include: [{
+          attributes: ['uuid'],
+          model: models.HouseholdMember,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Subcategory,
+          required: true,
+        }, {
+          attributes: ['uuid'],
+          model: models.Vendor,
+          required: true,
+        }],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isOk(expense);
+      assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+      assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+      assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+      assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+      assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+      assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember2Uuid);
+      assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember2Uuid);
+      assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+      assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+      assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+      // Verify that the Fund balance wasn't updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1Fund1Uuid,
+        },
+      });
+      assert.isOk(fund);
+      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE);
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Expense
+          && updateInstance.get('uuid') === expenseUuid;
+      });
+      assert.isOk(updateExpense);
+      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      assert.isNotOk(trackChangesParams.deleteList);
+      assert.isNotOk(trackChangesParams.newList);
+      assert.isOk(trackChangesParams.transaction);
+    });
+
+    describe('when adding a fund to an expense', function() {
+      beforeEach('remove fund from expense', async function() {
+        await models.Expense.update({
+          fund_uuid: null,
+        }, {
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+      });
+
+      it('should reject when the fund does not exist', async function() {
+        try {
+          const apiCall = await models.Audit.ApiCall.create({
+            user_uuid: user1Uuid,
+          });
+          await controllers.ExpenseCtrl.updateExpense({
+            amount: sampleData.expenses.expense1.amount_cents,
+            auditApiCallUuid: apiCall.get('uuid'),
+            date: sampleData.expenses.expense1.date,
+            description: sampleData.expenses.expense1.description,
+            expenseUuid,
+            fundUuid: uuidv4(),
+            householdMemberUuid: user1HouseholdMember1Uuid,
+            reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+            subcategoryUuid: user1Subcategory1Uuid,
+            vendorUuid: user1Vendor1Uuid,
+          });
+          /* istanbul ignore next */
+          throw new Error('Expected to reject not resolve.');
+        } catch (err) {
+          assert.isOk(err);
+          assert.strictEqual(err.message, 'Fund not found');
+          assert.isTrue(err instanceof ExpenseError);
+        }
+        assert.strictEqual(trackChangesSpy.callCount, 0);
+      });
+
+      it('should reject when the fund belongs to a different household', async function() {
+        try {
+          const apiCall = await models.Audit.ApiCall.create({
+            user_uuid: user1Uuid,
+          });
+          await controllers.ExpenseCtrl.updateExpense({
+            amount: sampleData.expenses.expense1.amount_cents,
+            auditApiCallUuid: apiCall.get('uuid'),
+            date: sampleData.expenses.expense1.date,
+            description: sampleData.expenses.expense1.description,
+            expenseUuid,
+            fundUuid: user2FundUuid,
+            householdMemberUuid: user1HouseholdMember1Uuid,
+            reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+            subcategoryUuid: user1Subcategory1Uuid,
+            vendorUuid: user1Vendor1Uuid,
+          });
+          /* istanbul ignore next */
+          throw new Error('Expected to reject not resolve.');
+        } catch (err) {
+          assert.isOk(err);
+          assert.strictEqual(err.message, 'Fund not found');
+          assert.isTrue(err instanceof ExpenseError);
+        }
+        assert.strictEqual(trackChangesSpy.callCount, 0);
+      });
+
+      it('should resolve adding the fund', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.updateExpense({
+          amount: sampleData.expenses.expense1.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense1.date,
+          description: sampleData.expenses.expense1.description,
+          expenseUuid,
+          fundUuid: user1Fund1Uuid,
+          householdMemberUuid: user1HouseholdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+          subcategoryUuid: user1Subcategory1Uuid,
+          vendorUuid: user1Vendor1Uuid,
+        });
+
+        // Verify the Expense instance.
+        const expense = await models.Expense.findOne({
+          attributes: [
+            'amount_cents',
+            'date',
+            'description',
+            'fund_uuid',
+            'household_member_uuid',
+            'reimbursed_cents',
+            'subcategory_uuid',
+            'uuid',
+            'vendor_uuid',
+          ],
+          include: [{
+            attributes: ['uuid'],
+            model: models.HouseholdMember,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Subcategory,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Vendor,
+            required: true,
+          }],
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+        assert.isOk(expense);
+        assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+        assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+        assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+        assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+        assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+        assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+        assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+        assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+        assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+        assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+        // Verify that the Fund balance was updated.
+        const fund = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          where: {
+            uuid: user1Fund1Uuid,
+          },
+        });
+        assert.isOk(fund);
+        assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE - sampleData.expenses.expense1.amount_cents);
+
+        assert.strictEqual(trackChangesSpy.callCount, 1);
+        const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+        assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+        assert.isOk(trackChangesParams.changeList);
+        const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Expense
+            && updateInstance.get('uuid') === expenseUuid;
+        });
+        assert.isOk(updateExpense);
+        const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Fund
+            && updateInstance.get('uuid') === user1Fund1Uuid;
+        });
+        assert.isOk(updateFund);
+        assert.strictEqual(trackChangesParams.changeList.length, 2);
+        assert.isNotOk(trackChangesParams.deleteList);
+        assert.isNotOk(trackChangesParams.newList);
+        assert.isOk(trackChangesParams.transaction);
+      });
+
+      it('should resolve when updating all other attributes', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.updateExpense({
+          amount: sampleData.expenses.expense2.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense2.date,
+          description: sampleData.expenses.expense2.description,
+          expenseUuid,
+          fundUuid: user1Fund1Uuid,
+          householdMemberUuid: user1HouseholdMember2Uuid,
+          reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
+          subcategoryUuid: user1Subcategory2Uuid,
+          vendorUuid: user1Vendor2Uuid,
+        });
+
+        // Verify the Expense instance.
+        const expense = await models.Expense.findOne({
+          attributes: [
+            'amount_cents',
+            'date',
+            'description',
+            'fund_uuid',
+            'household_member_uuid',
+            'reimbursed_cents',
+            'subcategory_uuid',
+            'uuid',
+            'vendor_uuid',
+          ],
+          include: [{
+            attributes: ['uuid'],
+            model: models.HouseholdMember,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Subcategory,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Vendor,
+            required: true,
+          }],
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+        assert.isOk(expense);
+        assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense2.amount_cents);
+        assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory2Uuid);
+        assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory2Uuid);
+        assert.strictEqual(expense.get('date'), sampleData.expenses.expense2.date);
+        assert.strictEqual(expense.get('description'), sampleData.expenses.expense2.description);
+        assert.strictEqual(expense.get('fund_uuid'), user1Fund1Uuid);
+        assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember2Uuid);
+        assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember2Uuid);
+        assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense2.reimbursed_cents);
+        assert.strictEqual(expense.get('vendor_uuid'), user1Vendor2Uuid);
+        assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor2Uuid);
+
+        // Verify that the Fund balance was updated.
+        const fund = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          where: {
+            uuid: user1Fund1Uuid,
+          },
+        });
+        assert.isOk(fund);
+        assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE - sampleData.expenses.expense2.amount_cents);
+
+        assert.strictEqual(trackChangesSpy.callCount, 1);
+        const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+        assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+        assert.isOk(trackChangesParams.changeList);
+        const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Expense
+            && updateInstance.get('uuid') === expenseUuid;
+        });
+        assert.isOk(updateExpense);
+        const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Fund
+            && updateInstance.get('uuid') === user1Fund1Uuid;
+        });
+        assert.isOk(updateFund);
+        assert.strictEqual(trackChangesParams.changeList.length, 2);
+        assert.isNotOk(trackChangesParams.deleteList);
+        assert.isNotOk(trackChangesParams.newList);
+        assert.isOk(trackChangesParams.transaction);
+      });
+    });
+
+    describe('when removing a fund from an expense', function() {
+      it('should resolve removing the fund', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.updateExpense({
+          amount: sampleData.expenses.expense1.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense1.date,
+          description: sampleData.expenses.expense1.description,
+          expenseUuid,
+          fundUuid: null,
+          householdMemberUuid: user1HouseholdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+          subcategoryUuid: user1Subcategory1Uuid,
+          vendorUuid: user1Vendor1Uuid,
+        });
+
+        // Verify the Expense instance.
+        const expense = await models.Expense.findOne({
+          attributes: [
+            'amount_cents',
+            'date',
+            'description',
+            'fund_uuid',
+            'household_member_uuid',
+            'reimbursed_cents',
+            'subcategory_uuid',
+            'uuid',
+            'vendor_uuid',
+          ],
+          include: [{
+            attributes: ['uuid'],
+            model: models.HouseholdMember,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Subcategory,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Vendor,
+            required: true,
+          }],
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+        assert.isOk(expense);
+        assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+        assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+        assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+        assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+        assert.isNull(expense.get('fund_uuid'));
+        assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+        assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+        assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+        assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+        assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+        // Verify that the Fund balance was updated.
+        const fund = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          where: {
+            uuid: user1Fund1Uuid,
+          },
+        });
+        assert.isOk(fund);
+        assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE + sampleData.expenses.expense1.amount_cents);
+
+        assert.strictEqual(trackChangesSpy.callCount, 1);
+        const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+        assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+        assert.isOk(trackChangesParams.changeList);
+        const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Expense
+            && updateInstance.get('uuid') === expenseUuid;
+        });
+        assert.isOk(updateExpense);
+        const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Fund
+            && updateInstance.get('uuid') === user1Fund1Uuid;
+        });
+        assert.isOk(updateFund);
+        assert.strictEqual(trackChangesParams.changeList.length, 2);
+        assert.isNotOk(trackChangesParams.deleteList);
+        assert.isNotOk(trackChangesParams.newList);
+        assert.isOk(trackChangesParams.transaction);
+      });
+
+      it('should resolve when updating all other attributes', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.updateExpense({
+          amount: sampleData.expenses.expense2.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense2.date,
+          description: sampleData.expenses.expense2.description,
+          expenseUuid,
+          fundUuid: null,
+          householdMemberUuid: user1HouseholdMember2Uuid,
+          reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
+          subcategoryUuid: user1Subcategory2Uuid,
+          vendorUuid: user1Vendor2Uuid,
+        });
+
+        // Verify the Expense instance.
+        const expense = await models.Expense.findOne({
+          attributes: [
+            'amount_cents',
+            'date',
+            'description',
+            'fund_uuid',
+            'household_member_uuid',
+            'reimbursed_cents',
+            'subcategory_uuid',
+            'uuid',
+            'vendor_uuid',
+          ],
+          include: [{
+            attributes: ['uuid'],
+            model: models.HouseholdMember,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Subcategory,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Vendor,
+            required: true,
+          }],
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+        assert.isOk(expense);
+        assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense2.amount_cents);
+        assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory2Uuid);
+        assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory2Uuid);
+        assert.strictEqual(expense.get('date'), sampleData.expenses.expense2.date);
+        assert.strictEqual(expense.get('description'), sampleData.expenses.expense2.description);
+        assert.isNull(expense.get('fund_uuid'));
+        assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember2Uuid);
+        assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember2Uuid);
+        assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense2.reimbursed_cents);
+        assert.strictEqual(expense.get('vendor_uuid'), user1Vendor2Uuid);
+        assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor2Uuid);
+
+        // Verify that the Fund balance was updated.
+        const fund = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          where: {
+            uuid: user1Fund1Uuid,
+          },
+        });
+        assert.isOk(fund);
+        assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE + sampleData.expenses.expense1.amount_cents);
+
+        assert.strictEqual(trackChangesSpy.callCount, 1);
+        const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+        assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+        assert.isOk(trackChangesParams.changeList);
+        const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Expense
+            && updateInstance.get('uuid') === expenseUuid;
+        });
+        assert.isOk(updateExpense);
+        const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Fund
+            && updateInstance.get('uuid') === user1Fund1Uuid;
+        });
+        assert.isOk(updateFund);
+        assert.strictEqual(trackChangesParams.changeList.length, 2);
+        assert.isNotOk(trackChangesParams.deleteList);
+        assert.isNotOk(trackChangesParams.newList);
+        assert.isOk(trackChangesParams.transaction);
+      });
+    });
+
+    describe('when updating to a different fund', async function() {
+      it('should reject when the new fund does not exist', async function() {
+        try {
+          const apiCall = await models.Audit.ApiCall.create({
+            user_uuid: user1Uuid,
+          });
+          await controllers.ExpenseCtrl.updateExpense({
+            amount: sampleData.expenses.expense1.amount_cents,
+            auditApiCallUuid: apiCall.get('uuid'),
+            date: sampleData.expenses.expense1.date,
+            description: sampleData.expenses.expense1.description,
+            expenseUuid,
+            fundUuid: uuidv4(),
+            householdMemberUuid: user1HouseholdMember1Uuid,
+            reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+            subcategoryUuid: user1Subcategory1Uuid,
+            vendorUuid: user1Vendor1Uuid,
+          });
+          /* istanbul ignore next */
+          throw new Error('Expected to reject not resolve.');
+        } catch (err) {
+          assert.isOk(err);
+          assert.strictEqual(err.message, 'Fund not found');
+          assert.isTrue(err instanceof ExpenseError);
+        }
+        assert.strictEqual(trackChangesSpy.callCount, 0);
+      });
+
+      it('should reject when the new fund belongs to a different household', async function() {
+        try {
+          const apiCall = await models.Audit.ApiCall.create({
+            user_uuid: user1Uuid,
+          });
+          await controllers.ExpenseCtrl.updateExpense({
+            amount: sampleData.expenses.expense1.amount_cents,
+            auditApiCallUuid: apiCall.get('uuid'),
+            date: sampleData.expenses.expense1.date,
+            description: sampleData.expenses.expense1.description,
+            expenseUuid,
+            fundUuid: user2FundUuid,
+            householdMemberUuid: user1HouseholdMember1Uuid,
+            reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+            subcategoryUuid: user1Subcategory1Uuid,
+            vendorUuid: user1Vendor1Uuid,
+          });
+          /* istanbul ignore next */
+          throw new Error('Expected to reject not resolve.');
+        } catch (err) {
+          assert.isOk(err);
+          assert.strictEqual(err.message, 'Fund not found');
+          assert.isTrue(err instanceof ExpenseError);
+        }
+        assert.strictEqual(trackChangesSpy.callCount, 0);
+      });
+
+      it('should resolve updating to the new fund', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.updateExpense({
+          amount: sampleData.expenses.expense1.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense1.date,
+          description: sampleData.expenses.expense1.description,
+          expenseUuid,
+          fundUuid: user1Fund2Uuid,
+          householdMemberUuid: user1HouseholdMember1Uuid,
+          reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+          subcategoryUuid: user1Subcategory1Uuid,
+          vendorUuid: user1Vendor1Uuid,
+        });
+
+        // Verify the Expense instance.
+        const expense = await models.Expense.findOne({
+          attributes: [
+            'amount_cents',
+            'date',
+            'description',
+            'fund_uuid',
+            'household_member_uuid',
+            'reimbursed_cents',
+            'subcategory_uuid',
+            'uuid',
+            'vendor_uuid',
+          ],
+          include: [{
+            attributes: ['uuid'],
+            model: models.HouseholdMember,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Subcategory,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Vendor,
+            required: true,
+          }],
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+        assert.isOk(expense);
+        assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory1Uuid);
+        assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory1Uuid);
+        assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+        assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+        assert.strictEqual(expense.get('fund_uuid'), user1Fund2Uuid);
+        assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember1Uuid);
+        assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember1Uuid);
+        assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+        assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
+        assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
+
+        // Verify that Fund 1 was updated.
+        const fund1 = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          where: {
+            uuid: user1Fund1Uuid,
+          },
+        });
+        assert.isOk(fund1);
+        assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL_BALANCE + sampleData.expenses.expense1.amount_cents);
+
+        // Verify that Fund 2 was updated.
+        const fund2 = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          where: {
+            uuid: user1Fund2Uuid,
+          },
+        });
+        assert.isOk(fund2);
+        assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL_BALANCE - sampleData.expenses.expense1.amount_cents);
+
+        assert.strictEqual(trackChangesSpy.callCount, 1);
+        const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+        assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+        assert.isOk(trackChangesParams.changeList);
+        const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Expense
+            && updateInstance.get('uuid') === expenseUuid;
+        });
+        assert.isOk(updateExpense);
+        const updateFund1 = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Fund
+            && updateInstance.get('uuid') === user1Fund1Uuid;
+        });
+        assert.isOk(updateFund1);
+        const updateFund2 = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Fund
+            && updateInstance.get('uuid') === user1Fund2Uuid;
+        });
+        assert.isOk(updateFund2);
+        assert.strictEqual(trackChangesParams.changeList.length, 3);
+        assert.isNotOk(trackChangesParams.deleteList);
+        assert.isNotOk(trackChangesParams.newList);
+        assert.isOk(trackChangesParams.transaction);
+      });
+
+      it('should resolve when updating all other attributes', async function() {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.updateExpense({
+          amount: sampleData.expenses.expense2.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense2.date,
+          description: sampleData.expenses.expense2.description,
+          expenseUuid,
+          fundUuid: user1Fund2Uuid,
+          householdMemberUuid: user1HouseholdMember2Uuid,
+          reimbursedAmount: sampleData.expenses.expense2.reimbursed_cents,
+          subcategoryUuid: user1Subcategory2Uuid,
+          vendorUuid: user1Vendor2Uuid,
+        });
+
+        // Verify the Expense instance.
+        const expense = await models.Expense.findOne({
+          attributes: [
+            'amount_cents',
+            'date',
+            'description',
+            'fund_uuid',
+            'household_member_uuid',
+            'reimbursed_cents',
+            'subcategory_uuid',
+            'uuid',
+            'vendor_uuid',
+          ],
+          include: [{
+            attributes: ['uuid'],
+            model: models.HouseholdMember,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Subcategory,
+            required: true,
+          }, {
+            attributes: ['uuid'],
+            model: models.Vendor,
+            required: true,
+          }],
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+        assert.isOk(expense);
+        assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense2.amount_cents);
+        assert.strictEqual(expense.get('subcategory_uuid'), user1Subcategory2Uuid);
+        assert.strictEqual(expense.Subcategory.get('uuid'), user1Subcategory2Uuid);
+        assert.strictEqual(expense.get('date'), sampleData.expenses.expense2.date);
+        assert.strictEqual(expense.get('description'), sampleData.expenses.expense2.description);
+        assert.strictEqual(expense.get('fund_uuid'), user1Fund2Uuid);
+        assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMember2Uuid);
+        assert.strictEqual(expense.HouseholdMember.get('uuid'), user1HouseholdMember2Uuid);
+        assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense2.reimbursed_cents);
+        assert.strictEqual(expense.get('vendor_uuid'), user1Vendor2Uuid);
+        assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor2Uuid);
+
+        // Verify that Fund 1 was updated.
+        const fund1 = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          where: {
+            uuid: user1Fund1Uuid,
+          },
+        });
+        assert.isOk(fund1);
+        assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL_BALANCE + sampleData.expenses.expense1.amount_cents);
+
+        // Verify that Fund 2 was updated.
+        const fund2 = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          where: {
+            uuid: user1Fund2Uuid,
+          },
+        });
+        assert.isOk(fund2);
+        assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL_BALANCE - sampleData.expenses.expense2.amount_cents);
+
+        assert.strictEqual(trackChangesSpy.callCount, 1);
+        const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+        assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+        assert.isOk(trackChangesParams.changeList);
+        const updateExpense = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Expense
+            && updateInstance.get('uuid') === expenseUuid;
+        });
+        assert.isOk(updateExpense);
+        const updateFund1 = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Fund
+            && updateInstance.get('uuid') === user1Fund1Uuid;
+        });
+        assert.isOk(updateFund1);
+        const updateFund2 = _.find(trackChangesParams.changeList, (updateInstance) => {
+          return updateInstance instanceof models.Fund
+            && updateInstance.get('uuid') === user1Fund2Uuid;
+        });
+        assert.isOk(updateFund2);
+        assert.strictEqual(trackChangesParams.changeList.length, 3);
+        assert.isNotOk(trackChangesParams.deleteList);
+        assert.isNotOk(trackChangesParams.newList);
+        assert.isOk(trackChangesParams.transaction);
+      });
+    });
   });
 });

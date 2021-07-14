@@ -15,39 +15,17 @@ class ExpenseCtrl {
     });
   }
 
-  async deleteExpense({
-    auditApiCallUuid,
-    expenseUuid,
-  }) {
+  async deleteExpense(params) {
     return deleteExpense({
-      auditApiCallUuid,
+      ...params,
       expenseCtrl: this,
-      expenseUuid,
     });
   }
 
-  async updateExpense({
-    amount,
-    auditApiCallUuid,
-    date,
-    description,
-    expenseUuid,
-    householdMemberUuid,
-    reimbursedAmount,
-    subcategoryUuid,
-    vendorUuid,
-  }) {
+  async updateExpense(params) {
     return updateExpense({
-      amount,
-      auditApiCallUuid,
-      date,
-      description,
+      ...params,
       expenseCtrl: this,
-      expenseUuid,
-      householdMemberUuid,
-      reimbursedAmount,
-      subcategoryUuid,
-      vendorUuid,
     });
   }
 }
