@@ -39,7 +39,7 @@ module.exports = async({
   }
 
   const deposit = await models.Deposit.findOne({
-    attributes: ['uuid'],
+    attributes: ['amount_cents', 'uuid'],
     include: [{
       attributes: ['uuid'],
       model: models.Fund,
@@ -59,8 +59,17 @@ module.exports = async({
   await models.sequelize.transaction({
     isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
   }, async(transaction) => {
+    const trackedFund = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      transaction,
+      where: {
+        uuid: deposit.Fund.get('uuid'),
+      },
+    });
+    trackedFund.set('balance_cents', trackedFund.get('balance_cents') - deposit.get('amount_cents'));
     await controllers.AuditCtrl.trackChanges({
       auditApiCallUuid,
+      changeList: [trackedFund],
       deleteList: [deposit],
       transaction,
     });

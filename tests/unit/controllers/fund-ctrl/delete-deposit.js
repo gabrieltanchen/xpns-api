@@ -24,6 +24,8 @@ describe('Unit:Controllers - FundCtrl.deleteDeposit', function() {
   let user2HouseholdUuid;
   let user2Uuid;
 
+  const FUND_INITIAL_BALANCE = 100000;
+
   before('get app', async function() {
     this.timeout(30000);
     const app = await testHelper.getApp();
@@ -59,6 +61,7 @@ describe('Unit:Controllers - FundCtrl.deleteDeposit', function() {
 
   beforeEach('create user 1 fund', async function() {
     const fund = await models.Fund.create({
+      balance_cents: FUND_INITIAL_BALANCE,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category1.name,
     });
@@ -67,8 +70,8 @@ describe('Unit:Controllers - FundCtrl.deleteDeposit', function() {
 
   beforeEach('create user 1 deposit', async function() {
     const deposit = await models.Deposit.create({
-      amount_cents: sampleData.expenses.expense1.amount_cents,
-      date: sampleData.expenses.expense1.date,
+      amount_cents: sampleData.deposits.deposit1.amount_cents,
+      date: sampleData.deposits.deposit1.date,
       fund_uuid: user1FundUuid,
     });
     user1DepositUuid = deposit.get('uuid');
@@ -263,10 +266,26 @@ describe('Unit:Controllers - FundCtrl.deleteDeposit', function() {
     });
     assert.isNull(deposit);
 
+    // Verify that the Fund balance was updated.
+    const fund = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: user1FundUuid,
+      },
+    });
+    assert.isOk(fund);
+    assert.strictEqual(fund.get('balance_cents'), FUND_INITIAL_BALANCE - sampleData.deposits.deposit1.amount_cents);
+
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
     assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
-    assert.isNotOk(trackChangesParams.changeList);
+    assert.isOk(trackChangesParams.changeList);
+    const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+      return updateInstance instanceof models.Fund
+        && updateInstance.get('uuid') === user1FundUuid;
+    });
+    assert.isOk(updateFund);
+    assert.strictEqual(trackChangesParams.changeList.length, 1);
     assert.isOk(trackChangesParams.deleteList);
     const deleteDeposit = _.find(trackChangesParams.deleteList, (deleteInstance) => {
       return deleteInstance instanceof models.Deposit

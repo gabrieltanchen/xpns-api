@@ -26,8 +26,8 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
   let user2HouseholdUuid;
   let user2Uuid;
 
-  const FUND1_INITIAL = 100000;
-  const FUND2_INITIAL = 150000;
+  const FUND1_INITIAL_BALANCE = 100000;
+  const FUND2_INITIAL_BALANCE = 150000;
 
   before('get app', async function() {
     this.timeout(30000);
@@ -64,7 +64,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 1 fund 1', async function() {
     const fund = await models.Fund.create({
-      balance_cents: FUND1_INITIAL,
+      balance_cents: FUND1_INITIAL_BALANCE,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category1.name,
     });
@@ -73,7 +73,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 1 fund 2', async function() {
     const fund = await models.Fund.create({
-      balance_cents: FUND2_INITIAL,
+      balance_cents: FUND2_INITIAL_BALANCE,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category2.name,
     });
@@ -459,7 +459,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
     assert.isOk(fund);
     const depositDifference = sampleData.deposits.deposit1.amount_cents
       - sampleData.deposits.deposit2.amount_cents;
-    assert.strictEqual(fund.get('balance_cents'), (FUND1_INITIAL - depositDifference));
+    assert.strictEqual(fund.get('balance_cents'), (FUND1_INITIAL_BALANCE - depositDifference));
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -524,7 +524,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(fund);
-    assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL);
+    assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -628,7 +628,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(fund1);
-    assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL - sampleData.deposits.deposit1.amount_cents);
+    assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL_BALANCE - sampleData.deposits.deposit1.amount_cents);
 
     // Verify that Fund 2 was updated.
     const fund2 = await models.Fund.findOne({
@@ -638,7 +638,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(fund2);
-    assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL + sampleData.deposits.deposit1.amount_cents);
+    assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL_BALANCE + sampleData.deposits.deposit1.amount_cents);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -708,7 +708,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(fund1);
-    assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL - sampleData.deposits.deposit1.amount_cents);
+    assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL_BALANCE - sampleData.deposits.deposit1.amount_cents);
 
     // Verify that Fund 2 balance was updated.
     const fund2 = await models.Fund.findOne({
@@ -718,7 +718,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(fund2);
-    assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL + sampleData.deposits.deposit2.amount_cents);
+    assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL_BALANCE + sampleData.deposits.deposit2.amount_cents);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
