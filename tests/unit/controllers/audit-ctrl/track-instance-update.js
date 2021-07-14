@@ -358,11 +358,11 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
     });
     const auditLog = await models.Audit.Log.create();
     const fund = await models.Fund.create({
-      amount_cents: sampleData.expenses.expense1.amount_cents,
+      balance_cents: sampleData.expenses.expense1.amount_cents,
       household_uuid: household1.get('uuid'),
       name: sampleData.categories.category1.name,
     });
-    fund.set('amount_cents', sampleData.expenses.expense2.amount_cents);
+    fund.set('balance_cents', sampleData.expenses.expense2.amount_cents);
     fund.set('household_uuid', household2.get('uuid'));
     fund.set('name', sampleData.categories.category2.name);
 
@@ -378,7 +378,7 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceUpdate', function() {
       },
     });
     shouldTrackAttribute({
-      attribute: 'amount_cents',
+      attribute: 'balance_cents',
       auditChanges,
       key: fund.get('uuid'),
       newValue: sampleData.expenses.expense2.amount_cents,

@@ -149,7 +149,7 @@ describe('Unit:Controllers - FundCtrl.createFund', function() {
 
     // Verify the Fund instance.
     const fund = await models.Fund.findOne({
-      attributes: ['amount_cents', 'household_uuid', 'name', 'uuid'],
+      attributes: ['balance_cents', 'household_uuid', 'name', 'uuid'],
       where: {
         uuid: fundUuid,
       },
@@ -157,8 +157,8 @@ describe('Unit:Controllers - FundCtrl.createFund', function() {
     assert.isOk(fund);
     assert.strictEqual(fund.get('household_uuid'), userHouseholdUuid);
     assert.strictEqual(fund.get('name'), sampleData.categories.category1.name);
-    // Should initialize with an amount of 0
-    assert.strictEqual(fund.get('amount_cents'), 0);
+    // Should initialize with a balance of 0
+    assert.strictEqual(fund.get('balance_cents'), 0);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];

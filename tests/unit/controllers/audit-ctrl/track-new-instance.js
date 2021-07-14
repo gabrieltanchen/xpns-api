@@ -316,7 +316,6 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
     });
     const auditLog = await models.Audit.Log.create();
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: household.get('uuid'),
       name: sampleData.categories.category1.name,
     });
@@ -340,7 +339,7 @@ describe('Unit:Controllers - AuditCtrl._trackNewInstance', function() {
       value: null,
     });
     shouldTrackAttribute({
-      attribute: 'amount_cents',
+      attribute: 'balance_cents',
       auditChanges,
       key: fund.get('uuid'),
       table: 'funds',

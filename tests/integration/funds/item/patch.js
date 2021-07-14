@@ -186,7 +186,7 @@ describe('Integration - PATCH /funds/:uuid', function() {
     expect(res).to.have.status(200);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(res.body.data.attributes.amount, 0);
+    assert.strictEqual(res.body.data.attributes.balance, 0);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.name, sampleData.funds.fund2.name);
     assert.strictEqual(res.body.data.id, user1FundUuid);

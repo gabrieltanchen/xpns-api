@@ -2,8 +2,9 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
   return sequelize.define('Fund', {
-    amount_cents: {
+    balance_cents: {
       allowNull: false,
+      defaultValue: 0,
       type: Sequelize.INTEGER,
     },
     created_at: {

@@ -127,7 +127,7 @@ describe('Integration - POST /funds', function() {
     expect(res).to.have.status(201);
     assert.isOk(res.body.data);
     assert.isOk(res.body.data.attributes);
-    assert.strictEqual(res.body.data.attributes.amount, 0);
+    assert.strictEqual(res.body.data.attributes.balance, 0);
     assert.isOk(res.body.data.attributes['created-at']);
     assert.strictEqual(res.body.data.attributes.name, sampleData.funds.fund1.name);
     assert.isOk(res.body.data.id);

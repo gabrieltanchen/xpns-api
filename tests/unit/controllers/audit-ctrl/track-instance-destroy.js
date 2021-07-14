@@ -250,7 +250,6 @@ describe('Unit:Controllers - AuditCtrl._trackInstanceDestroy', function() {
     });
     const auditLog = await models.Audit.Log.create();
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: household.get('uuid'),
       name: sampleData.categories.category1.name,
     });

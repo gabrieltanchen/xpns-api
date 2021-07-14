@@ -39,7 +39,6 @@ module.exports = async({
   }
 
   const newFund = models.Fund.build({
-    amount_cents: 0,
     household_uuid: user.get('household_uuid'),
     name,
   });

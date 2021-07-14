@@ -32,8 +32,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      amount_cents: {
+      balance_cents: {
         allowNull: false,
+        defaultValue: 0,
         type: Sequelize.INTEGER,
       },
     });

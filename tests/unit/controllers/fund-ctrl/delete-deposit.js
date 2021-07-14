@@ -59,7 +59,6 @@ describe('Unit:Controllers - FundCtrl.deleteDeposit', function() {
 
   beforeEach('create user 1 fund', async function() {
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category1.name,
     });
@@ -91,7 +90,6 @@ describe('Unit:Controllers - FundCtrl.deleteDeposit', function() {
 
   beforeEach('create user 2 fund', async function() {
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: user2HouseholdUuid,
       name: sampleData.categories.category2.name,
     });

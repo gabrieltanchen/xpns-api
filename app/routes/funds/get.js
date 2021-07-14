@@ -43,7 +43,7 @@ module.exports = (app) => {
       });
 
       const funds = await models.Fund.findAndCountAll({
-        attributes: ['amount_cents', 'created_at', 'name', 'uuid'],
+        attributes: ['balance_cents', 'created_at', 'name', 'uuid'],
         limit,
         offset,
         order: [['name', 'ASC']],
@@ -56,7 +56,7 @@ module.exports = (app) => {
         'data': funds.rows.map((fund) => {
           return {
             'attributes': {
-              'amount': fund.get('amount_cents'),
+              'balance': fund.get('balance_cents'),
               'created-at': fund.get('created_at'),
               'name': fund.get('name'),
             },

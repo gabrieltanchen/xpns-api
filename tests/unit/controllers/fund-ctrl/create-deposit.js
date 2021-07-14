@@ -57,7 +57,6 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
 
   beforeEach('create user 1 fund', async function() {
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category1.name,
     });
@@ -79,7 +78,6 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
 
   beforeEach('create user 2 fund', async function() {
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: user2HouseholdUuid,
       name: sampleData.categories.category2.name,
     });
@@ -333,6 +331,8 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
     assert.strictEqual(deposit.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
     assert.strictEqual(deposit.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(deposit.get('fund_uuid'), user1FundUuid);
+
+    // Verify that the Fund balance was updated.
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];

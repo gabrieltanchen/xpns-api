@@ -10,7 +10,7 @@ module.exports = (app) => {
    *
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object} data.attributes
-   * @apiSuccess (200) {integer} data.attributes.amount
+   * @apiSuccess (200) {integer} data.attributes.balance
    * @apiSuccess (200) {string} data.attributes[created-at]
    * @apiSuccess (200) {string} data.attributes.name
    * @apiSuccess (200) {string} data.id
@@ -37,7 +37,7 @@ module.exports = (app) => {
       }
 
       const fund = await models.Fund.findOne({
-        attributes: ['amount_cents', 'created_at', 'name', 'uuid'],
+        attributes: ['balance_cents', 'created_at', 'name', 'uuid'],
         where: {
           household_uuid: user.get('household_uuid'),
           uuid: req.params.uuid,
@@ -50,7 +50,7 @@ module.exports = (app) => {
       return res.status(200).json({
         'data': {
           'attributes': {
-            'amount': fund.get('amount_cents'),
+            'balance': fund.get('balance_cents'),
             'created-at': fund.get('created_at'),
             'name': fund.get('name'),
           },

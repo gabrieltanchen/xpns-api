@@ -69,11 +69,11 @@ describe('Unit:Model - Fund', function() {
     assert.isFalse(attributes.name.primaryKey);
 
     // amount_cents
-    assert.isOk(attributes.amount_cents);
-    assert.strictEqual(attributes.amount_cents.type, 'INTEGER');
-    assert.isFalse(attributes.amount_cents.allowNull);
-    assert.isNull(attributes.amount_cents.defaultValue);
-    assert.isFalse(attributes.amount_cents.primaryKey);
+    assert.isOk(attributes.balance_cents);
+    assert.strictEqual(attributes.balance_cents.type, 'INTEGER');
+    assert.isFalse(attributes.balance_cents.allowNull);
+    assert.strictEqual(attributes.balance_cents.defaultValue, '0');
+    assert.isFalse(attributes.balance_cents.primaryKey);
 
     assert.strictEqual(Object.keys(attributes).length, 7);
   });

@@ -61,7 +61,6 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 1 fund 1', async function() {
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category1.name,
     });
@@ -70,7 +69,6 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 1 fund 2', async function() {
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category2.name,
     });
@@ -102,7 +100,6 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 2 fund 1', async function() {
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: user2HouseholdUuid,
       name: sampleData.categories.category3.name,
     });
@@ -111,7 +108,6 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 2 fund 2', async function() {
     const fund = await models.Fund.create({
-      amount_cents: 0,
       household_uuid: user2HouseholdUuid,
       name: sampleData.categories.category4.name,
     });
