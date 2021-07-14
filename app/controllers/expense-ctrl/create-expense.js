@@ -10,6 +10,7 @@ const { ExpenseError } = require('../../middleware/error-handler');
  * @param {string} date
  * @param {string} description
  * @param {object} expenseCtrl Instance of ExpenseCtrl
+ * @param {string} fundUuid
  * @param {string} householdMemberUuid
  * @param {integer} reimbursedAmount
  * @param {string} subcategoryUuid
@@ -21,6 +22,7 @@ module.exports = async({
   date,
   description,
   expenseCtrl,
+  fundUuid,
   householdMemberUuid,
   reimbursedAmount,
   subcategoryUuid,
@@ -117,17 +119,44 @@ module.exports = async({
     vendor_uuid: vendor.get('uuid'),
   });
 
+  if (fundUuid) {
+    // Validate fund belongs to household.
+    const fund = await models.Fund.findOne({
+      attributes: ['uuid'],
+      where: {
+        household_uuid: user.get('household_uuid'),
+        uuid: fundUuid,
+      },
+    });
+    if (!fund) {
+      throw new ExpenseError('Fund not found');
+    }
+    newExpense.set('fund_uuid', fund.get('uuid'));
+  }
+
   await models.sequelize.transaction({
     isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
   }, async(transaction) => {
-    await newExpense.save({
-      transaction,
-    });
-    await controllers.AuditCtrl.trackChanges({
+    const trackChangesParams = {
       auditApiCallUuid,
       newList: [newExpense],
       transaction,
+    };
+    if (newExpense.get('fund_uuid')) {
+      const trackedFund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        transaction,
+        where: {
+          uuid: newExpense.get('fund_uuid'),
+        },
+      });
+      trackedFund.set('balance_cents', trackedFund.get('balance_cents') - newExpense.get('amount_cents'));
+      trackChangesParams.changeList = [trackedFund];
+    }
+    await newExpense.save({
+      transaction,
     });
+    await controllers.AuditCtrl.trackChanges(trackChangesParams);
   });
 
   return newExpense.get('uuid');

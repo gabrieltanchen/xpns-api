@@ -8,26 +8,10 @@ class ExpenseCtrl {
     this.models = models;
   }
 
-  async createExpense({
-    amount,
-    auditApiCallUuid,
-    date,
-    description,
-    householdMemberUuid,
-    reimbursedAmount,
-    subcategoryUuid,
-    vendorUuid,
-  }) {
+  async createExpense(params) {
     return createExpense({
-      amount,
-      auditApiCallUuid,
-      date,
-      description,
+      ...params,
       expenseCtrl: this,
-      householdMemberUuid,
-      reimbursedAmount,
-      subcategoryUuid,
-      vendorUuid,
     });
   }
 

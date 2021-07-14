@@ -660,6 +660,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
         'amount_cents',
         'date',
         'description',
+        'fund_uuid',
         'household_member_uuid',
         'reimbursed_cents',
         'subcategory_uuid',
@@ -675,6 +676,7 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
     assert.strictEqual(expense.get('subcategory_uuid'), user1SubcategoryUuid);
     assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
     assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+    assert.isNull(expense.get('fund_uuid'));
     assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMemberUuid);
     assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
     assert.strictEqual(expense.get('vendor_uuid'), user1VendorUuid);
@@ -692,5 +694,156 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
     assert.isOk(newExpense);
     assert.strictEqual(trackChangesParams.newList.length, 1);
     assert.isOk(trackChangesParams.transaction);
+  });
+
+  describe('when creating an expense for a fund', async function() {
+    const FUND_INITIAL_BALANCE = 100000;
+
+    let user1FundUuid;
+    let user2FundUuid;
+
+    beforeEach('create user 1 fund', async function() {
+      const fund = await models.Fund.create({
+        balance_cents: FUND_INITIAL_BALANCE,
+        household_uuid: user1HouseholdUuid,
+        name: sampleData.funds.fund1.name,
+      });
+      user1FundUuid = fund.get('uuid');
+    });
+
+    beforeEach('create user 2 fund', async function() {
+      const fund = await models.Fund.create({
+        household_uuid: user2HouseholdUuid,
+        name: sampleData.funds.fund2.name,
+      });
+      user2FundUuid = fund.get('uuid');
+    });
+
+    it('should reject when the fund does not exist', async function() {
+      try {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense1.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense1.date,
+          description: sampleData.expenses.expense1.description,
+          fundUuid: uuidv4(),
+          householdMemberUuid: user1HouseholdMemberUuid,
+          reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+          subcategoryUuid: user1SubcategoryUuid,
+          vendorUuid: user1VendorUuid,
+        });
+        /* istanbul ignore next */
+        throw new Error('Expected to reject not resolve.');
+      } catch (err) {
+        assert.isOk(err);
+        assert.strictEqual(err.message, 'Fund not found');
+        assert.isTrue(err instanceof ExpenseError);
+      }
+      assert.strictEqual(trackChangesSpy.callCount, 0);
+    });
+
+    it('should reject when the fund belongs to a different household', async function() {
+      try {
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.createExpense({
+          amount: sampleData.expenses.expense1.amount_cents,
+          auditApiCallUuid: apiCall.get('uuid'),
+          date: sampleData.expenses.expense1.date,
+          description: sampleData.expenses.expense1.description,
+          fundUuid: user2FundUuid,
+          householdMemberUuid: user1HouseholdMemberUuid,
+          reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+          subcategoryUuid: user1SubcategoryUuid,
+          vendorUuid: user1VendorUuid,
+        });
+        /* istanbul ignore next */
+        throw new Error('Expected to reject not resolve.');
+      } catch (err) {
+        assert.isOk(err);
+        assert.strictEqual(err.message, 'Fund not found');
+        assert.isTrue(err instanceof ExpenseError);
+      }
+      assert.strictEqual(trackChangesSpy.callCount, 0);
+    });
+
+    it('should resolve and update the fund balance', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      const expenseUuid = await controllers.ExpenseCtrl.createExpense({
+        amount: sampleData.expenses.expense1.amount_cents,
+        auditApiCallUuid: apiCall.get('uuid'),
+        date: sampleData.expenses.expense1.date,
+        description: sampleData.expenses.expense1.description,
+        fundUuid: user1FundUuid,
+        householdMemberUuid: user1HouseholdMemberUuid,
+        reimbursedAmount: sampleData.expenses.expense1.reimbursed_cents,
+        subcategoryUuid: user1SubcategoryUuid,
+        vendorUuid: user1VendorUuid,
+      });
+
+      assert.isOk(expenseUuid);
+
+      // Verify the Expense instance.
+      const expense = await models.Expense.findOne({
+        attributes: [
+          'amount_cents',
+          'date',
+          'description',
+          'fund_uuid',
+          'household_member_uuid',
+          'reimbursed_cents',
+          'subcategory_uuid',
+          'uuid',
+          'vendor_uuid',
+        ],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isOk(expense);
+      assert.strictEqual(expense.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
+      assert.strictEqual(expense.get('subcategory_uuid'), user1SubcategoryUuid);
+      assert.strictEqual(expense.get('date'), sampleData.expenses.expense1.date);
+      assert.strictEqual(expense.get('description'), sampleData.expenses.expense1.description);
+      assert.strictEqual(expense.get('fund_uuid'), user1FundUuid);
+      assert.strictEqual(expense.get('household_member_uuid'), user1HouseholdMemberUuid);
+      assert.strictEqual(expense.get('reimbursed_cents'), sampleData.expenses.expense1.reimbursed_cents);
+      assert.strictEqual(expense.get('vendor_uuid'), user1VendorUuid);
+
+      // Verify that the Fund balance was updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1FundUuid,
+        },
+      });
+      assert.strictEqual(fund.get('balance_cents'), FUND_INITIAL_BALANCE - sampleData.expenses.expense1.amount_cents);
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Fund
+          && updateInstance.get('uuid') === user1FundUuid;
+      });
+      assert.isOk(updateFund);
+      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      assert.isNotOk(trackChangesParams.deleteList);
+      assert.isOk(trackChangesParams.newList);
+      const newExpense = _.find(trackChangesParams.newList, (newInstance) => {
+        return newInstance instanceof models.Expense
+          && newInstance.get('uuid') === expense.get('uuid');
+      });
+      assert.isOk(newExpense);
+      assert.strictEqual(trackChangesParams.newList.length, 1);
+      assert.isOk(trackChangesParams.transaction);
+    });
   });
 });
