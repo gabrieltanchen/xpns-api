@@ -74,14 +74,19 @@ module.exports = async({
     throw new FundError('Deposit not found');
   }
 
+  const oldAmount = deposit.get('amount_cents');
+  let newAmount = oldAmount;
   if (deposit.get('amount_cents') !== parseInt(amount, 10)) {
     deposit.set('amount_cents', parseInt(amount, 10));
+    newAmount = deposit.get('amount_cents');
   }
   if (moment(deposit.get('date')).format('YYYY-MM-DD') !== moment.utc(date).format('YYYY-MM-DD')) {
     deposit.set('date', moment.utc(date).format('YYYY-MM-DD'));
   }
 
   // Validate fund UUID.
+  const oldFundUuid = deposit.get('fund_uuid');
+  let newFundUuid = oldFundUuid;
   if (fundUuid !== deposit.get('fund_uuid')) {
     const fund = await models.Fund.findOne({
       attributes: ['uuid'],
@@ -94,15 +99,53 @@ module.exports = async({
       throw new FundError('Fund not found');
     }
     deposit.set('fund_uuid', fund.get('uuid'));
+    newFundUuid = deposit.get('fund_uuid');
   }
 
   if (deposit.changed()) {
     await models.sequelize.transaction({
       isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
     }, async(transaction) => {
+      const changeList = [deposit];
+      if (deposit.changed('fund_uuid')) {
+        // The fund is being changed, so we need to subtract the deposit amount
+        // from the old fund and add to the new fund.
+        const oldTrackedFund = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          transaction,
+          where: {
+            uuid: oldFundUuid,
+          },
+        });
+        // Use oldAmount because that's the amount that would have been added previously.
+        oldTrackedFund.set('balance_cents', oldTrackedFund.get('balance_cents') - oldAmount);
+        changeList.push(oldTrackedFund);
+        const newTrackedFund = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          transaction,
+          where: {
+            uuid: newFundUuid,
+          },
+        });
+        // Use newAmount in case the amount is also being updated.
+        newTrackedFund.set('balance_cents', newTrackedFund.get('balance_cents') + newAmount);
+        changeList.push(newTrackedFund);
+      } else if (deposit.changed('amount_cents')) {
+        // Simply update the fund balance with the difference of the old and
+        // new amounts.
+        const trackedFund = await models.Fund.findOne({
+          attributes: ['balance_cents', 'uuid'],
+          transaction,
+          where: {
+            uuid: oldFundUuid,
+          },
+        });
+        trackedFund.set('balance_cents', trackedFund.get('balance_cents') - (oldAmount - newAmount));
+        changeList.push(trackedFund);
+      }
       await controllers.AuditCtrl.trackChanges({
         auditApiCallUuid,
-        changeList: [deposit],
+        changeList,
         transaction,
       });
     });

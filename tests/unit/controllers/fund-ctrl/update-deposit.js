@@ -26,6 +26,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
   let user2HouseholdUuid;
   let user2Uuid;
 
+  const FUND1_INITIAL = 100000;
+  const FUND2_INITIAL = 150000;
+
   before('get app', async function() {
     this.timeout(30000);
     const app = await testHelper.getApp();
@@ -61,6 +64,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 1 fund 1', async function() {
     const fund = await models.Fund.create({
+      balance_cents: FUND1_INITIAL,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category1.name,
     });
@@ -69,6 +73,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 1 fund 2', async function() {
     const fund = await models.Fund.create({
+      balance_cents: FUND2_INITIAL,
       household_uuid: user1HouseholdUuid,
       name: sampleData.categories.category2.name,
     });
@@ -77,8 +82,8 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
 
   beforeEach('create user 1 deposit', async function() {
     const deposit = await models.Deposit.create({
-      amount_cents: sampleData.expenses.expense1.amount_cents,
-      date: sampleData.expenses.expense1.date,
+      amount_cents: sampleData.deposits.deposit1.amount_cents,
+      date: sampleData.deposits.deposit1.date,
       fund_uuid: user1Fund1Uuid,
     });
     user1DepositUuid = deposit.get('uuid');
@@ -129,9 +134,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: null,
         fundUuid: user1Fund2Uuid,
       });
@@ -151,9 +156,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: user1DepositUuid,
         fundUuid: null,
       });
@@ -173,7 +178,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: null,
         depositUuid: user1DepositUuid,
@@ -195,7 +200,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: 'Invalid date',
         depositUuid: user1DepositUuid,
@@ -219,7 +224,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       await controllers.FundCtrl.updateDeposit({
         amount: null,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: user1DepositUuid,
         fundUuid: user1Fund2Uuid,
       });
@@ -241,7 +246,7 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       await controllers.FundCtrl.updateDeposit({
         amount: 'invalid amount',
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: user1DepositUuid,
         fundUuid: user1Fund2Uuid,
       });
@@ -258,9 +263,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
   it('should reject with no audit API call', async function() {
     try {
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: null,
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: user1DepositUuid,
         fundUuid: user1Fund2Uuid,
       });
@@ -277,9 +282,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
   it('should reject when the audit API call does not exist', async function() {
     try {
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: uuidv4(),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: user1DepositUuid,
         fundUuid: user1Fund2Uuid,
       });
@@ -304,9 +309,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: user1DepositUuid,
         fundUuid: user1Fund2Uuid,
       });
@@ -326,9 +331,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: uuidv4(),
         fundUuid: user1Fund2Uuid,
       });
@@ -348,9 +353,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user2Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: user1DepositUuid,
         fundUuid: user1Fund2Uuid,
       });
@@ -378,9 +383,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense2.amount_cents,
+        amount: sampleData.deposits.deposit2.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense2.date,
+        date: sampleData.deposits.deposit2.date,
         depositUuid: user1DepositUuid,
         fundUuid: user1Fund2Uuid,
       });
@@ -399,9 +404,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       user_uuid: user1Uuid,
     });
     await controllers.FundCtrl.updateDeposit({
-      amount: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.deposits.deposit1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      date: sampleData.expenses.expense1.date,
+      date: sampleData.deposits.deposit1.date,
       depositUuid: user1DepositUuid,
       fundUuid: user1Fund1Uuid,
     });
@@ -414,9 +419,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       user_uuid: user1Uuid,
     });
     await controllers.FundCtrl.updateDeposit({
-      amount: sampleData.expenses.expense2.amount_cents,
+      amount: sampleData.deposits.deposit2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      date: sampleData.expenses.expense1.date,
+      date: sampleData.deposits.deposit1.date,
       depositUuid: user1DepositUuid,
       fundUuid: user1Fund1Uuid,
     });
@@ -439,10 +444,22 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(deposit);
-    assert.strictEqual(deposit.get('amount_cents'), sampleData.expenses.expense2.amount_cents);
-    assert.strictEqual(deposit.get('date'), sampleData.expenses.expense1.date);
+    assert.strictEqual(deposit.get('amount_cents'), sampleData.deposits.deposit2.amount_cents);
+    assert.strictEqual(deposit.get('date'), sampleData.deposits.deposit1.date);
     assert.strictEqual(deposit.get('fund_uuid'), user1Fund1Uuid);
     assert.strictEqual(deposit.Fund.get('uuid'), user1Fund1Uuid);
+
+    // Verify that the Fund balance was updated.
+    const fund = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: deposit.get('fund_uuid'),
+      },
+    });
+    assert.isOk(fund);
+    const depositDifference = sampleData.deposits.deposit1.amount_cents
+      - sampleData.deposits.deposit2.amount_cents;
+    assert.strictEqual(fund.get('balance_cents'), (FUND1_INITIAL - depositDifference));
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -453,7 +470,12 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         && updateInstance.get('uuid') === user1DepositUuid;
     });
     assert.isOk(updateDeposit);
-    assert.strictEqual(trackChangesParams.changeList.length, 1);
+    const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+      return updateInstance instanceof models.Fund
+        && updateInstance.get('uuid') === user1Fund1Uuid;
+    });
+    assert.isOk(updateFund);
+    assert.strictEqual(trackChangesParams.changeList.length, 2);
     assert.isNotOk(trackChangesParams.deleteList);
     assert.isNotOk(trackChangesParams.newList);
     assert.isOk(trackChangesParams.transaction);
@@ -464,9 +486,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       user_uuid: user1Uuid,
     });
     await controllers.FundCtrl.updateDeposit({
-      amount: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.deposits.deposit1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      date: sampleData.expenses.expense2.date,
+      date: sampleData.deposits.deposit2.date,
       depositUuid: user1DepositUuid,
       fundUuid: user1Fund1Uuid,
     });
@@ -489,10 +511,20 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(deposit);
-    assert.strictEqual(deposit.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
-    assert.strictEqual(deposit.get('date'), sampleData.expenses.expense2.date);
+    assert.strictEqual(deposit.get('amount_cents'), sampleData.deposits.deposit1.amount_cents);
+    assert.strictEqual(deposit.get('date'), sampleData.deposits.deposit2.date);
     assert.strictEqual(deposit.get('fund_uuid'), user1Fund1Uuid);
     assert.strictEqual(deposit.Fund.get('uuid'), user1Fund1Uuid);
+
+    // Verify that the Fund balance wasn't updated.
+    const fund = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: deposit.get('fund_uuid'),
+      },
+    });
+    assert.isOk(fund);
+    assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -515,9 +547,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         depositUuid: user1DepositUuid,
         fundUuid: uuidv4(),
       });
@@ -537,9 +569,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.updateDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         depositUuid: user1DepositUuid,
         fundUuid: user2Fund2Uuid,
       });
@@ -558,9 +590,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       user_uuid: user1Uuid,
     });
     await controllers.FundCtrl.updateDeposit({
-      amount: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.deposits.deposit1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      date: sampleData.expenses.expense1.date,
+      date: sampleData.deposits.deposit1.date,
       depositUuid: user1DepositUuid,
       fundUuid: user1Fund2Uuid,
     });
@@ -583,10 +615,30 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(deposit);
-    assert.strictEqual(deposit.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
-    assert.strictEqual(deposit.get('date'), sampleData.expenses.expense1.date);
+    assert.strictEqual(deposit.get('amount_cents'), sampleData.deposits.deposit1.amount_cents);
+    assert.strictEqual(deposit.get('date'), sampleData.deposits.deposit1.date);
     assert.strictEqual(deposit.get('fund_uuid'), user1Fund2Uuid);
     assert.strictEqual(deposit.Fund.get('uuid'), user1Fund2Uuid);
+
+    // Verify that Fund 1 was updated.
+    const fund1 = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: user1Fund1Uuid,
+      },
+    });
+    assert.isOk(fund1);
+    assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL - sampleData.deposits.deposit1.amount_cents);
+
+    // Verify that Fund 2 was updated.
+    const fund2 = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: user1Fund2Uuid,
+      },
+    });
+    assert.isOk(fund2);
+    assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL + sampleData.deposits.deposit1.amount_cents);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -597,7 +649,17 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         && updateInstance.get('uuid') === user1DepositUuid;
     });
     assert.isOk(updateDeposit);
-    assert.strictEqual(trackChangesParams.changeList.length, 1);
+    const updateFund1 = _.find(trackChangesParams.changeList, (updateInstance) => {
+      return updateInstance instanceof models.Fund
+        && updateInstance.get('uuid') === user1Fund1Uuid;
+    });
+    assert.isOk(updateFund1);
+    const updateFund2 = _.find(trackChangesParams.changeList, (updateInstance) => {
+      return updateInstance instanceof models.Fund
+        && updateInstance.get('uuid') === user1Fund2Uuid;
+    });
+    assert.isOk(updateFund2);
+    assert.strictEqual(trackChangesParams.changeList.length, 3);
     assert.isNotOk(trackChangesParams.deleteList);
     assert.isNotOk(trackChangesParams.newList);
     assert.isOk(trackChangesParams.transaction);
@@ -608,9 +670,9 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       user_uuid: user1Uuid,
     });
     await controllers.FundCtrl.updateDeposit({
-      amount: sampleData.expenses.expense2.amount_cents,
+      amount: sampleData.deposits.deposit2.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      date: sampleData.expenses.expense2.date,
+      date: sampleData.deposits.deposit2.date,
       depositUuid: user1DepositUuid,
       fundUuid: user1Fund2Uuid,
     });
@@ -633,10 +695,30 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
       },
     });
     assert.isOk(deposit);
-    assert.strictEqual(deposit.get('amount_cents'), sampleData.expenses.expense2.amount_cents);
-    assert.strictEqual(deposit.get('date'), sampleData.expenses.expense2.date);
+    assert.strictEqual(deposit.get('amount_cents'), sampleData.deposits.deposit2.amount_cents);
+    assert.strictEqual(deposit.get('date'), sampleData.deposits.deposit2.date);
     assert.strictEqual(deposit.get('fund_uuid'), user1Fund2Uuid);
     assert.strictEqual(deposit.Fund.get('uuid'), user1Fund2Uuid);
+
+    // Verify that Fund 1 balance was updated.
+    const fund1 = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: user1Fund1Uuid,
+      },
+    });
+    assert.isOk(fund1);
+    assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL - sampleData.deposits.deposit1.amount_cents);
+
+    // Verify that Fund 2 balance was updated.
+    const fund2 = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: user1Fund2Uuid,
+      },
+    });
+    assert.isOk(fund2);
+    assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL + sampleData.deposits.deposit2.amount_cents);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -647,7 +729,17 @@ describe('Unit:Controllers - FundCtrl.updateDeposit', function() {
         && updateInstance.get('uuid') === user1DepositUuid;
     });
     assert.isOk(updateDeposit);
-    assert.strictEqual(trackChangesParams.changeList.length, 1);
+    const updateFund1 = _.find(trackChangesParams.changeList, (updateInstance) => {
+      return updateInstance instanceof models.Fund
+        && updateInstance.get('uuid') === user1Fund1Uuid;
+    });
+    assert.isOk(updateFund1);
+    const updateFund2 = _.find(trackChangesParams.changeList, (updateInstance) => {
+      return updateInstance instanceof models.Fund
+        && updateInstance.get('uuid') === user1Fund2Uuid;
+    });
+    assert.isOk(updateFund2);
+    assert.strictEqual(trackChangesParams.changeList.length, 3);
     assert.isNotOk(trackChangesParams.deleteList);
     assert.isNotOk(trackChangesParams.newList);
     assert.isOk(trackChangesParams.transaction);

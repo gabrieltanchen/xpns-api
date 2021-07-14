@@ -70,6 +70,7 @@ module.exports = async({
   }, async(transaction) => {
     const trackedFund = await models.Fund.findOne({
       attributes: ['balance_cents', 'uuid'],
+      transaction,
       where: {
         uuid: newDeposit.get('fund_uuid'),
       },
