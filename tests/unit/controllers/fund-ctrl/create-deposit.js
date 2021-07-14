@@ -99,9 +99,9 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.createDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         fundUuid: null,
       });
       /* istanbul ignore next */
@@ -120,7 +120,7 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.createDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: null,
         fundUuid: user1FundUuid,
@@ -141,7 +141,7 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.createDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
         date: 'invalid date',
         fundUuid: user1FundUuid,
@@ -164,7 +164,7 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
       await controllers.FundCtrl.createDeposit({
         amount: null,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         fundUuid: user1FundUuid,
       });
       /* istanbul ignore next */
@@ -185,7 +185,7 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
       await controllers.FundCtrl.createDeposit({
         amount: 'invalid amount',
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         fundUuid: user1FundUuid,
       });
       /* istanbul ignore next */
@@ -201,9 +201,9 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
   it('should reject with no audit API call', async function() {
     try {
       await controllers.FundCtrl.createDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: null,
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         fundUuid: user1FundUuid,
       });
       /* istanbul ignore next */
@@ -219,9 +219,9 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
   it('should reject when the audit API call does not exist', async function() {
     try {
       await controllers.FundCtrl.createDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: uuidv4(),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         fundUuid: user1FundUuid,
       });
       /* istanbul ignore next */
@@ -245,9 +245,9 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.createDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         fundUuid: user1FundUuid,
       });
       /* istanbul ignore next */
@@ -266,9 +266,9 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.createDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         fundUuid: uuidv4(),
       });
       /* istanbul ignore next */
@@ -287,9 +287,9 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
         user_uuid: user1Uuid,
       });
       await controllers.FundCtrl.createDeposit({
-        amount: sampleData.expenses.expense1.amount_cents,
+        amount: sampleData.deposits.deposit1.amount_cents,
         auditApiCallUuid: apiCall.get('uuid'),
-        date: sampleData.expenses.expense1.date,
+        date: sampleData.deposits.deposit1.date,
         fundUuid: user2FundUuid,
       });
       /* istanbul ignore next */
@@ -307,9 +307,9 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
       user_uuid: user1Uuid,
     });
     const depositUuid = await controllers.FundCtrl.createDeposit({
-      amount: sampleData.expenses.expense1.amount_cents,
+      amount: sampleData.deposits.deposit1.amount_cents,
       auditApiCallUuid: apiCall.get('uuid'),
-      date: sampleData.expenses.expense1.date,
+      date: sampleData.deposits.deposit1.date,
       fundUuid: user1FundUuid,
     });
 
@@ -328,16 +328,30 @@ describe('Unit:Controllers - FundCtrl.createDeposit', function() {
       },
     });
     assert.isOk(deposit);
-    assert.strictEqual(deposit.get('amount_cents'), sampleData.expenses.expense1.amount_cents);
-    assert.strictEqual(deposit.get('date'), sampleData.expenses.expense1.date);
+    assert.strictEqual(deposit.get('amount_cents'), sampleData.deposits.deposit1.amount_cents);
+    assert.strictEqual(deposit.get('date'), sampleData.deposits.deposit1.date);
     assert.strictEqual(deposit.get('fund_uuid'), user1FundUuid);
 
     // Verify that the Fund balance was updated.
+    const fund = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: deposit.get('fund_uuid'),
+      },
+    });
+    assert.isOk(fund);
+    assert.strictEqual(fund.get('balance_cents'), sampleData.deposits.deposit1.amount_cents);
 
     assert.strictEqual(trackChangesSpy.callCount, 1);
     const trackChangesParams = trackChangesSpy.getCall(0).args[0];
     assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
-    assert.isNotOk(trackChangesParams.changeList);
+    assert.isOk(trackChangesParams.changeList);
+    const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+      return updateInstance instanceof models.Fund
+        && updateInstance.get('uuid') === fund.get('uuid');
+    });
+    assert.isOk(updateFund);
+    assert.strictEqual(trackChangesParams.changeList.length, 1);
     assert.isNotOk(trackChangesParams.deleteList);
     assert.isOk(trackChangesParams.newList);
     const newDeposit = _.find(trackChangesParams.newList, (newInstance) => {

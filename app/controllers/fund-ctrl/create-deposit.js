@@ -68,11 +68,19 @@ module.exports = async({
   await models.sequelize.transaction({
     isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
   }, async(transaction) => {
+    const trackedFund = await models.Fund.findOne({
+      attributes: ['balance_cents', 'uuid'],
+      where: {
+        uuid: newDeposit.get('fund_uuid'),
+      },
+    });
+    trackedFund.set('balance_cents', trackedFund.get('balance_cents') + newDeposit.get('amount_cents'));
     await newDeposit.save({
       transaction,
     });
     await controllers.AuditCtrl.trackChanges({
       auditApiCallUuid,
+      changeList: [trackedFund],
       newList: [newDeposit],
       transaction,
     });
