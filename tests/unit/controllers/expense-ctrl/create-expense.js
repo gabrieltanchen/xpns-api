@@ -823,7 +823,13 @@ describe('Unit:Controllers - ExpenseCtrl.createExpense', function() {
           uuid: user1FundUuid,
         },
       });
-      assert.strictEqual(fund.get('balance_cents'), FUND_INITIAL_BALANCE - sampleData.expenses.expense1.amount_cents);
+      assert.strictEqual(
+        fund.get('balance_cents'),
+        FUND_INITIAL_BALANCE - (
+          sampleData.expenses.expense1.amount_cents
+            - sampleData.expenses.expense1.reimbursed_cents
+        ),
+      );
 
       assert.strictEqual(trackChangesSpy.callCount, 1);
       const trackChangesParams = trackChangesSpy.getCall(0).args[0];

@@ -150,7 +150,12 @@ module.exports = async({
           uuid: newExpense.get('fund_uuid'),
         },
       });
-      trackedFund.set('balance_cents', trackedFund.get('balance_cents') - newExpense.get('amount_cents'));
+      trackedFund.set(
+        'balance_cents',
+        trackedFund.get('balance_cents') - (
+          newExpense.get('amount_cents') - newExpense.get('reimbursed_cents')
+        ),
+      );
       trackChangesParams.changeList = [trackedFund];
     }
     await newExpense.save({
