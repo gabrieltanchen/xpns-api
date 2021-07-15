@@ -1671,9 +1671,15 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         },
       });
       assert.isOk(fund);
-      const expenseDifference = sampleData.expenses.expense1.amount_cents
-        - sampleData.expenses.expense2.amount_cents;
-      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE + expenseDifference);
+      const oldExpenseAmount = sampleData.expenses.expense1.amount_cents
+        - sampleData.expenses.expense1.reimbursed_cents;
+      const newExpenseAmount = sampleData.expenses.expense2.amount_cents
+        - sampleData.expenses.expense1.reimbursed_cents;
+      const expenseDifference = oldExpenseAmount - newExpenseAmount;
+      assert.strictEqual(
+        fund.get('balance_cents'),
+        FUND1_INITIAL_BALANCE + expenseDifference,
+      );
 
       assert.strictEqual(trackChangesSpy.callCount, 1);
       const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -1925,7 +1931,7 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
       assert.strictEqual(expense.get('vendor_uuid'), user1Vendor1Uuid);
       assert.strictEqual(expense.Vendor.get('uuid'), user1Vendor1Uuid);
 
-      // Verify that the Fund balance wasn't updated.
+      // Verify that the Fund balance was updated.
       const fund = await models.Fund.findOne({
         attributes: ['balance_cents', 'uuid'],
         where: {
@@ -1933,7 +1939,15 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
         },
       });
       assert.isOk(fund);
-      assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE);
+      const oldExpenseAmount = sampleData.expenses.expense1.amount_cents
+        - sampleData.expenses.expense1.reimbursed_cents;
+      const newExpenseAmount = sampleData.expenses.expense1.amount_cents
+        - sampleData.expenses.expense2.reimbursed_cents;
+      const expenseDifference = oldExpenseAmount - newExpenseAmount;
+      assert.strictEqual(
+        fund.get('balance_cents'),
+        FUND1_INITIAL_BALANCE + expenseDifference,
+      );
 
       assert.strictEqual(trackChangesSpy.callCount, 1);
       const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -1944,7 +1958,12 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           && updateInstance.get('uuid') === expenseUuid;
       });
       assert.isOk(updateExpense);
-      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Fund
+          && updateInstance.get('uuid') === user1Fund1Uuid;
+      });
+      assert.isOk(updateFund);
+      assert.strictEqual(trackChangesParams.changeList.length, 2);
       assert.isNotOk(trackChangesParams.deleteList);
       assert.isNotOk(trackChangesParams.newList);
       assert.isOk(trackChangesParams.transaction);
@@ -2338,7 +2357,13 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           },
         });
         assert.isOk(fund);
-        assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE - sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(
+          fund.get('balance_cents'),
+          FUND1_INITIAL_BALANCE - (
+            sampleData.expenses.expense1.amount_cents
+              - sampleData.expenses.expense1.reimbursed_cents
+          ),
+        );
 
         assert.strictEqual(trackChangesSpy.callCount, 1);
         const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -2428,7 +2453,13 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           },
         });
         assert.isOk(fund);
-        assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE - sampleData.expenses.expense2.amount_cents);
+        assert.strictEqual(
+          fund.get('balance_cents'),
+          FUND1_INITIAL_BALANCE - (
+            sampleData.expenses.expense2.amount_cents
+              - sampleData.expenses.expense2.reimbursed_cents
+          ),
+        );
 
         assert.strictEqual(trackChangesSpy.callCount, 1);
         const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -2520,7 +2551,13 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           },
         });
         assert.isOk(fund);
-        assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE + sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(
+          fund.get('balance_cents'),
+          FUND1_INITIAL_BALANCE + (
+            sampleData.expenses.expense1.amount_cents
+              - sampleData.expenses.expense1.reimbursed_cents
+          ),
+        );
 
         assert.strictEqual(trackChangesSpy.callCount, 1);
         const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -2610,7 +2647,13 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           },
         });
         assert.isOk(fund);
-        assert.strictEqual(fund.get('balance_cents'), FUND1_INITIAL_BALANCE + sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(
+          fund.get('balance_cents'),
+          FUND1_INITIAL_BALANCE + (
+            sampleData.expenses.expense1.amount_cents
+              - sampleData.expenses.expense1.reimbursed_cents
+          ),
+        );
 
         assert.strictEqual(trackChangesSpy.callCount, 1);
         const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -2756,7 +2799,13 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           },
         });
         assert.isOk(fund1);
-        assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL_BALANCE + sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(
+          fund1.get('balance_cents'),
+          FUND1_INITIAL_BALANCE + (
+            sampleData.expenses.expense1.amount_cents
+              - sampleData.expenses.expense1.reimbursed_cents
+          ),
+        );
 
         // Verify that Fund 2 was updated.
         const fund2 = await models.Fund.findOne({
@@ -2766,7 +2815,13 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           },
         });
         assert.isOk(fund2);
-        assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL_BALANCE - sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(
+          fund2.get('balance_cents'),
+          FUND2_INITIAL_BALANCE - (
+            sampleData.expenses.expense1.amount_cents
+              - sampleData.expenses.expense1.reimbursed_cents
+          ),
+        );
 
         assert.strictEqual(trackChangesSpy.callCount, 1);
         const trackChangesParams = trackChangesSpy.getCall(0).args[0];
@@ -2861,7 +2916,13 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           },
         });
         assert.isOk(fund1);
-        assert.strictEqual(fund1.get('balance_cents'), FUND1_INITIAL_BALANCE + sampleData.expenses.expense1.amount_cents);
+        assert.strictEqual(
+          fund1.get('balance_cents'),
+          FUND1_INITIAL_BALANCE + (
+            sampleData.expenses.expense1.amount_cents
+              - sampleData.expenses.expense1.reimbursed_cents
+          ),
+        );
 
         // Verify that Fund 2 was updated.
         const fund2 = await models.Fund.findOne({
@@ -2871,7 +2932,13 @@ describe('Unit:Controllers - ExpenseCtrl.updateExpense', function() {
           },
         });
         assert.isOk(fund2);
-        assert.strictEqual(fund2.get('balance_cents'), FUND2_INITIAL_BALANCE - sampleData.expenses.expense2.amount_cents);
+        assert.strictEqual(
+          fund2.get('balance_cents'),
+          FUND2_INITIAL_BALANCE - (
+            sampleData.expenses.expense2.amount_cents
+              - sampleData.expenses.expense2.reimbursed_cents
+          ),
+        );
 
         assert.strictEqual(trackChangesSpy.callCount, 1);
         const trackChangesParams = trackChangesSpy.getCall(0).args[0];

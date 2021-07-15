@@ -141,8 +141,11 @@ module.exports = async({
   if (expense.get('description') !== description) {
     expense.set('description', description);
   }
+  const oldReimbursedAmount = expense.get('reimbursed_cents');
+  let newReimbursedAmount = oldReimbursedAmount;
   if (expense.get('reimbursed_cents') !== parseInt(reimbursedAmount, 10)) {
     expense.set('reimbursed_cents', parseInt(reimbursedAmount, 10));
+    newReimbursedAmount = expense.get('reimbursed_cents');
   }
 
   // Validate subcategory UUID.
@@ -238,7 +241,10 @@ module.exports = async({
           });
           // Use oldAmount because that's the amount that would have been
           // subtracted previously.
-          oldTrackedFund.set('balance_cents', oldTrackedFund.get('balance_cents') + oldAmount);
+          oldTrackedFund.set(
+            'balance_cents',
+            oldTrackedFund.get('balance_cents') + (oldAmount - oldReimbursedAmount),
+          );
           changeList.push(oldTrackedFund);
         }
         if (newFundUuid) {
@@ -251,10 +257,13 @@ module.exports = async({
             },
           });
           // Use newAmount in case the amount is also being updated.
-          newTrackedFund.set('balance_cents', newTrackedFund.get('balance_cents') - newAmount);
+          newTrackedFund.set(
+            'balance_cents',
+            newTrackedFund.get('balance_cents') - (newAmount - newReimbursedAmount),
+          );
           changeList.push(newTrackedFund);
         }
-      } else if (expense.changed('amount_cents')) {
+      } else if (expense.changed('amount_cents') || expense.changed('reimbursed_cents')) {
         // Simply update the fund balance (if exists) with the difference of the
         // old nad new amounts.
         if (oldFundUuid) {
@@ -265,7 +274,12 @@ module.exports = async({
               uuid: oldFundUuid,
             },
           });
-          trackedFund.set('balance_cents', trackedFund.get('balance_cents') + (oldAmount - newAmount));
+          trackedFund.set(
+            'balance_cents',
+            trackedFund.get('balance_cents') + (
+              (oldAmount - oldReimbursedAmount) - (newAmount - newReimbursedAmount)
+            ),
+          );
           changeList.push(trackedFund);
         }
       }
