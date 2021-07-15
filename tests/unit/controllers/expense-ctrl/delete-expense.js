@@ -379,4 +379,120 @@ describe('Unit:Controllers - ExpenseCtrl.deleteExpense', function() {
     assert.isNotOk(trackChangesParams.newList);
     assert.isOk(trackChangesParams.transaction);
   });
+
+  describe('when deleting an expense with a fund', function() {
+    const FUND_INITIAL_BALANCE = 100000;
+
+    let user1FundUuid;
+    let user2FundUuid;
+
+    beforeEach('create user 1 fund', async function() {
+      const fund = await models.Fund.create({
+        balance_cents: FUND_INITIAL_BALANCE,
+        household_uuid: user1HouseholdUuid,
+        name: sampleData.funds.fund1.name,
+      });
+      user1FundUuid = fund.get('uuid');
+    });
+
+    beforeEach('create user 2 fund', async function() {
+      const fund = await models.Fund.create({
+        household_uuid: user2HouseholdUuid,
+        name: sampleData.funds.fund2.name,
+      });
+      user2FundUuid = fund.get('uuid');
+    });
+
+    beforeEach('update expense to belong to fund', async function() {
+      await models.Expense.update({
+        fund_uuid: user1FundUuid,
+      }, {
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+    });
+
+    // This should not happen.
+    it('should reject when the expense fund belongs to a different household', async function() {
+      try {
+        await models.Expense.update({
+          fund_uuid: user2FundUuid,
+        }, {
+          where: {
+            uuid: expenseUuid,
+          },
+        });
+        const apiCall = await models.Audit.ApiCall.create({
+          user_uuid: user1Uuid,
+        });
+        await controllers.ExpenseCtrl.deleteExpense({
+          auditApiCallUuid: apiCall.get('uuid'),
+          expenseUuid,
+        });
+        /* istanbul ignore next */
+        throw new Error('Expected to reject not resolve.');
+      } catch (err) {
+        assert.isOk(err);
+        assert.strictEqual(err.message, 'Not found');
+        assert.isTrue(err instanceof ExpenseError);
+      }
+      assert.strictEqual(trackChangesSpy.callCount, 0);
+    });
+
+    it('should resolve and update the fund balance', async function() {
+      const apiCall = await models.Audit.ApiCall.create({
+        user_uuid: user1Uuid,
+      });
+      await controllers.ExpenseCtrl.deleteExpense({
+        auditApiCallUuid: apiCall.get('uuid'),
+        expenseUuid,
+      });
+
+      // Verify that the Expense instance is deleted.
+      const expense = await models.Expense.findOne({
+        attributes: ['uuid'],
+        where: {
+          uuid: expenseUuid,
+        },
+      });
+      assert.isNull(expense);
+
+      // Verify that the Fund balance was updated.
+      const fund = await models.Fund.findOne({
+        attributes: ['balance_cents', 'uuid'],
+        where: {
+          uuid: user1FundUuid,
+        },
+      });
+      assert.isOk(fund);
+      assert.strictEqual(
+        fund.get('balance_cents'),
+        FUND_INITIAL_BALANCE + (
+          sampleData.expenses.expense1.amount_cents
+            - sampleData.expenses.expense1.reimbursed_cents
+        ),
+      );
+
+      assert.strictEqual(trackChangesSpy.callCount, 1);
+      const trackChangesParams = trackChangesSpy.getCall(0).args[0];
+      assert.strictEqual(trackChangesParams.auditApiCallUuid, apiCall.get('uuid'));
+      assert.isOk(trackChangesParams.changeList);
+      const updateFund = _.find(trackChangesParams.changeList, (updateInstance) => {
+        return updateInstance instanceof models.Fund
+          && updateInstance.get('uuid') === user1FundUuid;
+      });
+      assert.isOk(updateFund);
+      assert.strictEqual(trackChangesParams.changeList.length, 1);
+      assert.isOk(trackChangesParams.deleteList);
+      const deleteCategory = _.find(trackChangesParams.deleteList, (deleteInstance) => {
+        return deleteInstance instanceof models.Expense
+          && deleteInstance.get('uuid') === expenseUuid;
+      });
+      assert.isOk(deleteCategory);
+      assert.strictEqual(trackChangesParams.deleteList.length, 1);
+      assert.isNotOk(trackChangesParams.newList);
+      assert.isOk(trackChangesParams.transaction);
+    });
+  });
 });
