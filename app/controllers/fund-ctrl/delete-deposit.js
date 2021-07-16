@@ -53,7 +53,7 @@ module.exports = async({
     },
   });
   if (!deposit) {
-    throw new FundError('Not found');
+    throw new FundError('Deposit not found');
   }
 
   await models.sequelize.transaction({
