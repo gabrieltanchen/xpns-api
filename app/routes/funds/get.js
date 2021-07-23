@@ -9,7 +9,7 @@ module.exports = (app) => {
    * @apiSuccess (200) {object} data
    * @apiSuccess (200) {object[]} data.funds
    * @apiSuccess (200) {object} data.funds[].attributes
-   * @apiSuccess (200) {integer} data.funds[].attributes.amount
+   * @apiSuccess (200) {integer} data.funds[].attributes.balance
    * @apiSuccess (200) {string} data.funds[].attributes[created-at]
    * @apiSuccess (200) {string} data.funds[].attributes.name
    * @apiSuccess (200) {string} data.funds[].id
